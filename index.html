@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Village Deko (गांव देखो) - Asli Gaon aur Sanskriti</title>
+    <title>Village Deko - Asli Gaon aur Sanskriti</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -94,85 +94,81 @@
 </head>
 <body id="appBody" class="text-slate-900 antialiased pb-24">
 
-    <!-- Top State-Adaptive Header -->
-    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all duration-300">
-      <div class="max-w-4xl mx-auto px-4 pt-3 pb-2.5">
-        <div class="flex items-center justify-between mb-3">
+    <!-- Top Compact Header & Navbar -->
+    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-45 shadow-sm transition-all duration-300">
+      <div class="max-w-3xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between gap-4">
+          
+          <!-- Logo & Brand -->
           <div class="flex items-center gap-2.5">
-            <div id="headerLogoBg" class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-md">
+            <div id="headerLogoBg" class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
               🌾
             </div>
-            <h1 class="text-xl font-extrabold tracking-tight text-slate-900">
-              <span id="brandTitleColor" class="text-amber-700">Village</span>Deko <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded-full">Village View</span>
-            </h1>
+            <div>
+              <h1 class="text-base font-extrabold tracking-tight text-slate-900 leading-none">
+                <span id="brandTitleColor" class="text-amber-700">Village</span>Deko
+              </h1>
+              <span class="text-[10px] font-bold text-slate-500">Village View</span>
+            </div>
           </div>
-        </div>
 
-        <!-- All India State Selector Bar -->
-        <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          <span class="text-[11px] font-bold text-slate-700 whitespace-nowrap">State Theme:</span>
-          <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-100 border border-slate-300 font-bold px-3 py-2 rounded-xl text-slate-900 focus:outline-none">
-            <optgroup label="Popular Regions">
-              <option value="rajasthan">🏜️ Rajasthan</option>
-              <option value="punjab">🌾 Punjab</option>
-              <option value="maharashtra">⛰️ Maharashtra</option>
-              <option value="uttar-pradesh">🛕 Uttar Pradesh</option>
-              <option value="bihar">🌾 Bihar</option>
-              <option value="kerala">🌴 Kerala & South</option>
-            </optgroup>
-            <optgroup label="All States of India">
-              <option value="andhra-pradesh">Andhra Pradesh</option>
-              <option value="arunachal-pradesh">Arunachal Pradesh</option>
-              <option value="assam">Assam</option>
-              <option value="chhattisgarh">Chhattisgarh</option>
-              <option value="goa">Goa</option>
-              <option value="gujarat">Gujarat</option>
-              <option value="haryana">Haryana</option>
-              <option value="himachal-pradesh">Himachal Pradesh</option>
-              <option value="jharkhand">Jharkhand</option>
-              <option value="karnataka">Karnataka</option>
-              <option value="madhya-pradesh">Madhya Pradesh</option>
-              <option value="manipur">Manipur</option>
-              <option value="meghalaya">Meghalaya</option>
-              <option value="mizoram">Mizoram</option>
-              <option value="nagaland">Nagaland</option>
-              <option value="odisha">Odisha</option>
-              <option value="sikkim">Sikkim</option>
-              <option value="tamil-nadu">Tamil Nadu</option>
-              <option value="telangana">Telangana</option>
-              <option value="tripura">Tripura</option>
-              <option value="uttarakhand">Uttarakhand</option>
-              <option value="west-bengal">West Bengal</option>
-            </optgroup>
-            <optgroup label="Union Territories">
-              <option value="jammu-kashmir">Jammu & Kashmir</option>
-              <option value="ladakh">Ladakh</option>
-              <option value="delhi">Delhi NCR</option>
-              <option value="andamans">Andaman & Nicobar</option>
-            </optgroup>
-          </select>
-        </div>
+          <!-- Compact Category Buttons Row -->
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+            <button onclick="switchTab('villages')" class="tab-btn px-3 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all">
+              Villages
+            </button>
+            <button onclick="switchTab('weddings')" class="tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
+              Weddings
+            </button>
+            <button onclick="switchTab('chaupal')" class="tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
+              Chaupal
+            </button>
+          </div>
 
-        <!-- Category Icons Bar -->
-        <div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none text-center">
-          <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs">
-            <span class="text-2xl mb-1">🏡</span>
-            <span class="text-[11px]">Villages</span>
-          </button>
-          <button onclick="switchTab('weddings')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
-            <span class="text-2xl mb-1">💍</span>
-            <span class="text-[11px]">Weddings</span>
-          </button>
-          <button onclick="switchTab('chaupal')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
-            <span class="text-2xl mb-1">🔥</span>
-            <span class="text-[11px]">Chaupal</span>
-          </button>
+          <!-- State Selector & Profile Trigger -->
+          <div class="flex items-center gap-2">
+            <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-50 border border-slate-300 font-bold px-2.5 py-1.5 rounded-xl text-slate-900 focus:outline-none">
+              <optgroup label="Popular Regions">
+                <option value="rajasthan">Rajasthan</option>
+                <option value="punjab">Punjab</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="uttar-pradesh">Uttar Pradesh</option>
+                <option value="bihar">Bihar</option>
+                <option value="kerala">Kerala</option>
+              </optgroup>
+              <optgroup label="All States">
+                <option value="andhra-pradesh">Andhra Pradesh</option>
+                <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                <option value="assam">Assam</option>
+                <option value="chhattisgarh">Chhattisgarh</option>
+                <option value="goa">Goa</option>
+                <option value="gujarat">Gujarat</option>
+                <option value="haryana">Haryana</option>
+                <option value="himachal-pradesh">Himachal Pradesh</option>
+                <option value="jharkhand">Jharkhand</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="madhya-pradesh">Madhya Pradesh</option>
+                <option value="manipur">Manipur</option>
+                <option value="meghalaya">Meghalaya</option>
+                <option value="mizoram">Mizoram</option>
+                <option value="nagaland">Nagaland</option>
+                <option value="odisha">Odisha</option>
+                <option value="sikkim">Sikkim</option>
+                <option value="tamil-nadu">Tamil Nadu</option>
+                <option value="telangana">Telangana</option>
+                <option value="tripura">Tripura</option>
+                <option value="uttarakhand">Uttarakhand</option>
+                <option value="west-bengal">West Bengal</option>
+              </optgroup>
+            </select>
+          </div>
+
         </div>
       </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-4xl mx-auto p-4 space-y-4">
+    <main class="max-w-3xl mx-auto p-4 space-y-4">
       
       <!-- Live Success Banner -->
       <div id="liveSuccessBanner" class="hidden bg-emerald-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between animate-bounce">
@@ -186,35 +182,32 @@
         <button onclick="document.getElementById('liveSuccessBanner').classList.add('hidden')" class="text-white font-bold text-lg">&times;</button>
       </div>
 
-      <div class="bg-white rounded-3xl p-5 border border-slate-200 custom-shadow space-y-3">
-        <div class="flex items-center gap-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-          <span class="text-2xl">📍</span>
+      <!-- Search Section -->
+      <div class="bg-white rounded-3xl p-4 border border-slate-200 custom-shadow space-y-3">
+        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+          <span class="text-xl">🔍</span>
           <div class="w-full">
             <p class="text-[10px] uppercase font-extrabold text-slate-500">Search Destination</p>
-            <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none">
+            <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none">
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-          <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 text-center shadow-xs">
-            <span class="text-2xl">🚂</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-center shadow-xs">
+            <span class="text-xl">🚂</span>
             <p class="text-[11px] font-extrabold text-slate-900 mt-1">Nearest Station</p>
-            <p class="text-[10px] text-slate-600 font-medium">View access info</p>
           </div>
-          <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-center shadow-xs">
-            <span class="text-2xl">🌾</span>
+          <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-center shadow-xs">
+            <span class="text-xl">🌾</span>
             <p class="text-[11px] font-extrabold text-slate-900 mt-1">Real Farm</p>
-            <p class="text-[10px] text-slate-600 font-medium">Live farming view</p>
           </div>
-          <div class="p-3.5 bg-blue-50 rounded-2xl border border-blue-200 text-center shadow-xs">
-            <span class="text-2xl">👗</span>
+          <div class="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-center shadow-xs">
+            <span class="text-xl">👘</span>
             <p class="text-[11px] font-extrabold text-slate-900 mt-1">Attire</p>
-            <p class="text-[10px] text-slate-600 font-medium">Traditional clothing</p>
           </div>
-          <div class="p-3.5 bg-orange-50 rounded-2xl border border-orange-200 text-center shadow-xs">
-            <span class="text-2xl">🍲</span>
+          <div class="p-3 bg-orange-50 rounded-2xl border border-orange-200 text-center shadow-xs">
+            <span class="text-xl">🍲</span>
             <p class="text-[11px] font-extrabold text-slate-900 mt-1">Chulha Food</p>
-            <p class="text-[10px] text-slate-600 font-medium">Organic kitchen</p>
           </div>
         </div>
       </div>
@@ -222,8 +215,8 @@
       <!-- TAB 1: VILLAGES & ALBUMS -->
       <div id="tab-villages" class="tab-content space-y-4">
         <div class="flex justify-between items-center px-1">
-          <h3 class="font-extrabold text-slate-900 text-base">Village World & Galleries</h3>
-          <span class="text-xs text-amber-700 font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Select Village to View Stay & Packages</span>
+          <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
+          <span class="text-[11px] text-amber-700 font-extrabold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Select Village to View Stay</span>
         </div>
 
         <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -235,13 +228,13 @@
       <div id="tab-weddings" class="tab-content space-y-4 hidden">
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
           <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
-          <h3 class="text-2xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
+          <h3 class="text-xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
           <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience or host authentic rural wedding celebrations: folk singing, traditional attire, and community feasts across India.</p>
-          <div class="flex gap-3 pt-2">
-            <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="bg-white text-rose-950 font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md cursor-pointer hover:bg-pink-50">
+          <div class="flex flex-wrap gap-2 pt-2">
+            <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="bg-white text-rose-950 font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md hover:bg-pink-50">
               💳 Pay ₹2,999 (Escrow Safe) & Book Wedding Darshan
             </button>
-            <button onclick="openModal('listModal')" class="bg-rose-900 text-white font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md cursor-pointer hover:bg-rose-950">
+            <button onclick="openModal('listModal')" class="bg-rose-900 text-white font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md hover:bg-rose-950">
               💍 Host Wedding in Village
             </button>
           </div>
@@ -250,9 +243,9 @@
 
       <!-- TAB 3: CHAUPAL STORIES -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 transition-all duration-300 shadow-sm">
+        <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm">
           <span id="chaupalBadge" class="bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full">Oral Heritage</span>
-          <h3 class="text-xl font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
+          <h3 class="text-lg font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
           <p class="text-xs text-slate-700 font-medium">Elderly folklore stories, folk tales, and village history according to each state.</p>
           <div class="bg-white p-4 rounded-2xl border border-amber-200 text-xs space-y-1.5 shadow-xs">
             <p id="chaupalStoryTitle" class="font-bold text-slate-900 text-sm">Veer Tejaji Story - Rooparam Ji (Rajasthan)</p>
@@ -263,7 +256,7 @@
     </main>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-6 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-6 z-50 flex justify-around items-center max-w-3xl mx-auto shadow-2xl">
       <button onclick="switchTab('villages')" class="flex flex-col items-center text-amber-700 font-bold">
         <span class="text-xl">🏡</span>
         <span class="text-[10px]">Home</span>
@@ -343,7 +336,7 @@
       </div>
     </div>
 
-    <!-- 2. List Village Form Modal (Host adds Village, Stay, Pehnawa, Food & Multiple Gallery Photos) -->
+    <!-- 2. List Village Form Modal -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
@@ -363,9 +356,9 @@
             </div>
           </div>
 
-          <!-- Host Bank Account Details Section for Payouts -->
+          <!-- Host Bank Account Details Section -->
           <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
-            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Returning Guest Payouts)</p>
+            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Payouts)</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block font-bold text-slate-300 text-[11px] mb-1">Bank Account Number</label>
@@ -377,7 +370,7 @@
               </div>
             </div>
             <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Or Host UPI ID (Optional alternative)</label>
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Or Host UPI ID (Optional)</label>
               <input type="text" id="listHostUpi" placeholder="ramesh@okhdfc" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
           </div>
@@ -422,9 +415,6 @@
                 <option value="Tripura">Tripura</option>
                 <option value="Uttarakhand">Uttarakhand</option>
                 <option value="West Bengal">West Bengal</option>
-                <option value="Jammu and Kashmir">Jammu & Kashmir</option>
-                <option value="Ladakh">Ladakh</option>
-                <option value="Delhi NCR">Delhi NCR</option>
               </select>
             </div>
           </div>
@@ -439,7 +429,6 @@
             <textarea id="listDesc" rows="2" placeholder="Describe how people live here..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
 
-          <!-- Package & Stay Details for this specific Village -->
           <div class="bg-amber-950/30 p-3.5 rounded-xl border border-amber-500/30 space-y-3">
             <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -470,22 +459,20 @@
             </div>
           </div>
 
-          <!-- Separated Photo Uploads: Pehnawa, Chulha Food, & Multiple Gallery Photos -->
           <div class="space-y-3 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
             <div>
               <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire (Pehnawa) Photo</label>
-              <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
+              <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
             </div>
 
             <div class="pt-2 border-t border-slate-700">
               <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Traditional Chulha Food Photo</label>
-              <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
+              <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
             </div>
 
             <div class="pt-2 border-t border-slate-700">
-              <label class="block font-bold text-amber-400 text-xs mb-1">📸 Village Gallery Photos (Bohat saare photos ek sath)</label>
-              <input type="file" id="listGalleryPhotos" accept="image/*" multiple class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
-              <p class="text-[10px] text-slate-400 mt-1">Aap gallery ya folder se ek sath multiple photos select kar sakte hain.</p>
+              <label class="block font-bold text-amber-400 text-xs mb-1">📸 Village Gallery Photos</label>
+              <input type="file" id="listGalleryPhotos" accept="image/*" multiple class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
             </div>
           </div>
 
@@ -494,7 +481,7 @@
       </div>
     </div>
 
-    <!-- 3. Village Detail / Album & Package Modal -->
+    <!-- 3. Village Detail Modal -->
     <div id="villageDetailModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -508,7 +495,6 @@
           <p id="modalDesc" class="text-slate-700 leading-relaxed font-medium"></p>
           <div id="modalStationBox" class="p-3 bg-amber-50 rounded-xl text-amber-950 font-bold border border-amber-200"></div>
           
-          <!-- Host Package & Stay Section -->
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-300 space-y-2 shadow-xs">
             <span class="bg-amber-200 text-amber-950 font-extrabold text-[10px] px-2.5 py-1 rounded-md">⏳ Host Package & Stay Details</span>
             <h4 id="modalPkgTitle" class="font-extrabold text-slate-900 text-sm mt-1">Package Title</h4>
@@ -526,20 +512,19 @@
 
           <div class="grid grid-cols-2 gap-2.5 pt-1">
             <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
-              <p class="font-extrabold text-slate-900 mb-1">👗 Traditional Attire</p>
+              <p class="font-extrabold text-slate-900 mb-1">👘 Traditional Attire</p>
               <div id="modalPehnawaContainer" class="mt-1">
-                <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>
+                <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Available</p>
               </div>
             </div>
             <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
               <p class="font-extrabold text-slate-900 mb-1">🍲 Chulha Food</p>
               <div id="modalFoodContainer" class="mt-1">
-                <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Organic Desi Kitchen</p>
+                <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Kitchen Active</p>
               </div>
             </div>
           </div>
 
-          <!-- Multiple Gallery Photos Preview in Detail Modal -->
           <div id="modalGallerySection" class="space-y-2 pt-2 border-t">
             <p class="font-extrabold text-slate-900">📸 Village Photo Gallery:</p>
             <div id="modalGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
@@ -548,61 +533,127 @@
       </div>
     </div>
 
-    <!-- 4. Amazon-Style Comprehensive Profile & Settings Dashboard Modal -->
+    <!-- 4. Profile & Settings Dashboard Modal (GOOGLE DRIVE STYLE VERTICAL LIST IN ENGLISH) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <h3 class="font-extrabold text-slate-900 text-sm">👤 Account Dashboard & Settings</h3>
+          <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & Menu</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
 
-        <!-- Profile Navigation Tabs -->
-        <div class="flex gap-1 bg-slate-100 p-1 rounded-xl mb-4 text-xs font-bold">
-          <button onclick="switchProfileTab('overview')" id="profTabOverview" class="flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs">Dashboard</button>
-          <button onclick="switchProfileTab('orders')" id="profTabOrders" class="flex-1 py-2 rounded-lg text-slate-600">Your Bookings</button>
-          <button onclick="switchProfileTab('settings')" id="profTabSettings" class="flex-1 py-2 rounded-lg text-slate-600">Login & Security</button>
-          <button onclick="switchProfileTab('wallet')" id="profTabWallet" class="flex-1 py-2 rounded-lg text-slate-600">UPI & Payouts</button>
+        <!-- Google Drive Style Clean Vertical Menu List (English, No Icons) -->
+        <div class="mb-4 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden text-xs divide-y divide-slate-100">
+          
+          <!-- 1. Tourist Profile -->
+          <div onclick="switchProfileTab('overview');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Tourist Profile</p>
+              <p class="text-[11px] text-slate-500 font-medium">View tourist name, email, and personal details</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 2. Villages & Albums -->
+          <div onclick="closeModal('profileModal'); switchTab('villages');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Villages & Albums</p>
+              <p class="text-[11px] text-slate-500 font-medium">Explore all live villages, traditional stays, and photo galleries</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 3. List Village & Uploads -->
+          <div onclick="closeModal('profileModal'); openModal('listModal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">List Village & Uploads</p>
+              <p class="text-[11px] text-slate-500 font-medium">Add new villages with pehnawa, chulha food, and gallery photos</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 4. Village Weddings -->
+          <div onclick="closeModal('profileModal'); switchTab('weddings');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Village Weddings</p>
+              <p class="text-[11px] text-slate-500 font-medium">Book or host traditional rural wedding celebrations</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 5. Chaupal Stories -->
+          <div onclick="closeModal('profileModal'); switchTab('chaupal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Chaupal Stories</p>
+              <p class="text-[11px] text-slate-500 font-medium">Read state-wise folk tales and oral heritage histories</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 6. Bookings & Escrow -->
+          <div onclick="switchProfileTab('orders');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Bookings & Escrow</p>
+              <p class="text-[11px] text-slate-500 font-medium">Track active bookings and manage secure host payout releases</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 7. Settings -->
+          <div onclick="switchProfileTab('settings');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Settings</p>
+              <p class="text-[11px] text-slate-500 font-medium">Manage login credentials and security preferences</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
+          <!-- 8. Help & Support -->
+          <div onclick="alert('For support, please contact via WhatsApp or Admin helpline.')" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">Help & Support</p>
+              <p class="text-[11px] text-slate-500 font-medium">Get assistance via WhatsApp or customer support</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
         </div>
 
-        <!-- Tab Content 1: Overview / Owner Summary -->
+        <!-- Profile Navigation Sub-Sections -->
+        <div class="flex gap-1 bg-slate-100 p-1 rounded-xl mb-4 text-xs font-bold">
+          <button onclick="switchProfileTab('overview')" id="profTabOverview" class="flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs">Profile</button>
+          <button onclick="switchProfileTab('orders')" id="profTabOrders" class="flex-1 py-2 rounded-lg text-slate-600">Bookings</button>
+          <button onclick="switchProfileTab('settings')" id="profTabSettings" class="flex-1 py-2 rounded-lg text-slate-600">Security</button>
+        </div>
+
+        <!-- Tab Content 1: Overview / Tourist Profile -->
         <div id="profileSectionOverview" class="space-y-4 text-xs">
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 shadow-xs space-y-1">
-            <p class="font-extrabold text-slate-900 text-sm" id="profileUserName">Jagdish (Platform Owner)</p>
+            <p class="font-extrabold text-slate-900 text-sm" id="profileUserName">Jagdish (Tourist & Owner)</p>
             <p class="text-slate-600 text-[11px] font-medium" id="profileUserEmail">jagdish@example.com</p>
-            <p class="text-amber-800 font-extrabold text-[10px] mt-1">Role: Admin & Cultural Director | Commission Earned: Active</p>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
-              <p class="text-[10px] text-slate-500 font-bold uppercase">Escrow Held Balance</p>
-              <p class="text-base font-extrabold text-emerald-600 mt-0.5">₹1,999</p>
-            </div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
-              <p class="text-[10px] text-slate-500 font-bold uppercase">Total Platform Listings</p>
-              <p class="text-base font-extrabold text-amber-600 mt-0.5" id="totalListingsCount">Live</p>
-            </div>
+            <p class="text-amber-800 font-extrabold text-[10px] mt-1">Role: Platform Director & Traveler</p>
           </div>
         </div>
 
-        <!-- Tab Content 2: Your Bookings & Escrow Payout Release -->
+        <!-- Tab Content 2: Bookings -->
         <div id="profileSectionOrders" class="space-y-3 text-xs hidden">
-          <h4 class="font-extrabold text-slate-900">📦 Active Bookings & Escrow Payout Tracker</h4>
-          <p class="text-[10px] text-slate-500">When the guest returns, click **"Release Payout"** to send funds to the host's bank/UPI (platform commission retained).</p>
+          <h4 class="font-extrabold text-slate-900">Active Bookings & Escrow Payout Tracker</h4>
+          <p class="text-[10px] text-slate-500">When guest returns, click **"Release Payout"** to send funds to host bank.</p>
           <div id="myBookingsList" class="space-y-2 max-h-48 overflow-y-auto">
             <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 shadow-xs booking-item">
               <div class="flex justify-between items-center">
                 <div>
                   <p class="font-bold text-slate-900">3 Days Authentic Heritage Stay (Rohat)</p>
-                  <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured 🔒 (Guest Traveling)</p>
+                  <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured (Guest Traveling)</p>
                 </div>
-                <button onclick="releaseEscrowPayout(this, 'Ramesh Patel', '+919876543210', 'A/C: 1234567890, IFSC: SBIN0001234', '3 Days Authentic Heritage Stay', 2499)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">💵 Release Payout</button>
+                <button onclick="releaseEscrowPayout(this, 'Ramesh Patel', '+919876543210', 'A/C: 123456', '3 Days Authentic Heritage Stay', 2499)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">Release Payout</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Tab Content 3: Login & Security (Amazon Style) -->
+        <!-- Tab Content 3: Settings -->
         <div id="profileSectionSettings" class="space-y-3 text-xs hidden">
-          <h4 class="font-extrabold text-slate-900">🔐 Login & Security Settings</h4>
+          <h4 class="font-extrabold text-slate-900">Login & Security Settings</h4>
           <div class="space-y-2.5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
             <div>
               <label class="block font-bold text-slate-700 mb-1">Your Registered Email</label>
@@ -612,36 +663,15 @@
               <label class="block font-bold text-slate-700 mb-1">Update Password</label>
               <input type="password" placeholder="Enter new password" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl font-medium">
             </div>
-            <button onclick="showSuccessBanner('Settings Updated', 'Your security settings have been saved successfully.')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded-xl shadow-xs">Save Changes</button>
-          </div>
-          <div class="space-y-2 pt-1 text-slate-700 font-medium">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Hide my personal phone number from public views
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Enable Escrow & Return Payout Notifications
-            </label>
+            <button onclick="showSuccessBanner('Settings Updated', 'Security settings saved successfully.')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded-xl shadow-xs">Save Changes</button>
           </div>
         </div>
 
-        <!-- Tab Content 4: Payment Options / Saved UPI -->
-        <div id="profileSectionWallet" class="space-y-3 text-xs hidden">
-          <h4 class="font-extrabold text-slate-900">💳 Saved UPI & Admin Payout Account</h4>
-          <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
-            <p class="font-bold text-amber-950">Admin Collection UPI QR / Account</p>
-            <input type="text" value="villagedeko@upi" readonly class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl font-bold text-slate-900">
-            <p class="text-[10px] text-amber-800 font-medium">All incoming visitor payments lock into this secure escrow account before host disbursement.</p>
-          </div>
-        </div>
-
-        <!-- Action Buttons (List Village placed right above Logout as requested) -->
+        <!-- Action Buttons -->
         <div class="space-y-2 pt-4 border-t mt-4 text-xs">
-          <button onclick="openModal('listModal'); closeModal('profileModal');" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-3 rounded-xl shadow-xs flex items-center justify-center gap-2">
-            <span>+ List Village & Package</span>
-          </button>
           <div class="grid grid-cols-2 gap-2">
             <button onclick="openModal('authModal'); closeModal('profileModal');" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl shadow-xs">Switch Account</button>
-            <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl shadow-xs">🚪 Logout</button>
+            <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl shadow-xs">Logout</button>
           </div>
         </div>
       </div>
@@ -651,7 +681,7 @@
     <div id="authModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <h3 class="font-extrabold text-slate-900 text-sm">🔑 Login / Register</h3>
+          <h3 class="font-extrabold text-slate-900 text-sm">Login / Register</h3>
           <button onclick="closeModal('authModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
         <form onsubmit="handleAuth(event)" class="space-y-3 text-xs">
@@ -679,12 +709,10 @@
         document.getElementById('profileSectionOverview').classList.add('hidden');
         document.getElementById('profileSectionOrders').classList.add('hidden');
         document.getElementById('profileSectionSettings').classList.add('hidden');
-        document.getElementById('profileSectionWallet').classList.add('hidden');
 
         document.getElementById('profTabOverview').className = "flex-1 py-2 rounded-lg text-slate-600";
         document.getElementById('profTabOrders').className = "flex-1 py-2 rounded-lg text-slate-600";
         document.getElementById('profTabSettings').className = "flex-1 py-2 rounded-lg text-slate-600";
-        document.getElementById('profTabWallet').className = "flex-1 py-2 rounded-lg text-slate-600";
 
         if(tabName === 'overview') {
           document.getElementById('profileSectionOverview').classList.remove('hidden');
@@ -695,9 +723,6 @@
         } else if(tabName === 'settings') {
           document.getElementById('profileSectionSettings').classList.remove('hidden');
           document.getElementById('profTabSettings').className = "flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs font-bold";
-        } else if(tabName === 'wallet') {
-          document.getElementById('profileSectionWallet').classList.remove('hidden');
-          document.getElementById('profTabWallet').className = "flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs font-bold";
         }
       }
 
@@ -710,52 +735,45 @@
         const storyText = document.getElementById('chaupalStoryText');
 
         if(state === 'rajasthan') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          logoBg.className = "w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-amber-700";
           chaupalCard.className = "bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Veer Tejaji Story - Rooparam Ji (Rajasthan)";
           storyText.innerText = "\"When the first rain falls on the desert sand, the fragrance that rises is our true culture...\"";
         } else if(state === 'punjab') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-emerald-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          logoBg.className = "w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-emerald-700";
           chaupalCard.className = "bg-emerald-50 p-6 rounded-3xl border border-emerald-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-emerald-200 text-emerald-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Heera-Ranjha Tale - Gurdeep Singh (Punjab)";
           storyText.innerText = "\"When the breeze blows through the mustard fields, the soul feels joyful...\"";
         } else if(state === 'maharashtra') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          logoBg.className = "w-9 h-9 rounded-xl bg-orange-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-orange-700";
           chaupalCard.className = "bg-orange-50 p-6 rounded-3xl border border-orange-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-orange-200 text-orange-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Shivaji Maharaj Ballads - Tatyasaheb (Maharashtra)";
           storyText.innerText = "\"The refreshing winds blowing through the Sahyadri mountains and historic tales...\"";
         } else if(state === 'uttar-pradesh') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-yellow-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          logoBg.className = "w-9 h-9 rounded-xl bg-yellow-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-yellow-700";
           chaupalCard.className = "bg-yellow-50 p-6 rounded-3xl border border-yellow-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-yellow-200 text-yellow-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Braj Melodies and Tales - Pandit Ramdin (UP)";
           storyText.innerText = "\"The sands of Yamuna bank and stories of Gokul lanes...\"";
         } else if(state === 'bihar') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-red-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          logoBg.className = "w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-red-700";
           chaupalCard.className = "bg-red-50 p-6 rounded-3xl border border-red-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-red-200 text-red-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Bhojpuri Folk Tale - Bhikhari Thakur Saga (Bihar)";
           storyText.innerText = "\"The pure earthy fragrance of villages along the banks of Mother Ganga...\"";
-        } else if(state === 'kerala' || state === 'tamil-nadu' || state === 'south') {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-teal-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+        } else {
+          logoBg.className = "w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
           brandColor.className = "text-teal-700";
           chaupalCard.className = "bg-teal-50 p-6 rounded-3xl border border-teal-300 space-y-3 shadow-sm";
           chaupalBadge.className = "bg-teal-200 text-teal-950 text-xs font-extrabold px-3 py-1 rounded-full";
-          storyTitle.innerText = "Kerala & South Heritage Tales - Raman Nair (South)";
-          storyText.innerText = "\"Coconut groves and the soothing rhythm of monsoon rains on banana leaves...\"";
-        } else {
-          logoBg.className = "w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-md";
-          brandColor.className = "text-indigo-700";
-          chaupalCard.className = "bg-indigo-50 p-6 rounded-3xl border border-indigo-300 space-y-3 shadow-sm";
-          chaupalBadge.className = "bg-indigo-200 text-indigo-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Incredible India Rural Heritage Saga";
           storyText.innerText = "\"Every village in India has its own unique story and culture...\"";
         }
@@ -766,9 +784,9 @@
         document.getElementById('tab-' + tabId).classList.remove('hidden');
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
-          btn.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold";
+          btn.className = "tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all";
         });
-        event.currentTarget.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs";
+        event.currentTarget.className = "tab-btn px-3 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all";
       }
 
       function switchPayTab(type) {
@@ -815,7 +833,7 @@
 
       function processSuccessfulPayment() {
         closeModal('paymentModal');
-        showSuccessBanner("Escrow Payment Secured! 🛡️", `Funds locked safely for "${currentBookingItem}". Commission retained, payout pending guest return.`);
+        showSuccessBanner("Escrow Payment Secured!", `Funds locked safely for "${currentBookingItem}".`);
 
         const bookingsList = document.getElementById('myBookingsList');
         const newBooking = document.createElement('div');
@@ -824,28 +842,28 @@
           <div class="flex justify-between items-center">
             <div>
               <p class="font-bold text-slate-900">${currentBookingItem} (₹${currentAmount})</p>
-              <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured 🔒 (Guest Traveling)</p>
+              <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured (Guest Traveling)</p>
             </div>
-            <button onclick="releaseEscrowPayout(this, 'Host', '${currentHostPhone}', '${currentHostBank}', '${currentBookingItem}', ${currentAmount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">💵 Release Payout</button>
+            <button onclick="releaseEscrowPayout(this, 'Host', '${currentHostPhone}', '${currentHostBank}', '${currentBookingItem}', ${currentAmount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">Release Payout</button>
           </div>
         `;
         bookingsList.prepend(newBooking);
 
-        let waText = encodeURIComponent(`Hello Host, a new booking has been confirmed on Village Deko! Item: ${currentBookingItem}, Amount: ₹${currentAmount}. Payment is secured in Admin Escrow and will be released to your bank (${currentHostBank}) after guest return.`);
+        let waText = encodeURIComponent(`Hello Host, a new booking has been confirmed on Village Deko! Item: ${currentBookingItem}, Amount: ₹${currentAmount}.`);
         window.open(`https://wa.me/${currentHostPhone}?text=${waText}`, '_blank');
       }
 
       function releaseEscrowPayout(btn, hostName, hostPhone, hostBankDetails, itemName, amount) {
-        if(confirm(`Has the guest completed the trip and returned? Transfer payout to host (${hostName}) bank/UPI (${hostBankDetails}) after deducting your platform commission?`)) {
+        if(confirm(`Transfer payout to host (${hostName}) bank/UPI (${hostBankDetails})?`)) {
           btn.closest('div.booking-item').innerHTML = `
             <div>
               <p class="font-bold text-slate-900">${itemName} (₹${amount})</p>
-              <p class="text-[10px] text-emerald-700 font-bold">Payout Released Successfully to Host Bank ✅ (Commission Retained)</p>
+              <p class="text-[10px] text-emerald-700 font-bold">Payout Released Successfully to Host Bank</p>
             </div>
           `;
-          showSuccessBanner("Payout Released Successfully! 💸", `Commission kept in your account, remaining funds transferred to host ${hostName} (${hostBankDetails}).`);
+          showSuccessBanner("Payout Released Successfully!", `Funds transferred to host ${hostName}.`);
 
-          let payoutWaText = encodeURIComponent(`Hello ${hostName}, your payout for "${itemName}" has been successfully transferred to your bank details (${hostBankDetails})! Thank you for hosting with Village Deko.`);
+          let payoutWaText = encodeURIComponent(`Hello ${hostName}, your payout for "${itemName}" has been successfully transferred to your bank!`);
           window.open(`https://wa.me/${hostPhone}?text=${payoutWaText}`, '_blank');
         }
       }
@@ -864,7 +882,7 @@
         const div = document.createElement('div');
         div.className = "flex gap-2 items-center";
         div.innerHTML = `
-          <input type="text" placeholder="e.g., Harvesting wheat or folk songs" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white font-medium" required>
+          <input type="text" placeholder="e.g., Harvesting wheat" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white font-medium" required>
           <button type="button" onclick="this.parentElement.remove()" class="bg-red-600 text-white px-2.5 py-1.5 rounded-xl text-xs font-extrabold">✕</button>
         `;
         container.appendChild(div);
@@ -876,8 +894,8 @@
         document.getElementById('modalDesc').innerText = desc;
         document.getElementById('modalStationBox').innerHTML = `🚆 <b>Nearest Station:</b> ${station}`;
         
-        document.getElementById('modalPkgTitle').innerText = pkgTitle || "Authentic Village Stay & Experience";
-        document.getElementById('modalPkgDesc').innerText = pkgDesc || "Enjoy mud house stay, farm tour, and organic meals.";
+        document.getElementById('modalPkgTitle').innerText = pkgTitle || "Authentic Village Stay";
+        document.getElementById('modalPkgDesc').innerText = pkgDesc || "Enjoy mud house stay and farm tour.";
         let priceNum = Number(pkgPrice) || 1999;
         document.getElementById('modalPkgPrice').innerText = "₹" + priceNum.toLocaleString('en-IN') + " per person";
 
@@ -887,14 +905,14 @@
         if(pehnawaImg && pehnawaImg.startsWith('data:image')) {
           pehnawaBox.innerHTML = `<img src="${pehnawaImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
         } else {
-          pehnawaBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>`;
+          pehnawaBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Available</p>`;
         }
 
         let foodBox = document.getElementById('modalFoodContainer');
         if(foodImg && foodImg.startsWith('data:image')) {
           foodBox.innerHTML = `<img src="${foodImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
         } else {
-          foodBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Organic Desi Kitchen</p>`;
+          foodBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Kitchen Active</p>`;
         }
 
         let actContainer = document.getElementById('modalActivitiesList');
@@ -903,7 +921,6 @@
           actContainer.innerHTML += `<span class="bg-amber-100 text-amber-950 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-amber-200">✨ ${act}</span>`;
         });
 
-        // Gallery Photos Grid in Modal
         let galleryGrid = document.getElementById('modalGalleryGrid');
         galleryGrid.innerHTML = '';
         if(galleryPhotosArr && galleryPhotosArr.length > 0) {
@@ -990,7 +1007,7 @@
         closeModal('listModal');
         document.getElementById('listVillageForm').reset();
         loadLiveGalleries();
-        showSuccessBanner("Village & Galleries Listed Successfully! 🌾", `"${title}" is now live with stay, pehnawa, food and gallery photos.`);
+        showSuccessBanner("Village Listed Successfully!", `"${title}" is now live.`);
       }
 
       async function deleteVillageListing(docId, elementCard) {
@@ -1009,10 +1026,10 @@
       function handleLogout() {
         if(confirm("Are you sure you want to log out?")) {
           window.signOut(window.auth).then(() => {
-            showSuccessBanner("Logged Out", "Successfully signed out of session.");
+            showSuccessBanner("Logged Out", "Successfully signed out.");
             closeModal('profileModal');
           }).catch(() => {
-            showSuccessBanner("Logged Out", "Successfully signed out of session.");
+            showSuccessBanner("Logged Out", "Successfully signed out.");
             closeModal('profileModal');
           });
         }
@@ -1055,7 +1072,7 @@
                 <div class="h-44 bg-gradient-to-tr from-amber-200 to-orange-100 relative flex items-center justify-center text-3xl overflow-hidden">
                   ${coverImg}
                   <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">📍 ${locFormat}</span>
-                  <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">🗑️ Delete</button>
+                  <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">Delete</button>
                 </div>
                 <div class="p-4 space-y-2">
                   <div class="flex justify-between items-center">
@@ -1070,13 +1087,12 @@
                 </div>
               </div>
               <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-100 mt-2">
-                <span class="text-[11px] text-slate-500 font-bold">📸 Host: ${data.hostName}</span>
+                <span class="text-[11px] text-slate-500 font-bold">Host: ${data.hostName}</span>
                 <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', '${pkgTitle}', '${pkgDesc}', '${pkgPrice}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto || ""}', '${data.foodPhoto || ""}', ${JSON.stringify(galleryPhotos).replace(/"/g, '&quot;')}, '${data.phone}', '${hostBank}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Stay & Packages →</button>
               </div>
             `;
             container.prepend(cardDiv);
           });
-          document.getElementById('totalListingsCount').innerText = count + " Live";
         } catch(err) { console.log("DB load notice"); }
       }
 
@@ -1086,12 +1102,12 @@
         const pass = document.getElementById('authPassword').value;
         try {
           await window.signInWithEmailAndPassword(window.auth, email, pass);
-          showSuccessBanner("Logged In Successfully!", "Welcome back to your dashboard.");
+          showSuccessBanner("Logged In Successfully!", "Welcome back.");
           closeModal('authModal');
         } catch(err) {
           try {
             await window.createUserWithEmailAndPassword(window.auth, email, pass);
-            showSuccessBanner("Account Created!", "You are now successfully logged in.");
+            showSuccessBanner("Account Created!", "You are now logged in.");
             closeModal('authModal');
           } catch(err2) { alert("Error: " + err2.message); }
         }
