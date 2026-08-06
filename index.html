@@ -58,7 +58,7 @@
     <style>
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #f8fafc;
+        background-color: #f1f5f9;
         transition: background-color 0.4s ease;
       }
       .modal {
@@ -70,54 +70,54 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(15, 23, 42, 0.6);
+        background-color: rgba(15, 23, 42, 0.7);
         backdrop-filter: blur(4px);
       }
       .modal-content {
-        background-color: #fff;
+        background-color: #ffffff;
         margin: 5% auto;
         padding: 24px;
         border-radius: 24px;
         max-width: 650px;
         width: 92%;
         position: relative;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15);
         max-height: 88vh;
         overflow-y: auto;
       }
       .custom-shadow {
-        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
       }
     </style>
 </head>
-<body id="appBody" class="text-slate-800 antialiased pb-20">
+<body id="appBody" class="text-slate-900 antialiased pb-24">
 
-    <!-- Top State-Adaptive Header -->
-    <header id="appHeader" class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs transition-all duration-300">
-      <div class="max-w-4xl mx-auto px-4 pt-3 pb-2">
+    <!-- Top State-Adaptive Header (Bright & Clear Contrast) -->
+    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all duration-300">
+      <div class="max-w-4xl mx-auto px-4 pt-3 pb-2.5">
         <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <div id="headerLogoBg" class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-black text-lg shadow-sm">
+          <div class="flex items-center gap-2.5">
+            <div id="headerLogoBg" class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-md">
               🌾
             </div>
-            <h1 class="text-lg font-extrabold tracking-tight text-slate-900">
-              <span id="brandTitleColor" class="text-amber-600">Village</span>Deko <span class="text-[10px] font-semibold px-2 py-0.5 bg-amber-50 text-amber-800 rounded-full">गांव देखो</span>
+            <h1 class="text-xl font-extrabold tracking-tight text-slate-900">
+              <span id="brandTitleColor" class="text-amber-700">Village</span>Deko <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded-full">गांव देखो</span>
             </h1>
           </div>
           <div class="flex gap-2">
-            <button onclick="openModal('listModal')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-sm">
+            <button onclick="openModal('listModal')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-sm">
               + List Gaon
             </button>
-            <button onclick="openModal('packageModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-sm">
+            <button onclick="openModal('packageModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-sm">
               + Make Package
             </button>
           </div>
         </div>
 
-        <!-- All India State Selector Bar (Changes Dynamic Theme) -->
-        <div class="mb-2.5 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          <span class="text-[11px] font-bold text-slate-500 whitespace-nowrap">Select State (All India):</span>
-          <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-100 border border-slate-200 font-bold px-3 py-1.5 rounded-xl text-slate-800 focus:outline-none">
+        <!-- All India State Selector Bar -->
+        <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <span class="text-[11px] font-bold text-slate-700 whitespace-nowrap">State Theme:</span>
+          <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-100 border border-slate-300 font-bold px-3 py-2 rounded-xl text-slate-900 focus:outline-none">
             <optgroup label="Popular Regions">
               <option value="rajasthan">🏜️ Rajasthan</option>
               <option value="punjab">🌾 Punjab</option>
@@ -143,7 +143,6 @@
               <option value="mizoram">Mizoram</option>
               <option value="nagaland">Nagaland</option>
               <option value="odisha">Odisha</option>
-              <option value="rajasthan">Rajasthan</option>
               <option value="sikkim">Sikkim</option>
               <option value="tamil-nadu">Tamil Nadu</option>
               <option value="telangana">Telangana</option>
@@ -160,23 +159,23 @@
           </select>
         </div>
 
-        <!-- Category Icons Bar -->
-        <div class="flex items-center justify-between gap-2 overflow-x-auto pb-2 scrollbar-none text-center">
-          <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[70px] p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 transition-all">
-            <span class="text-xl mb-1">🏡</span>
-            <span class="text-[11px] font-bold">Villages</span>
+        <!-- Category Icons Bar (Bright & Clear) -->
+        <div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none text-center">
+          <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs">
+            <span class="text-2xl mb-1">🏡</span>
+            <span class="text-[11px]">Villages</span>
           </button>
-          <button onclick="switchTab('packages')" class="tab-btn flex flex-col items-center min-w-[70px] p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-100 transition-all">
-            <span class="text-xl mb-1">⏳</span>
-            <span class="text-[11px] font-bold">Packages</span>
+          <button onclick="switchTab('packages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
+            <span class="text-2xl mb-1">⏳</span>
+            <span class="text-[11px]">Packages</span>
           </button>
-          <button onclick="switchTab('weddings')" class="tab-btn flex flex-col items-center min-w-[70px] p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-100 transition-all">
-            <span class="text-xl mb-1">💍</span>
-            <span class="text-[11px] font-bold">Weddings</span>
+          <button onclick="switchTab('weddings')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
+            <span class="text-2xl mb-1">💍</span>
+            <span class="text-[11px]">Weddings</span>
           </button>
-          <button onclick="switchTab('chaupal')" class="tab-btn flex flex-col items-center min-w-[70px] p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-100 transition-all">
-            <span class="text-xl mb-1">🔥</span>
-            <span class="text-[11px] font-bold">Chaupal</span>
+          <button onclick="switchTab('chaupal')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
+            <span class="text-2xl mb-1">🔥</span>
+            <span class="text-[11px]">Chaupal</span>
           </button>
         </div>
       </div>
@@ -185,35 +184,36 @@
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto p-4 space-y-4">
       
-      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 custom-shadow space-y-3">
-        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100">
-          <span class="text-xl">📍</span>
+      <!-- Search & Highlights Bar -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 custom-shadow space-y-3">
+        <div class="flex items-center gap-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+          <span class="text-2xl">📍</span>
           <div class="w-full">
-            <p class="text-[10px] uppercase font-bold text-slate-400">Search Destination</p>
-            <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-sm font-bold text-slate-800 focus:outline-none">
+            <p class="text-[10px] uppercase font-extrabold text-slate-500">Search Destination</p>
+            <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none">
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-          <div class="p-3 bg-amber-50/60 rounded-2xl border border-amber-100 text-center">
-            <span class="text-lg">🚂</span>
-            <p class="text-[11px] font-bold text-slate-700 mt-1">Nearest Station</p>
-            <p class="text-[9px] text-slate-500">View access info</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+          <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 text-center shadow-xs">
+            <span class="text-2xl">🚂</span>
+            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Nearest Station</p>
+            <p class="text-[10px] text-slate-600 font-medium">View access info</p>
           </div>
-          <div class="p-3 bg-emerald-50/60 rounded-2xl border border-emerald-100 text-center">
-            <span class="text-lg">🌾</span>
-            <p class="text-[11px] font-bold text-slate-700 mt-1">Asli Khet</p>
-            <p class="text-[9px] text-slate-500">Live farming view</p>
+          <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-center shadow-xs">
+            <span class="text-2xl">🌾</span>
+            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Asli Khet</p>
+            <p class="text-[10px] text-slate-600 font-medium">Live farming view</p>
           </div>
-          <div class="p-3 bg-blue-50/60 rounded-2xl border border-blue-100 text-center">
-            <span class="text-lg">👗</span>
-            <p class="text-[11px] font-bold text-slate-700 mt-1">Pehnawa</p>
-            <p class="text-[9px] text-slate-500">Traditional attire</p>
+          <div class="p-3.5 bg-blue-50 rounded-2xl border border-blue-200 text-center shadow-xs">
+            <span class="text-2xl">👗</span>
+            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Pehnawa</p>
+            <p class="text-[10px] text-slate-600 font-medium">Traditional attire</p>
           </div>
-          <div class="p-3 bg-orange-50/60 rounded-2xl border border-orange-100 text-center">
-            <span class="text-lg">🍲</span>
-            <p class="text-[11px] font-bold text-slate-700 mt-1">Chulha Food</p>
-            <p class="text-[9px] text-slate-500">Desi rasoi</p>
+          <div class="p-3.5 bg-orange-50 rounded-2xl border border-orange-200 text-center shadow-xs">
+            <span class="text-2xl">🍲</span>
+            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Chulha Food</p>
+            <p class="text-[10px] text-slate-600 font-medium">Desi rasoi</p>
           </div>
         </div>
       </div>
@@ -222,36 +222,43 @@
       <div id="tab-villages" class="tab-content space-y-4">
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-base">Gaon ki Duniya & Galleries</h3>
-          <span class="text-xs text-amber-600 font-bold">All India Live Listings</span>
+          <span class="text-xs text-amber-700 font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">All India Live Listings</span>
         </div>
 
         <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Dynamic listings load here automatically -->
+          <!-- Dynamic listings load here -->
         </div>
       </div>
 
-      <!-- TAB 2: PACKAGES (Custom User Packages) -->
+      <!-- TAB 2: PACKAGES (Custom User Packages with Budget Sorting Filter) -->
       <div id="tab-packages" class="tab-content space-y-4 hidden">
-        <div class="flex justify-between items-center px-1">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 px-1 bg-white p-4 rounded-2xl border border-slate-200">
           <div>
             <h3 class="font-extrabold text-slate-900 text-base">Custom Village Cultural Packages</h3>
-            <p class="text-xs text-slate-500">Created by hosts and travelers (2 Days, 4 Days, 7 Days, 15 Days+)</p>
+            <p class="text-xs text-slate-600 font-medium">Created by hosts and travelers</p>
           </div>
-          <button onclick="openModal('packageModal')" class="bg-amber-600 text-white text-xs font-bold px-3 py-2 rounded-xl">+ Create</button>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <select id="budgetFilter" onchange="sortPackagesByBudget()" class="text-xs bg-slate-100 border border-slate-300 font-bold px-3 py-2 rounded-xl text-slate-900 focus:outline-none">
+              <option value="default">💰 Sort by Budget</option>
+              <option value="low-high">Low to High (₹)</option>
+              <option value="high-low">High to Low (₹)</option>
+            </select>
+            <button onclick="openModal('packageModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs whitespace-nowrap">+ Create</button>
+          </div>
         </div>
 
         <div id="dynamicPackagesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Dynamic custom packages load here automatically -->
+          <!-- Dynamic custom packages load here -->
         </div>
       </div>
 
       <!-- TAB 3: VILLAGE WEDDING EXPERIENCE (Darshan & Direct Booking) -->
       <div id="tab-weddings" class="tab-content space-y-4 hidden">
-        <div class="bg-gradient-to-br from-pink-500 to-rose-600 text-white p-6 rounded-3xl shadow-lg space-y-3">
-          <span class="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full">💍 Special Experience</span>
-          <h3 class="text-xl font-extrabold">Village Wedding (Gaon ki Shadi) Darshan & Join</h3>
-          <p class="text-xs text-pink-100 leading-relaxed">Experience authentic rural wedding celebrations: folk singing (Banna-Banni geet), traditional attire, community feast (Panti Bhojan), and vibrant cultural rituals across India.</p>
-          <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20join%20or%20view%20a%20Village%20Wedding." target="_blank" class="inline-block bg-white text-rose-900 font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md">
+        <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
+          <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
+          <h3 class="text-2xl font-extrabold">Village Wedding (Gaon ki Shadi) Darshan & Join</h3>
+          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience authentic rural wedding celebrations: folk singing (Banna-Banni geet), traditional attire, community feast (Panti Bhojan), and vibrant cultural rituals across India.</p>
+          <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20join%20or%20view%20a%20Village%20Wedding." target="_blank" class="inline-block bg-white text-rose-950 font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md">
             💬 Inquire to Join Wedding on WhatsApp
           </a>
         </div>
@@ -259,45 +266,45 @@
 
       <!-- TAB 4: CHAUPAL (Regional Stories with Theme) -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-200/60 space-y-3 transition-all duration-300">
-          <span id="chaupalBadge" class="bg-amber-200 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">Oral Heritage</span>
+        <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 transition-all duration-300 shadow-sm">
+          <span id="chaupalBadge" class="bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full">Oral Heritage</span>
           <h3 class="text-xl font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
-          <p class="text-xs text-slate-600">Purane buzurgon ki zubaani kisse, lok-kathaen aur gaon ka itihas har state ke anusaar.</p>
-          <div class="bg-white p-4 rounded-2xl border border-amber-100 text-xs space-y-1">
-            <p id="chaupalStoryTitle" class="font-bold text-slate-900">Veer Tejaji ki Katha - Rooparam Ji (Rajasthan)</p>
-            <p id="chaupalStoryText" class="text-slate-500">"Ret ki mitti mein jab pehli baarish padti hai, toh jo saugandh uthti hai, wahi hamari sanskriti hai..."</p>
+          <p class="text-xs text-slate-700 font-medium">Purane buzurgon ki zubaani kisse, lok-kathaen aur gaon ka itihas har state ke anusaار.</p>
+          <div class="bg-white p-4 rounded-2xl border border-amber-200 text-xs space-y-1.5 shadow-xs">
+            <p id="chaupalStoryTitle" class="font-bold text-slate-900 text-sm">Veer Tejaji ki Katha - Rooparam Ji (Rajasthan)</p>
+            <p id="chaupalStoryText" class="text-slate-600 font-medium">"Ret ki mitti mein jab pehli baarish padti hai, toh jo saugandh uthti hai, wahi hamari sanskriti hai..."</p>
           </div>
         </div>
       </div>
     </main>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2.5 px-6 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-xl">
-      <button onclick="switchTab('villages')" class="flex flex-col items-center text-amber-600">
-        <span class="text-lg">🏡</span>
-        <span class="text-[10px] font-bold">Home</span>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-6 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
+      <button onclick="switchTab('villages')" class="flex flex-col items-center text-amber-700 font-bold">
+        <span class="text-xl">🏡</span>
+        <span class="text-[10px]">Home</span>
       </button>
-      <button onclick="openModal('listModal')" class="flex flex-col items-center text-slate-500 hover:text-amber-600">
-        <span class="text-lg">➕</span>
-        <span class="text-[10px] font-bold">List Gaon</span>
+      <button onclick="openModal('listModal')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+        <span class="text-xl">➕</span>
+        <span class="text-[10px]">List Gaon</span>
       </button>
-      <button onclick="switchTab('packages')" class="flex flex-col items-center text-slate-500 hover:text-amber-600">
-        <span class="text-lg">⏳</span>
-        <span class="text-[10px] font-bold">Packages</span>
+      <button onclick="switchTab('packages')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+        <span class="text-xl">⏳</span>
+        <span class="text-[10px]">Packages</span>
       </button>
-      <button onclick="switchTab('weddings')" class="flex flex-col items-center text-slate-500 hover:text-amber-600">
-        <span class="text-lg">💍</span>
-        <span class="text-[10px] font-bold">Weddings</span>
+      <button onclick="switchTab('weddings')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+        <span class="text-xl">💍</span>
+        <span class="text-[10px]">Weddings</span>
       </button>
-      <button onclick="openModal('profileModal')" class="flex flex-col items-center text-slate-500 hover:text-amber-600">
-        <span class="text-lg">👤</span>
-        <span class="text-[10px] font-bold">Profile</span>
+      <button onclick="openModal('profileModal')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+        <span class="text-xl">👤</span>
+        <span class="text-[10px]">Profile</span>
       </button>
     </nav>
 
     <!-- MODALS -->
 
-    <!-- 1. List Village Form Modal with All States Dropdown -->
+    <!-- 1. List Village Form Modal (Format: Village -> District -> State) -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
@@ -305,31 +312,31 @@
           <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
         
-        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3 text-sm">
+        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3.5 text-sm">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Host Name</label>
-              <input type="text" id="listHostName" placeholder="Ramesh Patel" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host Name</label>
+              <input type="text" id="listHostName" placeholder="Ramesh Patel" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Phone / WhatsApp</label>
-              <input type="tel" id="listPhone" placeholder="+91 98765 43210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-slate-300 text-xs mb-1">Phone / WhatsApp</label>
+              <input type="tel" id="listPhone" placeholder="+91 98765 43210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
           </div>
 
-          <!-- Sequence: Village -> District -> State Dropdown (All India) -->
+          <!-- Format Sequence: Village -> District -> State -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Gaon ka Naam (Village)</label>
-              <input type="text" id="listVillageName" placeholder="Rohat" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-amber-400 text-xs mb-1">Gaon (Village)</label>
+              <input type="text" id="listVillageName" placeholder="Rohat" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Jile ka Naam (District)</label>
-              <input type="text" id="listDistrict" placeholder="Pali" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-amber-400 text-xs mb-1">Jila (District)</label>
+              <input type="text" id="listDistrict" placeholder="Pali" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">State ka Naam</label>
-              <select id="listState" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-amber-400 text-xs mb-1">State</label>
+              <select id="listState" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
                 <option value="Rajasthan">Rajasthan</option>
                 <option value="Punjab">Punjab</option>
                 <option value="Maharashtra">Maharashtra</option>
@@ -358,7 +365,7 @@
                 <option value="Tripura">Tripura</option>
                 <option value="Uttarakhand">Uttarakhand</option>
                 <option value="West Bengal">West Bengal</option>
-                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jammu and Kashmir">Jammu & Kashmir</option>
                 <option value="Ladakh">Ladakh</option>
                 <option value="Delhi NCR">Delhi NCR</option>
               </select>
@@ -366,20 +373,20 @@
           </div>
 
           <div>
-            <label class="block font-semibold text-slate-300 text-xs mb-1">Nearest Railway Station / Bus Stand</label>
-            <input type="text" id="listStation" placeholder="Pali Marwar Junction (25 km)" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+            <label class="block font-bold text-slate-300 text-xs mb-1">Nearest Railway Station / Bus Stand</label>
+            <input type="text" id="listStation" placeholder="Pali Marwar Junction (25 km)" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
           </div>
 
           <div>
-            <label class="block font-semibold text-slate-300 text-xs mb-1">Gaon ki Sanskriti aur Description</label>
-            <textarea id="listDesc" rows="2" placeholder="Yahan log kaise rehte hain..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs"></textarea>
+            <label class="block font-bold text-slate-300 text-xs mb-1">Gaon ki Sanskriti aur Description</label>
+            <textarea id="listDesc" rows="2" placeholder="Yahan log kaise rehte hain..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
 
           <!-- Dynamic Activities Section -->
-          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 space-y-2">
+          <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
             <div class="flex justify-between items-center">
-              <label class="block font-semibold text-amber-400 text-xs">Gaon ki Activities (Add More)</label>
-              <button type="button" onclick="addActivityField()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-bold px-2.5 py-1 rounded-lg">+ Add Activity</button>
+              <label class="block font-bold text-amber-400 text-xs">Gaon ki Activities (Add More)</label>
+              <button type="button" onclick="addActivityField()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-lg">+ Add Activity</button>
             </div>
             <div id="activitiesContainer" class="space-y-2">
               <div class="flex gap-2">
@@ -389,14 +396,14 @@
           </div>
 
           <!-- Category-wise Photo Uploads -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-800 p-3.5 rounded-xl border border-slate-700">
             <div>
-              <label class="block font-semibold text-amber-400 text-xs mb-1">👗 Pehnawa Details / Photo</label>
-              <input type="text" id="listPehnawaPhoto" placeholder="e.g. Traditional Safa & Ghagra" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
+              <label class="block font-bold text-amber-400 text-xs mb-1">👗 Pehnawa Details / Photo</label>
+              <input type="text" id="listPehnawaPhoto" placeholder="Traditional Safa & Ghagra" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
             </div>
             <div>
-              <label class="block font-semibold text-amber-400 text-xs mb-1">🍲 Chulha Food Details / Photo</label>
-              <input type="text" id="listFoodPhoto" placeholder="e.g. Bajre ki Roti & Dal Baati" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
+              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Chulha Food Details / Photo</label>
+              <input type="text" id="listFoodPhoto" placeholder="Bajre ki Roti & Dal Baati" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
             </div>
           </div>
 
@@ -413,26 +420,26 @@
           <button onclick="closeModal('packageModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
         
-        <form id="customPackageForm" onsubmit="handleCustomPackage(event)" class="space-y-3 text-sm">
+        <form id="customPackageForm" onsubmit="handleCustomPackage(event)" class="space-y-3.5 text-sm">
           <div>
-            <label class="block font-semibold text-slate-300 text-xs mb-1">Package Title</label>
-            <input type="text" id="pkgTitle" placeholder="e.g. 4 Days Heritage & Farming Experience" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+            <label class="block font-bold text-slate-300 text-xs mb-1">Package Title</label>
+            <input type="text" id="pkgTitle" placeholder="e.g. 4 Days Heritage & Farming Experience" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Duration (e.g. 2 Days, 7 Days, 15 Days)</label>
-              <input type="text" id="pkgDuration" placeholder="4 Days" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-slate-300 text-xs mb-1">Duration (e.g. 2 Days, 7 Days)</label>
+              <input type="text" id="pkgDuration" placeholder="4 Days" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 text-xs mb-1">Price per Person (INR)</label>
-              <input type="text" id="pkgPrice" placeholder="₹4,999" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs">
+              <label class="block font-bold text-slate-300 text-xs mb-1">Price per Person (INR)</label>
+              <input type="number" id="pkgPriceNum" placeholder="4999" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
           </div>
 
           <div>
-            <label class="block font-semibold text-slate-300 text-xs mb-1">Package Description & Highlights</label>
-            <textarea id="pkgDesc" rows="3" placeholder="What is included in this package..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs"></textarea>
+            <label class="block font-bold text-slate-300 text-xs mb-1">Package Description & Highlights</label>
+            <textarea id="pkgDesc" rows="3" placeholder="What is included in this package..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
 
           <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Package Live</button>
@@ -445,34 +452,34 @@
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
           <div>
-            <span id="modalLocation" class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Location</span>
+            <span id="modalLocation" class="text-[11px] font-extrabold bg-amber-100 text-amber-950 px-2.5 py-1 rounded-md">Location</span>
             <h3 id="modalTitle" class="text-lg font-extrabold text-slate-900 mt-1">Village Name</h3>
           </div>
           <button onclick="closeModal('villageDetailModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
-        <div class="space-y-3 text-xs">
-          <p id="modalDesc" class="text-slate-600 leading-relaxed"></p>
-          <div id="modalStationBox" class="p-2.5 bg-amber-50 rounded-xl text-amber-900 font-medium"></div>
+        <div class="space-y-3.5 text-xs">
+          <p id="modalDesc" class="text-slate-700 leading-relaxed font-medium"></p>
+          <div id="modalStationBox" class="p-3 bg-amber-50 rounded-xl text-amber-950 font-bold border border-amber-200"></div>
           <div>
-            <p class="font-bold text-slate-800 mb-1">🎯 Gaon ki Special Activities:</p>
+            <p class="font-extrabold text-slate-900 mb-1.5">🎯 Gaon ki Special Activities:</p>
             <div id="modalActivitiesList" class="flex flex-wrap gap-1.5"></div>
           </div>
-          <div class="grid grid-cols-2 gap-2 pt-2">
-            <div class="bg-slate-50 p-3 rounded-xl text-center border">
-              <p class="font-bold text-slate-700 mb-1">👗 Pehnawa</p>
-              <p id="modalPehnawaTxt" class="text-[11px] text-slate-500">Traditional Attire Available</p>
+          <div class="grid grid-cols-2 gap-2.5 pt-1">
+            <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
+              <p class="font-extrabold text-slate-900 mb-1">👗 Pehnawa</p>
+              <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>
             </div>
-            <div class="bg-slate-50 p-3 rounded-xl text-center border">
-              <p class="font-bold text-slate-700 mb-1">🍲 Chulha Food</p>
-              <p id="modalFoodTxt" class="text-[11px] text-slate-500">Organic Desi Rasoi</p>
+            <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
+              <p class="font-extrabold text-slate-900 mb-1">🍲 Chulha Food</p>
+              <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Organic Desi Rasoi</p>
             </div>
           </div>
-          <a id="modalWhatsapp" href="#" target="_blank" class="block text-center bg-emerald-600 text-white font-bold py-2.5 rounded-xl mt-2">💬 Inquire / Visit on WhatsApp</a>
+          <a id="modalWhatsapp" href="#" target="_blank" class="block text-center bg-emerald-600 text-white font-extrabold py-3 rounded-xl mt-3 shadow-sm">💬 Inquire / Visit on WhatsApp</a>
         </div>
       </div>
     </div>
 
-    <!-- 4. Profile Modal (With My Bookings, Cancel Booking & Privacy Settings) -->
+    <!-- 4. Profile Modal (With Bookings, Cancel, Account Settings & Logout) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -480,40 +487,43 @@
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
         <div class="space-y-4 text-xs">
-          <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200">
-            <p class="font-bold text-slate-900 text-sm" id="profileUserName">Traveler Jagdish</p>
-            <p class="text-slate-500 text-[11px]" id="profileUserEmail">jagdish@example.com</p>
-            <p class="text-amber-700 font-bold text-[10px] mt-1">Role: Admin & Cultural Host</p>
+          <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 shadow-xs">
+            <p class="font-extrabold text-slate-900 text-sm" id="profileUserName">Traveler Jagdish</p>
+            <p class="text-slate-600 text-[11px] font-medium" id="profileUserEmail">jagdish@example.com</p>
+            <p class="text-amber-800 font-extrabold text-[10px] mt-1">Role: Admin & Cultural Host</p>
           </div>
 
           <!-- My Bookings Section -->
           <div class="space-y-2">
             <h4 class="font-extrabold text-slate-900 text-xs">📦 My Bookings & Trips</h4>
             <div id="myBookingsList" class="space-y-2 max-h-36 overflow-y-auto">
-              <div class="p-2.5 bg-slate-50 border rounded-xl flex justify-between items-center">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center shadow-xs">
                 <div>
-                  <p class="font-bold text-slate-800">2 Days Quick Escape (Rohat)</p>
-                  <p class="text-[10px] text-slate-500">Status: Confirmed</p>
+                  <p class="font-bold text-slate-900">2 Days Quick Escape (Rohat)</p>
+                  <p class="text-[10px] text-slate-600 font-medium">Status: Confirmed</p>
                 </div>
-                <button onclick="cancelBooking(this)" class="bg-red-50 text-red-600 hover:bg-red-100 font-bold px-2.5 py-1 rounded-lg text-[10px]">Cancel</button>
+                <button onclick="cancelBooking(this)" class="bg-red-50 text-red-700 hover:bg-red-100 font-bold px-2.5 py-1.5 rounded-lg text-[10px] border border-red-200">Cancel</button>
               </div>
             </div>
           </div>
 
-          <!-- Privacy & Security Settings -->
+          <!-- Account Settings & Privacy -->
           <div class="space-y-2 pt-2 border-t">
-            <h4 class="font-extrabold text-slate-900 text-xs">🔒 Privacy & Security</h4>
-            <div class="space-y-1.5 text-slate-600">
+            <h4 class="font-extrabold text-slate-900 text-xs">⚙️ Account Settings & Privacy</h4>
+            <div class="space-y-2 text-slate-700 font-medium">
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded text-amber-600"> Hide my phone number from public guest views
+                <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Hide my phone number from public views
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded text-amber-600"> Allow booking notifications via WhatsApp
+                <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Allow booking notifications via WhatsApp
               </label>
             </div>
           </div>
 
-          <button onclick="openModal('authModal'); closeModal('profileModal');" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">Switch Account / Login</button>
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t">
+            <button onclick="openModal('authModal'); closeModal('profileModal');" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl shadow-xs">Switch Account</button>
+            <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl shadow-xs">🚪 Logout</button>
+          </div>
         </div>
       </div>
     </div>
@@ -527,14 +537,14 @@
         </div>
         <form onsubmit="handleAuth(event)" class="space-y-3 text-xs">
           <div>
-            <label class="block font-semibold mb-1">Email</label>
-            <input type="email" id="authEmail" required class="w-full p-2.5 border rounded-xl">
+            <label class="block font-bold mb-1">Email</label>
+            <input type="email" id="authEmail" required class="w-full p-2.5 border border-slate-300 rounded-xl font-medium">
           </div>
           <div>
-            <label class="block font-semibold mb-1">Password</label>
-            <input type="password" id="authPassword" required class="w-full p-2.5 border rounded-xl">
+            <label class="block font-bold mb-1">Password</label>
+            <input type="password" id="authPassword" required class="w-full p-2.5 border border-slate-300 rounded-xl font-medium">
           </div>
-          <button type="submit" class="w-full bg-amber-600 text-white font-bold py-2.5 rounded-xl">Submit</button>
+          <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-2.5 rounded-xl shadow-sm">Submit</button>
         </form>
       </div>
     </div>
@@ -551,52 +561,52 @@
         const storyText = document.getElementById('chaupalStoryText');
 
         if(state === 'rajasthan') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-black text-lg shadow-sm";
-          brandColor.className = "text-amber-600";
-          chaupalCard.className = "bg-amber-50 p-6 rounded-3xl border border-amber-200/60 space-y-3";
-          chaupalBadge.className = "bg-amber-200 text-amber-900 text-xs font-bold px-3 py-1 rounded-full";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          brandColor.className = "text-amber-700";
+          chaupalCard.className = "bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Veer Tejaji ki Katha - Rooparam Ji (Rajasthan)";
           storyText.innerText = "\"Ret ki mitti mein jab pehli baarish padti hai, toh jo saugandh uthti hai, wahi hamari sanskriti hai...\"";
         } else if(state === 'punjab') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-emerald-600 flex items-center justify-center text-white font-black text-xl shadow-md";
           brandColor.className = "text-emerald-700";
-          chaupalCard.className = "bg-emerald-50 p-6 rounded-3xl border border-emerald-200/60 space-y-3";
-          chaupalBadge.className = "bg-emerald-200 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full";
+          chaupalCard.className = "bg-emerald-50 p-6 rounded-3xl border border-emerald-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-emerald-200 text-emerald-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Heera-Ranjha di Vaar - Gurdeep Singh (Punjab)";
           storyText.innerText = "\"Sarson de khet vich jado hawa chaldi hai, taan rooh khid jaandi hai...\"";
         } else if(state === 'maharashtra') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-orange-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-black text-xl shadow-md";
           brandColor.className = "text-orange-700";
-          chaupalCard.className = "bg-orange-50 p-6 rounded-3xl border border-orange-200/60 space-y-3";
-          chaupalBadge.className = "bg-orange-200 text-orange-900 text-xs font-bold px-3 py-1 rounded-full";
+          chaupalCard.className = "bg-orange-50 p-6 rounded-3xl border border-orange-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-orange-200 text-orange-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Shivaji Maharaj che Povada - Tatyasaheb (Maharashtra)";
           storyText.innerText = "\"Sahyadri chya dongratun wahnaari hawa ani mavalache kisse...\"";
         } else if(state === 'uttar-pradesh') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-yellow-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-yellow-600 flex items-center justify-center text-white font-black text-xl shadow-md";
           brandColor.className = "text-yellow-700";
-          chaupalCard.className = "bg-yellow-50 p-6 rounded-3xl border border-yellow-200/60 space-y-3";
-          chaupalBadge.className = "bg-yellow-200 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full";
+          chaupalCard.className = "bg-yellow-50 p-6 rounded-3xl border border-yellow-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-yellow-200 text-yellow-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Braj ke Rasiya aur Kisse - Pandit Ramdin (UP)";
           storyText.innerText = "\"Yamuna kinare ki ret aur gokul ki galiyon ki dastan...\"";
         } else if(state === 'bihar') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-red-600 flex items-center justify-center text-white font-black text-xl shadow-md";
           brandColor.className = "text-red-700";
-          chaupalCard.className = "bg-red-50 p-6 rounded-3xl border border-red-200/60 space-y-3";
-          chaupalBadge.className = "bg-red-200 text-red-900 text-xs font-bold px-3 py-1 rounded-full";
+          chaupalCard.className = "bg-red-50 p-6 rounded-3xl border border-red-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-red-200 text-red-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Bhojpuri Lok Katha - Bhikhari Thakur Gatha (Bihar)";
           storyText.innerText = "\"Ganga maiya ke tir par basne wale gaon ki sachi mitti ki khushboo...\"";
         } else if(state === 'kerala' || state === 'tamil-nadu' || state === 'south') {
-          logoBg.className = "w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-teal-600 flex items-center justify-center text-white font-black text-xl shadow-md";
           brandColor.className = "text-teal-700";
-          chaupalCard.className = "bg-teal-50 p-6 rounded-3xl border border-teal-200/60 space-y-3";
-          chaupalBadge.className = "bg-teal-200 text-teal-900 text-xs font-bold px-3 py-1 rounded-full";
+          chaupalCard.className = "bg-teal-50 p-6 rounded-3xl border border-teal-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-teal-200 text-teal-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Kerala & South Heritage Tales - Raman Nair (South)";
           storyText.innerText = "\"Coconut groves and the soothing rhythm of monsoon rains on banana leaves...\"";
         } else {
-          logoBg.className = "w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-sm";
-          brandColor.className = "text-indigo-600";
-          chaupalCard.className = "bg-indigo-50 p-6 rounded-3xl border border-indigo-200/60 space-y-3";
-          chaupalBadge.className = "bg-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full";
+          logoBg.className = "w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-md";
+          brandColor.className = "text-indigo-700";
+          chaupalCard.className = "bg-indigo-50 p-6 rounded-3xl border border-indigo-300 space-y-3 shadow-sm";
+          chaupalBadge.className = "bg-indigo-200 text-indigo-950 text-xs font-extrabold px-3 py-1 rounded-full";
           storyTitle.innerText = "Incredible India Rural Heritage Gatha";
           storyText.innerText = "\"Bharat ke har gaon ki apni ek anokhi kahani aur sanskriti hai...\"";
         }
@@ -607,9 +617,9 @@
         document.getElementById('tab-' + tabId).classList.remove('hidden');
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
-          btn.classList.remove('bg-amber-50', 'text-amber-900', 'border-amber-200');
-          btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-100');
+          btn.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold";
         });
+        event.currentTarget.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs";
       }
 
       function openModal(id) { document.getElementById(id).style.display = 'block'; }
@@ -633,8 +643,8 @@
         const div = document.createElement('div');
         div.className = "flex gap-2 items-center";
         div.innerHTML = `
-          <input type="text" placeholder="e.g. Gehu ki katai ya lok geet" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white" required>
-          <button type="button" onclick="this.parentElement.remove()" class="bg-red-600 text-white px-2 py-1.5 rounded-xl text-xs font-bold">✕</button>
+          <input type="text" placeholder="e.g. Gehu ki katai ya lok geet" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white font-medium" required>
+          <button type="button" onclick="this.parentElement.remove()" class="bg-red-600 text-white px-2.5 py-1.5 rounded-xl text-xs font-extrabold">✕</button>
         `;
         container.appendChild(div);
       }
@@ -651,7 +661,7 @@
         let actContainer = document.getElementById('modalActivitiesList');
         actContainer.innerHTML = '';
         activities.forEach(act => {
-          actContainer.innerHTML += `<span class="bg-amber-100 text-amber-900 px-2 py-1 rounded-md text-[11px] font-semibold">✨ ${act}</span>`;
+          actContainer.innerHTML += `<span class="bg-amber-100 text-amber-950 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-amber-200">✨ ${act}</span>`;
         });
 
         openModal('villageDetailModal');
@@ -675,6 +685,7 @@
           if(input.value.trim() !== "") activities.push(input.value.trim());
         });
 
+        // Format: Village, District, State
         const locationStr = `${village}, ${district}, ${state}`;
         const title = `${village} Village - Cultural Hub`;
 
@@ -694,12 +705,13 @@
         e.preventDefault();
         const title = document.getElementById('pkgTitle').value;
         const duration = document.getElementById('pkgDuration').value;
-        const price = document.getElementById('pkgPrice').value;
+        const priceNum = Number(document.getElementById('pkgPriceNum').value);
+        const priceStr = "₹" + priceNum.toLocaleString('en-IN');
         const desc = document.getElementById('pkgDesc').value;
 
         try {
           await window.addDoc(window.collection(window.db, "customPackages"), {
-            title, duration, price, description: desc, createdAt: window.serverTimestamp()
+            title, duration, priceNum, price: priceStr, description: desc, createdAt: window.serverTimestamp()
           });
         } catch(err) { console.log("Firestore notice"); }
 
@@ -742,6 +754,18 @@
         }
       }
 
+      function handleLogout() {
+        if(confirm("Kya aap logout karna chahte hain?")) {
+          window.signOut(window.auth).then(() => {
+            alert("Successfully logged out!");
+            closeModal('profileModal');
+          }).catch(() => {
+            alert("Logged out from session!");
+            closeModal('profileModal');
+          });
+        }
+      }
+
       async function loadLiveGalleries() {
         try {
           const querySnapshot = await window.getDocs(window.collection(window.db, "villageGalleries"));
@@ -752,32 +776,33 @@
             const data = docSnap.data();
             const docId = docSnap.id;
             const acts = data.activities || ["Traditional Walk", "Chulha Food"];
+            const locFormat = `${data.village}, ${data.district}, ${data.state}`;
 
             let cardDiv = document.createElement('div');
-            cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden border border-slate-100 custom-shadow flex flex-col justify-between";
-            cardDiv.setAttribute('data-location', `${data.village} ${data.district} ${data.state}`.toLowerCase());
+            cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden border border-slate-200 custom-shadow flex flex-col justify-between";
+            cardDiv.setAttribute('data-location', locFormat.toLowerCase());
 
-            let actBadges = acts.map(a => `<span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded text-[10px] font-medium">${a}</span>`).join(' ');
+            let actBadges = acts.map(a => `<span class="bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">✨ ${a}</span>`).join(' ');
 
             cardDiv.innerHTML = `
               <div>
-                <div class="h-44 bg-gradient-to-tr from-amber-100 to-orange-50 relative flex items-center justify-center text-3xl">
-                  <span class="absolute top-3 left-3 bg-slate-900/70 text-white text-[11px] font-medium px-2.5 py-1 rounded-full">${data.village}, ${data.district}, ${data.state}</span>
+                <div class="h-44 bg-gradient-to-tr from-amber-200 to-orange-100 relative flex items-center justify-center text-3xl">
+                  <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">📍 ${locFormat}</span>
                   🌾
-                  <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-lg">🗑️ Delete</button>
+                  <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">🗑️ Delete</button>
                 </div>
                 <div class="p-4 space-y-2">
-                  <h4 class="font-bold text-slate-900 text-sm">${data.title}</h4>
-                  <p class="text-xs text-slate-500 line-clamp-2">${data.description}</p>
-                  <div class="flex flex-wrap gap-1 pt-1">${actBadges}</div>
-                  <div class="text-[11px] bg-slate-50 p-2 rounded-xl text-slate-600 border border-slate-100">
-                    🚆 <b>Nearest Station:</b> ${data.station}
+                  <h4 class="font-extrabold text-slate-900 text-sm">${data.title}</h4>
+                  <p class="text-xs text-slate-600 font-medium line-clamp-2">${data.description}</p>
+                  <div class="flex flex-wrap gap-1.5 pt-1">${actBadges}</div>
+                  <div class="text-[11px] bg-slate-50 p-2.5 rounded-xl text-slate-800 font-bold border border-slate-200">
+                    🚆 Nearest Station: ${data.station}
                   </div>
                 </div>
               </div>
-              <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
-                <span class="text-[11px] text-slate-400 font-medium">📸 Host: ${data.hostName}</span>
-                <button onclick="openVillageModal('${data.title}', '${data.location}', '${data.description}', '${data.station}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto}', '${data.foodPhoto}')" class="bg-amber-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Album →</button>
+              <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-100 mt-2">
+                <span class="text-[11px] text-slate-500 font-bold">📸 Host: ${data.hostName}</span>
+                <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto}', '${data.foodPhoto}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Album →</button>
               </div>
             `;
             container.prepend(cardDiv);
@@ -796,21 +821,36 @@
             const docId = docSnap.id;
 
             let cardDiv = document.createElement('div');
-            cardDiv.className = "bg-white rounded-3xl p-5 border border-slate-100 custom-shadow space-y-3 relative";
+            cardDiv.className = "package-card bg-white rounded-3xl p-5 border border-slate-200 custom-shadow space-y-3 relative";
+            cardDiv.setAttribute('data-price', data.priceNum || 0);
 
             cardDiv.innerHTML = `
-              <button onclick="deletePackageListing('${docId}', this.closest('div'))" class="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-lg">🗑️ Delete</button>
+              <button onclick="deletePackageListing('${docId}', this.closest('div'))" class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">🗑️ Delete</button>
               <div class="flex justify-between items-center pr-16">
-                <span class="bg-amber-100 text-amber-900 text-xs font-extrabold px-3 py-1 rounded-full">⏳ ${data.duration}</span>
-                <span class="font-extrabold text-amber-600 text-sm">${data.price}</span>
+                <span class="bg-amber-100 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full border border-amber-200">⏳ ${data.duration}</span>
+                <span class="font-extrabold text-amber-700 text-base">${data.price}</span>
               </div>
-              <h4 class="font-bold text-slate-900 text-sm">${data.title}</h4>
-              <p class="text-xs text-slate-600">${data.description}</p>
-              <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20book%20the%20package:%20${data.title}%20(${data.price})" target="_blank" class="block text-center w-full bg-amber-600 text-white text-xs font-bold py-2.5 rounded-xl shadow-xs">Book Package on WhatsApp</a>
+              <h4 class="font-extrabold text-slate-900 text-sm">${data.title}</h4>
+              <p class="text-xs text-slate-600 font-medium">${data.description}</p>
+              <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20book%20the%20package:%20${data.title}%20(${data.price})" target="_blank" class="block text-center w-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-2.5 rounded-xl shadow-xs">Book Package on WhatsApp</a>
             `;
             container.prepend(cardDiv);
           });
         } catch(err) { console.log("DB packages notice"); }
+      }
+
+      function sortPackagesByBudget() {
+        const sortVal = document.getElementById('budgetFilter').value;
+        const container = document.getElementById('dynamicPackagesContainer');
+        const cards = Array.from(container.getElementsByClassName('package-card'));
+
+        if(sortVal === 'low-high') {
+          cards.sort((a, b) => Number(a.getAttribute('data-price')) - Number(b.getAttribute('data-price')));
+        } else if(sortVal === 'high-low') {
+          cards.sort((a, b) => Number(b.getAttribute('data-price')) - Number(a.getAttribute('data-price')));
+        }
+
+        cards.forEach(card => container.appendChild(card));
       }
 
       async function handleAuth(e) {
