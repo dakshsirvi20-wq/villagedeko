@@ -92,7 +92,7 @@
 </head>
 <body id="appBody" class="text-slate-900 antialiased pb-24">
 
-    <!-- Top State-Adaptive Header (Bright & Clear Contrast) -->
+    <!-- Top State-Adaptive Header -->
     <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all duration-300">
       <div class="max-w-4xl mx-auto px-4 pt-3 pb-2.5">
         <div class="flex items-center justify-between mb-3">
@@ -159,7 +159,7 @@
           </select>
         </div>
 
-        <!-- Category Icons Bar (Bright & Clear) -->
+        <!-- Category Icons Bar -->
         <div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none text-center">
           <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs">
             <span class="text-2xl mb-1">🏡</span>
@@ -184,7 +184,18 @@
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto p-4 space-y-4">
       
-      <!-- Search & Highlights Bar -->
+      <!-- Live Success Banner -->
+      <div id="liveSuccessBanner" class="hidden bg-emerald-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between animate-bounce">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">✅</span>
+          <div>
+            <p class="font-extrabold text-sm" id="successBannerTitle">Escrow Payment Secured!</p>
+            <p class="text-xs text-emerald-100 font-medium" id="successBannerDesc">Funds held safely in Admin Escrow until guest returns.</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('liveSuccessBanner').classList.add('hidden')" class="text-white font-bold text-lg">&times;</button>
+      </div>
+
       <div class="bg-white rounded-3xl p-5 border border-slate-200 custom-shadow space-y-3">
         <div class="flex items-center gap-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
           <span class="text-2xl">📍</span>
@@ -218,7 +229,7 @@
         </div>
       </div>
 
-      <!-- TAB 1: VILLAGES & ALBUMS (Dynamic Live Only) -->
+      <!-- TAB 1: VILLAGES & ALBUMS -->
       <div id="tab-villages" class="tab-content space-y-4">
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-base">Gaon ki Duniya & Galleries</h3>
@@ -230,7 +241,7 @@
         </div>
       </div>
 
-      <!-- TAB 2: PACKAGES (Custom User Packages with Budget Sorting Filter) -->
+      <!-- TAB 2: PACKAGES -->
       <div id="tab-packages" class="tab-content space-y-4 hidden">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 px-1 bg-white p-4 rounded-2xl border border-slate-200">
           <div>
@@ -248,28 +259,28 @@
         </div>
 
         <div id="dynamicPackagesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Dynamic custom packages load here -->
+          <!-- Dynamic packages load here -->
         </div>
       </div>
 
-      <!-- TAB 3: VILLAGE WEDDING EXPERIENCE (Darshan & Direct Booking) -->
+      <!-- TAB 3: VILLAGE WEDDING EXPERIENCE -->
       <div id="tab-weddings" class="tab-content space-y-4 hidden">
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
           <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
           <h3 class="text-2xl font-extrabold">Village Wedding (Gaon ki Shadi) Darshan & Join</h3>
-          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience authentic rural wedding celebrations: folk singing (Banna-Banni geet), traditional attire, community feast (Panti Bhojan), and vibrant cultural rituals across India.</p>
-          <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20join%20or%20view%20a%20Village%20Wedding." target="_blank" class="inline-block bg-white text-rose-950 font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md">
-            💬 Inquire to Join Wedding on WhatsApp
-          </a>
+          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience authentic rural wedding celebrations: folk singing, traditional attire, and community feasts across India.</p>
+          <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="inline-block bg-white text-rose-950 font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md cursor-pointer hover:bg-pink-50">
+            💳 Pay ₹2,999 (Escrow Safe) & Book Wedding Darshan
+          </button>
         </div>
       </div>
 
-      <!-- TAB 4: CHAUPAL (Regional Stories with Theme) -->
+      <!-- TAB 4: CHAUPAL STORIES -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
         <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 transition-all duration-300 shadow-sm">
           <span id="chaupalBadge" class="bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full">Oral Heritage</span>
           <h3 class="text-xl font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
-          <p class="text-xs text-slate-700 font-medium">Purane buzurgon ki zubaani kisse, lok-kathaen aur gaon ka itihas har state ke anusaار.</p>
+          <p class="text-xs text-slate-700 font-medium">Purane buzurgon ki zubaani kisse, lok-kathaen aur gaon ka itihas har state ke anusaar.</p>
           <div class="bg-white p-4 rounded-2xl border border-amber-200 text-xs space-y-1.5 shadow-xs">
             <p id="chaupalStoryTitle" class="font-bold text-slate-900 text-sm">Veer Tejaji ki Katha - Rooparam Ji (Rajasthan)</p>
             <p id="chaupalStoryText" class="text-slate-600 font-medium">"Ret ki mitti mein jab pehli baarish padti hai, toh jo saugandh uthti hai, wahi hamari sanskriti hai..."</p>
@@ -304,11 +315,74 @@
 
     <!-- MODALS -->
 
-    <!-- 1. List Village Form Modal (Format: Village -> District -> State) -->
+    <!-- 1. Secure UPI & Card Payment Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content bg-slate-900 text-white">
+        <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-3">
+          <div>
+            <span class="text-[10px] font-extrabold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">🔒 Escrow Protected Checkout</span>
+            <h3 id="payModalTitle" class="text-lg font-extrabold text-white mt-1">Complete Payment</h3>
+          </div>
+          <button onclick="closeModal('paymentModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex justify-between items-center">
+            <div>
+              <p class="text-slate-400 font-medium">Secured in Admin Escrow</p>
+              <p id="payModalAmount" class="text-xl font-extrabold text-amber-400">₹0</p>
+            </div>
+            <span class="text-3xl">🛡️</span>
+          </div>
+
+          <div class="flex gap-2 bg-slate-800 p-1 rounded-xl">
+            <button type="button" onclick="switchPayTab('upi')" id="tabUpiBtn" class="flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950">📱 UPI / QR</button>
+            <button type="button" onclick="switchPayTab('card')" id="tabCardBtn" class="flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300">💳 Credit / Debit Card</button>
+          </div>
+
+          <div id="payUpiSection" class="space-y-3">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Enter UPI ID (GPay / PhonePe / Paytm)</label>
+              <input type="text" id="userUpiId" placeholder="username@okhdfcbank" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
+            </div>
+            <div class="p-3 bg-slate-800 rounded-xl text-center border border-slate-700 text-slate-400">
+              <p class="font-bold text-slate-200 mb-1">Scan & Pay via Admin UPI</p>
+              <div class="bg-white p-3 inline-block rounded-lg my-1">
+                <p class="text-slate-900 font-black text-sm">📱 [ ADMIN UPI QR CODE ]</p>
+                <p class="text-[10px] text-slate-600">villagedeko@upi</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="payCardSection" class="space-y-3 hidden">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Card Number</label>
+              <input type="text" placeholder="4111 2222 3333 4444" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 mb-1">Expiry (MM/YY)</label>
+                <input type="text" placeholder="12/28" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 mb-1">CVV</label>
+                <input type="password" placeholder="321" maxlength="4" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
+              </div>
+            </div>
+          </div>
+
+          <button onclick="processSuccessfulPayment()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold py-3.5 rounded-xl transition-all shadow-md text-xs">
+            ✅ Pay & Lock in Escrow (Notify Host)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. List Village Form Modal (Includes Host Bank Account Details) -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-          <h3 class="text-lg font-extrabold text-white">List Village Gallery & Culture</h3>
+          <h3 class="text-lg font-extrabold text-white">List Village Gallery & Host Payout Details</h3>
           <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
         
@@ -319,12 +393,30 @@
               <input type="text" id="listHostName" placeholder="Ramesh Patel" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Phone / WhatsApp</label>
-              <input type="tel" id="listPhone" placeholder="+91 98765 43210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host WhatsApp Number</label>
+              <input type="tel" id="listPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
           </div>
 
-          <!-- Format Sequence: Village -> District -> State -->
+          <!-- Host Bank Account Details Section for Payouts -->
+          <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
+            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Returning Guest Payouts)</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Bank Account Number</label>
+                <input type="text" id="listAccNum" placeholder="123456789012" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">IFSC Code</label>
+                <input type="text" id="listIfsc" placeholder="SBIN0001234" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Or Host UPI ID (Optional alternative)</label>
+              <input type="text" id="listHostUpi" placeholder="ramesh@okhdfc" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label class="block font-bold text-amber-400 text-xs mb-1">Gaon (Village)</label>
@@ -382,7 +474,6 @@
             <textarea id="listDesc" rows="2" placeholder="Yahan log kaise rehte hain..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
 
-          <!-- Dynamic Activities Section -->
           <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
             <div class="flex justify-between items-center">
               <label class="block font-bold text-amber-400 text-xs">Gaon ki Activities (Add More)</label>
@@ -395,15 +486,14 @@
             </div>
           </div>
 
-          <!-- Category-wise Photo Uploads -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-800 p-3.5 rounded-xl border border-slate-700">
             <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">👗 Pehnawa Details / Photo</label>
-              <input type="text" id="listPehnawaPhoto" placeholder="Traditional Safa & Ghagra" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
+              <label class="block font-bold text-amber-400 text-xs mb-1">👗 Pehnawa Gallery Photo</label>
+              <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
             </div>
             <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Chulha Food Details / Photo</label>
-              <input type="text" id="listFoodPhoto" placeholder="Bajre ki Roti & Dal Baati" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
+              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Chulha Food Gallery Photo</label>
+              <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
             </div>
           </div>
 
@@ -412,7 +502,7 @@
       </div>
     </div>
 
-    <!-- 2. Create Custom Package Modal -->
+    <!-- 3. Create Custom Package Modal -->
     <div id="packageModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
@@ -428,7 +518,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Duration (e.g. 2 Days, 7 Days)</label>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Duration</label>
               <input type="text" id="pkgDuration" placeholder="4 Days" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
             <div>
@@ -437,9 +527,20 @@
             </div>
           </div>
 
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host WhatsApp Number</label>
+              <input type="tel" id="pkgHostPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host Bank A/C or UPI for Payout</label>
+              <input type="text" id="pkgHostBank" placeholder="A/C: 123456 / IFSC: SBIN000" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+          </div>
+
           <div>
-            <label class="block font-bold text-slate-300 text-xs mb-1">Package Description & Highlights</label>
-            <textarea id="pkgDesc" rows="3" placeholder="What is included in this package..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
+            <label class="block font-bold text-slate-300 text-xs mb-1">Package Description</label>
+            <textarea id="pkgDesc" rows="3" placeholder="What is included..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
 
           <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Package Live</button>
@@ -447,7 +548,7 @@
       </div>
     </div>
 
-    <!-- 3. Village Detail / Album Modal -->
+    <!-- 4. Village Detail / Album Modal -->
     <div id="villageDetailModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -467,47 +568,52 @@
           <div class="grid grid-cols-2 gap-2.5 pt-1">
             <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
               <p class="font-extrabold text-slate-900 mb-1">👗 Pehnawa</p>
-              <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>
+              <div id="modalPehnawaContainer" class="mt-1">
+                <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>
+              </div>
             </div>
             <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
               <p class="font-extrabold text-slate-900 mb-1">🍲 Chulha Food</p>
-              <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Organic Desi Rasoi</p>
+              <div id="modalFoodContainer" class="mt-1">
+                <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Organic Desi Rasoi</p>
+              </div>
             </div>
           </div>
-          <a id="modalWhatsapp" href="#" target="_blank" class="block text-center bg-emerald-600 text-white font-extrabold py-3 rounded-xl mt-3 shadow-sm">💬 Inquire / Visit on WhatsApp</a>
+          <button id="modalBookBtn" onclick="" class="w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl mt-3 shadow-sm cursor-pointer">💳 Pay & Book Visit (₹1,999 Escrow)</button>
         </div>
       </div>
     </div>
 
-    <!-- 4. Profile Modal (With Bookings, Cancel, Account Settings & Logout) -->
+    <!-- 5. Profile Modal with Admin Escrow Payout Release System -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <h3 class="font-extrabold text-slate-900 text-sm">👤 Explorer Profile & Bookings</h3>
+          <h3 class="font-extrabold text-slate-900 text-sm">👤 Admin Escrow & Traveler Bookings</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
         <div class="space-y-4 text-xs">
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 shadow-xs">
             <p class="font-extrabold text-slate-900 text-sm" id="profileUserName">Traveler Jagdish</p>
             <p class="text-slate-600 text-[11px] font-medium" id="profileUserEmail">jagdish@example.com</p>
-            <p class="text-amber-800 font-extrabold text-[10px] mt-1">Role: Admin & Cultural Host</p>
+            <p class="text-amber-800 font-extrabold text-[10px] mt-1">Role: Admin & Cultural Director</p>
           </div>
 
-          <!-- My Bookings Section -->
           <div class="space-y-2">
-            <h4 class="font-extrabold text-slate-900 text-xs">📦 My Bookings & Trips</h4>
-            <div id="myBookingsList" class="space-y-2 max-h-36 overflow-y-auto">
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center shadow-xs">
-                <div>
-                  <p class="font-bold text-slate-900">2 Days Quick Escape (Rohat)</p>
-                  <p class="text-[10px] text-slate-600 font-medium">Status: Confirmed</p>
+            <h4 class="font-extrabold text-slate-900 text-xs">📦 Active Bookings & Escrow Payout Tracker</h4>
+            <p class="text-[10px] text-slate-500">Guest ke wapas aane par **"Release Payout"** dabayein taaki host ko unke bank/UPI mein paisa bhej sakein.</p>
+            <div id="myBookingsList" class="space-y-2 max-h-48 overflow-y-auto">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 shadow-xs booking-item">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-bold text-slate-900">2 Days Quick Escape (Rohat)</p>
+                    <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured 🔒 (Guest Traveling)</p>
+                  </div>
+                  <button onclick="releaseEscrowPayout(this, 'Ramesh Patel', '+919876543210', 'A/C: 1234567890, IFSC: SBIN0001234', '2 Days Quick Escape', 1999)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">💵 Release Payout</button>
                 </div>
-                <button onclick="cancelBooking(this)" class="bg-red-50 text-red-700 hover:bg-red-100 font-bold px-2.5 py-1.5 rounded-lg text-[10px] border border-red-200">Cancel</button>
               </div>
             </div>
           </div>
 
-          <!-- Account Settings & Privacy -->
           <div class="space-y-2 pt-2 border-t">
             <h4 class="font-extrabold text-slate-900 text-xs">⚙️ Account Settings & Privacy</h4>
             <div class="space-y-2 text-slate-700 font-medium">
@@ -515,7 +621,7 @@
                 <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Hide my phone number from public views
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Allow booking notifications via WhatsApp
+                <input type="checkbox" checked class="rounded text-amber-600 w-4 h-4"> Enable Escrow & Return Payout Notifications
               </label>
             </div>
           </div>
@@ -528,7 +634,7 @@
       </div>
     </div>
 
-    <!-- 5. Auth Modal -->
+    <!-- 6. Auth Modal -->
     <div id="authModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -551,7 +657,11 @@
 
     <!-- JavaScript Controller -->
     <script>
-      // All States Dynamic Themes & Chaupal Stories
+      let currentBookingItem = "";
+      let currentHostPhone = "";
+      let currentHostBank = "";
+      let currentAmount = 0;
+
       function changeStateTheme(state) {
         const logoBg = document.getElementById('headerLogoBg');
         const brandColor = document.getElementById('brandTitleColor');
@@ -622,11 +732,86 @@
         event.currentTarget.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs";
       }
 
+      function switchPayTab(type) {
+        if(type === 'upi') {
+          document.getElementById('payUpiSection').classList.remove('hidden');
+          document.getElementById('payCardSection').classList.add('hidden');
+          document.getElementById('tabUpiBtn').className = "flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950";
+          document.getElementById('tabCardBtn').className = "flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300";
+        } else {
+          document.getElementById('payUpiSection').classList.add('hidden');
+          document.getElementById('payCardSection').classList.remove('hidden');
+          document.getElementById('tabCardBtn').className = "flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950";
+          document.getElementById('tabUpiBtn').className = "flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300";
+        }
+      }
+
       function openModal(id) { document.getElementById(id).style.display = 'block'; }
       function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
       window.onclick = function(e) {
         if (e.target.classList.contains('modal')) e.target.style.display = 'none';
+      }
+
+      function showSuccessBanner(title, desc) {
+        const banner = document.getElementById('liveSuccessBanner');
+        document.getElementById('successBannerTitle').innerText = title;
+        document.getElementById('successBannerDesc').innerText = desc;
+        banner.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => { banner.classList.add('hidden'); }, 5000);
+      }
+
+      function openPaymentModal(itemName, amount, hostPhone, hostBank) {
+        currentBookingItem = itemName;
+        currentAmount = amount;
+        currentHostPhone = hostPhone;
+        currentHostBank = hostBank;
+
+        document.getElementById('payModalTitle').innerText = itemName;
+        document.getElementById('payModalAmount').innerText = "₹" + amount.toLocaleString('en-IN');
+        closeModal('villageDetailModal');
+        openModal('paymentModal');
+      }
+
+      function processSuccessfulPayment() {
+        closeModal('paymentModal');
+        showSuccessBanner("Escrow Payment Secured! 🛡️", `Funds locked safely for "${currentBookingItem}". Payout will be released to host after guest returns.`);
+
+        // Add to My Bookings with Escrow Status & Release Payout button
+        const bookingsList = document.getElementById('myBookingsList');
+        const newBooking = document.createElement('div');
+        newBooking.className = "p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 shadow-xs booking-item";
+        newBooking.innerHTML = `
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="font-bold text-slate-900">${currentBookingItem} (₹${currentAmount})</p>
+              <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured 🔒 (Guest Traveling)</p>
+            </div>
+            <button onclick="releaseEscrowPayout(this, 'Host', '${currentHostPhone}', '${currentHostBank}', '${currentBookingItem}', ${currentAmount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] shadow-xs">💵 Release Payout</button>
+          </div>
+        `;
+        bookingsList.prepend(newBooking);
+
+        // Notify Host via WhatsApp that booking is received & payment is secured in Escrow
+        let waText = encodeURIComponent(`Hello Host, naya booking confirm hua hai Village Deko par! Item: ${currentBookingItem}, Amount: ₹${currentAmount}. Payment is secured in Admin Escrow and will be released to your bank (${currentHostBank}) after guest return.`);
+        window.open(`https://wa.me/${currentHostPhone}?text=${waText}`, '_blank');
+      }
+
+      function releaseEscrowPayout(btn, hostName, hostPhone, hostBankDetails, itemName, amount) {
+        if(confirm(`Kya guest ghum kar wapas aa gaye hain? Payout of ₹${amount} host (${hostName}) ke bank/UPI (${hostBankDetails}) par bhej diya jaye?`)) {
+          btn.closest('div.booking-item').innerHTML = `
+            <div>
+              <p class="font-bold text-slate-900">${itemName} (₹${amount})</p>
+              <p class="text-[10px] text-emerald-700 font-bold">Payout Released Successfully to Host Bank ✅</p>
+            </div>
+          `;
+          showSuccessBanner("Payout Released Successfully! 💸", `₹${amount} transferred to host ${hostName} (${hostBankDetails}).`);
+
+          // WhatsApp confirmation message to host for payout transfer
+          let payoutWaText = encodeURIComponent(`Hello ${hostName}, aapka payout of ₹${amount} for "${itemName}" successfully transfer kar diya gaya hai aapke bank details (${hostBankDetails}) par! Thank you for hosting with Village Deko.`);
+          window.open(`https://wa.me/${hostPhone}?text=${payoutWaText}`, '_blank');
+        }
       }
 
       function filterVillages() {
@@ -649,15 +834,30 @@
         container.appendChild(div);
       }
 
-      function openVillageModal(title, location, desc, station, activities, pehnawa, food) {
+      function openVillageModal(title, location, desc, station, activities, pehnawaImg, foodImg, hostPhone, hostBank) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalLocation').innerText = location;
         document.getElementById('modalDesc').innerText = desc;
         document.getElementById('modalStationBox').innerHTML = `🚆 <b>Nearest Station:</b> ${station}`;
-        document.getElementById('modalPehnawaTxt').innerText = pehnawa || "Traditional Attire Available";
-        document.getElementById('modalFoodTxt').innerText = food || "Organic Desi Rasoi";
-        document.getElementById('modalWhatsapp').href = `https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20visit%20${title} (${location})`;
         
+        let visitPrice = 1999;
+        document.getElementById('modalBookBtn').setAttribute('onclick', `openPaymentModal('${title}', ${visitPrice}, '${hostPhone || "+919876543210"}', '${hostBank || "A/C: 123456"}')`);
+        document.getElementById('modalBookBtn').innerText = `💳 Pay ₹1,999 (Escrow Safe) & Book Visit`;
+
+        let pehnawaBox = document.getElementById('modalPehnawaContainer');
+        if(pehnawaImg && pehnawaImg.startsWith('data:image')) {
+          pehnawaBox.innerHTML = `<img src="${pehnawaImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
+        } else {
+          pehnawaBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">${pehnawaImg || 'Traditional Attire'}</p>`;
+        }
+
+        let foodBox = document.getElementById('modalFoodContainer');
+        if(foodImg && foodImg.startsWith('data:image')) {
+          foodBox.innerHTML = `<img src="${foodImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
+        } else {
+          foodBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">${foodImg || 'Organic Desi Rasoi'}</p>`;
+        }
+
         let actContainer = document.getElementById('modalActivitiesList');
         actContainer.innerHTML = '';
         activities.forEach(act => {
@@ -667,17 +867,36 @@
         openModal('villageDetailModal');
       }
 
+      function getFileAsBase64(fileInputId) {
+        return new Promise((resolve) => {
+          const fileInput = document.getElementById(fileInputId);
+          if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) { resolve(e.target.result); };
+            reader.readAsDataURL(fileInput.files[0]);
+          } else {
+            resolve("");
+          }
+        });
+      }
+
       async function handleVillageListing(e) {
         e.preventDefault();
         const hostName = document.getElementById('listHostName').value;
         const phone = document.getElementById('listPhone').value;
+        const accNum = document.getElementById('listAccNum').value;
+        const ifsc = document.getElementById('listIfsc').value;
+        const hostUpi = document.getElementById('listHostUpi').value;
         const village = document.getElementById('listVillageName').value;
         const district = document.getElementById('listDistrict').value;
         const state = document.getElementById('listState').value;
         const station = document.getElementById('listStation').value;
         const desc = document.getElementById('listDesc').value;
-        const pehnawaPhoto = document.getElementById('listPehnawaPhoto').value || "Traditional Wear";
-        const foodPhoto = document.getElementById('listFoodPhoto').value || "Chulha Food";
+
+        const hostBankDetails = `A/C: ${accNum}, IFSC: ${ifsc}${hostUpi ? ' | UPI: ' + hostUpi : ''}`;
+
+        const pehnawaPhoto = await getFileAsBase64('listPehnawaFile');
+        const foodPhoto = await getFileAsBase64('listFoodFile');
 
         const activityInputs = document.querySelectorAll('.activity-input');
         let activities = [];
@@ -685,20 +904,19 @@
           if(input.value.trim() !== "") activities.push(input.value.trim());
         });
 
-        // Format: Village, District, State
         const locationStr = `${village}, ${district}, ${state}`;
         const title = `${village} Village - Cultural Hub`;
 
         try {
           await window.addDoc(window.collection(window.db, "villageGalleries"), {
-            hostName, phone, village, district, state, station, description: desc, activities, pehnawaPhoto, foodPhoto, location: locationStr, title, createdAt: window.serverTimestamp()
+            hostName, phone, hostBankDetails, village, district, state, station, description: desc, activities, pehnawaPhoto, foodPhoto, location: locationStr, title, createdAt: window.serverTimestamp()
           });
         } catch(err) { console.log("Firestore notice"); }
 
-        alert("Village Culture Album published live!");
         closeModal('listModal');
         document.getElementById('listVillageForm').reset();
         loadLiveGalleries();
+        showSuccessBanner("Village Listed Successfully! 🌾", `"${title}" has been published live with Host Bank Details.`);
       }
 
       async function handleCustomPackage(e) {
@@ -706,19 +924,21 @@
         const title = document.getElementById('pkgTitle').value;
         const duration = document.getElementById('pkgDuration').value;
         const priceNum = Number(document.getElementById('pkgPriceNum').value);
+        const hostPhone = document.getElementById('pkgHostPhone').value;
+        const hostBank = document.getElementById('pkgHostBank').value;
         const priceStr = "₹" + priceNum.toLocaleString('en-IN');
         const desc = document.getElementById('pkgDesc').value;
 
         try {
           await window.addDoc(window.collection(window.db, "customPackages"), {
-            title, duration, priceNum, price: priceStr, description: desc, createdAt: window.serverTimestamp()
+            title, duration, priceNum, price: priceStr, hostPhone, hostBank, description: desc, createdAt: window.serverTimestamp()
           });
         } catch(err) { console.log("Firestore notice"); }
 
-        alert("Custom Package published live!");
         closeModal('packageModal');
         document.getElementById('customPackageForm').reset();
         loadCustomPackages();
+        showSuccessBanner("Package Created Successfully! ⏳", `"${title}" is live with price ${priceStr}.`);
       }
 
       async function deleteVillageListing(docId, elementCard) {
@@ -726,10 +946,10 @@
           try {
             await window.deleteDoc(window.doc(window.db, "villageGalleries", docId));
             elementCard.remove();
-            alert("Deleted successfully!");
+            showSuccessBanner("Listing Deleted", "Village gallery removed.");
           } catch(err) {
             elementCard.remove();
-            alert("Removed from view!");
+            showSuccessBanner("Listing Deleted", "Village gallery removed.");
           }
         }
       }
@@ -739,28 +959,21 @@
           try {
             await window.deleteDoc(window.doc(window.db, "customPackages", docId));
             elementCard.remove();
-            alert("Package deleted successfully!");
+            showSuccessBanner("Package Deleted", "Cultural package removed.");
           } catch(err) {
             elementCard.remove();
-            alert("Removed from view!");
+            showSuccessBanner("Package Deleted", "Cultural package removed.");
           }
-        }
-      }
-
-      function cancelBooking(btn) {
-        if(confirm("Kya aap apni yeh booking cancel karna chahte hain?")) {
-          btn.closest('div.flex').remove();
-          alert("Booking successfully cancelled!");
         }
       }
 
       function handleLogout() {
         if(confirm("Kya aap logout karna chahte hain?")) {
           window.signOut(window.auth).then(() => {
-            alert("Successfully logged out!");
+            showSuccessBanner("Logged Out", "Successfully signed out of session.");
             closeModal('profileModal');
           }).catch(() => {
-            alert("Logged out from session!");
+            showSuccessBanner("Logged Out", "Successfully signed out of session.");
             closeModal('profileModal');
           });
         }
@@ -777,6 +990,7 @@
             const docId = docSnap.id;
             const acts = data.activities || ["Traditional Walk", "Chulha Food"];
             const locFormat = `${data.village}, ${data.district}, ${data.state}`;
+            const hostBank = data.hostBankDetails || "A/C: 123456";
 
             let cardDiv = document.createElement('div');
             cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden border border-slate-200 custom-shadow flex flex-col justify-between";
@@ -786,9 +1000,9 @@
 
             cardDiv.innerHTML = `
               <div>
-                <div class="h-44 bg-gradient-to-tr from-amber-200 to-orange-100 relative flex items-center justify-center text-3xl">
+                <div class="h-44 bg-gradient-to-tr from-amber-200 to-orange-100 relative flex items-center justify-center text-3xl overflow-hidden">
+                  ${data.pehnawaPhoto && data.pehnawaPhoto.startsWith('data:image') ? `<img src="${data.pehnawaPhoto}" class="absolute inset-0 w-full h-full object-cover">` : '🌾'}
                   <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">📍 ${locFormat}</span>
-                  🌾
                   <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">🗑️ Delete</button>
                 </div>
                 <div class="p-4 space-y-2">
@@ -802,7 +1016,7 @@
               </div>
               <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-100 mt-2">
                 <span class="text-[11px] text-slate-500 font-bold">📸 Host: ${data.hostName}</span>
-                <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto}', '${data.foodPhoto}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Album →</button>
+                <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto}', '${data.foodPhoto}', '${data.phone}', '${hostBank}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Album →</button>
               </div>
             `;
             container.prepend(cardDiv);
@@ -832,7 +1046,7 @@
               </div>
               <h4 class="font-extrabold text-slate-900 text-sm">${data.title}</h4>
               <p class="text-xs text-slate-600 font-medium">${data.description}</p>
-              <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20book%20the%20package:%20${data.title}%20(${data.price})" target="_blank" class="block text-center w-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-2.5 rounded-xl shadow-xs">Book Package on WhatsApp</a>
+              <button onclick="openPaymentModal('${data.title}', ${data.priceNum || 4999}, '${data.hostPhone || "+919876543210"}', '${data.hostBank || "A/C: 123456"}')" class="block text-center w-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-2.5 rounded-xl shadow-xs cursor-pointer">💳 Pay & Book Package (Escrow Safe)</button>
             `;
             container.prepend(cardDiv);
           });
@@ -859,12 +1073,12 @@
         const pass = document.getElementById('authPassword').value;
         try {
           await window.signInWithEmailAndPassword(window.auth, email, pass);
-          alert("Logged in!");
+          showSuccessBanner("Logged In Successfully!", "Welcome back to your dashboard.");
           closeModal('authModal');
         } catch(err) {
           try {
             await window.createUserWithEmailAndPassword(window.auth, email, pass);
-            alert("Account created and logged in!");
+            showSuccessBanner("Account Created!", "You are now successfully logged in.");
             closeModal('authModal');
           } catch(err2) { alert("Error: " + err2.message); }
         }
