@@ -42,17 +42,20 @@
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
 
+      // Live Auth State Listener to update Profile details dynamically
       onAuthStateChanged(auth, (user) => {
-        const userNameEl = document.getElementById('profileUserName');
-        const userEmailEl = document.getElementById('profileUserEmail');
-        const settingEmailEl = document.getElementById('settingEmail');
+        const profileNameEl = document.getElementById('profileUserName');
+        const profileEmailEl = document.getElementById('profileUserEmail');
+        const profileUidEl = document.getElementById('profileUserUid');
+
         if (user) {
-          if(userNameEl) userNameEl.innerText = user.displayName || "Jagdish (Platform Owner)";
-          if(userEmailEl) userEmailEl.innerText = user.email;
-          if(settingEmailEl) settingEmailEl.value = user.email;
+          if(profileNameEl) profileNameEl.innerText = user.displayName || "Jagdish (Platform User)";
+          if(profileEmailEl) profileEmailEl.innerText = user.email || "user@villagedeko.in";
+          if(profileUidEl) profileUidEl.innerText = "App ID / UID: " + user.uid;
         } else {
-          if(userNameEl) userNameEl.innerText = "Jagdish (Platform Owner)";
-          if(userEmailEl) userEmailEl.innerText = "jagdish@example.com";
+          if(profileNameEl) profileNameEl.innerText = "Jagdish (Platform Owner)";
+          if(profileEmailEl) profileEmailEl.innerText = "jagdish@villagedeko.in";
+          if(profileUidEl) profileUidEl.innerText = "App ID / UID: VD-ADMIN-9600";
         }
       });
     </script>
@@ -194,25 +197,6 @@
             <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none">
           </div>
         </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-center shadow-xs">
-            <span class="text-xl">🚂</span>
-            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Nearest Station</p>
-          </div>
-          <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-center shadow-xs">
-            <span class="text-xl">🌾</span>
-            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Real Farm</p>
-          </div>
-          <div class="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-center shadow-xs">
-            <span class="text-xl">👘</span>
-            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Attire</p>
-          </div>
-          <div class="p-3 bg-orange-50 rounded-2xl border border-orange-200 text-center shadow-xs">
-            <span class="text-xl">🍲</span>
-            <p class="text-[11px] font-extrabold text-slate-900 mt-1">Chulha Food</p>
-          </div>
-        </div>
       </div>
 
       <!-- TAB 1: VILLAGES & ALBUMS -->
@@ -221,10 +205,7 @@
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
           <span class="text-[11px] text-amber-700 font-extrabold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Select Village to View Stay</span>
         </div>
-
-        <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Dynamic listings load here -->
-        </div>
+        <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
 
       <!-- TAB 2: VILLAGE WEDDING EXPERIENCE -->
@@ -232,25 +213,17 @@
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
           <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
           <h3 class="text-xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
-          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience or host authentic rural wedding celebrations: folk singing, traditional attire, and community feasts across India.</p>
-          <div class="flex flex-wrap gap-2 pt-2">
-            <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="bg-white text-rose-950 font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md hover:bg-pink-50">
-              💳 Pay ₹2,999 (Escrow Safe) & Book Wedding Darshan
-            </button>
-            <button onclick="openModal('listModal')" class="bg-rose-900 text-white font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md hover:bg-rose-950">
-              💍 Host Wedding in Village
-            </button>
-          </div>
+          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience or host authentic rural wedding celebrations across India.</p>
         </div>
       </div>
 
-      <!-- TAB 3: VILLAGE DESTINATION WEDDING (CONCIERGE & AGENCY MODEL) -->
+      <!-- TAB 3: VILLAGE DESTINATION WEDDING -->
       <div id="tab-villageWedding" class="tab-content space-y-4 hidden">
         <div class="bg-white rounded-3xl p-6 border border-slate-200 custom-shadow space-y-4">
           <div class="border-b border-slate-100 pb-3">
             <span class="bg-amber-100 text-amber-900 text-[10px] font-extrabold px-2.5 py-1 rounded-full">🏺 Managed Concierge Service</span>
             <h3 class="text-lg font-extrabold text-slate-900 mt-2">Village Destination Wedding</h3>
-            <p class="text-xs text-slate-600 font-medium mt-1">Plan an authentic, grand royal rural wedding managed securely by Village Deko experts. Share your requirements and get a custom quote directly from our team.</p>
+            <p class="text-xs text-slate-600 font-medium mt-1">Plan an authentic, grand royal rural wedding managed securely by Village Deko experts.</p>
           </div>
 
           <form id="villageWeddingInquiryForm" onsubmit="handleVillageWeddingInquiry(event)" class="space-y-3.5 text-xs">
@@ -261,13 +234,13 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Phone Number (For Expert Consultation)</label>
-                <input type="tel" id="vwPhone" placeholder="Enter your mobile number" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500">
+                <label class="block font-bold text-slate-700 mb-1">Phone Number</label>
+                <input type="tel" id="vwPhone" placeholder="Enter mobile number" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500">
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Preferred Village / Region Location</label>
+                <label class="block font-bold text-slate-700 mb-1">Village Location</label>
                 <select id="vwLocation" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500">
-                  <option value="">Select Village Region</option>
+                  <option value="">Select Region</option>
                   <option value="Pali Heritage Farmhouse, Rajasthan">Pali Heritage Farmhouse, Rajasthan</option>
                   <option value="Udaipur Rural Haveli, Rajasthan">Udaipur Rural Haveli, Rajasthan</option>
                   <option value="Konkan Village Wadi, Maharashtra">Konkan Village Wadi, Maharashtra</option>
@@ -277,38 +250,32 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Estimated Guest Count</label>
+                <label class="block font-bold text-slate-700 mb-1">Guest Count</label>
                 <input type="number" id="vwGuests" placeholder="e.g., 150-200" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500">
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Expected Wedding Date</label>
+                <label class="block font-bold text-slate-700 mb-1">Wedding Date</label>
                 <input type="date" id="vwDate" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500">
               </div>
             </div>
 
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Special Requirements (Catering, Halwai, Folk Music, Tent, etc.)</label>
-              <textarea id="vwReqs" rows="3" placeholder="Tell us what you have in mind..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500"></textarea>
+              <label class="block font-bold text-slate-700 mb-1">Special Requirements</label>
+              <textarea id="vwReqs" rows="3" placeholder="Catering, Tent, Halwai, etc..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500"></textarea>
             </div>
 
             <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-3.5 rounded-xl transition-all shadow-md text-xs">
               🚀 Submit Inquiry & Get Custom Agency Quote
             </button>
-            <p class="text-[11px] text-slate-500 text-center font-medium">🔒 Your details are 100% secure. Our wedding planning expert will review and connect with you directly.</p>
           </form>
         </div>
       </div>
 
       <!-- TAB 4: CHAUPAL STORIES -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <div id="chaupalCardTheme" class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm">
-          <span id="chaupalBadge" class="bg-amber-200 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full">Oral Heritage</span>
+        <div class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm">
           <h3 class="text-lg font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
-          <p class="text-xs text-slate-700 font-medium">Elderly folklore stories, folk tales, and village history according to each state.</p>
-          <div class="bg-white p-4 rounded-2xl border border-amber-200 text-xs space-y-1.5 shadow-xs">
-            <p id="chaupalStoryTitle" class="font-bold text-slate-900 text-sm">Veer Tejaji Story - Rooparam Ji (Rajasthan)</p>
-            <p id="chaupalStoryText" class="text-slate-600 font-medium">"When the first rain falls on the desert sand, the fragrance that rises is our true culture..."</p>
-          </div>
+          <p class="text-xs text-slate-700 font-medium">Elderly folklore stories, folk tales, and village history.</p>
         </div>
       </div>
     </main>
@@ -335,277 +302,24 @@
 
     <!-- MODALS -->
 
-    <!-- 1. Secure UPI & Card Payment Modal -->
-    <div id="paymentModal" class="modal">
-      <div class="modal-content bg-slate-900 text-white">
-        <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-3">
-          <div>
-            <span class="text-[10px] font-extrabold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">🔒 Escrow Protected Checkout</span>
-            <h3 id="payModalTitle" class="text-lg font-extrabold text-white mt-1">Complete Payment</h3>
-          </div>
-          <button onclick="closeModal('paymentModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
-        </div>
-
-        <div class="space-y-4 text-xs">
-          <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex justify-between items-center">
-            <div>
-              <p class="text-slate-400 font-medium">Secured in Admin Escrow</p>
-              <p id="payModalAmount" class="text-xl font-extrabold text-amber-400">₹0</p>
-            </div>
-            <span class="text-3xl">🛡️</span>
-          </div>
-
-          <div class="flex gap-2 bg-slate-800 p-1 rounded-xl">
-            <button type="button" onclick="switchPayTab('upi')" id="tabUpiBtn" class="flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950">📱 UPI / QR</button>
-            <button type="button" onclick="switchPayTab('card')" id="tabCardBtn" class="flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300">💳 Credit / Debit Card</button>
-          </div>
-
-          <div id="payUpiSection" class="space-y-3">
-            <div>
-              <label class="block font-bold text-slate-300 mb-1">Enter UPI ID (GPay / PhonePe / Paytm)</label>
-              <input type="text" id="userUpiId" placeholder="username@okhdfcbank" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
-            </div>
-            <div class="p-3 bg-slate-800 rounded-xl text-center border border-slate-700 text-slate-400">
-              <p class="font-bold text-slate-200 mb-1">Scan & Pay via Admin UPI</p>
-              <div class="bg-white p-3 inline-block rounded-lg my-1">
-                <p class="text-slate-900 font-black text-sm">📱 [ ADMIN UPI QR CODE ]</p>
-                <p class="text-[10px] text-slate-600">villagedeko@upi</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="payCardSection" class="space-y-3 hidden">
-            <div>
-              <label class="block font-bold text-slate-300 mb-1">Card Number</label>
-              <input type="text" placeholder="4111 2222 3333 4444" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">Expiry (MM/YY)</label>
-                <input type="text" placeholder="12/28" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">CVV</label>
-                <input type="password" placeholder="321" maxlength="4" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium">
-              </div>
-            </div>
-          </div>
-
-          <button onclick="processSuccessfulPayment()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold py-3.5 rounded-xl transition-all shadow-md text-xs">
-            ✅ Pay & Lock in Escrow (Notify Host)
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. List Village Form Modal -->
-    <div id="listModal" class="modal">
-      <div class="modal-content bg-slate-900 text-white">
-        <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-          <h3 class="text-lg font-extrabold text-white">List Village, Stay & Photo Galleries</h3>
-          <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
-        </div>
-        
-        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3.5 text-sm">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Host Name</label>
-              <input type="text" id="listHostName" placeholder="Ramesh Patel" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-            </div>
-            <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Host WhatsApp Number</label>
-              <input type="tel" id="listPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-            </div>
-          </div>
-
-          <!-- Host Bank Account Details Section -->
-          <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
-            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Payouts)</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block font-bold text-slate-300 text-[11px] mb-1">Bank Account Number</label>
-                <input type="text" id="listAccNum" placeholder="123456789012" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 text-[11px] mb-1">IFSC Code</label>
-                <input type="text" id="listIfsc" placeholder="SBIN0001234" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-              </div>
-            </div>
-            <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Or Host UPI ID (Optional)</label>
-              <input type="text" id="listHostUpi" placeholder="ramesh@okhdfc" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">Village Name</label>
-              <input type="text" id="listVillageName" placeholder="Rohat" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-            </div>
-            <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">District</label>
-              <input type="text" id="listDistrict" placeholder="Pali" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-            </div>
-            <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">State</label>
-              <select id="listState" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Odisha">Odisha</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="West Bengal">West Bengal</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-300 text-xs mb-1">Nearest Railway Station / Bus Stand</label>
-            <input type="text" id="listStation" placeholder="Pali Marwar Junction (25 km)" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-300 text-xs mb-1">Village Culture and Description</label>
-            <textarea id="listDesc" rows="2" placeholder="Describe how people live here..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
-          </div>
-
-          <div class="bg-amber-950/30 p-3.5 rounded-xl border border-amber-500/30 space-y-3">
-            <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block font-bold text-slate-300 text-[11px] mb-1">Package / Stay Title</label>
-                <input type="text" id="listPkgTitle" placeholder="3 Days Authentic Heritage Stay" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 text-[11px] mb-1">Price per Person (INR)</label>
-                <input type="number" id="listPkgPrice" placeholder="2499" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
-              </div>
-            </div>
-            <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description</label>
-              <textarea id="listPkgDesc" rows="2" placeholder="Mud house stay, organic chulha food, farm tour included..." required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
-            </div>
-          </div>
-
-          <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
-            <div class="flex justify-between items-center">
-              <label class="block font-bold text-amber-400 text-xs">Village Activities (Add More)</label>
-              <button type="button" onclick="addActivityField()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-lg">+ Add Activity</button>
-            </div>
-            <div id="activitiesContainer" class="space-y-2">
-              <div class="flex gap-2">
-                <input type="text" placeholder="e.g., Making clay pottery" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white" required>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-3 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
-            <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire (Pehnawa) Photo</label>
-              <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
-            </div>
-
-            <div class="pt-2 border-t border-slate-700">
-              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Traditional Chulha Food Photo</label>
-              <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
-            </div>
-
-            <div class="pt-2 border-t border-slate-700">
-              <label class="block font-bold text-amber-400 text-xs mb-1">📸 Village Gallery Photos</label>
-              <input type="file" id="listGalleryPhotos" accept="image/*" multiple class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
-            </div>
-          </div>
-
-          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Village & Galleries Live</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- 3. Village Detail Modal -->
-    <div id="villageDetailModal" class="modal">
-      <div class="modal-content">
-        <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <div>
-            <span id="modalLocation" class="text-[11px] font-extrabold bg-amber-100 text-amber-950 px-2.5 py-1 rounded-md">Location</span>
-            <h3 id="modalTitle" class="text-lg font-extrabold text-slate-900 mt-1">Village Name</h3>
-          </div>
-          <button onclick="closeModal('villageDetailModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
-        </div>
-        <div class="space-y-4 text-xs">
-          <p id="modalDesc" class="text-slate-700 leading-relaxed font-medium"></p>
-          <div id="modalStationBox" class="p-3 bg-amber-50 rounded-xl text-amber-950 font-bold border border-amber-200"></div>
-          
-          <div class="p-4 bg-amber-50 rounded-2xl border border-amber-300 space-y-2 shadow-xs">
-            <span class="bg-amber-200 text-amber-950 font-extrabold text-[10px] px-2.5 py-1 rounded-md">⏳ Host Package & Stay Details</span>
-            <h4 id="modalPkgTitle" class="font-extrabold text-slate-900 text-sm mt-1">Package Title</h4>
-            <p id="modalPkgDesc" class="text-slate-700 font-medium">Stay description...</p>
-            <div class="flex justify-between items-center pt-2 border-t border-amber-200">
-              <span id="modalPkgPrice" class="font-extrabold text-amber-700 text-base">₹0</span>
-              <button id="modalBookBtn" onclick="" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl shadow-xs cursor-pointer">💳 Pay & Book Stay (Escrow Safe)</button>
-            </div>
-          </div>
-
-          <div>
-            <p class="font-extrabold text-slate-900 mb-1.5">🎯 Village Special Activities:</p>
-            <div id="modalActivitiesList" class="flex flex-wrap gap-1.5"></div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2.5 pt-1">
-            <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
-              <p class="font-extrabold text-slate-900 mb-1">👘 Traditional Attire</p>
-              <div id="modalPehnawaContainer" class="mt-1">
-                <p id="modalPehnawaTxt" class="text-[11px] text-slate-600 font-medium">Available</p>
-              </div>
-            </div>
-            <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
-              <p class="font-extrabold text-slate-900 mb-1">🍲 Chulha Food</p>
-              <div id="modalFoodContainer" class="mt-1">
-                <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Kitchen Active</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="modalGallerySection" class="space-y-2 pt-2 border-t">
-            <p class="font-extrabold text-slate-900">📸 Village Photo Gallery:</p>
-            <div id="modalGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. Profile & Settings Dashboard Modal (CORRECTED & COMPLETE) -->
+    <!-- 1. Profile & Settings Dashboard Modal (WITH LIVE NAME & APP ID SECTION) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & Menu</h3>
+          <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & User Info</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
 
+        <!-- User Identity Box (Shows Live Name, Email & App ID) -->
+        <div class="mb-4 p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-1">
+          <p class="text-[10px] font-extrabold text-amber-800 uppercase tracking-wider">Active Account Details</p>
+          <p id="profileUserName" class="text-base font-black text-slate-900">Loading Name...</p>
+          <p id="profileUserEmail" class="text-xs font-semibold text-slate-600">Loading Email...</p>
+          <p id="profileUserUid" class="text-[11px] font-bold text-amber-900 font-mono mt-1 bg-amber-100/70 p-1.5 rounded-lg inline-block">App ID / UID: Loading...</p>
+        </div>
+
+        <!-- Vertical Menu List -->
         <div class="mb-4 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden text-xs divide-y divide-slate-100">
-          
-          <!-- Option 1: Villages & Stays -->
           <div onclick="closeModal('profileModal'); switchTab('villages');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Villages & Stays</p>
@@ -614,7 +328,6 @@
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
 
-          <!-- Option 2: Village Destination Wedding -->
           <div onclick="closeModal('profileModal'); switchTab('villageWedding');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Village Destination Wedding</p>
@@ -623,7 +336,6 @@
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
 
-          <!-- Option 3: Village Wedding Experience -->
           <div onclick="closeModal('profileModal'); switchTab('weddings');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Village Wedding Experience</p>
@@ -632,7 +344,6 @@
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
 
-          <!-- Option 4: Chaupal Stories -->
           <div onclick="closeModal('profileModal'); switchTab('chaupal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Chaupal Stories</p>
@@ -640,16 +351,6 @@
             </div>
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
-
-          <!-- Option 5: Host a Village -->
-          <div onclick="closeModal('profileModal'); openModal('listModal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
-            <div>
-              <p class="font-extrabold text-slate-900 text-sm">List Your Village & Stay</p>
-              <p class="text-[11px] text-slate-500 font-medium">Add new village photos, stay & bank details</p>
-            </div>
-            <span class="text-slate-400 font-bold">&rsaquo;</span>
-          </div>
-
         </div>
       </div>
     </div>
@@ -676,33 +377,6 @@
         if(m) m.style.display = 'none';
       }
 
-      function switchPayTab(type) {
-        if(type === 'upi') {
-          document.getElementById('payUpiSection').classList.remove('hidden');
-          document.getElementById('payCardSection').classList.add('hidden');
-          document.getElementById('tabUpiBtn').className = "flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950";
-          document.getElementById('tabCardBtn').className = "flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300";
-        } else {
-          document.getElementById('payUpiSection').classList.add('hidden');
-          document.getElementById('payCardSection').classList.remove('hidden');
-          document.getElementById('tabCardBtn').className = "flex-1 py-2 font-bold rounded-lg bg-amber-500 text-slate-950";
-          document.getElementById('tabUpiBtn').className = "flex-1 py-2 font-bold rounded-lg bg-transparent text-slate-300";
-        }
-      }
-
-      function openPaymentModal(title, amount, phone, bankDetails) {
-        document.getElementById('payModalTitle').innerText = "Book: " + title;
-        document.getElementById('payModalAmount').innerText = "₹" + amount.toLocaleString('en-IN');
-        openModal('paymentModal');
-      }
-
-      function processSuccessfulPayment() {
-        closeModal('paymentModal');
-        const banner = document.getElementById('liveSuccessBanner');
-        banner.classList.remove('hidden');
-        setTimeout(() => { banner.classList.add('hidden'); }, 6000);
-      }
-
       function handleVillageWeddingInquiry(e) {
         e.preventDefault();
         const name = document.getElementById('vwName').value;
@@ -718,16 +392,8 @@
         const url = `https://api.whatsapp.com/send?phone=${adminWhatsApp}&text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
         
-        alert('Inquiry successfully submitted! Our wedding coordinator will review and reach out to you shortly.');
+        alert('Inquiry successfully submitted! Our wedding coordinator will reach out to you shortly.');
         document.getElementById('villageWeddingInquiryForm').reset();
-      }
-
-      function addActivityField() {
-        const container = document.getElementById('activitiesContainer');
-        const div = document.createElement('div');
-        div.className = "flex gap-2";
-        div.innerHTML = `<input type="text" placeholder="e.g., Folk dance performance" class="activity-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white" required>`;
-        container.appendChild(div);
       }
 
       function filterVillages() {}
