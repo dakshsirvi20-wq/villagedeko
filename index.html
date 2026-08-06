@@ -30,14 +30,14 @@
       }
       .modal-content {
         background-color: #ffffff;
-        margin: 5% auto;
+        margin: 4% auto;
         padding: 24px;
         border-radius: 24px;
         max-width: 680px;
         width: 92%;
         position: relative;
         box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15);
-        max-height: 88vh;
+        max-height: 90vh;
         overflow-y: auto;
       }
       .custom-shadow {
@@ -47,8 +47,8 @@
 </head>
 <body id="appBody" class="text-slate-900 antialiased pb-24">
 
-    <!-- Top State-Adaptive Header -->
-    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all duration-300">
+    <!-- Top Header -->
+    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-4xl mx-auto px-4 pt-3 pb-2.5">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2.5">
@@ -56,37 +56,32 @@
               🌾
             </div>
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900">
-              <span id="brandTitleColor" class="text-amber-700">Village</span>Deko <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded-full">Village View</span>
+              <span class="text-amber-700">Village</span>Deko <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded-full">Village View</span>
             </h1>
           </div>
         </div>
 
-        <!-- All India State Selector Bar -->
-        <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <!-- State Theme Selector -->
+        <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1">
           <span class="text-[11px] font-bold text-slate-700 whitespace-nowrap">State Theme:</span>
           <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-100 border border-slate-300 font-bold px-3 py-2 rounded-xl text-slate-900 focus:outline-none">
-            <optgroup label="Popular Regions">
-              <option value="rajasthan">🏜️ Rajasthan</option>
-              <option value="punjab">🌾 Punjab</option>
-              <option value="maharashtra">⛰️ Maharashtra</option>
-              <option value="uttar-pradesh">🛕 Uttar Pradesh</option>
-              <option value="bihar">🌾 Bihar</option>
-              <option value="kerala">🌴 Kerala & South</option>
-            </optgroup>
+            <option value="rajasthan">🏜️ Rajasthan</option>
+            <option value="punjab">🌾 Punjab</option>
+            <option value="maharashtra">⛰️ Maharashtra</option>
           </select>
         </div>
 
         <!-- Category Icons Bar -->
-        <div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none text-center">
-          <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs">
+        <div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 text-center">
+          <button onclick="switchTab('villages')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 font-bold shadow-xs">
             <span class="text-2xl mb-1">🏡</span>
             <span class="text-[11px]">Villages</span>
           </button>
-          <button onclick="switchTab('weddings')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
+          <button onclick="switchTab('weddings')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold">
             <span class="text-2xl mb-1">💍</span>
             <span class="text-[11px]">Weddings</span>
           </button>
-          <button onclick="switchTab('chaupal')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold">
+          <button onclick="switchTab('chaupal')" class="tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold">
             <span class="text-2xl mb-1">🔥</span>
             <span class="text-[11px]">Chaupal</span>
           </button>
@@ -109,11 +104,12 @@
         <button onclick="document.getElementById('liveSuccessBanner').classList.add('hidden')" class="text-white font-bold text-lg">&times;</button>
       </div>
 
+      <!-- Search Destination Bar -->
       <div class="bg-white rounded-3xl p-5 border border-slate-200 custom-shadow space-y-3">
         <div class="flex items-center gap-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
           <span class="text-2xl">📍</span>
           <div class="w-full">
-            <p class="text-[10px] uppercase font-extrabold text-slate-500">Search Destination</p>
+            <p class="text-[10px] uppercase font-extrabold text-slate-500">Search Destination / Village</p>
             <input type="text" id="searchInput" onkeyup="filterVillages()" placeholder="Search by Village, District or State..." class="w-full bg-transparent text-sm font-bold text-slate-900 focus:outline-none">
           </div>
         </div>
@@ -123,7 +119,7 @@
       <div id="tab-villages" class="tab-content space-y-4">
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-base">Village World & Galleries</h3>
-          <span class="text-xs text-amber-700 font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Select Village to View Stay & Packages</span>
+          <span class="text-xs text-amber-700 font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Select Village to View Packages & Stay</span>
         </div>
 
         <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -136,12 +132,12 @@
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
           <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
           <h3 class="text-2xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
-          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience or host authentic rural wedding celebrations across India.</p>
+          <p class="text-xs text-pink-100 font-medium">Experience or host authentic rural wedding celebrations across India.</p>
           <div class="flex gap-3 pt-2">
-            <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="bg-white text-rose-950 font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md cursor-pointer">
-              💳 Pay ₹2,999 & Book Wedding Darshan
+            <button onclick="openPaymentModal('Village Wedding Experience', 2999, '+919876543210', 'Default Host Bank/UPI')" class="bg-white text-rose-950 font-extrabold text-xs px-4 py-3 rounded-2xl cursor-pointer shadow-md">
+              💳 Pay ₹2,999 (Escrow Safe)
             </button>
-            <button onclick="openModal('listModal')" class="bg-rose-900 text-white font-extrabold text-xs px-4 py-3 rounded-2xl shadow-md cursor-pointer">
+            <button onclick="openModal('listModal')" class="bg-rose-900 text-white font-extrabold text-xs px-4 py-3 rounded-2xl cursor-pointer shadow-md">
               💍 Host Wedding in Village
             </button>
           </div>
@@ -177,27 +173,28 @@
 
     <!-- MODALS -->
 
-    <!-- 1. Payment Modal -->
+    <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-3">
           <h3 id="payModalTitle" class="text-lg font-extrabold text-white">Complete Payment</h3>
-          <button onclick="closeModal('paymentModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+          <button onclick="closeModal('paymentModal')" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
         </div>
         <div class="space-y-4 text-xs">
           <p id="payModalAmount" class="text-xl font-extrabold text-amber-400">₹0</p>
-          <button onclick="processSuccessfulPayment()" class="w-full bg-emerald-500 text-slate-950 font-extrabold py-3.5 rounded-xl">✅ Pay & Lock in Escrow</button>
+          <button onclick="processSuccessfulPayment()" class="w-full bg-emerald-500 text-slate-950 font-extrabold py-3.5 rounded-xl cursor-pointer">✅ Pay & Lock in Escrow</button>
         </div>
       </div>
     </div>
 
-    <!-- 2. List Village Modal -->
+    <!-- Original List Village Modal Structure -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
           <h3 class="text-lg font-extrabold text-white">List Village, Stay & Package Details</h3>
-          <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+          <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
         </div>
+        
         <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3.5 text-sm">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -209,6 +206,21 @@
               <input type="tel" id="listPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
             </div>
           </div>
+
+          <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
+            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Payout)</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Bank Account Number</label>
+                <input type="text" id="listAccNum" placeholder="123456789012" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">IFSC Code</label>
+                <input type="text" id="listIfsc" placeholder="SBIN0001234" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label class="block font-bold text-amber-400 text-xs mb-1">Village Name</label>
@@ -224,34 +236,44 @@
                 <option value="Rajasthan">Rajasthan</option>
                 <option value="Punjab">Punjab</option>
                 <option value="Maharashtra">Maharashtra</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
               </select>
             </div>
           </div>
+
           <div>
             <label class="block font-bold text-slate-300 text-xs mb-1">Nearest Station</label>
             <input type="text" id="listStation" placeholder="Pali Marwar Junction" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
           </div>
+
           <div>
             <label class="block font-bold text-slate-300 text-xs mb-1">Description</label>
             <textarea id="listDesc" rows="2" placeholder="Culture details..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Package Title</label>
-              <input type="text" id="listPkgTitle" placeholder="3 Days Heritage Stay" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+
+          <div class="bg-amber-950/30 p-3.5 rounded-xl border border-amber-500/30 space-y-3">
+            <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Package Title</label>
+                <input type="text" id="listPkgTitle" placeholder="3 Days Heritage Stay" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Price per Person (INR)</label>
+                <input type="number" id="listPkgPrice" placeholder="2499" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
             </div>
             <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Price per Person (INR)</label>
-              <input type="number" id="listPkgPrice" placeholder="2499" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description</label>
+              <textarea id="listPkgDesc" rows="2" placeholder="Mud house stay, organic food..." required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
             </div>
           </div>
-          <button type="submit" class="w-full bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-xs">Publish Village & Package Live</button>
+
+          <button type="submit" class="w-full bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl cursor-pointer text-xs">Publish Village & Package Live</button>
         </form>
       </div>
     </div>
 
-    <!-- 3. Village Detail Modal -->
+    <!-- Village Detail Modal -->
     <div id="villageDetailModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -259,10 +281,10 @@
             <span id="modalLocation" class="text-[11px] font-extrabold bg-amber-100 text-amber-950 px-2.5 py-1 rounded-md">Location</span>
             <h3 id="modalTitle" class="text-lg font-extrabold text-slate-900 mt-1">Village Name</h3>
           </div>
-          <button onclick="closeModal('villageDetailModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
+          <button onclick="closeModal('villageDetailModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold cursor-pointer">&times;</button>
         </div>
         <div class="space-y-4 text-xs">
-          <p id="modalDesc" class="text-slate-700 leading-relaxed font-medium"></p>
+          <p id="modalDesc" class="text-slate-700 font-medium"></p>
           <div id="modalStationBox" class="p-3 bg-amber-50 rounded-xl text-amber-950 font-bold border border-amber-200"></div>
           
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-300 space-y-2">
@@ -278,15 +300,20 @@
       </div>
     </div>
 
-    <!-- 4. Profile Dashboard Modal -->
+    <!-- Profile Dashboard Modal -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
           <h3 class="font-extrabold text-slate-900 text-sm">👤 Account Dashboard & Settings</h3>
-          <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
+          <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold cursor-pointer">&times;</button>
         </div>
 
-        <div class="space-y-4 text-xs">
+        <div class="flex gap-1 bg-slate-100 p-1 rounded-xl mb-4 text-xs font-bold">
+          <button onclick="switchProfileTab('overview')" id="profTabOverview" class="flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs cursor-pointer">Dashboard</button>
+          <button onclick="switchProfileTab('orders')" id="profTabOrders" class="flex-1 py-2 rounded-lg text-slate-600 cursor-pointer">Bookings & Payouts</button>
+        </div>
+
+        <div id="profileSectionOverview" class="space-y-4 text-xs">
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-1">
             <p class="font-extrabold text-slate-900 text-sm" id="profileUserName">Jagdish (Platform Owner)</p>
             <p class="text-slate-600 text-[11px] font-medium" id="profileUserEmail">jagdish@example.com</p>
@@ -300,6 +327,21 @@
             <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
               <p class="text-[10px] text-slate-500 font-bold uppercase">Total Listings</p>
               <p class="text-base font-extrabold text-amber-600 mt-0.5" id="totalListingsCount">0 Live</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="profileSectionOrders" class="space-y-3 text-xs hidden">
+          <h4 class="font-extrabold text-slate-900">📦 Active Bookings & Escrow Tracker</h4>
+          <div id="myBookingsList" class="space-y-2 max-h-48 overflow-y-auto">
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-900">3 Days Heritage Stay (Rohat)</p>
+                  <p class="text-[10px] text-amber-700 font-bold">Status: Escrow Secured 🔒</p>
+                </div>
+                <button onclick="releaseEscrowPayout(this)" class="bg-emerald-600 text-white font-extrabold px-3 py-2 rounded-xl text-[10px] cursor-pointer">💵 Release Payout</button>
+              </div>
             </div>
           </div>
         </div>
@@ -323,44 +365,40 @@
           description: 'Experience authentic rural lifestyle in the heart of Rajasthan with mud houses and desert traditions.',
           station: 'Pali Marwar Junction (25 km)',
           pkgTitle: '3 Days Authentic Heritage Stay',
-          pkgDesc: 'Mud house stay, organic chulha food, and camel farm tour included.',
+          pkgDesc: 'Mud house stay, organic chulha food, and farm tour included.',
           pkgPrice: '2499',
           activities: ['Clay Pottery', 'Folk Music', 'Camel Safari'],
           hostName: 'Ramesh Patel',
           phone: '+919876543210',
-          hostBankDetails: 'A/C: 1234567890, IFSC: SBIN0001234',
-          pehnawaPhoto: '',
-          foodPhoto: ''
+          hostBankDetails: 'A/C: 1234567890, IFSC: SBIN0001234'
         }
       ];
 
-      function openModal(id) {
-        const modal = document.getElementById(id);
-        if(modal) modal.style.display = 'block';
+      function switchProfileTab(tabName) {
+        document.getElementById('profileSectionOverview').classList.add('hidden');
+        document.getElementById('profileSectionOrders').classList.add('hidden');
+        document.getElementById('profTabOverview').className = "flex-1 py-2 rounded-lg text-slate-600 cursor-pointer";
+        document.getElementById('profTabOrders').className = "flex-1 py-2 rounded-lg text-slate-600 cursor-pointer";
+
+        if(tabName === 'overview') {
+          document.getElementById('profileSectionOverview').classList.remove('hidden');
+          document.getElementById('profTabOverview').className = "flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs font-bold cursor-pointer";
+        } else {
+          document.getElementById('profileSectionOrders').classList.remove('hidden');
+          document.getElementById('profTabOrders').className = "flex-1 py-2 rounded-lg bg-white text-slate-900 shadow-xs font-bold cursor-pointer";
+        }
       }
 
-      function closeModal(id) {
-        const modal = document.getElementById(id);
-        if(modal) modal.style.display = 'none';
-      }
+      function openModal(id) { document.getElementById(id).style.display = 'block'; }
+      function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
       window.onclick = function(e) {
-        if (e.target.classList.contains('modal')) {
-          e.target.style.display = 'none';
-        }
+        if (e.target.classList.contains('modal')) e.target.style.display = 'none';
       }
 
       function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        const targetTab = document.getElementById('tab-' + tabId);
-        if(targetTab) targetTab.classList.remove('hidden');
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-          btn.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all font-bold";
-        });
-        if(event && event.currentTarget) {
-          event.currentTarget.className = "tab-btn flex flex-col items-center min-w-[72px] p-2 rounded-2xl bg-amber-100 text-amber-950 border border-amber-300 transition-all font-bold shadow-xs";
-        }
+        document.getElementById('tab-' + tabId).classList.remove('hidden');
       }
 
       function showSuccessBanner(title, desc) {
@@ -368,7 +406,6 @@
         document.getElementById('successBannerTitle').innerText = title;
         document.getElementById('successBannerDesc').innerText = desc;
         banner.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => { banner.classList.add('hidden'); }, 5000);
       }
 
@@ -384,6 +421,13 @@
         showSuccessBanner("Escrow Payment Secured! 🛡️", "Funds locked safely in admin escrow account.");
       }
 
+      function releaseEscrowPayout(btn) {
+        if(confirm("Release payout to host bank account?")) {
+          btn.closest('div').innerHTML = `<p class="text-[10px] text-emerald-700 font-bold">Payout Released Successfully ✅</p>`;
+          showSuccessBanner("Payout Released! 💸", "Funds transferred to host.");
+        }
+      }
+
       function filterVillages() {
         let query = document.getElementById('searchInput').value.toLowerCase();
         let cards = document.querySelectorAll('.village-card');
@@ -393,7 +437,7 @@
         });
       }
 
-      function openVillageModal(title, location, desc, station, pkgTitle, pkgDesc, pkgPrice, activities, pehnawaImg, foodImg, hostPhone, hostBank) {
+      function openVillageModal(title, location, desc, station, pkgTitle, pkgDesc, pkgPrice, hostPhone, hostBank) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalLocation').innerText = location;
         document.getElementById('modalDesc').innerText = desc;
@@ -404,7 +448,7 @@
         let priceNum = Number(pkgPrice) || 1999;
         document.getElementById('modalPkgPrice').innerText = "₹" + priceNum.toLocaleString('en-IN') + " per person";
 
-        document.getElementById('modalBookBtn').setAttribute('onclick', `openPaymentModal('${pkgTitle || title}', ${priceNum}, '${hostPhone || "+919876543210"}', '${hostBank || "A/C: 123456"}')`);
+        document.getElementById('modalBookBtn').setAttribute('onclick', `openPaymentModal('${pkgTitle || title}', ${priceNum}, '${hostPhone}', '${hostBank}')`);
 
         openModal('villageDetailModal');
       }
@@ -420,6 +464,7 @@
         const desc = document.getElementById('listDesc').value;
         const pkgTitle = document.getElementById('listPkgTitle').value;
         const pkgPrice = document.getElementById('listPkgPrice').value;
+        const pkgDesc = document.getElementById('listPkgDesc').value;
 
         const locationStr = `${village}, ${district}, ${state}`;
         const title = `${village} Village - Cultural Hub`;
@@ -431,23 +476,22 @@
           description: desc,
           station,
           pkgTitle,
-          pkgDesc: "Comfortable stay and food included.",
+          pkgDesc,
           pkgPrice,
-          activities: ["Cultural Tour", "Desi Food"],
           hostName,
           phone,
-          hostBankDetails: "A/C: 123456"
+          hostBankDetails: "A/C Verified"
         };
 
         defaultListings.unshift(newListing);
         closeModal('listModal');
         document.getElementById('listVillageForm').reset();
         loadLiveGalleries();
-        showSuccessBanner("Village & Package Listed Successfully! 🌾", `"${title}" is now live for tourists.`);
+        showSuccessBanner("Village & Package Listed Successfully! 🌾", `"${title}" is now live.`);
       }
 
       function deleteVillageListing(id, elementCard) {
-        if(confirm("Are you sure you want to delete this listing?")) {
+        if(confirm("Delete this listing?")) {
           defaultListings = defaultListings.filter(item => item.id !== id);
           elementCard.remove();
           showSuccessBanner("Listing Deleted", "Village gallery removed.");
@@ -456,8 +500,8 @@
       }
 
       function handleLogout() {
-        if(confirm("Are you sure you want to log out?")) {
-          showSuccessBanner("Logged Out", "Successfully signed out of session.");
+        if(confirm("Log out?")) {
+          showSuccessBanner("Logged Out", "Successfully signed out.");
           closeModal('profileModal');
         }
       }
@@ -470,8 +514,6 @@
           let cardDiv = document.createElement('div');
           cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden border border-slate-200 custom-shadow flex flex-col justify-between";
           cardDiv.setAttribute('data-location', data.location.toLowerCase());
-
-          let actBadges = data.activities.map(a => `<span class="bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">✨ ${a}</span>`).join(' ');
 
           cardDiv.innerHTML = `
             <div>
@@ -486,7 +528,6 @@
                   <span class="text-xs font-extrabold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">₹${Number(data.pkgPrice).toLocaleString('en-IN')}</span>
                 </div>
                 <p class="text-xs text-slate-600 font-medium line-clamp-2">${data.description}</p>
-                <div class="flex flex-wrap gap-1.5 pt-1">${actBadges}</div>
                 <div class="text-[11px] bg-slate-50 p-2.5 rounded-xl text-slate-800 font-bold border border-slate-200">
                   🚆 Nearest Station: ${data.station}
                 </div>
@@ -494,7 +535,7 @@
             </div>
             <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-100 mt-2">
               <span class="text-[11px] text-slate-500 font-bold">📸 Host: ${data.hostName}</span>
-              <button onclick="openVillageModal('${data.title}', '${data.location}', '${data.description}', '${data.station}', '${data.pkgTitle}', '${data.pkgDesc}', '${data.pkgPrice}', ${JSON.stringify(data.activities).replace(/"/g, '&quot;')}, '', '', '${data.phone}', '${data.hostBankDetails}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs cursor-pointer">View Stay & Packages →</button>
+              <button onclick="openVillageModal('${data.title}', '${data.location}', '${data.description}', '${data.station}', '${data.pkgTitle}', '${data.pkgDesc}', '${data.pkgPrice}', '${data.phone}', '${data.hostBankDetails}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs cursor-pointer">View Stay & Packages →</button>
             </div>
           `;
           container.appendChild(cardDiv);
