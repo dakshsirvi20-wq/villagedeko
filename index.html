@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Village Deko (गांव देखो) - Authentic Rural Travel & Stays</title>
+    <title>Village Deko (गांव देखो) - Asli Gaon aur Sanskriti ki Duniya</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyCQxzHVjVKCxhAPGSruFcaDQY-UqCh8y_o",
@@ -38,6 +38,8 @@
       window.collection = collection;
       window.addDoc = addDoc;
       window.getDocs = getDocs;
+      window.deleteDoc = deleteDoc;
+      window.doc = doc;
       window.query = query;
       window.orderBy = orderBy;
       window.serverTimestamp = serverTimestamp;
@@ -54,7 +56,7 @@
           authActionBtn.onclick = handleLogout;
         } else {
           userNameEl.innerText = "Guest Traveler";
-          userEmailEl.innerText = "Login to access bookings";
+          userEmailEl.innerText = "Login to explore villages";
           authActionBtn.innerHTML = `<span>🔑</span> Login / Register`;
           authActionBtn.onclick = () => openModal('authModal');
         }
@@ -79,13 +81,15 @@
       }
       .modal-content {
         background-color: #fff;
-        margin: 4% auto;
+        margin: 3% auto;
         padding: 24px;
         border-radius: 24px;
-        max-width: 650px;
+        max-width: 700px;
         width: 92%;
         position: relative;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        max-height: 90vh;
+        overflow-y: auto;
       }
       #sidebar {
         transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -126,16 +130,16 @@
         <!-- Search Bar -->
         <div class="hidden md:flex items-center bg-slate-100/80 border border-slate-200/80 rounded-2xl px-4 py-2.5 w-full max-w-sm focus-within:bg-white focus-within:ring-2 focus-within:ring-amber-500/20 focus-within:border-amber-500 transition-all">
           <span class="text-slate-400 mr-2 text-sm">🔍</span>
-          <input type="text" placeholder="Search villages, states, hosts..." class="bg-transparent w-full text-xs sm:text-sm text-slate-800 focus:outline-none">
+          <input type="text" placeholder="Search villages, culture, traditions..." class="bg-transparent w-full text-xs sm:text-sm text-slate-800 focus:outline-none">
         </div>
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-2 sm:gap-3">
           <button onclick="openModal('listModal')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow">
-            + List Village
+            + List Village Gallery
           </button>
           <button onclick="openModal('photoModal')" class="hidden sm:inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-            📷 Share Photo
+            📷 Share Moment
           </button>
         </div>
       </div>
@@ -159,30 +163,27 @@
         </div>
 
         <nav class="p-4 space-y-1.5">
-          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Traveler Menu</p>
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Explorer Menu</p>
           
           <a href="#" onclick="openModal('profileModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-slate-200">
             <span class="text-lg">👤</span> My Profile
           </a>
           <a href="#" onclick="openModal('myBookingsModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-slate-200">
-            <span class="text-lg">📅</span> My Bookings & Trips
-          </a>
-          <a href="#" onclick="openModal('cancelModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-amber-400">
-            <span class="text-lg">❌</span> Cancel Booking / Refund
+            <span class="text-lg">📅</span> My Village Visits
           </a>
           <a href="#" onclick="openModal('wishlistModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-slate-200">
-            <span class="text-lg">❤️</span> Saved Wishlist
+            <span class="text-lg">❤️</span> Saved Village Albums
           </a>
 
           <div class="pt-4 pb-1">
-            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Support & Settings</p>
+            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Support & Admin</p>
           </div>
 
           <a href="#" onclick="openModal('settingsModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-slate-200">
             <span class="text-lg">⚙️</span> App Settings
           </a>
           <a href="#" onclick="openModal('supportModal'); toggleSidebar();" class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl hover:bg-slate-800/80 text-sm font-medium transition-all text-slate-200">
-            <span class="text-lg">📞</span> Help & Host Support
+            <span class="text-lg">📞</span> Help & Coordinators
           </a>
         </nav>
       </div>
@@ -201,33 +202,33 @@
         
         <div class="relative z-10 max-w-3xl">
           <span class="inline-block bg-white/20 backdrop-blur-md text-white text-xs font-semibold px-3.5 py-1.5 rounded-full mb-4">
-            ✨ Asli Gaon ke Homestays aur Sanskar
+            ✨ Asli Bharat, Asli Gaon aur Wahan ke Log
           </span>
           <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-            Experience Real India Through Village Homestays
+            Explore India's Villages: Culture, Clothing & Lifestyle
           </h2>
           <p class="text-sm sm:text-lg text-amber-100 font-normal mb-8 leading-relaxed">
-            Discover pan-India villages, live with local rural families, listen to folk tales at Village Chaupal, and experience true village life.
+            Dekhein gaon ke log kaise rehte hain, kya pehnte hain, unke khet, kachhe raste, aur chaupal ki kahaniyan—ek hi jagah par gaon ka poora album.
           </p>
           
           <div class="flex flex-wrap gap-3">
             <a href="#explore-villages" class="bg-white hover:bg-amber-50 text-amber-900 font-bold py-3.5 px-7 rounded-2xl shadow-lg transition-all text-sm sm:text-base">
-              🏡 Explore Village Stays
+              👁️ Explore Village Albums
             </a>
             <a href="#chaupal-section" class="bg-amber-900/30 hover:bg-amber-900/50 border border-white/30 text-white font-bold py-3.5 px-7 rounded-2xl backdrop-blur-md transition-all text-sm sm:text-base">
-              🔥 Visit Chaupal
+              🔥 Village Chaupal
             </a>
           </div>
         </div>
       </div>
     </main>
 
-    <!-- SECTION: Listings & State Filters -->
+    <!-- SECTION: Village Albums & Filters -->
     <section id="explore-villages" class="max-w-7xl mx-auto px-4 sm:px-8 py-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-3">
         <div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Explore Villages & Homestays</h3>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">Book direct stays in real village homes hosted by local rural families.</p>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Gaon ki Duniya (Village Albums & Culture)</h3>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">Kisi bhi gaon par click karke uski poori photo gallery, pehnawa aur khet dekhein.</p>
         </div>
       </div>
 
@@ -241,79 +242,78 @@
         <button onclick="filterListings('Himachal')" class="filter-btn shrink-0 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">Himachal</button>
       </div>
 
-      <!-- Listings Grid -->
+      <!-- Listings Grid (Village Cards) -->
       <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
-        <!-- Static Dummy Card 1 -->
+        
+        <!-- Static Dummy Village Card 1 -->
         <div class="village-card bg-white rounded-3xl overflow-hidden custom-card-shadow border border-slate-100 flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1" data-state="Rajasthan">
           <div>
             <div class="h-52 bg-gradient-to-tr from-amber-100 to-orange-50 flex items-center justify-center text-4xl relative">
-              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Rajasthan</span>
+              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Pali, Rajasthan</span>
               🏜️
             </div>
             <div class="p-5">
-              <div class="flex justify-between items-start gap-2 mb-2">
-                <h4 class="text-base sm:text-lg font-bold text-slate-900">Patel Family Desert Homestay</h4>
-                <span class="text-xs font-bold bg-amber-50 text-amber-700 px-2.5 py-1 rounded-lg shrink-0">₹1,499 / night</span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Live with a traditional Marwari family, enjoy organic food on chulha, and experience rural desert life.</p>
-              <div class="mt-3.5 text-xs text-amber-800 bg-amber-50/80 p-2.5 rounded-xl font-medium border border-amber-100">
-                ✨ Activities: Cart Ride (₹200) | Farming Tour (₹150)
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1">Rohat Village - Desert Life & Culture</h4>
+              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Yahan log traditional safa aur kurta-dhoti pehnte hain. Ret ke khet, bailgadi aur mitti ke ghar is gaon ki pehchan hain.</p>
+              
+              <div class="mt-3.5 flex flex-wrap gap-1.5 text-[11px]">
+                <span class="bg-amber-50 text-amber-800 px-2.5 py-1 rounded-lg font-medium">👗 Traditional Poshak & Safa</span>
+                <span class="bg-amber-50 text-amber-800 px-2.5 py-1 rounded-lg font-medium">🐄 Gaushala & Bailgadi</span>
               </div>
             </div>
           </div>
           <div class="p-5 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
-            <span class="text-xs text-slate-500 font-medium">⭐ 4.9 (Verified Homestay)</span>
-            <button onclick="openModal('bookingModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">Book Stay</button>
+            <span class="text-xs text-slate-500 font-medium">📸 12 Photos in Album</span>
+            <button onclick="openVillageModal('Rohat Village - Desert Life', 'Pali, Rajasthan', 'Yahan log traditional safa aur kurta-dhoti pehnte hain. Ret ke khet, bailgadi aur mitti ke ghar is gaon ki pehchan hain. Subah chulhe par bajre ki roti aur rabdi banti hai.', ['Desert view with camels', 'Traditional Marwari attire', 'Chulha cooking setup', 'Village Chaupal gathering'])" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">View Village Album →</button>
           </div>
         </div>
 
-        <!-- Static Dummy Card 2 -->
+        <!-- Static Dummy Village Card 2 -->
         <div class="village-card bg-white rounded-3xl overflow-hidden custom-card-shadow border border-slate-100 flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1" data-state="Gujarat">
           <div>
             <div class="h-52 bg-gradient-to-tr from-emerald-100 to-teal-50 flex items-center justify-center text-4xl relative">
-              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Gujarat</span>
+              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Kutch, Gujarat</span>
               🏺
             </div>
             <div class="p-5">
-              <div class="flex justify-between items-start gap-2 mb-2">
-                <h4 class="text-base sm:text-lg font-bold text-slate-900">Potter's Mud Cottage Stay</h4>
-                <span class="text-xs font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg shrink-0">₹1,899 / night</span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Stay in authentic handcrafted mud cottages and learn unique Rogan art and pottery from master artisans.</p>
-              <div class="mt-3.5 text-xs text-emerald-800 bg-emerald-50/80 p-2.5 rounded-xl font-medium border border-emerald-100">
-                ✨ Activities: Pottery Workshop (₹300)
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1">Nirona Village - Artisan & Bhungas</h4>
+              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Kutch ke is gaon mein 'Bhungas' (gol mitti ke ghar) hote hain. Yahan ke log colorful embroidered kapde pehnte hain aur rogan art banate hain.</p>
+              
+              <div class="mt-3.5 flex flex-wrap gap-1.5 text-[11px]">
+                <span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg font-medium">🎨 Rogan Art & Pottery</span>
+                <span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg font-medium">🏡 Traditional Bhunga Houses</span>
               </div>
             </div>
           </div>
           <div class="p-5 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
-            <span class="text-xs text-slate-500 font-medium">⭐ 4.8 (Artisan Village)</span>
-            <button onclick="openModal('bookingModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">Book Stay</button>
+            <span class="text-xs text-slate-500 font-medium">📸 15 Photos in Album</span>
+            <button onclick="openVillageModal('Nirona Village - Artisan Hub', 'Kutch, Gujarat', 'Kutch ke is gaon mein Bhungas (gol mitti ke ghar) hote hain. Yahan ke log colorful embroidered kapde pehnte hain aur rogan art, copper bell craft sikhate hain.', ['Bhunga mud houses view', 'Kutch embroidery attire', 'Copper bell making workshop', 'Local village elders'])" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">View Village Album →</button>
           </div>
         </div>
 
-        <!-- Static Dummy Card 3 -->
+        <!-- Static Dummy Village Card 3 -->
         <div class="village-card bg-white rounded-3xl overflow-hidden custom-card-shadow border border-slate-100 flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1 sm:col-span-2 lg:col-span-1" data-state="Kerala">
           <div>
             <div class="h-52 bg-gradient-to-tr from-blue-100 to-sky-50 flex items-center justify-center text-4xl relative">
-              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Kerala</span>
+              <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">Alleppey, Kerala</span>
               🌴
             </div>
             <div class="p-5">
-              <div class="flex justify-between items-start gap-2 mb-2">
-                <h4 class="text-base sm:text-lg font-bold text-slate-900">Backwater Heritage Village Home</h4>
-                <span class="text-xs font-bold bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg shrink-0">₹3,199 / night</span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Experience lakeside village living with traditional canoe rides and genuine southern family hospitality.</p>
-              <div class="mt-3.5 text-xs text-blue-800 bg-blue-50/80 p-2.5 rounded-xl font-medium border border-blue-100">
-                ✨ Activities: Canoe Ride (₹400) | Fishing (₹250)
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1">Kuttanad Backwater Village</h4>
+              <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">Nadiyon ke kinare base is gaon mein log safed mundu pehnte hain. Pani ke beech kheti (sea level se neeche) yahan ki sabse badi khasiyat hai.</p>
+              
+              <div class="mt-3.5 flex flex-wrap gap-1.5 text-[11px]">
+                <span class="bg-blue-50 text-blue-800 px-2.5 py-1 rounded-lg font-medium">🛶 Canoe & Backwaters</span>
+                <span class="bg-blue-50 text-blue-800 px-2.5 py-1 rounded-lg font-medium">🥥 Coconut Farms</span>
               </div>
             </div>
           </div>
           <div class="p-5 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
-            <span class="text-xs text-slate-500 font-medium">⭐ 4.9 (Heritage Stay)</span>
-            <button onclick="openModal('bookingModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">Book Stay</button>
+            <span class="text-xs text-slate-500 font-medium">📸 10 Photos in Album</span>
+            <button onclick="openVillageModal('Kuttanad Backwater Village', 'Alleppey, Kerala', 'Nadiyon ke kinare base is gaon mein log safed mundu pehnte hain. Pani ke beech kheti (sea level se neeche) yahan ki sabse badi khasiyat hai. Nariyal ke ped aur naav yahan ka jeevan hain.', ['Backwater river view', 'Traditional Kerala attire', 'Canoe boat riding', 'Local spice gardens'])" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">View Village Album →</button>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -323,18 +323,18 @@
         <div class="text-center max-w-2xl mx-auto mb-8">
           <span class="text-xs bg-amber-200/80 text-amber-900 px-3.5 py-1 rounded-full font-bold">Oral Heritage & Folklore</span>
           <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">🔥 Village Chaupal (गांव की चौपाल)</h3>
-          <p class="text-xs sm:text-sm text-slate-600 mt-1">Sit around the virtual fireplace to read legendary folk tales, local myths, and village lore.</p>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Gaon ke buzurgon ki zubaani suniye purani kahaniyan aur lok-kathaen.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div class="bg-white p-6 rounded-2xl shadow-xs border border-amber-100 flex flex-col justify-between">
             <div>
               <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md font-medium">Rajasthan Folklore</span>
-              <h4 class="text-base font-bold text-slate-900 mt-3">The Legend of Veer Tejaji & Marwar Folk Songs</h4>
-              <p class="text-xs sm:text-sm text-slate-600 mt-2">Discover how ancient ballads sung by village elders in Pali preserve tales of bravery, sacrifice, and monsoon prayers.</p>
+              <h4 class="text-base font-bold text-slate-900 mt-3">Veer Tejaji aur Pali ke Lok Geet</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">Gaon ki chaupal par gaaye jane wale geet jo barish aur khet ki mitti ki khushboo bayaan karte hain.</p>
             </div>
             <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
-              <span>📖 Told by Rooparam Ji</span>
+              <span>📖 Rooparam Ji</span>
               <span class="text-amber-600 font-bold cursor-pointer hover:underline">Read Story →</span>
             </div>
           </div>
@@ -342,11 +342,11 @@
           <div class="bg-white p-6 rounded-2xl shadow-xs border border-amber-100 flex flex-col justify-between">
             <div>
               <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md font-medium">Gujarat Heritage</span>
-              <h4 class="text-base font-bold text-slate-900 mt-3">The Secret of Kutch Bell Makers (Luhar Tradition)</h4>
-              <p class="text-xs sm:text-sm text-slate-600 mt-2">A 400-year-old craft passed down generations where copper-coated iron bells create musical notes tuned to desert winds.</p>
+              <h4 class="text-base font-bold text-slate-900 mt-3">Kutch ke Ghumantu Kalakar</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">Registan ke beeche sangeet aur hastkala ki 400 saal purani parampara.</p>
             </div>
             <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
-              <span>📖 Told by Vala Family</span>
+              <span>📖 Vala Family</span>
               <span class="text-amber-600 font-bold cursor-pointer hover:underline">Read Story →</span>
             </div>
           </div>
@@ -354,11 +354,11 @@
           <div class="bg-white p-6 rounded-2xl shadow-xs border border-amber-100 flex flex-col justify-between sm:col-span-2 lg:col-span-1">
             <div>
               <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md font-medium">Himachal Lore</span>
-              <h4 class="text-base font-bold text-slate-900 mt-3">The Deodar Forest Spirits of Pragpur</h4>
-              <p class="text-xs sm:text-sm text-slate-600 mt-2">Mystical tales of village protectors and sacred groves where villagers worship nature and ancient mountain peaks.</p>
+              <h4 class="text-base font-bold text-slate-900 mt-3">Pahadi Devta aur Van Sanskriti</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">Pahadon ke gaon mein prakriti ki pooja aur vriksho se jude anokhe niyam.</p>
             </div>
             <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
-              <span>📖 Told by Thakur Ram</span>
+              <span>📖 Thakur Ram</span>
               <span class="text-amber-600 font-bold cursor-pointer hover:underline">Read Story →</span>
             </div>
           </div>
@@ -367,13 +367,47 @@
     </section>
 
     <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20know%20more%20about%20Village%20Deko%20stays." target="_blank" class="fixed bottom-6 right-6 z-45 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-3xl transition-transform hover:scale-110" title="Chat on WhatsApp">
+    <a href="https://wa.me/919167588371?text=Hello%20Jagdish,%20I%20want%20to%20explore%20villages%20on%20Village%20Deko." target="_blank" class="fixed bottom-6 right-6 z-45 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-3xl transition-transform hover:scale-110" title="Chat on WhatsApp">
       💬
     </a>
 
     <!-- ALL MODALS -->
 
-    <!-- 1. Authentication Modal -->
+    <!-- 1. Village Album Detail Modal (Full Gallery View) -->
+    <div id="villageDetailModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4 border-b pb-3">
+          <div>
+            <span id="modalVillageLocation" class="text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md">Location</span>
+            <h3 id="modalVillageTitle" class="text-xl font-extrabold text-slate-900 mt-1">Village Name</h3>
+          </div>
+          <button onclick="closeModal('villageDetailModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
+        </div>
+        
+        <div class="space-y-4 text-sm">
+          <div>
+            <h4 class="font-bold text-slate-800 mb-1">📖 Gaon ki Kahani aur Pehnawa (Culture & Lifestyle)</h4>
+            <p id="modalVillageDesc" class="text-slate-600 text-xs sm:text-sm leading-relaxed">Description goes here...</p>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-slate-800 mb-2">📸 Gaon ki Photo Gallery (Pehnawa, Khet & Log)</h4>
+            <div id="modalGalleryGrid" class="grid grid-cols-2 sm:grid-cols-2 gap-3">
+              <!-- Dynamically populated photos -->
+            </div>
+          </div>
+
+          <div class="pt-4 border-t flex justify-between items-center">
+            <span class="text-xs text-slate-500 font-medium">✨ Asli Gaon Darshan by Village Deko</span>
+            <a id="whatsappInquireBtn" href="https://wa.me/919167588371" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-sm">
+              💬 Inquire on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Authentication Modal -->
     <div id="authModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -401,121 +435,58 @@
       </div>
     </div>
 
-    <!-- 2. Booking Modal -->
-    <div id="bookingModal" class="modal">
-      <div class="modal-content">
-        <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-slate-900">Book Village Homestay & Activities</h3>
-          <button onclick="closeModal('bookingModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
-        </div>
-        <form action="https://formsubmit.co/Dakshsirvi20@gmail.com" method="POST" class="space-y-4 text-sm">
-          <input type="hidden" name="_subject" value="New Village Homestay Booking Request!">
-          <input type="hidden" name="_captcha" value="false">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1">Full Name</label>
-              <input type="text" name="Traveler Name" placeholder="Amit Kumar" required class="w-full px-4 py-2.5 border rounded-xl">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1">Phone / WhatsApp</label>
-              <input type="tel" name="Traveler Phone" placeholder="+91 98765 43210" required class="w-full px-4 py-2.5 border rounded-xl">
-            </div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1">Village Homestay Name</label>
-              <input type="text" name="Destination Village Stay" placeholder="Patel Family Desert Homestay" required class="w-full px-4 py-2.5 border rounded-xl">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1">Visit Date</label>
-              <input type="date" name="Visit Date" required class="w-full px-4 py-2.5 border rounded-xl">
-            </div>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Select Village Activities (Optional)</label>
-            <div class="p-3.5 bg-slate-50 border rounded-xl space-y-2">
-              <label class="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-slate-700">
-                <input type="checkbox" name="Interested Activities" value="Cart Ride" class="w-4 h-4 text-amber-600 rounded">
-                <span>Bailgadi / Cart Ride (As per host)</span>
-              </label>
-              <label class="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-slate-700">
-                <input type="checkbox" name="Interested Activities" value="Farming Tour" class="w-4 h-4 text-amber-600 rounded">
-                <span>Farming / Kheti Tour (As per host)</span>
-              </label>
-              <label class="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-slate-700">
-                <input type="checkbox" name="Interested Activities" value="Workshop" class="w-4 h-4 text-amber-600 rounded">
-                <span>Chulha Food / Pottery Workshop (As per host)</span>
-              </label>
-            </div>
-          </div>
-          <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm">Confirm Booking Request</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- 3. List Village Modal -->
+    <!-- 3. List Village Gallery Modal (Multiple Photos Upload) -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-          <h3 class="text-lg font-extrabold text-white">List Your Village Homestay</h3>
+          <h3 class="text-lg font-extrabold text-white">List Village Gallery & Culture</h3>
           <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
         
-        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-sm">
-          <input type="hidden" name="_subject" value="New Village Homestay Listing!">
+        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-sm" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" value="New Village Culture Gallery Listing!">
           <input type="hidden" name="_captcha" value="false">
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block font-semibold text-slate-300 mb-1">Host Name</label>
+              <label class="block font-semibold text-slate-300 mb-1">Your Name / Host</label>
               <input type="text" id="listHostName" name="Host Name" placeholder="Ramesh Patel" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 mb-1">Phone Number</label>
+              <label class="block font-semibold text-slate-300 mb-1">Phone / WhatsApp</label>
               <input type="tel" id="listPhone" name="Host Phone" placeholder="+91 98765 43210" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
             </div>
           </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block font-semibold text-slate-300 mb-1">Village & State</label>
+              <label class="block font-semibold text-slate-300 mb-1">Village & State Location</label>
               <input type="text" id="listLocation" name="Village Location" placeholder="Pali, Rajasthan" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
             </div>
             <div>
-              <label class="block font-semibold text-slate-300 mb-1">Stay Price (₹ / night)</label>
-              <input type="number" id="listPrice" name="Price per Night" placeholder="1499" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
+              <label class="block font-semibold text-slate-300 mb-1">Village Title</label>
+              <input type="text" id="listTitle" name="Village Title" placeholder="Rohat Village - Desert Life" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
             </div>
           </div>
+
           <div>
-            <label class="block font-semibold text-slate-300 mb-1">Village Stay Title</label>
-            <input type="text" id="listTitle" name="Stay Title" placeholder="Desert Family Homestay" required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-300 mb-1">Description</label>
-            <textarea id="listDesc" name="Description" rows="2" placeholder="Tell travelers about your village home and food..." required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"></textarea>
+            <label class="block font-semibold text-slate-300 mb-1">Gaon ke Log, Pehnawa aur Sanskriti (Description)</label>
+            <textarea id="listDesc" name="Village Description" rows="3" placeholder="Yahan ke log kaise rehte hain, kya pehnte hain, khet aur chaupal ke baare mein likhiye..." required class="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"></textarea>
           </div>
 
-          <!-- Custom Activities Builder -->
+          <!-- Multiple Photos Upload Option -->
           <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
-            <div class="flex justify-between items-center mb-3">
-              <label class="text-xs font-bold text-amber-400 uppercase tracking-wide">Custom Village Activities & Prices</label>
-              <button type="button" onclick="addActivityRow()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all">+ Add Activity</button>
-            </div>
-            
-            <div id="activitiesContainer" class="space-y-2.5">
-              <div class="flex gap-2 items-center activity-row">
-                <input type="text" placeholder="Activity Name (e.g. Cart Ride)" class="activity-name w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white" value="Cart Ride">
-                <input type="number" placeholder="Price (₹)" class="activity-price w-28 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white" value="200">
-                <button type="button" onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-300 font-bold px-2 text-lg">&times;</button>
-              </div>
-            </div>
+            <label class="block font-semibold text-amber-400 mb-1 text-xs uppercase tracking-wide">Upload Multiple Village Photos (Album)</label>
+            <input type="file" id="listPhotos" name="Village Gallery Photos" accept="image/*" multiple class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-300">
+            <p class="text-[11px] text-slate-400 mt-1">Select multiple photos (khet, pehnawa, ghar, log) taaki ek sath album ban sake.</p>
           </div>
 
-          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md">Publish Village Listing Live</button>
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md">Publish Village Album Live</button>
         </form>
       </div>
     </div>
 
-    <!-- 4. Share Photo Modal -->
+    <!-- 4. Share Moment Modal -->
     <div id="photoModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -523,7 +494,7 @@
           <button onclick="closeModal('photoModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
         </div>
         <form action="https://formsubmit.co/Dakshsirvi20@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-4 text-sm">
-          <input type="hidden" name="_subject" value="New Village Photo Post!">
+          <input type="hidden" name="_subject" value="New Village Moment Photo!">
           <input type="hidden" name="_captcha" value="false">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -541,9 +512,9 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Caption / Story</label>
-            <textarea name="Photo Caption" rows="2" placeholder="Write something special about village life..." required class="w-full px-4 py-2.5 border rounded-xl"></textarea>
+            <textarea name="Photo Caption" rows="2" placeholder="Write about village lifestyle..." required class="w-full px-4 py-2.5 border rounded-xl"></textarea>
           </div>
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm">📤 Post Photo</button>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm">📤 Post Moment</button>
         </form>
       </div>
     </div>
@@ -552,81 +523,58 @@
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-slate-900">👤 Traveler Profile</h3>
+          <h3 class="text-lg font-extrabold text-slate-900">👤 Explorer Profile</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
         </div>
         <div class="space-y-3 text-sm">
           <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
             <p class="font-bold text-amber-900">Account Status: Active Session</p>
-            <p class="text-xs text-amber-700 mt-0.5">Secured via Firebase Authentication (`villagedekonew`)</p>
+            <p class="text-xs text-amber-700 mt-0.5">Secured via Firebase Authentication</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 6. My Bookings Modal -->
+    <!-- 6. My Bookings / Visits Modal -->
     <div id="myBookingsModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-slate-900">📅 My Bookings & Trips</h3>
+          <h3 class="text-lg font-extrabold text-slate-900">📅 My Village Visits & Planned Trips</h3>
           <button onclick="closeModal('myBookingsModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
         </div>
         <div class="space-y-3 text-sm">
           <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 flex justify-between items-center gap-3">
             <div>
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold uppercase tracking-wide">Confirmed</span>
-              <h4 class="font-bold text-slate-900 mt-2">Patel Family Desert Homestay</h4>
-              <p class="text-xs text-slate-500 mt-0.5">Date: 15 March 2026 | Pali</p>
+              <span class="text-[10px] bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold uppercase tracking-wide">Planned Visit</span>
+              <h4 class="font-bold text-slate-900 mt-2">Rohat Village Tour - Pali</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Date: 15 March 2026</p>
             </div>
-            <span class="font-bold text-amber-700 text-base shrink-0">₹1,499</span>
+            <span class="font-bold text-amber-700 text-xs shrink-0">Free Cultural Trip</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 7. Cancel Modal -->
-    <div id="cancelModal" class="modal">
-      <div class="modal-content">
-        <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-red-600">❌ Cancel Booking / Refund</h3>
-          <button onclick="closeModal('cancelModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
-        </div>
-        <form onsubmit="event.preventDefault(); alert('Cancellation request submitted.'); closeModal('cancelModal');" class="space-y-4 text-sm">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Select Booking</label>
-            <select class="w-full px-4 py-2.5 border rounded-xl">
-              <option>Patel Family Desert Homestay (15 March)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Reason for Cancellation</label>
-            <textarea rows="2" placeholder="Type reason..." required class="w-full px-4 py-2.5 border rounded-xl"></textarea>
-          </div>
-          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all">Submit Cancellation</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- 8. Wishlist Modal -->
+    <!-- 7. Wishlist Modal -->
     <div id="wishlistModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-slate-900">❤️ Saved Wishlist</h3>
+          <h3 class="text-lg font-extrabold text-slate-900">❤️ Saved Village Albums</h3>
           <button onclick="closeModal('wishlistModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
         </div>
         <div class="space-y-3 text-sm">
           <div class="p-4 border rounded-2xl flex justify-between items-center bg-slate-50 gap-3">
             <div>
-              <p class="font-bold text-slate-900">Potter's Mud Cottage Stay</p>
-              <p class="text-xs text-slate-500 mt-0.5">Nirona, Gujarat</p>
+              <p class="font-bold text-slate-900">Nirona Village - Artisan Hub</p>
+              <p class="text-xs text-slate-500 mt-0.5">Kutch, Gujarat</p>
             </div>
-            <button onclick="openModal('bookingModal'); closeModal('wishlistModal');" class="bg-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shrink-0">Book Now</button>
+            <button onclick="openModal('villageDetailModal'); closeModal('wishlistModal');" class="bg-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shrink-0">View Album</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 9. Settings Modal -->
+    <!-- 8. Settings Modal -->
     <div id="settingsModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -646,20 +594,20 @@
       </div>
     </div>
 
-    <!-- 10. Support Modal -->
+    <!-- 9. Support Modal -->
     <div id="supportModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
-          <h3 class="text-lg font-extrabold text-slate-900">📞 Help & Host Support</h3>
+          <h3 class="text-lg font-extrabold text-slate-900">📞 Help & Coordinators</h3>
           <button onclick="closeModal('supportModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
         </div>
         <div class="space-y-3 text-sm">
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200">
-            <p class="font-bold text-slate-900">Jagdish (Admin Support)</p>
+            <p class="font-bold text-slate-900">Jagdish (Founder & Admin)</p>
             <a href="tel:9167588371" class="text-amber-600 font-bold mt-1 inline-block">📞 9167588371</a>
           </div>
           <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200">
-            <p class="font-bold text-slate-900">Vaibhav (Host Coordinator)</p>
+            <p class="font-bold text-slate-900">Vaibhav (Coordinator)</p>
             <a href="tel:9756123123" class="text-amber-600 font-bold mt-1 inline-block">📞 9756123123</a>
           </div>
         </div>
@@ -689,6 +637,28 @@
         if (event.target.classList.contains('modal')) {
           event.target.style.display = "none";
         }
+      }
+
+      // Open Village Album Detail Modal with dynamic info & gallery
+      function openVillageModal(title, location, desc, photoHighlights) {
+        document.getElementById('modalVillageTitle').innerText = title;
+        document.getElementById('modalVillageLocation').innerText = location;
+        document.getElementById('modalVillageDesc').innerText = desc;
+        
+        const galleryGrid = document.getElementById('modalGalleryGrid');
+        galleryGrid.innerHTML = '';
+        
+        photoHighlights.forEach((ph, idx) => {
+          galleryGrid.innerHTML += `
+            <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200 text-center flex flex-col justify-center items-center h-36">
+              <span class="text-3xl mb-1">🖼️</span>
+              <p class="text-xs font-bold text-slate-700">${ph}</p>
+              <span class="text-[10px] text-slate-400 mt-0.5">Photo #${idx + 1}</span>
+            </div>
+          `;
+        });
+
+        openModal('villageDetailModal');
       }
 
       function toggleAuthMode() {
@@ -753,98 +723,91 @@
         });
       }
 
-      function addActivityRow() {
-        const container = document.getElementById('activitiesContainer');
-        const rowHTML = `
-          <div class="flex gap-2 items-center activity-row">
-            <input type="text" placeholder="Activity Name (e.g. Farming Tour)" class="activity-name w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
-            <input type="number" placeholder="Price (₹)" class="activity-price w-28 px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
-            <button type="button" onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-300 font-bold px-2 text-lg">&times;</button>
-          </div>
-        `;
-        container.insertAdjacentHTML('beforeend', rowHTML);
-      }
-
       async function handleVillageListing(e) {
         e.preventDefault();
         const hostName = document.getElementById('listHostName').value;
         const phone = document.getElementById('listPhone').value;
         const location = document.getElementById('listLocation').value;
-        const price = document.getElementById('listPrice').value;
         const title = document.getElementById('listTitle').value;
         const description = document.getElementById('listDesc').value;
 
-        let activitiesText = "";
-        const activityRows = document.querySelectorAll('.activity-row');
-        activityRows.forEach(row => {
-          const name = row.querySelector('.activity-name').value;
-          const cost = row.querySelector('.activity-price').value;
-          if (name) {
-            activitiesText += `${name} (₹${cost || 0}) | `;
-          }
-        });
-
         try {
-          await window.addDoc(window.collection(window.db, "listings"), {
-            hostName, phone, location, price, title, description, activities: activitiesText || "Standard Village Tour", createdAt: window.serverTimestamp()
+          await window.addDoc(window.collection(window.db, "villageGalleries"), {
+            hostName, phone, location, title, description, createdAt: window.serverTimestamp()
           });
         } catch (error) {
           console.log("Firestore notice: " + error.message);
         }
 
         const formData = new FormData(document.getElementById('listVillageForm'));
-        if(activitiesText) formData.append("Custom Activities & Prices", activitiesText);
         
         fetch("https://formsubmit.co/ajax/Dakshsirvi20@gmail.com", {
             method: "POST",
             body: formData
         }).catch(err => console.log("Email notification error"));
 
-        alert("Village Homestay listing published live successfully!");
+        alert("Village Culture Gallery published live successfully!");
         closeModal('listModal');
         document.getElementById('listVillageForm').reset();
-        loadLiveListings();
+        loadLiveGalleries();
       }
 
-      async function loadLiveListings() {
-        try {
-          const querySnapshot = await window.getDocs(window.collection(window.db, "listings"));
-          const container = document.getElementById('dynamicListingsContainer');
-          
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            const cardHTML = `
-              <div class="village-card bg-white rounded-3xl overflow-hidden custom-card-shadow border border-slate-100 flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1" data-state="${data.location}">
-                <div>
-                  <div class="h-52 bg-gradient-to-tr from-amber-100 to-orange-50 flex items-center justify-center text-4xl relative">
-                    <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">${data.location}</span>
-                    🏡
-                  </div>
-                  <div class="p-5">
-                    <div class="flex justify-between items-start gap-2 mb-2">
-                      <h4 class="text-base sm:text-lg font-bold text-slate-900">${data.title}</h4>
-                      <span class="text-xs font-bold bg-amber-50 text-amber-700 px-2.5 py-1 rounded-lg shrink-0">₹${data.price} / night</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">${data.description}</p>
-                    <div class="mt-3.5 text-xs text-amber-800 bg-amber-50/80 p-2.5 rounded-xl font-medium border border-amber-100">
-                      ✨ Activities: ${data.activities || 'Village Tour'}
-                    </div>
-                  </div>
-                </div>
-                <div class="p-5 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
-                  <span class="text-xs text-slate-500 font-medium">Host: ${data.hostName}</span>
-                  <button onclick="openModal('bookingModal')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">Book Stay</button>
-                </div>
-              </div>
-            `;
-            container.insertAdjacentHTML('afterbegin', cardHTML);
-          });
-        } catch (err) {
-          console.log("Database fetch notice: configure your Firebase credentials.");
+      // Delete Function for Live Listings (Controlled by Host or Admin Jagdish)
+      async function deleteVillageListing(docId, elementCard) {
+        if(confirm("Kya aap sach mein is village gallery ko delete karna chahte hain?")) {
+          try {
+            await window.deleteDoc(window.doc(window.db, "villageGalleries", docId));
+            elementCard.remove();
+            alert("Village gallery successfully deleted!");
+          } catch(err) {
+            elementCard.remove();
+            alert("Listing removed from view!");
+          }
         }
       }
 
-      window.onload = loadLiveListings;
+      async function loadLiveGalleries() {
+        try {
+          const querySnapshot = await window.getDocs(window.collection(window.db, "villageGalleries"));
+          const container = document.getElementById('dynamicListingsContainer');
+          
+          querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            const docId = docSnap.id;
+
+            const cardDiv = document.createElement('div');
+            cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden custom-card-shadow border border-slate-100 flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1";
+            cardDiv.setAttribute('data-state', data.location);
+
+            cardDiv.innerHTML = `
+              <div>
+                <div class="h-52 bg-gradient-to-tr from-amber-100 to-orange-50 flex items-center justify-center text-4xl relative">
+                  <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs font-medium px-3 py-1 rounded-full">${data.location}</span>
+                  🌾
+                  <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg backdrop-blur-md transition-all shadow-sm" title="Delete Listing">🗑️ Delete</button>
+                </div>
+                <div class="p-5">
+                  <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1">${data.title}</h4>
+                  <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">${data.description}</p>
+                  
+                  <div class="mt-3.5 flex flex-wrap gap-1.5 text-[11px]">
+                    <span class="bg-amber-50 text-amber-800 px-2.5 py-1 rounded-lg font-medium">✨ Host: ${data.hostName}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-5 pt-0 flex justify-between items-center border-t border-slate-50 mt-2">
+                <span class="text-xs text-slate-500 font-medium">📸 Village Album</span>
+                <button onclick="openVillageModal('${data.title}', '${data.location}', '${data.description}', ['Village Entrance & Khet', 'Local Attire & People', 'Chulha & Kitchen Setup', 'Chaupal & Community'])" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">View Village Album →</button>
+              </div>
+            `;
+            container.prepend(cardDiv);
+          });
+        } catch (err) {
+          console.log("Database fetch notice.");
+        }
+      }
+
+      window.onload = loadLiveGalleries;
     </script>
 
     <!-- Footer -->
@@ -852,11 +815,11 @@
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h2 class="text-white text-lg font-bold tracking-tight"><span class="text-amber-500">Village</span>Deko <span class="text-xs text-amber-400 font-normal">(गांव देखो)</span></h2>
-          <p class="text-xs sm:text-sm mt-1 text-slate-400">Celebrating India's rich rural culture, folk art, and authentic village homestays.</p>
+          <p class="text-xs sm:text-sm mt-1 text-slate-400">Celebrating India's rich rural culture, clothing, lifestyle, and traditions.</p>
         </div>
         
         <div class="text-xs sm:text-sm space-y-1">
-          <p class="text-white font-semibold">Contact Support:</p>
+          <p class="text-white font-semibold">Contact Coordinators:</p>
           <p>📞 Jagdish: <a href="tel:9167588371" class="text-amber-400 hover:underline">9167588371</a></p>
           <p>📞 Vaibhav: <a href="tel:9756123123" class="text-amber-400 hover:underline">9756123123</a></p>
         </div>
