@@ -302,7 +302,7 @@
 
     <!-- MODALS -->
 
-    <!-- 1. List Village Form Modal -->
+    <!-- 1. List Village Form Modal (RESTORED WITH PHOTO UPLOADS) -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
@@ -413,12 +413,30 @@
             </div>
           </div>
 
+          <!-- PHOTO UPLOAD SECTION RESTORED HERE -->
+          <div class="space-y-3 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+            <div>
+              <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire (Pehnawa) Photo</label>
+              <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
+            </div>
+
+            <div class="pt-2 border-t border-slate-700">
+              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Traditional Chulha Food Photo</label>
+              <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
+            </div>
+
+            <div class="pt-2 border-t border-slate-700">
+              <label class="block font-bold text-amber-400 text-xs mb-1">📸 Village Gallery Photos</label>
+              <input type="file" id="listGalleryPhotos" accept="image/*" multiple class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950">
+            </div>
+          </div>
+
           <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Village & Galleries Live</button>
         </form>
       </div>
     </div>
 
-    <!-- 2. Profile & Settings Dashboard Modal (WITH LIVE NAME, APP ID & LIST VILLAGE OPTION) -->
+    <!-- 2. Profile & Settings Dashboard Modal -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -434,9 +452,8 @@
           <p id="profileUserUid" class="text-[11px] font-bold text-amber-900 font-mono mt-1 bg-amber-100/70 p-1.5 rounded-lg inline-block">App ID / UID: Loading...</p>
         </div>
 
-        <!-- Vertical Menu List (Including List Your Village & Stay) -->
+        <!-- Vertical Menu List -->
         <div class="mb-4 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden text-xs divide-y divide-slate-100">
-          
           <div onclick="closeModal('profileModal'); switchTab('villages');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Villages & Stays</p>
@@ -469,7 +486,6 @@
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
 
-          <!-- List Your Village & Stay Option Added Back -->
           <div onclick="closeModal('profileModal'); openModal('listModal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">List Your Village & Stay</p>
@@ -477,7 +493,6 @@
             </div>
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
-
         </div>
       </div>
     </div>
