@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Village Deko (गांव देखो) - Authentic Rural India Travel & Craft Poster Showcase</title>
+  <meta name="description" content="Discover India's rich village culture, mud farmstays, traditional pottery crafts, and authentic rural tourism through Village Deko." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              700: '#8D2B18', // Poster Crimson
+              800: '#6D1E0E',
+              900: '#4A1208',
+            },
+            yellow: {
+              500: '#D49B28', // Saffron Gold
+              600: '#B88219',
+            },
+            stone: {
+              50: '#FDF8EE', // Parchment
+              100: '#F5EAD4',
+              900: '#12261D',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Poster Styling -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="antialiased text-stone-900 selection:bg-amber-800 selection:text-amber-100">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Announcement Bar (Poster Gold Theme) -->
+  <div class="bg-[#8D2B18] text-amber-100 text-xs py-2.5 px-4 text-center font-bold tracking-wide border-b-2 border-[#D49B28] shadow-sm">
+    <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+      <span class="flex items-center gap-2">
+        <span class="stamp-seal px-2 py-0.5 text-[10px] rounded-md">Verified Desi</span>
+        <span>🌾 भारत की समृद्ध देहाती संस्कृति, लोक कला एवं ग्रामीण पर्यटन - Village Deko (गांव देखो)</span>
+      </span>
+      <div class="hidden sm:flex items-center gap-5 text-[11px] font-semibold text-amber-200">
+  <span>📞 Jagdish: +91 9167588371</span>
+  <span>📞 Vaibhav: +91 9756123123</span>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Poster Navigation Header -->
+  <header class="sticky top-0 z-40 poster-nav shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-22 flex items-center justify-between">
+      
+      <!-- Brand Logo in Vintage Poster Frame -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="w-12 h-12 rounded-2xl bg-[#8D2B18] border-2 border-[#D49B28] text-amber-300 flex items-center justify-center font-bold text-2xl shadow-md group-hover:scale-105 transition-transform">
+          🌾
+        </div>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-black text-[#8D2B18] tracking-tight font-poster leading-tight flex items-center gap-2">
+            <span data-i18n="navBrand">Village Deko (गांव देखो)</span>
+          </h1>
+          <p class="text-[11px] font-extrabold text-[#D49B28] tracking-widest uppercase font-mono" data-i18n="navTagline">असली भारत की खोज</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-bold text-stone-800 font-heading">
+        <a href="#villages-section" class="hover:text-[#8D2B18] transition-colors hover:underline decoration-[#D49B28] underline-offset-4" data-i18n="navExplore">गांव खोजें</a>
+        <a href="#villages-section" class="hover:text-[#8D2B18] transition-colors hover:underline decoration-[#D49B28] underline-offset-4" data-i18n="navStays">होमस्टे</a>
+        <a href="#bazaar-section" class="hover:text-[#8D2B18] transition-colors hover:underline decoration-[#D49B28] underline-offset-4" data-i18n="navBazaar">हाट-बाज़ार</a>
+        <a href="#experiences-section" class="hover:text-[#8D2B18] transition-colors hover:underline decoration-[#D49B28] underline-offset-4" data-i18n="navExperiences">गतिविधियां</a>
+      </nav>
+
+      <!-- Right Action Items -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher Button -->
+        <button id="lang-toggle-btn" class="bg-[#F5EAD4] hover:bg-[#EBDCBF] text-[#8D2B18] font-bold px-3.5 py-2 rounded-xl transition-all border-2 border-[#D49B28] flex items-center gap-1.5 shadow-xs" title="Switch Language">
+          <!-- Dynamically updated by app.js -->
+        </button>
+
+        <!-- Cart Button with Stamp Badge -->
+        <button class="cart-toggle-btn relative p-2.5 bg-[#8D2B18] text-amber-200 hover:bg-[#6D1E0E] rounded-xl transition-all border-2 border-[#D49B28] shadow-sm" title="Shopping Cart">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 stamp-seal text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-white">0</span>
+        </button>
+
+        <!-- Host Onboarding CTA Button -->
+        <button id="nav-host-btn" class="hidden sm:flex bg-[#1B382B] hover:bg-[#12261D] text-amber-200 text-xs font-black px-4.5 py-2.5 rounded-xl transition-all border-2 border-[#D49B28] shadow-sm hover:shadow flex items-center gap-1.5" data-i18n="navHost">
+          ➕ अपना गांव जोड़ें
+        </button>
+
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-[#8D2B18]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-nav" class="hidden md:hidden border-t-2 border-[#8D2B18] bg-[#FDF8EE] px-4 py-4 space-y-3">
+      <a href="#villages-section" class="block font-bold text-stone-900 py-1" data-i18n="navExplore">गांव खोजें</a>
+      <a href="#bazaar-section" class="block font-bold text-stone-900 py-1" data-i18n="navBazaar">हाट-बाज़ार</a>
+      <a href="#experiences-section" class="block font-bold text-stone-900 py-1" data-i18n="navExperiences">गतिविधियां</a>
+      <button onclick="openHostModal()" class="w-full bg-[#1B382B] text-amber-200 py-2.5 rounded-xl font-bold text-xs border border-[#D49B28]" data-i18n="navHost">
+        ➕ अपना गांव जोड़ें
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section with Generated Poster Artwork -->
+  <section class="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="max-w-6xl mx-auto rounded-3xl poster-frame relative overflow-hidden bg-cover bg-center text-white p-8 sm:p-16 shadow-2xl" style="background-image: linear-gradient(to right, rgba(18, 38, 29, 0.92), rgba(141, 43, 24, 0.85)), url('assets/village_poster_hero_1785939299477.jpg');">
+      
+      <div class="relative z-10 max-w-3xl">
+        <div class="inline-flex items-center gap-2 bg-[#D49B28] text-stone-950 font-black px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-6 shadow-md border border-amber-200">
+          <span>🎨 Vintage Cultural Tourism Showcase</span>
+        </div>
+
+        <h2 class="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight font-poster text-amber-100 drop-shadow-md" data-i18n="heroTitle">
+          शहर की भागदौड़ छोड़ें, <span class="text-[#F5B836] underline decoration-[#D49B28]">गांवों की सादगी</span> महसूस करें
+        </h2>
+
+        <p class="text-base sm:text-xl text-amber-100/90 max-w-2xl mb-8 leading-relaxed font-heading" data-i18n="heroSubtitle">
+          ऑर्गेनिक फार्मस्टे, हस्तशिल्प हाट, कुम्हार कला और ग्रामीण संस्कृति का सच्चा अनुभव प्राप्त करें।
+        </p>
+
+        <!-- Search Bar Card (Parchment Styled) -->
+        <div class="bg-[#FDF8EE] p-3 sm:p-4 rounded-2xl border-4 border-[#D49B28] shadow-2xl max-w-2xl flex flex-col sm:flex-row items-center gap-3 text-stone-900">
+          <div class="flex-1 w-full flex items-center gap-3 px-3.5 py-2.5 bg-[#F5EAD4] rounded-xl border border-[#D49B28]/50">
+            <svg class="w-5 h-5 text-[#8D2B18]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="hero-search-input" type="text" class="w-full bg-transparent border-none text-xs sm:text-sm font-bold text-stone-900 focus:outline-none placeholder-stone-500" data-i18n-placeholder="searchPlaceholder" placeholder="राज्य, ज़िला या गांव खोजें (उदा. पाली, राजस्थान, हिमाचल)..." />
+          </div>
+          <button id="hero-search-btn" class="w-full sm:w-auto bg-[#8D2B18] hover:bg-[#6D1E0E] text-amber-100 font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 border-2 border-[#D49B28]" data-i18n="searchBtn">
+            खोजें
+          </button>
+        </div>
+
+        <!-- Poster Stat Seals -->
+        <div class="grid grid-cols-3 gap-4 max-w-xl mt-10 pt-6 border-t border-amber-500/40 text-center">
+          <div class="bg-[#8D2B18]/60 backdrop-blur-xs p-3 rounded-xl border border-[#D49B28]/40">
+            <p class="text-xl sm:text-2xl font-black text-amber-300 font-poster">150+</p>
+            <p class="text-[11px] text-amber-100 font-semibold" data-i18n="heroStat1">सत्यापित गांव</p>
+          </div>
+          <div class="bg-[#8D2B18]/60 backdrop-blur-xs p-3 rounded-xl border border-[#D49B28]/40">
+            <p class="text-xl sm:text-2xl font-black text-amber-300 font-poster">12,000+</p>
+            <p class="text-[11px] text-amber-100 font-semibold" data-i18n="heroStat2">खुश यात्री</p>
+          </div>
+          <div class="bg-[#8D2B18]/60 backdrop-blur-xs p-3 rounded-xl border border-[#D49B28]/40">
+            <p class="text-xl sm:text-2xl font-black text-amber-300 font-poster">500+</p>
+            <p class="text-[11px] text-amber-100 font-semibold" data-i18n="heroStat3">स्थानीय कारीगर</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+    <!-- Village Stays Discovery Section -->
+    <section id="villages-section" class="scroll-mt-24">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b-2 border-[#8D2B18]/20">
+        <div>
+          <span class="bg-[#8D2B18] text-amber-200 text-[10px] font-black px-3 py-1 rounded-md uppercase tracking-widest border border-[#D49B28]">🏡 Travel Posters & Stays</span>
+          <h3 class="text-3xl font-black text-[#8D2B18] font-poster mt-2" data-i18n="staysTitle">लोकप्रिय गांव & होमस्टे</h3>
+          <p class="text-xs font-semibold text-stone-600 mt-1" data-i18n="staysSubtitle">प्राकृतिक मिट्टी के घरों और ऑर्गेनिक खेतों के बीच रुकें</p>
+        </div>
+
+        <!-- Category Filter Pills (Poster Styled) -->
+        <div class="flex flex-wrap gap-2">
+          <button data-filter="all" class="filter-btn active bg-[#8D2B18] text-amber-100 font-extrabold text-xs px-4 py-2 rounded-xl border-2 border-[#D49B28] shadow-sm transition-all" data-i18n="allFilter">सभी गांव</button>
+          <button data-filter="farmstay" class="filter-btn bg-[#F5EAD4] text-stone-800 hover:bg-[#EBDCBF] font-bold text-xs px-4 py-2 rounded-xl border border-[#D49B28]/60 transition-all" data-i18n="farmstayFilter">फार्मस्टे</button>
+          <button data-filter="pottery" class="filter-btn bg-[#F5EAD4] text-stone-800 hover:bg-[#EBDCBF] font-bold text-xs px-4 py-2 rounded-xl border border-[#D49B28]/60 transition-all" data-i18n="potteryFilter">मिट्टी कला</button>
+          <button data-filter="heritage" class="filter-btn bg-[#F5EAD4] text-stone-800 hover:bg-[#EBDCBF] font-bold text-xs px-4 py-2 rounded-xl border border-[#D49B28]/60 transition-all" data-i18n="heritageFilter">धरोहर</button>
+          <button data-filter="mountain" class="filter-btn bg-[#F5EAD4] text-stone-800 hover:bg-[#EBDCBF] font-bold text-xs px-4 py-2 rounded-xl border border-[#D49B28]/60 transition-all" data-i18n="mountainFilter">पहाड़ी गांव</button>
+        </div>
+      </div>
+
+      <!-- Village Cards Grid -->
+      <div id="villages-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Artisan Bazaar Section with Generated Haat Poster -->
+    <section id="bazaar-section" class="scroll-mt-24 rounded-3xl poster-border-gold p-8 sm:p-10 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(135deg, rgba(253, 248, 238, 0.96), rgba(245, 234, 212, 0.94)), url('assets/village_bazaar_poster_1785939317382.jpg');">
+      <div class="max-w-3xl mb-8 relative z-10">
+        <span class="bg-[#D49B28] text-stone-950 text-[10px] font-black px-3 py-1 rounded-md uppercase tracking-widest border border-[#8D2B18]">🎨 Rural Haat-Bazaar</span>
+        <h3 class="text-3xl font-black text-[#8D2B18] font-poster mt-2" data-i18n="bazaarTitle">ग्रामीण हाट-बाज़ार (Artisan Bazaar)</h3>
+        <p class="text-xs font-semibold text-stone-700 mt-1" data-i18n="bazaarSubtitle">सीधे गांव के कारीगरों और किसानों से हस्तनिर्मित वस्तुएं खरीदें</p>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="bazaar-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Village Experiences Section -->
+    <section id="experiences-section" class="scroll-mt-24">
+      <div class="max-w-3xl mb-8 pb-4 border-b-2 border-[#8D2B18]/20">
+        <span class="bg-[#1B382B] text-amber-200 text-[10px] font-black px-3 py-1 rounded-md uppercase tracking-widest border border-[#D49B28]">🚜 Authentic Activities</span>
+        <h3 class="text-3xl font-black text-[#8D2B18] font-poster mt-2" data-i18n="experiencesTitle">अनोखे ग्रामीण अनुभव</h3>
+        <p class="text-xs font-semibold text-stone-600 mt-1" data-i18n="experiencesSubtitle">कुम्हार के चाक से लेकर खेत-रसोई और बैलगाड़ी सवारी तक</p>
+      </div>
+
+      <div id="experiences-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Chaupal Audio Folklore Stories -->
+    <section class="bg-[#12261D] text-amber-100 p-8 sm:p-12 rounded-3xl border-4 border-[#D49B28] shadow-2xl relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl mb-8">
+        <span class="stamp-seal px-3 py-1 text-[10px] rounded-md">📻 Audio Chaupal</span>
+        <h3 class="text-3xl font-black font-poster text-amber-300 mt-2" data-i18n="storiesTitle">गांव की चौपाल (लोक कथाएं & कहानियां)</h3>
+        <p class="text-xs text-amber-100/80 mt-1 font-semibold" data-i18n="storiesSubtitle">बुजुर्गों और मेजबानों की ज़बानी सुनें अपने गांव के किस्से</p>
+      </div>
+
+      <div id="stories-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Host Onboarding Banner Card -->
+    <section class="bg-[#8D2B18] text-amber-100 rounded-3xl p-8 sm:p-12 border-4 border-[#D49B28] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-2xl">
+        <span class="stamp-seal text-[10px] px-3 py-1 rounded-md uppercase tracking-wider mb-3 inline-block">आपकी आवाज़, आपका गांव</span>
+        <h3 class="text-3xl font-black font-poster mb-3 text-amber-200">क्या आप अपने गांव या कला को दुनिया से जोड़ना चाहते हैं?</h3>
+        <p class="text-amber-100/90 text-xs sm:text-sm leading-relaxed font-heading">
+          यदि आप गांव के निवासी, किसान, कुम्हार, हस्तशिल्प कारीगर या सरपंच हैं, तो मुफ़्त में अपने होमस्टे, ऑर्गेनिक उत्पादों या ग्रामीण गतिविधियों को "Village Deko (गांव देखो)" पर सूचीबद्ध करें।
+        </p>
+      </div>
+      <button id="hero-host-btn" class="bg-[#D49B28] hover:bg-[#F5B836] text-stone-950 font-black text-sm px-8 py-4 rounded-2xl shadow-xl transition-all shrink-0 font-poster border-2 border-white">
+        🌾 अपना गांव जोड़ें (Register Free)
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Poster Styled Footer -->
+  <footer class="bg-[#12261D] text-amber-100/80 border-t-4 border-[#8D2B18] pt-14 pb-10 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-amber-900/60">
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#8D2B18] border border-[#D49B28] text-amber-200 flex items-center justify-center font-bold text-lg">🌾</div>
+            <h4 class="text-2xl font-black text-amber-300 font-poster" data-i18n="navBrand">Village Deko (गांव देखो)</h4>
+          </div>
+          <p class="text-amber-100/70 text-xs leading-relaxed max-w-md" data-i18n="footerDesc">
+            Village Deko (गांव देखो) - भारत की ग्रामीण धरोहर, संस्कृति और स्थानीय अर्थव्यवस्था को सशक्त बनाने का एक प्रयास।
+          </p>
+        </div>
+
+        <div>
+          <h5 class="text-amber-300 font-bold text-xs uppercase tracking-wider mb-4 font-poster" data-i18n="quickLinks">त्वरित लिंक्स</h5>
+          <ul class="space-y-2 text-xs text-amber-100/80 font-semibold">
+            <li><a href="#villages-section" class="hover:text-amber-300">गांव खोजें</a></li>
+            <li><a href="#bazaar-section" class="hover:text-amber-300">हाट-बाज़ार</a></li>
+            <li><a href="#experiences-section" class="hover:text-amber-300">गतिविधियां</a></li>
+            <li><a href="#" onclick="openHostModal()" class="hover:text-amber-300">होस्ट रजिस्ट्रेशन</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-amber-300 font-bold text-xs uppercase tracking-wider mb-4 font-poster" data-i18n="contactUs">संपर्क करें</h5>
+          <p class="text-xs">📍 Village Deko HQ, New Delhi / Jaipur</p>
+          <p class="text-xs mt-1">📧 namaste@villagedeko.in</p>
+          <p class="text-amber-400 text-xs mt-3 font-bold" data-i18n="supportRural">ग्रामीण भारत का समर्थन करें ❤️</p>
+        </div>
+      </div>
+
+      <div class="pt-6 text-center text-[11px] text-amber-200/50 font-semibold">
+        © 2026 Village Deko (गांव देखो) Platform. Designed with traditional poster art & modern eco-tourism values.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Stay Details & Booking Modal -->
+  <div id="stay-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="stay-modal-overlay" class="fixed inset-0 bg-stone-950/80 backdrop-blur-xs"></div>
+    <div class="relative bg-[#FDF8EE] w-full max-w-2xl rounded-3xl border-4 border-[#8D2B18] shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto z-10 text-stone-900">
+      <button id="booking-modal-close" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#8D2B18] text-amber-100 hover:bg-[#6D1E0E] flex items-center justify-center font-black">✕</button>
+      
+      <div id="stay-modal-content">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <form id="stay-booking-form" class="mt-6 border-t-2 border-[#8D2B18]/30 pt-6 space-y-4">
+        <h4 class="text-sm font-bold text-[#8D2B18] font-poster">तारीख एवं यात्रियों की संख्या चुनें</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="modalCheckIn">आगमन तिथि (Check-In)</label>
+            <input type="date" required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold text-stone-900" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="modalGuests">यात्रियों की संख्या</label>
+            <select class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold text-stone-900">
+              <option>1 यात्री</option>
+              <option selected>2 यात्री</option>
+              <option>3-4 यात्री</option>
+              <option>5+ यात्री (ग्रुप)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <div>
+            <span class="text-xs text-stone-600 font-semibold">कुल अनुमानित मूल्य:</span>
+            <p id="stay-modal-price" class="text-2xl font-black text-[#8D2B18] font-poster">₹0</p>
+          </div>
+          <button type="submit" class="bg-[#8D2B18] hover:bg-[#6D1E0E] text-amber-100 font-black text-xs px-6 py-3 rounded-xl shadow-md border border-[#D49B28]" data-i18n="confirmBooking">
+            बुकिंग की पुष्टि करें
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Experience Booking Modal -->
+  <div id="exp-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="exp-modal-overlay" class="fixed inset-0 bg-stone-950/80 backdrop-blur-xs"></div>
+    <div class="relative bg-[#FDF8EE] w-full max-w-md rounded-3xl border-4 border-[#8D2B18] shadow-2xl p-6 z-10">
+      <button id="exp-modal-close" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#8D2B18] text-amber-100 flex items-center justify-center font-bold">✕</button>
+      
+      <h3 id="exp-modal-title" class="text-xl font-black text-[#8D2B18] font-poster mb-2">गतिविधि बुक करें</h3>
+      <p id="exp-modal-desc" class="text-xs text-stone-700 mb-4 leading-relaxed font-semibold"></p>
+
+      <form id="exp-booking-form" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-stone-800 mb-1">तिथि चुनें</label>
+          <input type="date" required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2 text-xs font-bold" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-stone-800 mb-1">स्थानों की संख्या (Seats)</label>
+          <input type="number" min="1" max="10" value="1" required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2 text-xs font-bold" />
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-[#8D2B18]/20">
+          <span id="exp-modal-price" class="text-xl font-black text-[#8D2B18] font-poster">₹0</span>
+          <button type="submit" class="bg-[#8D2B18] hover:bg-[#6D1E0E] text-amber-100 font-bold text-xs px-5 py-2.5 rounded-xl border border-[#D49B28]">
+            पुष्टि करें
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Host Onboarding Form Modal -->
+  <div id="host-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="host-modal-overlay" class="fixed inset-0 bg-stone-950/80 backdrop-blur-xs"></div>
+    <div class="relative bg-[#FDF8EE] w-full max-w-xl rounded-3xl border-4 border-[#8D2B18] shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto z-10 text-stone-900">
+      <button id="host-modal-close" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#8D2B18] text-amber-100 flex items-center justify-center font-bold">✕</button>
+
+      <div class="mb-6">
+        <h3 class="text-2xl font-black text-[#8D2B18] font-poster" data-i18n="hostModalTitle">अपना गांव या अनुभव पंजीकृत करें</h3>
+        <p class="text-xs text-stone-600 mt-1 font-semibold" data-i18n="hostModalDesc">यदि आप गांव के निवासी, सरपंच, किसान या कारीगर हैं, तो अपने होमस्टे/उत्पाद को भारतभर से जोड़ें।</p>
+      </div>
+       <form id="host-registration-form" class="space-y-4">
+      <input type="hidden" name="access_key" value="d392b6f3-cba5-45bb-9440-9a1f55966080">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formName">आपका नाम</label>
+            <input type="text" required placeholder="रामसेवक कुशवाहा" class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formRole">आपकी भूमिका</label>
+            <input type="text" required placeholder="किसान / कारीगर / सरपंच" class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formVillage">गांव एवं ज़िला</label>
+            <input type="text" required placeholder="पाली ग्राम, पाली" class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formState">राज्य</label>
+            <input type="text" required placeholder="राजस्थान" class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formCategory">श्रेणी</label>
+          <select class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold">
+            <option data-i18n="formCatStay">होमस्टे / फार्मस्टे</option>
+            <option data-i18n="formCatCraft">हस्तशिल्प / हाट उत्पाद</option>
+            <option data-i18n="formCatExp">ग्रामीण गतिविधि / वर्कशॉप</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formPrice">मूल्य (₹)</label>
+            <input type="number" placeholder="1500" required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+          </div>
+         <!-- File Upload Field -->
+<div>
+  <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formPhoto">गांव / कॉटेज की फोटो (Upload Photos)</label>
+  <input type="file" accept="image/*" multiple required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2 text-xs font-bold file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#8D2B18] file:text-white hover:file:bg-stone-800" />
+</div>
+
+<!-- WhatsApp / Mobile Number Field -->
+<div>
+  <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formPhone">व्हाट्सएप / संपर्क नंबर (WhatsApp Number)</label>
+  <input type="tel" placeholder="e.g. 9876543210" required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold" />
+</div>        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-800 mb-1" data-i18n="formDesc">विवरण एवं खास बातें</label>
+          <textarea rows="3" placeholder="अपने गांव, होमस्टे या उत्पाद की खासियत बताएं..." required class="w-full bg-[#F5EAD4] border border-[#D49B28] rounded-xl px-3.5 py-2.5 text-xs font-bold"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-[#1B382B] hover:bg-[#12261D] text-amber-200 font-black text-sm py-3.5 rounded-xl shadow-md border border-[#D49B28]" data-i18n="formSubmit">
+          आवेदन जमा करें
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart Drawer Slide-Over (Poster Styled) -->
+  <div id="cart-overlay" class="fixed inset-0 bg-stone-950/70 backdrop-blur-xs z-50 hidden"></div>
+  <div id="cart-drawer" class="cart-drawer fixed top-0 right-0 bottom-0 w-full max-w-md bg-[#FDF8EE] z-50 shadow-2xl flex flex-col justify-between translate-x-full border-l-4 border-[#8D2B18]">
+    <div class="p-6 border-b-2 border-[#8D2B18]/30 flex items-center justify-between bg-[#F5EAD4]">
+      <h3 class="text-xl font-black text-[#8D2B18] font-poster flex items-center gap-2">
+        <span>🛒</span>
+        <span data-i18n="cartTitle">आपकी हाट की टोकरी</span>
+      </h3>
+      <button id="cart-close-btn" class="w-8 h-8 rounded-full bg-[#8D2B18] text-amber-100 flex items-center justify-center font-bold">✕</button>
+    </div>
+
+    <!-- Cart Items Container -->
+    <div id="cart-items-container" class="p-6 flex-1 overflow-y-auto space-y-3">
+      <!-- Rendered dynamically -->
+    </div>
+
+    <!-- Cart Footer & Checkout -->
+    <div class="p-6 border-t-2 border-[#8D2B18]/30 bg-[#F5EAD4] space-y-4">
+      <div class="flex items-center justify-between text-stone-900">
+        <span class="text-sm font-bold" data-i18n="cartTotal">कुल योग</span>
+        <span id="cart-total-amount" class="text-2xl font-black text-[#8D2B18] font-poster">₹0</span>
+      </div>
+      <button id="cart-checkout-btn" class="w-full bg-[#8D2B18] hover:bg-[#6D1E0E] text-amber-100 font-black text-sm py-3.5 rounded-2xl shadow-md border-2 border-[#D49B28]" data-i18n="checkoutBtn">
+        ऑर्डर दें (Cash/UPI)
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+<!-- Custom Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-[#F5EAD4] border-2 border-[#D49B28] rounded-2xl p-6 text-center max-w-sm w-full shadow-2xl">
+    <div class="text-4xl mb-3">🟢</div>
+    <h3 class="text-lg font-bold text-stone-800 mb-2">Listing Submitted! / जानकारी दर्ज हो गई!</h3>
+    <p class="text-xs text-stone-600 mb-4">Humari team 24 ghante ke andar aapki details verify karegi.</p>
+    <button type="button" onclick="document.getElementById('successModal').classList.add('hidden')" class="bg-[#8D2B18] hover:bg-stone-800 text-white font-bold py-2 px-6 rounded-xl text-xs transition-colors">OK / ठीक है</button>
+  </div>
+</div>
+</body>
+</html>
