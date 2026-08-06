@@ -302,7 +302,123 @@
 
     <!-- MODALS -->
 
-    <!-- 1. Profile & Settings Dashboard Modal (WITH LIVE NAME & APP ID SECTION) -->
+    <!-- 1. List Village Form Modal -->
+    <div id="listModal" class="modal">
+      <div class="modal-content bg-slate-900 text-white">
+        <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+          <h3 class="text-lg font-extrabold text-white">List Village, Stay & Photo Galleries</h3>
+          <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+        </div>
+        
+        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3.5 text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host Name</label>
+              <input type="text" id="listHostName" placeholder="Ramesh Patel" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Host WhatsApp Number</label>
+              <input type="tel" id="listPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+          </div>
+
+          <!-- Host Bank Account Details Section -->
+          <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
+            <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Payouts)</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Bank Account Number</label>
+                <input type="text" id="listAccNum" placeholder="123456789012" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">IFSC Code</label>
+                <input type="text" id="listIfsc" placeholder="SBIN0001234" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Or Host UPI ID (Optional)</label>
+              <input type="text" id="listHostUpi" placeholder="ramesh@okhdfc" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-amber-400 text-xs mb-1">Village Name</label>
+              <input type="text" id="listVillageName" placeholder="Rohat" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+            <div>
+              <label class="block font-bold text-amber-400 text-xs mb-1">District</label>
+              <input type="text" id="listDistrict" placeholder="Pali" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+            </div>
+            <div>
+              <label class="block font-bold text-amber-400 text-xs mb-1">State</label>
+              <select id="listState" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 text-xs mb-1">Nearest Railway Station / Bus Stand</label>
+            <input type="text" id="listStation" placeholder="Pali Marwar Junction (25 km)" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 text-xs mb-1">Village Culture and Description</label>
+            <textarea id="listDesc" rows="2" placeholder="Describe how people live here..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
+          </div>
+
+          <div class="bg-amber-950/30 p-3.5 rounded-xl border border-amber-500/30 space-y-3">
+            <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Package / Stay Title</label>
+                <input type="text" id="listPkgTitle" placeholder="3 Days Authentic Heritage Stay" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 text-[11px] mb-1">Price per Person (INR)</label>
+                <input type="number" id="listPkgPrice" placeholder="2499" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium">
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description</label>
+              <textarea id="listPkgDesc" rows="2" placeholder="Mud house stay, organic chulha food, farm tour included..." required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Village & Galleries Live</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. Profile & Settings Dashboard Modal (WITH LIVE NAME, APP ID & LIST VILLAGE OPTION) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -310,7 +426,7 @@
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
 
-        <!-- User Identity Box (Shows Live Name, Email & App ID) -->
+        <!-- User Identity Box -->
         <div class="mb-4 p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-1">
           <p class="text-[10px] font-extrabold text-amber-800 uppercase tracking-wider">Active Account Details</p>
           <p id="profileUserName" class="text-base font-black text-slate-900">Loading Name...</p>
@@ -318,8 +434,9 @@
           <p id="profileUserUid" class="text-[11px] font-bold text-amber-900 font-mono mt-1 bg-amber-100/70 p-1.5 rounded-lg inline-block">App ID / UID: Loading...</p>
         </div>
 
-        <!-- Vertical Menu List -->
+        <!-- Vertical Menu List (Including List Your Village & Stay) -->
         <div class="mb-4 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden text-xs divide-y divide-slate-100">
+          
           <div onclick="closeModal('profileModal'); switchTab('villages');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
               <p class="font-extrabold text-slate-900 text-sm">Villages & Stays</p>
@@ -351,6 +468,16 @@
             </div>
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
+
+          <!-- List Your Village & Stay Option Added Back -->
+          <div onclick="closeModal('profileModal'); openModal('listModal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">List Your Village & Stay</p>
+              <p class="text-[11px] text-slate-500 font-medium">Add new village photos, stay & bank details</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
+
         </div>
       </div>
     </div>
@@ -394,6 +521,13 @@
         
         alert('Inquiry successfully submitted! Our wedding coordinator will reach out to you shortly.');
         document.getElementById('villageWeddingInquiryForm').reset();
+      }
+
+      function handleVillageListing(e) {
+        e.preventDefault();
+        alert('Village listing submitted successfully! Admin will review and publish live.');
+        closeModal('listModal');
+        document.getElementById('listVillageForm').reset();
       }
 
       function filterVillages() {}
