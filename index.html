@@ -343,11 +343,11 @@
       </div>
     </div>
 
-    <!-- 2. List Village Form Modal (Host adds Village, Stay & Package together) -->
+    <!-- 2. List Village Form Modal (Host adds Village, Stay, Pehnawa, Food & Multiple Gallery Photos) -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-          <h3 class="text-lg font-extrabold text-white">List Village, Stay & Package Details</h3>
+          <h3 class="text-lg font-extrabold text-white">List Village, Stay & Photo Galleries</h3>
           <button onclick="closeModal('listModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
         
@@ -441,7 +441,7 @@
 
           <!-- Package & Stay Details for this specific Village -->
           <div class="bg-amber-950/30 p-3.5 rounded-xl border border-amber-500/30 space-y-3">
-            <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details (Shown when tourist selects this village)</p>
+            <p class="font-extrabold text-amber-400 text-xs">⏳ Village Stay & Package Details</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block font-bold text-slate-300 text-[11px] mb-1">Package / Stay Title</label>
@@ -453,7 +453,7 @@
               </div>
             </div>
             <div>
-              <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description (Kaise rehna hai, meals included etc.)</label>
+              <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description</label>
               <textarea id="listPkgDesc" rows="2" placeholder="Mud house stay, organic chulha food, farm tour included..." required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
             </div>
           </div>
@@ -470,19 +470,26 @@
             </div>
           </div>
 
-          <!-- Direct Gallery Photo Upload Section -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-800 p-3.5 rounded-xl border border-slate-700">
+          <!-- Separated Photo Uploads: Pehnawa, Chulha Food, & Multiple Gallery Photos -->
+          <div class="space-y-3 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
             <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire Gallery Photo</label>
+              <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire (Pehnawa) Photo</label>
               <input type="file" id="listPehnawaFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
             </div>
-            <div>
-              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Traditional Food Gallery Photo</label>
+
+            <div class="pt-2 border-t border-slate-700">
+              <label class="block font-bold text-amber-400 text-xs mb-1">🍲 Traditional Chulha Food Photo</label>
               <input type="file" id="listFoodFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
+            </div>
+
+            <div class="pt-2 border-t border-slate-700">
+              <label class="block font-bold text-amber-400 text-xs mb-1">📸 Village Gallery Photos (Bohat saare photos ek sath)</label>
+              <input type="file" id="listGalleryPhotos" accept="image/*" multiple class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600">
+              <p class="text-[10px] text-slate-400 mt-1">Aap gallery ya folder se ek sath multiple photos select kar sakte hain.</p>
             </div>
           </div>
 
-          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Village & Package Live</button>
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">Publish Village & Galleries Live</button>
         </form>
       </div>
     </div>
@@ -516,6 +523,7 @@
             <p class="font-extrabold text-slate-900 mb-1.5">🎯 Village Special Activities:</p>
             <div id="modalActivitiesList" class="flex flex-wrap gap-1.5"></div>
           </div>
+
           <div class="grid grid-cols-2 gap-2.5 pt-1">
             <div class="bg-slate-50 p-3 rounded-2xl text-center border border-slate-200">
               <p class="font-extrabold text-slate-900 mb-1">👗 Traditional Attire</p>
@@ -529,6 +537,12 @@
                 <p id="modalFoodTxt" class="text-[11px] text-slate-600 font-medium">Organic Desi Kitchen</p>
               </div>
             </div>
+          </div>
+
+          <!-- Multiple Gallery Photos Preview in Detail Modal -->
+          <div id="modalGallerySection" class="space-y-2 pt-2 border-t">
+            <p class="font-extrabold text-slate-900">📸 Village Photo Gallery:</p>
+            <div id="modalGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
           </div>
         </div>
       </div>
@@ -856,7 +870,7 @@
         container.appendChild(div);
       }
 
-      function openVillageModal(title, location, desc, station, pkgTitle, pkgDesc, pkgPrice, activities, pehnawaImg, foodImg, hostPhone, hostBank) {
+      function openVillageModal(title, location, desc, station, pkgTitle, pkgDesc, pkgPrice, activities, pehnawaImg, foodImg, galleryPhotosArr, hostPhone, hostBank) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalLocation').innerText = location;
         document.getElementById('modalDesc').innerText = desc;
@@ -873,14 +887,14 @@
         if(pehnawaImg && pehnawaImg.startsWith('data:image')) {
           pehnawaBox.innerHTML = `<img src="${pehnawaImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
         } else {
-          pehnawaBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">${pehnawaImg || 'Traditional Attire'}</p>`;
+          pehnawaBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Traditional Attire Available</p>`;
         }
 
         let foodBox = document.getElementById('modalFoodContainer');
         if(foodImg && foodImg.startsWith('data:image')) {
           foodBox.innerHTML = `<img src="${foodImg}" class="w-full h-24 object-cover rounded-xl mt-1 shadow-xs">`;
         } else {
-          foodBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">${foodImg || 'Organic Desi Kitchen'}</p>`;
+          foodBox.innerHTML = `<p class="text-[11px] text-slate-600 font-medium">Organic Desi Kitchen</p>`;
         }
 
         let actContainer = document.getElementById('modalActivitiesList');
@@ -888,6 +902,18 @@
         activities.forEach(act => {
           actContainer.innerHTML += `<span class="bg-amber-100 text-amber-950 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-amber-200">✨ ${act}</span>`;
         });
+
+        // Gallery Photos Grid in Modal
+        let galleryGrid = document.getElementById('modalGalleryGrid');
+        galleryGrid.innerHTML = '';
+        if(galleryPhotosArr && galleryPhotosArr.length > 0) {
+          document.getElementById('modalGallerySection').style.display = 'block';
+          galleryPhotosArr.forEach(photo => {
+            galleryGrid.innerHTML += `<img src="${photo}" class="w-full h-24 object-cover rounded-xl shadow-xs border border-slate-200">`;
+          });
+        } else {
+          document.getElementById('modalGallerySection').style.display = 'none';
+        }
 
         openModal('villageDetailModal');
       }
@@ -901,6 +927,25 @@
             reader.readAsDataURL(fileInput.files[0]);
           } else {
             resolve("");
+          }
+        });
+      }
+
+      function getMultipleFilesAsBase64(fileInputId) {
+        return new Promise((resolve) => {
+          const fileInput = document.getElementById(fileInputId);
+          if (fileInput.files && fileInput.files.length > 0) {
+            let files = Array.from(fileInput.files);
+            let base64Promises = files.map(file => {
+              return new Promise((res) => {
+                const reader = new FileReader();
+                reader.onload = function(e) { res(e.target.result); };
+                reader.readAsDataURL(file);
+              });
+            });
+            Promise.all(base64Promises).then(results => resolve(results));
+          } else {
+            resolve([]);
           }
         });
       }
@@ -925,6 +970,7 @@
 
         const pehnawaPhoto = await getFileAsBase64('listPehnawaFile');
         const foodPhoto = await getFileAsBase64('listFoodFile');
+        const galleryPhotos = await getMultipleFilesAsBase64('listGalleryPhotos');
 
         const activityInputs = document.querySelectorAll('.activity-input');
         let activities = [];
@@ -937,14 +983,14 @@
 
         try {
           await window.addDoc(window.collection(window.db, "villageGalleries"), {
-            hostName, phone, hostBankDetails, village, district, state, station, description: desc, pkgTitle, pkgPrice, pkgDesc, activities, pehnawaPhoto, foodPhoto, location: locationStr, title, createdAt: window.serverTimestamp()
+            hostName, phone, hostBankDetails, village, district, state, station, description: desc, pkgTitle, pkgPrice, pkgDesc, activities, pehnawaPhoto, foodPhoto, galleryPhotos, location: locationStr, title, createdAt: window.serverTimestamp()
           });
         } catch(err) { console.log("Firestore notice"); }
 
         closeModal('listModal');
         document.getElementById('listVillageForm').reset();
         loadLiveGalleries();
-        showSuccessBanner("Village & Package Listed Successfully! 🌾", `"${title}" is now live for tourists with stay and package details.`);
+        showSuccessBanner("Village & Galleries Listed Successfully! 🌾", `"${title}" is now live with stay, pehnawa, food and gallery photos.`);
       }
 
       async function deleteVillageListing(docId, elementCard) {
@@ -989,6 +1035,7 @@
             const pkgTitle = data.pkgTitle || "Authentic Village Stay";
             const pkgPrice = data.pkgPrice || "1999";
             const pkgDesc = data.pkgDesc || "Mud house stay and organic food.";
+            const galleryPhotos = data.galleryPhotos || [];
 
             let cardDiv = document.createElement('div');
             cardDiv.className = "village-card bg-white rounded-3xl overflow-hidden border border-slate-200 custom-shadow flex flex-col justify-between";
@@ -996,10 +1043,17 @@
 
             let actBadges = acts.map(a => `<span class="bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">✨ ${a}</span>`).join(' ');
 
+            let coverImg = '🌾';
+            if(galleryPhotos.length > 0 && galleryPhotos[0].startsWith('data:image')) {
+              coverImg = `<img src="${galleryPhotos[0]}" class="absolute inset-0 w-full h-full object-cover">`;
+            } else if(data.pehnawaPhoto && data.pehnawaPhoto.startsWith('data:image')) {
+              coverImg = `<img src="${data.pehnawaPhoto}" class="absolute inset-0 w-full h-full object-cover">`;
+            }
+
             cardDiv.innerHTML = `
               <div>
                 <div class="h-44 bg-gradient-to-tr from-amber-200 to-orange-100 relative flex items-center justify-center text-3xl overflow-hidden">
-                  ${data.pehnawaPhoto && data.pehnawaPhoto.startsWith('data:image') ? `<img src="${data.pehnawaPhoto}" class="absolute inset-0 w-full h-full object-cover">` : '🌾'}
+                  ${coverImg}
                   <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">📍 ${locFormat}</span>
                   <button onclick="deleteVillageListing('${docId}', this.closest('.village-card'))" class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-xl shadow-xs">🗑️ Delete</button>
                 </div>
@@ -1017,7 +1071,7 @@
               </div>
               <div class="p-4 pt-0 flex justify-between items-center border-t border-slate-100 mt-2">
                 <span class="text-[11px] text-slate-500 font-bold">📸 Host: ${data.hostName}</span>
-                <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', '${pkgTitle}', '${pkgDesc}', '${pkgPrice}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto}', '${data.foodPhoto}', '${data.phone}', '${hostBank}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Stay & Packages →</button>
+                <button onclick="openVillageModal('${data.title}', '${locFormat}', '${data.description}', '${data.station}', '${pkgTitle}', '${pkgDesc}', '${pkgPrice}', ${JSON.stringify(acts).replace(/"/g, '&quot;')}, '${data.pehnawaPhoto || ""}', '${data.foodPhoto || ""}', ${JSON.stringify(galleryPhotos).replace(/"/g, '&quot;')}, '${data.phone}', '${hostBank}')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs">View Stay & Packages →</button>
               </div>
             `;
             container.prepend(cardDiv);
