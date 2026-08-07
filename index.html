@@ -362,6 +362,17 @@
               </div>
             </div>
             <div>
+                <!-- Host Activity Section -->
+<div class="mt-4">
+    <label class="block font-bold text-slate-800 mb-1">Add Activities & Price</label>
+    <div id="activityContainer" class="space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+            <input type="text" placeholder="Activity Name (e.g. Camel Ride)" class="w-full px-3 py-2 border rounded-lg">
+            <input type="number" placeholder="Price (INR)" class="w-full px-3 py-2 border rounded-lg">
+        </div>
+    </div>
+    <button type="button" onclick="addActivityField()" class="mt-2 text-sm text-blue-600 hover:underline">+ Add another activity</button>
+</div>
               <label class="block font-bold text-slate-300 text-[11px] mb-1">Stay Description</label>
               <textarea id="listPkgDesc" rows="2" placeholder="Mud house stay, organic chulha food, farm tour included..." required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs font-medium"></textarea>
             </div>
@@ -658,6 +669,129 @@
         closeModal('settingsModal');
         alert("Account settings saved successfully!");
       }
+        // Jab user form submit karega tab yeh function chalega
+async function handleFireBasePhotoPost(event) {
+    event.preventDefault(); // Page reload hone se rokenge
+
+    const author = document.getElementById('storyAuthor').value.trim();
+    const location = document.getElementById('storyLocation').value.trim();
+    const photoInput = document.getElementById('storyImage'); // Photo input id
+
+    let photoUrl = "";
+
+    // Agar user ne photo select ki hai toh usko base64 mein convert karein
+    if (photoInput && photoInput.files[0]) {
+        const file = photoInput.files[0];
+        photoUrl = await convertFileToBase64(file);
+    }
+
+    // Firestore database mein data bhejne ka object
+    const postData = {
+        author: author,
+        location: location,
+        photoUrl: photoUrl,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp() // Sahi waqt record karne ke liye
+    };
+
+    try {
+        // Firestore ke 'chaupal_posts' collection mein data add karein
+        await db.collection("chaupal_posts").add(postData);
+        alert("Aapki story safalpurvak post ho gayi!");
+        
+        // Form ko clear kar dein
+        document.getElementById('chaupalPostForm').reset();
+        
+        // Modal band karne ke liye agar function hai
+        if (typeof closeModal === 'function') {
+            closeModal('addStoryModal');
+        }
+        
+        // Stories ko dobara load karein taaki nayi post turant dikhe
+        if (typeof loadChaupalStories === 'function') {
+            loadChaupalStories();
+        }
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("Post save karne mein kuch samasya aayi. Kripya dobara koshish karein.");
+    }
+}
+
+// Helper function file ko convert karne ke liye
+function convertFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+// Database se saari stories live fetch karne ka function
+function loadChaupalStories() {
+    const container = document.getElementById('chaupalStoriesContainer'); // Jahan par posts dikheni hain uska container id
+    if (!container) return;
+
+    // Firestore se data real-time sunne ke liye
+    db.collection("chaupal_posts")
+      .orderBy("createdAt", "desc") // Nayi post sabse upar dikhegi
+      .onSnapshot((snapshot) => {
+        container.innerHTML = ""; // Pehle purana list clear karein
+
+        if (snapshot.empty) {
+            container.innerHTML = "<p class='text-center text-slate-500'>Abhi koi story nahi hai. Aap pehli story post karein!</p>";
+            return;
+        }
+
+        snapshot.forEach((doc) => {
+            const post = doc.data();
+            
+            // HTML card banana har ek post ke liye
+            const postCard = `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800">${escapeHtml(post.author || 'Anjaan')}</h3>
+                        <span class="text-xs text-slate-500">${escapeHtml(post.location || 'Gaon')}</span>
+                    </div>
+                    ${post.photoUrl ? `<img src="${post.photoUrl}" class="w-full h-48 object-cover rounded-lg" alt="Chaupal Photo">` : ''}
+                </div>
+            `;
+            container.innerHTML += postCard;
+        });
+    }, (error) => {
+        console.error("Error loading stories: ", error);
+    });
+}
+
+// Security ke liye chota sa helper function
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+// Jab page load ho toh yeh function apne aap chal jaye
+document.addEventListener('DOMContentLoaded', () => {
+    loadChaupalStories();
+});
+        // Host ke liye naya activity aur price field jodne ka function
+function addActivityField() {
+    const container = document.getElementById('activityContainer');
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = 'grid grid-cols-2 gap-2 mt-2';
+    div.innerHTML = `
+        <input type="text" placeholder="Activity Name" class="w-full px-3 py-2 border rounded-lg">
+        <input type="number" placeholder="Price (INR)" class="w-full px-3 py-2 border rounded-lg">
+    `;
+    container.appendChild(div);
+}
     </script>
 </body>
 </html>
