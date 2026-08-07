@@ -100,10 +100,10 @@
     <!-- Top Compact Header & Navbar -->
     <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-45 shadow-sm transition-all duration-300">
       <div class="max-w-3xl mx-auto px-4 py-3">
-        <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center justify-between gap-2">
           
           <!-- Logo & Brand -->
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2">
             <div id="headerLogoBg" class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
               🌾
             </div>
@@ -116,24 +116,21 @@
           </div>
 
           <!-- Compact Category Buttons Row -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
-            <button onclick="switchTab('villages')" class="tab-btn px-3 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all">
+          <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+            <button onclick="switchTab('villages')" class="tab-btn px-2.5 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all">
               Villages
             </button>
-            <button onclick="switchTab('weddings')" class="tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
+            <button onclick="switchTab('villageWedding')" class="tab-btn px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
               Weddings
             </button>
-            <button onclick="switchTab('villageWedding')" class="tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
-              Dest. Wedding
-            </button>
-            <button onclick="switchTab('chaupal')" class="tab-btn px-3 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
+            <button onclick="switchTab('chaupal')" class="tab-btn px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-slate-900 font-extrabold text-xs transition-all">
               Chaupal
             </button>
           </div>
 
           <!-- State Selector -->
-          <div class="flex items-center gap-2">
-            <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-50 border border-slate-300 font-bold px-2.5 py-1.5 rounded-xl text-slate-900 focus:outline-none">
+          <div class="flex items-center">
+            <select id="stateThemeSelector" onchange="changeStateTheme(this.value)" class="text-xs bg-slate-50 border border-slate-300 font-bold px-2 py-1.5 rounded-xl text-slate-900 focus:outline-none">
               <optgroup label="Popular Regions">
                 <option value="rajasthan">Rajasthan</option>
                 <option value="punjab">Punjab</option>
@@ -141,30 +138,6 @@
                 <option value="uttar-pradesh">Uttar Pradesh</option>
                 <option value="bihar">Bihar</option>
                 <option value="kerala">Kerala</option>
-              </optgroup>
-              <optgroup label="All States">
-                <option value="andhra-pradesh">Andhra Pradesh</option>
-                <option value="arunachal-pradesh">Arunachal Pradesh</option>
-                <option value="assam">Assam</option>
-                <option value="chhattisgarh">Chhattisgarh</option>
-                <option value="goa">Goa</option>
-                <option value="gujarat">Gujarat</option>
-                <option value="haryana">Haryana</option>
-                <option value="himachal-pradesh">Himachal Pradesh</option>
-                <option value="jharkhand">Jharkhand</option>
-                <option value="karnataka">Karnataka</option>
-                <option value="madhya-pradesh">Madhya Pradesh</option>
-                <option value="manipur">Manipur</option>
-                <option value="meghalaya">Meghalaya</option>
-                <option value="mizoram">Mizoram</option>
-                <option value="nagaland">Nagaland</option>
-                <option value="odisha">Odisha</option>
-                <option value="sikkim">Sikkim</option>
-                <option value="tamil-nadu">Tamil Nadu</option>
-                <option value="telangana">Telangana</option>
-                <option value="tripura">Tripura</option>
-                <option value="uttarakhand">Uttarakhand</option>
-                <option value="west-bengal">West Bengal</option>
               </optgroup>
             </select>
           </div>
@@ -208,22 +181,18 @@
         <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
 
-      <!-- TAB 2: VILLAGE WEDDING EXPERIENCE -->
-      <div id="tab-weddings" class="tab-content space-y-4 hidden">
+      <!-- TAB 2: VILLAGE WEDDING EXPERIENCE & DESTINATION WEDDING (INTACT) -->
+      <div id="tab-villageWedding" class="tab-content space-y-4 hidden">
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
           <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
           <h3 class="text-xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
-          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience or host authentic rural wedding celebrations across India.</p>
+          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience authentic rural celebrations or plan your royal destination wedding managed securely by Village Deko experts.</p>
         </div>
-      </div>
 
-      <!-- TAB 3: VILLAGE DESTINATION WEDDING -->
-      <div id="tab-villageWedding" class="tab-content space-y-4 hidden">
         <div class="bg-white rounded-3xl p-6 border border-slate-200 custom-shadow space-y-4">
           <div class="border-b border-slate-100 pb-3">
             <span class="bg-amber-100 text-amber-900 text-[10px] font-extrabold px-2.5 py-1 rounded-full">🏺 Managed Concierge Service</span>
-            <h3 class="text-lg font-extrabold text-slate-900 mt-2">Village Destination Wedding</h3>
-            <p class="text-xs text-slate-600 font-medium mt-1">Plan an authentic, grand royal rural wedding managed securely by Village Deko experts.</p>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-2">Destination Wedding Inquiry</h3>
           </div>
 
           <form id="villageWeddingInquiryForm" onsubmit="handleVillageWeddingInquiry(event)" class="space-y-3.5 text-xs">
@@ -271,9 +240,8 @@
         </div>
       </div>
 
-     <!-- TAB 4: CHAUPAL STORIES -->
+      <!-- TAB 3: CHAUPAL STORIES -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <!-- Chaupal Section with Photo & Story Global Sync -->
         <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
           <div class="flex justify-between items-center">
             <h3 class="text-base font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
@@ -282,9 +250,8 @@
           <p class="text-xs text-slate-700 font-medium">Stories and photos shared here are visible globally to all visitors in real-time.</p>
         </div>
 
-        <!-- Global Feed Container -->
         <div id="chaupalFeedContainer" class="space-y-3">
-          <!-- Firebase se photo aur stories yahan load hongi -->
+          <!-- Firebase photos and stories load here -->
         </div>
       </div>
     </main>
@@ -295,13 +262,13 @@
         <span class="text-xl">🏡</span>
         <span class="text-[10px]">Home</span>
       </button>
-      <button onclick="switchTab('weddings')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+      <button onclick="switchTab('villageWedding')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
         <span class="text-xl">💍</span>
         <span class="text-[10px]">Weddings</span>
       </button>
-      <button onclick="switchTab('villageWedding')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
-        <span class="text-xl">🏺</span>
-        <span class="text-[10px]">Dest. Wedding</span>
+      <button onclick="switchTab('chaupal')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
+        <span class="text-xl">🔥</span>
+        <span class="text-[10px]">Chaupal</span>
       </button>
       <button onclick="openModal('profileModal')" class="flex flex-col items-center text-slate-600 hover:text-amber-700 font-bold">
         <span class="text-xl">👤</span>
@@ -311,7 +278,7 @@
 
     <!-- MODALS -->
 
-    <!-- 1. List Village Form Modal (RESTORED WITH PHOTO UPLOADS) -->
+    <!-- 1. List Village Form Modal -->
     <div id="listModal" class="modal">
       <div class="modal-content bg-slate-900 text-white">
         <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
@@ -331,7 +298,6 @@
             </div>
           </div>
 
-          <!-- Host Bank Account Details Section -->
           <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-500/40 space-y-3">
             <p class="font-extrabold text-amber-400 text-xs">🏦 Host Bank Account Details (For Payouts)</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -368,28 +334,6 @@
                 <option value="Uttar Pradesh">Uttar Pradesh</option>
                 <option value="Bihar">Bihar</option>
                 <option value="Kerala">Kerala</option>
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Odisha">Odisha</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="West Bengal">West Bengal</option>
               </select>
             </div>
           </div>
@@ -422,7 +366,6 @@
             </div>
           </div>
 
-          <!-- PHOTO UPLOAD SECTION RESTORED HERE -->
           <div class="space-y-3 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
             <div>
               <label class="block font-bold text-amber-400 text-xs mb-1">👘 Traditional Attire (Pehnawa) Photo</label>
@@ -445,7 +388,7 @@
       </div>
     </div>
 
-    <!-- 2. Profile & Settings Dashboard Modal -->
+    <!-- 2. Profile & Settings Dashboard Modal (COMPREHENSIVE LIST WITH WEDDING HOST POST & SETTINGS) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -453,7 +396,6 @@
           <button onclick="closeModal('profileModal')" class="text-slate-400 hover:text-slate-900 text-xl font-bold">&times;</button>
         </div>
 
-        <!-- User Identity Box -->
         <div class="mb-4 p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-1">
           <p class="text-[10px] font-extrabold text-amber-800 uppercase tracking-wider">Active Account Details</p>
           <p id="profileUserName" class="text-base font-black text-slate-900">Loading Name...</p>
@@ -461,7 +403,7 @@
           <p id="profileUserUid" class="text-[11px] font-bold text-amber-900 font-mono mt-1 bg-amber-100/70 p-1.5 rounded-lg inline-block">App ID / UID: Loading...</p>
         </div>
 
-        <!-- Vertical Menu List -->
+        <!-- Comprehensive List Menu -->
         <div class="mb-4 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden text-xs divide-y divide-slate-100">
           <div onclick="closeModal('profileModal'); switchTab('villages');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
@@ -473,18 +415,18 @@
 
           <div onclick="closeModal('profileModal'); switchTab('villageWedding');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
             <div>
-              <p class="font-extrabold text-slate-900 text-sm">Village Destination Wedding</p>
+              <p class="font-extrabold text-slate-900 text-sm">Village Weddings & Destinations</p>
               <p class="text-[11px] text-slate-500 font-medium">Submit wedding enquiries and manage bookings</p>
             </div>
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
 
-          <div onclick="closeModal('profileModal'); switchTab('weddings');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
+          <div onclick="closeModal('profileModal'); openModal('weddingHostPostModal');" class="p-3.5 hover:bg-pink-50 cursor-pointer transition-all flex items-center justify-between border-l-4 border-pink-600">
             <div>
-              <p class="font-extrabold text-slate-900 text-sm">Village Wedding Experience</p>
-              <p class="text-[11px] text-slate-500 font-medium">View rural celebrations & host wedding</p>
+              <p class="font-extrabold text-pink-900 text-sm">💍 Wedding Host Post</p>
+              <p class="text-[11px] text-pink-600 font-medium">Post your village wedding event or venue details</p>
             </div>
-            <span class="text-slate-400 font-bold">&rsaquo;</span>
+            <span class="text-pink-400 font-bold">&rsaquo;</span>
           </div>
 
           <div onclick="closeModal('profileModal'); switchTab('chaupal');" class="p-3.5 hover:bg-amber-50 cursor-pointer transition-all flex items-center justify-between">
@@ -502,25 +444,151 @@
             </div>
             <span class="text-slate-400 font-bold">&rsaquo;</span>
           </div>
+
+          <div onclick="closeModal('profileModal'); openModal('settingsModal');" class="p-3.5 hover:bg-slate-100 cursor-pointer transition-all flex items-center justify-between">
+            <div>
+              <p class="font-extrabold text-slate-900 text-sm">⚙️ Account Settings</p>
+              <p class="text-[11px] text-slate-500 font-medium">Update profile, preferences & privacy controls</p>
+            </div>
+            <span class="text-slate-400 font-bold">&rsaquo;</span>
+          </div>
         </div>
       </div>
     </div>
-<!-- TAB 4: CHAUPAL STORIES -->
-      <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <!-- Chaupal Section with Photo & Story Global Sync -->
-        <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
-          <div class="flex justify-between items-center"> 
-            <h3 class="text-base font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
-            <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow hover:bg-amber-700 transition-all">+ Share Story & Photo</button>
+
+    <!-- 3. ADD STORY MODAL -->
+    <div id="addStoryModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-bold text-slate-800">✨ Share Your Village Story</h3>
+          <button onclick="closeModal('addStoryModal')" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+        </div>
+        
+        <form id="chaupalPostForm" onsubmit="handleFirebasePhotoPost(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Your Name</label>
+            <input type="text" id="storyAuthor" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter your name">
           </div>
-          <p class="text-xs text-slate-700 font-medium">Stories and photos shared here are visible globally to all visitors in real-time.</p>
+          
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Village / Location</label>
+            <input type="text" id="storyLocation" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Village name">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Upload Photo</label>
+            <input type="file" id="storyImageFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+          </div>
+          
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Your Story / Memory</label>
+            <textarea id="storyText" rows="3" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Write your story here..."></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" onclick="closeModal('addStoryModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200">Cancel</button>
+            <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 shadow-md">Publish Story</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 4. WEDDING HOST POST MODAL -->
+    <div id="weddingHostPostModal" class="modal">
+      <div class="modal-content bg-slate-900 text-white">
+        <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+          <h3 class="text-lg font-extrabold text-pink-400">💍 Post Village Wedding Event / Venue</h3>
+          <button onclick="closeModal('weddingHostPostModal')" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
 
-        <!-- Global Feed Container -->
-        <div id="chaupalFeedContainer" class="space-y-3">
-          <!-- Firebase se photo aur stories yahan load hongi -->
+        <form id="weddingHostForm" onsubmit="handleWeddingHostPost(event)" class="space-y-3.5 text-xs">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Host / Organizer Name</label>
+            <input type="text" id="whHostName" placeholder="Enter full name" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Contact WhatsApp Number</label>
+              <input type="tel" id="whPhone" placeholder="+919876543210" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Village & State</label>
+              <input type="text" id="whLocation" placeholder="Rohat, Rajasthan" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Wedding Event Date</label>
+              <input type="date" id="whDate" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 mb-1">Expected Capacity / Guests</label>
+              <input type="text" id="whCapacity" placeholder="e.g., 200 Guests" required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Wedding Details & Arrangements</label>
+            <textarea id="whDesc" rows="3" placeholder="Traditional folk music, authentic food, heritage venue setup..." required class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium focus:outline-none focus:border-pink-500"></textarea>
+          </div>
+
+          <div>
+            <label class="block font-bold text-pink-400 mb-1">Upload Wedding Venue / Event Photo</label>
+            <input type="file" id="whPhotoFile" accept="image/*" class="w-full text-xs text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-pink-600 file:text-white">
+          </div>
+
+          <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-extrabold py-3.5 rounded-xl transition-all shadow-md text-xs">
+            🚀 Publish Wedding Post Live
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 5. ACCOUNT SETTINGS MODAL -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4 border-b pb-3">
+          <h3 class="text-lg font-extrabold text-slate-900">⚙️ Account Settings</h3>
+          <button onclick="closeModal('settingsModal')" class="text-slate-400 hover:text-slate-900 text-2xl font-bold">&times;</button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+            <p class="font-extrabold text-slate-800">Profile Preferences</p>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Display Name</label>
+              <input type="text" id="settingsNameInput" value="Jagdish" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl font-medium focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">User Status Mode</label>
+              <select id="settingsRoleSelect" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl font-medium focus:outline-none focus:border-amber-500">
+                <option value="guest">Guest / Traveler</option>
+                <option value="host">Village Host / Organizer</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+            <p class="font-extrabold text-slate-800">Privacy & Notifications</p>
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-slate-700">Show WhatsApp contact on listings</span>
+              <input type="checkbox" checked class="w-4 h-4 text-amber-600 rounded">
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-slate-700">Enable booking alert notifications</span>
+              <input type="checkbox" checked class="w-4 h-4 text-amber-600 rounded">
+            </div>
+          </div>
+
+          <button onclick="saveAccountSettings()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-3 rounded-xl transition-all shadow-md text-xs">
+            Save Settings
+          </button>
         </div>
       </div>
+    </div>
+
     <script>
       function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -557,56 +625,35 @@
         
         const url = `https://api.whatsapp.com/send?phone=${adminWhatsApp}&text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
-        
-        alert('Inquiry successfully submitted! Our wedding coordinator will reach out to you shortly.');
-        document.getElementById('villageWeddingInquiryForm').reset();
       }
 
-      function handleVillageListing(e) {
+      function handleWeddingHostPost(e) {
         e.preventDefault();
-        alert('Village listing submitted successfully! Admin will review and publish live.');
-        closeModal('listModal');
-        document.getElementById('listVillageForm').reset();
+        const hostName = document.getElementById('whHostName').value;
+        const phone = document.getElementById('whPhone').value;
+        const location = document.getElementById('whLocation').value;
+        const date = document.getElementById('whDate').value;
+        const capacity = document.getElementById('whCapacity').value;
+        const desc = document.getElementById('whDesc').value;
+
+        const adminWhatsApp = "919876543210";
+        const msg = `💍 *New Village Wedding Host Post!* 💍\n\n👤 Host: ${hostName}\n📞 Phone: ${phone}\n📍 Location: ${location}\n📅 Date: ${date}\n👥 Capacity: ${capacity}\n📝 Details: ${desc}\n\n_Action: Verify and publish on Village Deko._`;
+
+        const url = `https://api.whatsapp.com/send?phone=${adminWhatsApp}&text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        closeModal('weddingHostPostModal');
+        alert("Wedding post submitted successfully to admin via WhatsApp!");
       }
 
-      function filterVillages() {}
-      function changeStateTheme(state) {}
+      function saveAccountSettings() {
+        const newName = document.getElementById('settingsNameInput').value;
+        const nameEl = document.getElementById('profileUserName');
+        if(nameEl && newName) {
+          nameEl.innerText = newName + " (Platform User)";
+        }
+        closeModal('settingsModal');
+        alert("Account settings saved successfully!");
+      }
     </script>
-    <!-- ADD STORY MODAL -->
-<div id="addStoryModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative shadow-2xl animate-fade-in">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg font-bold text-slate-800">✨ Share Your Village Story</h3>
-      <button onclick="closeModal('addStoryModal')" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
-    </div>
-    
-    <form id="chaupalPostForm" onsubmit="handleFirebasePhotoPost(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Your Name</label>
-        <input type="text" id="storyAuthor" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter your name">
-      </div>
-      
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Village / Location</label>
-        <input type="text" id="storyLocation" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Village name">
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Upload Photo</label>
-        <input type="file" id="storyImageFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-      </div>
-      
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Your Story / Memory</label>
-        <textarea id="storyText" rows="3" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Write your story here..."></textarea>
-      </div>
-
-      <div class="flex justify-end gap-2 pt-2">
-        <button type="button" onclick="closeModal('addStoryModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200">Cancel</button>
-        <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 shadow-md">Publish Story</button>
-      </div>
-    </form>
-  </div>
-</div>
 </body>
 </html>
