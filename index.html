@@ -271,11 +271,20 @@
         </div>
       </div>
 
-      <!-- TAB 4: CHAUPAL STORIES -->
+     <!-- TAB 4: CHAUPAL STORIES -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <div class="bg-amber-50 p-6 rounded-3xl border border-amber-300 space-y-3 shadow-sm">
-          <h3 class="text-lg font-extrabold text-slate-900">🔥 Village Chaupal Stories</h3>
-          <p class="text-xs text-slate-700 font-medium">Elderly folklore stories, folk tales, and village history.</p>
+        <!-- Chaupal Section with Photo & Story Global Sync -->
+        <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
+            <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow hover:bg-amber-700 transition-all">+ Share Story & Photo</button>
+          </div>
+          <p class="text-xs text-slate-700 font-medium">Stories and photos shared here are visible globally to all visitors in real-time.</p>
+        </div>
+
+        <!-- Global Feed Container -->
+        <div id="chaupalFeedContainer" class="space-y-3">
+          <!-- Firebase se photo aur stories yahan load hongi -->
         </div>
       </div>
     </main>
@@ -496,7 +505,22 @@
         </div>
       </div>
     </div>
+<!-- TAB 4: CHAUPAL STORIES -->
+      <div id="tab-chaupal" class="tab-content space-y-4 hidden">
+        <!-- Chaupal Section with Photo & Story Global Sync -->
+        <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
+            <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow hover:bg-amber-700 transition-all">+ Share Story & Photo</button>
+          </div>
+          <p class="text-xs text-slate-700 font-medium">Stories and photos shared here are visible globally to all visitors in real-time.</p>
+        </div>
 
+        <!-- Global Feed Container -->
+        <div id="chaupalFeedContainer" class="space-y-3">
+          <!-- Firebase se photo aur stories yahan load hongi -->
+        </div>
+      </div>
     <script>
       function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
