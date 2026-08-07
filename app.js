@@ -594,7 +594,85 @@ async function handleHostSubmit(e) {
     alert('Network issue. Kripya apna internet check karein.');
   }
 }
+// Chaupal Firebase Functions
+      function handleFirebasePhotoPost(e) {
+        e.preventDefault();
+        const author = document.getElementById('storyAuthor').value;
+        const location = document.getElementById('storyLocation').value;
+        const text = document.getElementById('storyText').value;
+        const fileInput = document.getElementById('storyPhotoFile');
 
+        if (fileInput.files && fileInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = async function(uploadEvent) {
+            const base64Image = uploadEvent.target.result;
+            await saveToFirebaseDB(author, location, text, base64Image);
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        } else {
+          saveToFirebaseDB(author, location, text, null);
+        }
+      }
+
+      async function saveToFirebaseDB(author, location, text, photo) {
+        try {
+          await window.addDoc(window.collection(window.db, "chaupal_posts"), {
+            author: author,
+            location: location,
+            text: text,
+            photo: photo,
+            createdAt: window.serverTimestamp()
+          });
+
+          alert('Story & Photo published live globally for everyone!');
+          closeModal('addStoryModal');
+          document.getElementById('chaupalPostForm').reset();
+          loadFirebasePhotoStories();
+        } catch (error) {
+          console.error("Error saving: ", error);
+          alert('Error publishing. Please try again.');
+        }
+      }
+
+      async function loadFirebasePhotoStories() {
+        const container = document.getElementById('chaupalFeedContainer');
+        if(!container) return;
+
+        try {
+          const querySnapshot = await window.getDocs(window.collection(window.db, "chaupal_posts"));
+          let htmlContent = "";
+          
+          if(querySnapshot.empty) {
+            container.innerHTML = `<div class="bg-white p-4 rounded-2xl border border-slate-200 text-center text-xs text-slate-500 font-medium">No stories shared yet. Be the first one!</div>`;
+            return;
+          }
+
+          querySnapshot.forEach((doc) => {
+            const s = doc.data();
+            htmlContent += `
+              <div class="bg-white p-4 rounded-2xl border border-slate-200 custom-shadow space-y-2.5">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-extrabold text-slate-900 text-sm">${s.author}</h4>
+                    <p class="text-[11px] text-amber-700 font-bold">📍 ${s.location}</p>
+                  </div>
+                  <span class="text-[10px] text-slate-400 font-medium">Global Live</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed font-medium">${s.text}</p>
+                ${s.photo ? `<div class="mt-2"><img src="${s.photo}" class="rounded-xl max-h-48 w-full object-cover border border-slate-100 shadow-sm" /></div>` : ''}
+              </div>
+            `;
+          });
+          container.innerHTML = htmlContent;
+        } catch (err) {
+          console.error("Error loading feed:", err);
+        }
+      }
+
+      // Page load hote hi stories load karne ke liye
+      window.addEventListener('DOMContentLoaded', () => {
+        loadFirebasePhotoStories();
+      });
 // Helper Toast Notification
 function showToast(message) {
   const container = document.getElementById('toast-container');
