@@ -681,7 +681,7 @@ async function handleFireBasePhotoPost(event) {
 
     try {
         // Firestore ke 'chaupal_posts' collection mein data add karein
-        await db.collection("chaupal_posts").add(postData);
+        await addDoc(collection(db, "chaupal_posts"), postData);
         alert("Aapki story safalpurvak post ho gayi!");
         
         // Form ko clear kar dein
