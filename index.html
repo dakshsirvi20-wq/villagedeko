@@ -718,9 +718,7 @@ function loadChaupalStories() {
     if (!container) return;
 
     // Firestore se data real-time sunne ke liye
-    db.collection("chaupal_posts")
-      .orderBy("createdAt", "desc") // Nayi post sabse upar dikhegi
-      .onSnapshot((snapshot) => {
+    onSnapshot(query(collection(db, "chaupal_posts"), orderBy("createdAt", "desc")), (snapshot) => {
         container.innerHTML = ""; // Pehle purana list clear karein
 
         if (snapshot.empty) {
