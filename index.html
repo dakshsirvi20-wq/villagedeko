@@ -45,7 +45,7 @@
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
 
-      // Live Auth State Listener (No default names)
+      // Clean Auth State Listener (No hardcoded admin name)
       onAuthStateChanged(auth, (user) => {
         const profileNameEl = document.getElementById('profileUserName');
         const profileEmailEl = document.getElementById('profileUserEmail');
@@ -57,7 +57,7 @@
           if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
         } else {
           if(profileNameEl) profileNameEl.innerText = "Guest User";
-          if(profileEmailEl) profileEmailEl.innerText = "Please sign in";
+          if(profileEmailEl) profileEmailEl.innerText = "Please sign in to view account";
           if(profileUidEl) profileUidEl.innerText = "";
         }
       });
@@ -67,7 +67,6 @@
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #f1f5f9;
-        transition: background-color 0.4s ease;
       }
       .modal {
         display: none;
@@ -112,17 +111,6 @@
               <span class="text-[10px] font-bold text-slate-500">Village View</span>
             </div>
           </div>
-
-          <div class="flex items-center">
-            <select id="stateThemeSelector" class="text-xs bg-slate-50 border border-slate-300 font-bold px-2.5 py-1.5 rounded-xl text-slate-900 focus:outline-none">
-              <option value="rajasthan">Rajasthan</option>
-              <option value="punjab">Punjab</option>
-              <option value="maharashtra">Maharashtra</option>
-              <option value="uttar-pradesh">Uttar Pradesh</option>
-              <option value="bihar">Bihar</option>
-              <option value="kerala">Kerala</option>
-            </select>
-          </div>
         </div>
 
         <div class="flex items-center justify-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
@@ -135,25 +123,18 @@
 
     <!-- Main Container -->
     <main class="max-w-3xl mx-auto p-4 space-y-4">
-      <!-- TAB 1: VILLAGES -->
       <div id="tab-villages" class="tab-content space-y-4">
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
-          <span class="text-[11px] text-amber-700 font-extrabold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Select Village to View Stay</span>
         </div>
-        <div id="dynamicListingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
 
-      <!-- TAB 2: WEDDINGS -->
       <div id="tab-villageWedding" class="tab-content space-y-4 hidden">
         <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
-          <span class="bg-white/25 text-white text-[11px] font-extrabold px-3 py-1 rounded-full">💍 Special Experience</span>
           <h3 class="text-xl font-extrabold">Village Wedding Darshan & Destination Booking</h3>
-          <p class="text-xs text-pink-100 leading-relaxed font-medium">Experience authentic rural celebrations managed securely.</p>
         </div>
       </div>
 
-      <!-- TAB 3: CHAUPAL -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
         <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
           <div class="flex justify-between items-center">
@@ -206,19 +187,21 @@
       </div>
     </div>
 
+    <!-- Profile Modal (Updated without hardcoded admin) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
-          <h3 class="font-extrabold text-slate-900 text-sm">User Profile Dashboard</h3>
+          <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & User Info</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
-        <p id="profileUserName" class="text-base font-black text-slate-900">Loading...</p>
-        <p id="profileUserEmail" class="text-xs text-slate-600">Please wait</p>
-        <p id="profileUserUid" class="text-[11px] font-mono mt-1 bg-amber-100 p-1.5 rounded-lg inline-block"></p>
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-1">
+          <p id="profileUserName" class="text-sm font-black text-slate-900">Loading...</p>
+          <p id="profileUserEmail" class="text-xs text-slate-600">Please wait</p>
+          <p id="profileUserUid" class="text-[11px] font-mono text-amber-800"></p>
+        </div>
       </div>
     </div>
 
-    <!-- JavaScript Functions -->
     <script>
       function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -236,7 +219,6 @@
       async function loadChaupalPosts() {
         const container = document.getElementById('chaupalFeedContainer');
         if (!container) return;
-        
         try {
           const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
           window.onSnapshot(q, (snapshot) => {
