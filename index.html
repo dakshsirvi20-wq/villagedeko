@@ -45,12 +45,22 @@
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
 
-      // Clean Auth State Listener (No hardcoded admin name)
+    // Clean Auth State Listener
       onAuthStateChanged(auth, (user) => {
         const profileNameEl = document.getElementById('profileUserName');
         const profileEmailEl = document.getElementById('profileUserEmail');
         const profileUidEl = document.getElementById('profileUserUid');
 
+        if (user) {
+          if(profileNameEl) profileNameEl.innerText = user.displayName || user.email.split('@')[0];
+          if(profileEmailEl) profileEmailEl.innerText = user.email || "";
+          if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
+        } else {
+          if(profileNameEl) profileNameEl.innerText = "Guest User";
+          if(profileEmailEl) profileEmailEl.innerText = "Not signed in";
+          if(profileUidEl) profileUidEl.innerText = "";
+        }
+      });
         if (user) {
           if(profileNameEl) profileNameEl.innerText = user.displayName || user.email.split('@')[0];
           if(profileEmailEl) profileEmailEl.innerText = user.email || "";
