@@ -45,7 +45,7 @@
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
 
-      // Live Auth State Listener (Updated: No default admin name)
+      // Live Auth State Listener (No default names)
       onAuthStateChanged(auth, (user) => {
         const profileNameEl = document.getElementById('profileUserName');
         const profileEmailEl = document.getElementById('profileUserEmail');
@@ -57,7 +57,7 @@
           if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
         } else {
           if(profileNameEl) profileNameEl.innerText = "Guest User";
-          if(profileEmailEl) profileEmailEl.innerText = "Please sign in to view account";
+          if(profileEmailEl) profileEmailEl.innerText = "Please sign in";
           if(profileUidEl) profileUidEl.innerText = "";
         }
       });
@@ -194,7 +194,7 @@
             <input type="file" id="storyImageFile" accept="image/*" class="w-full text-xs text-slate-500">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Activity Type (Host & Experience)</label>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Activity Type</label>
             <input type="text" id="storyActivity" placeholder="e.g. Pottery, Folk Dance, Farm Tour" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 outline-none">
           </div>
           <div>
