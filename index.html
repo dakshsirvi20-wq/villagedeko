@@ -11,7 +11,7 @@
 
     <!-- Firebase SDKs -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { initializeApp } from "https://www.gstatic.com/js/10.8.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -303,7 +303,7 @@
           <button type="button" onclick="closeModal('listVillageModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
 
-        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-xs">
+       <form id="listVillageForm" action="https://formsubmit.co/Dakshsirvi20@gmail.com" method="POST" class="space-y-4 text-xs"> 
           
           <!-- Photo Gallery Upload Box -->
           <div class="bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-300 space-y-2">
@@ -506,10 +506,12 @@
 
                   <div class="flex justify-between items-center pt-2 border-t border-slate-100">
                     <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
-                    <a href="https://wa.me/${d.hostWhatsapp}?text=Hi%20${encodeURIComponent(d.hostName)},%20I%20saw%20your%20village%20${encodeURIComponent(d.vName)}%20on%20Village%20Deko%20and%20want%20to%20book%20a%20stay!" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1">
-                      💬 Contact Host
-                    </a>
-                  </div>
+                 <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+    <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
+    <a href="https://wa.me/919167588371?text=Hello%2C%20main%20${encodeURIComponent(d.vName)}%20listing%20ke%20baare%20mein%20baat%20karna%20chahta%20hoon" target="_blank" class="inline-flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-green-700">
+        💬 Chat on WhatsApp
+    </a>
+</div>
                 </div>
               `;
             });
@@ -589,7 +591,7 @@
         listSubmitBtn.disabled = true;
         listSubmitBtn.innerText = "Uploading Photos & Publishing...";
 
-        const hostName = document.getElementById('hostName').value;
+        const  hostName = document.getElementById('hostName').value;
         const hostWhatsapp = document.getElementById('hostWhatsapp').value;
         const bankAcc = document.getElementById('bankAcc').value;
         const ifscCode = document.getElementById('ifscCode').value;
