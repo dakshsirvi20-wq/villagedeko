@@ -52,9 +52,9 @@
           if(profileEmailEl) profileEmailEl.innerText = user.email || "";
           if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
         } else {
-          if(profileNameEl) profileNameEl.innerText = "Guest User";
-          if(profileEmailEl) profileEmailEl.innerText = "Please sign in to view account";
-          if(profileUidEl) profileUidEl.innerText = "";
+          if(profileNameEl) profileNameEl.innerText = "Jagdish (Platform Owner)";
+          if(profileEmailEl) profileEmailEl.innerText = "jagdish@villagedeko.in";
+          if(profileUidEl) profileUidEl.innerText = "App ID / UID: v1-ADMIN-9600";
         }
       });
     </script>
@@ -107,6 +107,9 @@
               <span class="text-[10px] font-bold text-slate-500">Village View</span>
             </div>
           </div>
+          <div>
+            <span class="text-xs bg-slate-100 border border-slate-200 px-3 py-1 rounded-full font-bold text-slate-700">Rajasthan</span>
+          </div>
         </div>
 
         <div class="flex items-center justify-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
@@ -122,30 +125,73 @@
       
       <!-- Villages Tab -->
       <div id="tab-villages" class="tab-content space-y-4">
+        <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <label class="block text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Search Destination</label>
+          <input type="text" placeholder="Search by Village, District or State..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 outline-none font-medium">
+        </div>
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-          <p class="text-xs text-slate-600 font-medium">Explore authentic village stays, heritage sites, and local experiences from Pali, Rajasthan and across India.</p>
+          <button onclick="openModal('listVillageModal')" class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">Select Village to View Stay</button>
         </div>
       </div>
 
       <!-- Village Weddings Tab -->
       <div id="tab-villageWedding" class="tab-content space-y-4 hidden">
-        <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-6 rounded-3xl shadow-lg space-y-3">
-          <h3 class="text-xl font-extrabold">💍 Village Wedding Darshan & Destination Booking</h3>
-          <p class="text-xs text-pink-100 leading-relaxed">Experience the vibrant colours, traditional folk music, authentic feast preparations, and age-old rituals of a real Indian village wedding.</p>
-          <button onclick="openModal('addStoryModal')" class="bg-white text-rose-700 text-xs font-extrabold px-4 py-2 rounded-xl shadow">Share Wedding Moments</button>
+        <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <input type="text" placeholder="Search by Village, District or State..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 outline-none font-medium">
+        </div>
+        <div class="bg-gradient-to-br from-pink-600 to-rose-700 text-white p-5 rounded-3xl shadow-lg space-y-2">
+          <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">✨ Special Experience</span>
+          <h3 class="text-base font-extrabold">Village Wedding Darshan & Destination Booking</h3>
+          <p class="text-xs text-pink-100 leading-relaxed">Experience authentic rural celebrations or plan your royal destination wedding managed securely by Village Deko experts.</p>
+        </div>
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">Destination Wedding Inquiry</h4>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Your Full Name</label>
+              <input type="text" placeholder="Enter your name" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Phone Number</label>
+                <input type="text" placeholder="Enter mobile number" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Village Location</label>
+                <select class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+                  <option>Select Region</option>
+                  <option>Pali, Rajasthan</option>
+                  <option>Rohet, Rajasthan</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Guest Count</label>
+                <input type="text" placeholder="e.g. 150-200" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Wedding Date</label>
+                <input type="text" placeholder="mm/dd/yyyy" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+              </div>
+            </div>
+            <button class="w-full py-2.5 text-xs font-bold text-white bg-rose-600 rounded-xl shadow-sm">Submit Wedding Inquiry</button>
+          </div>
         </div>
       </div>
 
       <!-- Chaupal Tab -->
       <div id="tab-chaupal" class="tab-content space-y-4 hidden">
-        <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-4 shadow-sm">
-          <div class="flex justify-between items-center">
-            <h3 class="text-base font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
-            <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow">+ Share Story & Photo</button>
+        <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <input type="text" placeholder="Search by Village, District or State..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 outline-none font-medium">
+        </div>
+        <div class="bg-amber-50 p-5 rounded-3xl border border-amber-200 space-y-3 shadow-sm flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
+            <p class="text-[11px] text-slate-500">Stories and photos shared here are visible globally to all visitors in real-time.</p>
           </div>
+          <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow shrink-0">+ Share Story & Photo</button>
         </div>
         <div id="chaupalFeedContainer" class="space-y-3"></div>
       </div>
@@ -164,46 +210,99 @@
     <div id="addStoryModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold text-slate-800">✨ Share Your Village Story</h3>
+          <h3 class="text-sm font-black text-slate-900">✨ Share Your Village Story</h3>
           <button onclick="closeModal('addStoryModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
-        <form id="chaupalPostForm" onsubmit="handleFirebasePhotoPost(event)" class="space-y-4">
+        <form id="chaupalPostForm" onsubmit="handleFirebasePhotoPost(event)" class="space-y-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Your Name</label>
-            <input type="text" id="storyAuthor" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 outline-none">
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Your Name</label>
+            <input type="text" id="storyAuthor" required placeholder="Enter your name" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Village / Location</label>
-            <input type="text" id="storyLocation" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 outline-none">
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Village / Location</label>
+            <input type="text" id="storyLocation" required placeholder="Village name" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Upload Photo</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Upload Photo</label>
             <input type="file" id="storyImageFile" accept="image/*" class="w-full text-xs text-slate-500">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Activity Type</label>
-            <input type="text" id="storyActivity" placeholder="e.g. Pottery, Wedding, Climb" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 outline-none">
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Your Story / Memory</label>
+            <textarea id="storyText" rows="3" required placeholder="Write your story here..." class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none"></textarea>
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Your Story</label>
-            <textarea id="storyText" rows="3" required class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 outline-none"></textarea>
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" onclick="closeModal('addStoryModal')" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 rounded-xl">Cancel</button>
+            <button type="submit" id="submitBtn" class="px-4 py-2 text-xs font-bold text-white bg-amber-600 rounded-xl shadow-sm">Publish Story</button>
           </div>
-          <button type="submit" class="w-full py-2 text-xs font-semibold text-white bg-amber-600 rounded-lg">Publish Story</button>
         </form>
       </div>
     </div>
 
-    <!-- Profile Modal -->
+    <!-- List Village Modal (from video) -->
+    <div id="listVillageModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-black text-slate-900">List Village, Stay & Photo Galleries</h3>
+          <button onclick="closeModal('listVillageModal')" class="text-slate-400 font-bold text-xl">&times;</button>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Host Name</label>
+              <input type="text" value="Ramesh Patel" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Host WhatsApp Number</label>
+              <input type="text" value="+919876543210" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2">
+            </div>
+          </div>
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
+            <p class="font-black text-amber-900">Host Bank Account Details (For Payouts)</p>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" placeholder="Bank Account Number" value="123456789012" class="border border-slate-200 bg-white rounded-xl px-3 py-2">
+              <input type="text" placeholder="IFSC Code" value="SBIN0001234" class="border border-slate-200 bg-white rounded-xl px-3 py-2">
+            </div>
+            <input type="text" placeholder="Or Host UPI ID (Optional)" value="ramesh@okaxis" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2">
+          </div>
+          <button class="w-full py-2.5 text-xs font-bold text-white bg-amber-600 rounded-xl">Publish Village & Galleries Live</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Modal (matching video dashboard) -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
-        <div class="flex justify-between items-center mb-3 border-b pb-2">
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
           <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & User Info</h3>
           <button onclick="closeModal('profileModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
-        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-1">
-          <p id="profileUserName" class="text-sm font-black text-slate-900">Loading...</p>
-          <p id="profileUserEmail" class="text-xs text-slate-600">Please wait</p>
-          <p id="profileUserUid" class="text-[11px] font-mono text-amber-800"></p>
+        <div class="space-y-3">
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-0.5">
+            <p class="text-[10px] font-bold text-amber-800 uppercase">Active Account Details</p>
+            <p id="profileUserName" class="text-sm font-black text-slate-900">Jagdish (Platform Owner)</p>
+            <p id="profileUserEmail" class="text-xs text-slate-600">jagdish@villagedeko.in</p>
+            <p id="profileUserUid" class="text-[11px] font-mono text-amber-800">App ID / UID: v1-ADMIN-9600</p>
+          </div>
+          <div class="space-y-1.5 text-xs font-bold text-slate-700">
+            <div onclick="switchTab('villages'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>🏡 Villages & Stays <span class="block text-[10px] font-normal text-slate-500">Explore island villages and book stays</span></span>
+            </div>
+            <div onclick="switchTab('villageWedding'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>💍 Village Weddings & Destinations <span class="block text-[10px] font-normal text-slate-500">Submit wedding inquiries and manage bookings</span></span>
+            </div>
+            <div onclick="openModal('addStoryModal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>🔥 Wedding Host Post <span class="block text-[10px] font-normal text-slate-500">Post your village wedding events or venue details</span></span>
+            </div>
+            <div onclick="switchTab('chaupal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>🔥 Chaupal Stories <span class="block text-[10px] font-normal text-slate-500">Read village folklore and village tales</span></span>
+            </div>
+            <div onclick="openModal('listVillageModal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>🏨 List Your Village & Stay <span class="block text-[10px] font-normal text-slate-500">Add-on village photos, stay & bank details</span></span>
+            </div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
+              <span>⚙️ Account Settings <span class="block text-[10px] font-normal text-slate-500">Update profile, preferences & privacy controls</span></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -241,7 +340,6 @@
                     <span class="font-bold text-xs text-amber-800">${data.author || 'Anonymous'}</span>
                     <span class="text-[10px] text-slate-400">${data.location || ''}</span>
                   </div>
-                  ${data.activity ? `<span class="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">Activity: ${data.activity}</span>` : ''}
                   ${data.imageUrl ? `<img src="${data.imageUrl}" class="w-full h-48 object-cover rounded-xl mt-2"/>` : ''}
                   <p class="text-xs text-slate-700 mt-1">${data.text || ''}</p>
                 </div>
@@ -255,9 +353,12 @@
 
       async function handleFirebasePhotoPost(e) {
         e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Publishing...";
+
         const author = document.getElementById('storyAuthor').value;
         const location = document.getElementById('storyLocation').value;
-        const activity = document.getElementById('storyActivity').value;
         const text = document.getElementById('storyText').value;
         const fileInput = document.getElementById('storyImageFile');
 
@@ -272,15 +373,10 @@
           });
         }
 
-        await savePostToDb(author, location, activity, text, imageUrl);
-      }
-
-      async function savePostToDb(author, location, activity, text, imageUrl) {
         try {
           await window.addDoc(window.collection(window.db, "posts"), {
             author,
             location,
-            activity,
             text,
             imageUrl,
             createdAt: window.serverTimestamp()
@@ -290,6 +386,9 @@
           alert("Story published successfully!");
         } catch (err) {
           alert("Error publishing: " + err.message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Publish Story";
         }
       }
 
