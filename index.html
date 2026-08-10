@@ -14,6 +14,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
       
       const firebaseConfig = {
         apiKey: "AIzaSyCQxzHVjVKCxhAPGSruFcaDQY-UqCh8y_o",
@@ -27,10 +28,14 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
+      const storage = getStorage(app);
 
-      // Global Bindings for Mobile & Desktop
       window.auth = auth;
       window.db = db;
+      window.storage = storage;
+      window.ref = ref;
+      window.uploadBytes = uploadBytes;
+      window.getDownloadURL = getDownloadURL;
       window.query = query;
       window.orderBy = orderBy;
       window.onSnapshot = onSnapshot;
@@ -175,7 +180,6 @@
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
           <button type="button" onclick="openModal('listVillageModal')" class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">List Your Village & Stay</button>
         </div>
-        <!-- Listed Villages Feed Container -->
         <div id="villagesFeedContainer" class="space-y-4"></div>
       </div>
 
@@ -304,6 +308,7 @@
           <div class="bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-300 space-y-2">
             <label class="block font-black text-amber-900 text-sm">📸 Select Village & Stay Photos (Multiple)</label>
             <input type="file" id="villageGalleryFiles" accept="image/*" multiple class="w-full text-xs text-slate-700 bg-white border border-amber-200 rounded-xl p-2.5">
+            <p class="text-[10px] text-amber-700">You can select multiple photos safely without any size limit.</p>
           </div>
 
           <!-- Host Info -->
@@ -369,7 +374,7 @@
             <textarea id="packageDesc" rows="2" placeholder="Stay Description..." class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none"></textarea>
           </div>
 
-          <!-- Dynamic Activities Container (Multiple Activities) -->
+          <!-- Dynamic Activities Container -->
           <div id="activitiesContainer" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
             <div class="flex justify-between items-center">
               <p class="font-black text-slate-800">🎯 Village Activities & Pricing</p>
@@ -430,7 +435,6 @@
     </div>
 
     <script>
-      // Add Activity Field Dynamically
       function addActivityField() {
         const container = document.getElementById('activitiesContainer');
         const div = document.createElement('div');
@@ -446,7 +450,6 @@
         container.appendChild(div);
       }
 
-      // Load Listed Villages from Firestore with Multiple Photos and Activities
       async function loadVillagesListings() {
         const container = document.getElementById('villagesFeedContainer');
         if (!container) return;
@@ -515,7 +518,6 @@
         }
       }
 
-      // Load Chaupal Posts
       async function loadChaupalPosts() {
         const container = document.getElementById('chaupalFeedContainer');
         if (!container) return;
@@ -550,7 +552,7 @@
         e.preventDefault();
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
-        submitBtn.innerText = "Publishing...";
+        submitBtn.innerText = "Uploading Photo...";
 
         const author = document.getElementById('storyAuthor').value;
         const location = document.getElementById('storyLocation').value;
@@ -560,11 +562,9 @@
         let imageUrl = "";
         if (fileInput.files && fileInput.files[0]) {
           const file = fileInput.files[0];
-          imageUrl = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (uploadEvent) => resolve(uploadEvent.target.result);
-            reader.readAsDataURL(file);
-          });
+          const storageRef = window.ref(window.storage, 'chaupal/' + Date.now() + '_' + file.name);
+          const snapshot = await window.uploadBytes(storageRef, file);
+          imageUrl = await window.getDownloadURL(snapshot.ref);
         }
 
         try {
@@ -586,7 +586,7 @@
         e.preventDefault();
         const listSubmitBtn = document.getElementById('listSubmitBtn');
         listSubmitBtn.disabled = true;
-        listSubmitBtn.innerText = "Publishing Village & Photos...";
+        listSubmitBtn.innerText = "Uploading Photos & Publishing...";
 
         const hostName = document.getElementById('hostName').value;
         const hostWhatsapp = document.getElementById('hostWhatsapp').value;
@@ -602,22 +602,19 @@
         const packagePrice = document.getElementById('packagePrice').value;
         const packageDesc = document.getElementById('packageDesc').value;
 
-        // Multiple Gallery Images Conversion
+        // Upload Multiple Photos to Firebase Storage safely
         const galleryInput = document.getElementById('villageGalleryFiles');
         let imagesArray = [];
         if (galleryInput.files && galleryInput.files.length > 0) {
           for (let i = 0; i < galleryInput.files.length; i++) {
             const file = galleryInput.files[i];
-            const base64Img = await new Promise((resolve) => {
-              const reader = new FileReader();
-              reader.onload = (evt) => resolve(evt.target.result);
-              reader.readAsDataURL(file);
-            });
-            imagesArray.push(base64Img);
+            const storageRef = window.ref(window.storage, 'villages/' + Date.now() + '_' + i + '_' + file.name);
+            const snapshot = await window.uploadBytes(storageRef, file);
+            const downloadURL = await window.getDownloadURL(snapshot.ref);
+            imagesArray.push(downloadURL);
           }
         }
 
-        // Multiple Activities Collection
         const actNames = Array.from(document.getElementsByName('activityName[]')).map(i => i.value);
         const actPrices = Array.from(document.getElementsByName('activityPrice[]')).map(i => i.value);
         const activities = actNames.map((name, idx) => ({
