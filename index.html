@@ -138,7 +138,6 @@
             </div>
           </div>
           <div>
-            <!-- All States Dropdown Selector -->
             <select class="text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-bold text-slate-700 outline-none">
               <option value="All">All States</option>
               <option value="Rajasthan" selected>Rajasthan</option>
@@ -176,6 +175,8 @@
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
           <button type="button" onclick="openModal('listVillageModal')" class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">List Your Village & Stay</button>
         </div>
+        <!-- Listed Villages Feed Container -->
+        <div id="villagesFeedContainer" class="space-y-4"></div>
       </div>
 
       <!-- Village Weddings Tab -->
@@ -289,7 +290,7 @@
       </div>
     </div>
 
-    <!-- List Village, Stay & Photo Gallery Modal (Non-Mandatory Bank Details) -->
+    <!-- List Village Modal -->
     <div id="listVillageModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-2">
@@ -311,7 +312,7 @@
             </div>
           </div>
 
-          <!-- Bank/Payout Details (Optional / Non-Mandatory) -->
+          <!-- Bank/Payout Details (Optional) -->
           <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
             <p class="font-black text-amber-900">Host Bank Account Details <span class="text-[10px] font-normal text-amber-700">(Optional for now)</span></p>
             <div class="grid grid-cols-2 gap-2">
@@ -375,12 +376,6 @@
             </div>
           </div>
 
-          <!-- Photo Gallery Uploads -->
-          <div class="space-y-2">
-            <label class="block font-bold text-slate-600">📸 Village Photo Gallery</label>
-            <input type="file" id="villageGalleryFiles" accept="image/*" multiple class="w-full text-slate-500 border border-slate-200 bg-slate-50 rounded-xl p-2">
-          </div>
-
           <div class="flex justify-end gap-2 pt-2">
             <button type="button" onclick="closeModal('listVillageModal')" class="px-4 py-2 font-bold text-slate-600 bg-slate-100 rounded-xl">Cancel</button>
             <button type="submit" id="listSubmitBtn" class="px-4 py-2 font-bold text-white bg-amber-600 rounded-xl shadow-sm">Publish Village & Stay Live</button>
@@ -426,6 +421,59 @@
     </div>
 
     <script>
+      // Load Listed Villages from Firestore
+      async function loadVillagesListings() {
+        const container = document.getElementById('villagesFeedContainer');
+        if (!container) return;
+        try {
+          const q = window.query(window.collection(window.db, "villagesListings"), window.orderBy("createdAt", "desc"));
+          window.onSnapshot(q, (snapshot) => {
+            container.innerHTML = "";
+            if (snapshot.empty) {
+              container.innerHTML = `<div class="bg-white p-6 rounded-2xl text-center border border-slate-200 shadow-sm"><p class="text-xs text-slate-500 font-bold">No villages listed yet. Be the first host to list your village!</p></div>`;
+              return;
+            }
+            snapshot.forEach((docSnap) => {
+              const d = docSnap.data();
+              container.innerHTML += `
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2.5 py-1 rounded-lg">${d.vDistrict || ''}, ${d.vState || ''}</span>
+                      <h3 class="text-base font-black text-slate-900 mt-1">🏡 ${d.vName || ''}</h3>
+                    </div>
+                    <span class="text-xs font-bold text-slate-500">Host: ${d.hostName || ''}</span>
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">${d.vDescription || ''}</p>
+                  
+                  <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1">
+                    <p class="text-xs font-black text-slate-800">🌟 Stay Package: ${d.packageName || 'Village Experience'}</p>
+                    <p class="text-xs font-bold text-amber-700">Price: ₹${d.packagePrice || 'On Request'} / person</p>
+                    <p class="text-[11px] text-slate-500">${d.packageDesc || ''}</p>
+                  </div>
+
+                  ${d.activityName ? `
+                    <div class="bg-amber-50/50 p-2.5 rounded-xl border border-amber-100 text-xs">
+                      <span class="font-bold text-amber-900">Activity:</span> ${d.activityName} — <span class="font-bold text-amber-800">₹${d.activityPrice || 'Free'}</span>
+                    </div>
+                  ` : ''}
+
+                  <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+                    <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
+                    <a href="https://wa.me/${d.hostWhatsapp}?text=Hi%20${encodeURIComponent(d.hostName)},%20I%20saw%20your%20village%20${encodeURIComponent(d.vName)}%20on%20Village%20Deko%20and%20want%20to%20book%20a%20stay!" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1">
+                      💬 Contact Host
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+          });
+        } catch (e) {
+          console.error("Error loading villages:", e);
+        }
+      }
+
+      // Load Chaupal Posts
       async function loadChaupalPosts() {
         const container = document.getElementById('chaupalFeedContainer');
         if (!container) return;
@@ -468,7 +516,6 @@
         const fileInput = document.getElementById('storyImageFile');
 
         let imageUrl = "";
-
         if (fileInput.files && fileInput.files[0]) {
           const file = fileInput.files[0];
           imageUrl = await new Promise((resolve) => {
@@ -480,11 +527,7 @@
 
         try {
           await window.addDoc(window.collection(window.db, "posts"), {
-            author,
-            location,
-            text,
-            imageUrl,
-            createdAt: window.serverTimestamp()
+            author, location, text, imageUrl, createdAt: window.serverTimestamp()
           });
           window.closeModal('addStoryModal');
           document.getElementById('chaupalPostForm').reset();
@@ -521,21 +564,9 @@
 
         try {
           await window.addDoc(window.collection(window.db, "villagesListings"), {
-            hostName,
-            hostWhatsapp,
-            bankAcc,
-            ifscCode,
-            upiId,
-            vName,
-            vDistrict,
-            vState,
-            vStation,
-            vDescription,
-            packageName,
-            packagePrice,
-            packageDesc,
-            activityName,
-            activityPrice,
+            hostName, hostWhatsapp, bankAcc, ifscCode, upiId,
+            vName, vDistrict, vState, vStation, vDescription,
+            packageName, packagePrice, packageDesc, activityName, activityPrice,
             createdAt: window.serverTimestamp()
           });
           window.closeModal('listVillageModal');
@@ -550,6 +581,7 @@
       }
 
       window.onload = function() {
+        loadVillagesListings();
         loadChaupalPosts();
       };
     </script>
