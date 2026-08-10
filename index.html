@@ -91,6 +91,11 @@
           }
         }
       });
+
+      window.onload = () => {
+        loadVillagesListings();
+        loadChaupalPosts();
+      };
     </script>
 
     <style>
@@ -482,6 +487,9 @@
                 activitiesHtml += `</div>`;
               }
 
+              // Fixed WhatsApp Number to Jagdish's personal number: 9167588371
+              const myWhatsappNumber = "919167588371";
+
               container.innerHTML += `
                 <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
                   <div class="flex justify-between items-start">
@@ -505,7 +513,7 @@
 
                   <div class="flex justify-between items-center pt-2 border-t border-slate-100">
                     <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
-                    <a href="https://wa.me/${d.hostWhatsapp}?text=Hi%20${encodeURIComponent(d.hostName)},%20I%20saw%20your%20village%20${encodeURIComponent(d.vName)}%20on%20Village%20Deko%20and%20want%20to%20book%20a%20stay!" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1">
+                    <a href="https://wa.me/${myWhatsappNumber}?text=Hi%20Jagdish,%20I%20saw%20your%20village%20${encodeURIComponent(d.vName)}%20on%20Village%20Deko%20and%20want%20to%20book%20a%20stay!" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1">
                       💬 Contact Host
                     </a>
                   </div>
@@ -554,28 +562,34 @@
         submitBtn.disabled = true;
         submitBtn.innerText = "Uploading Photo...";
 
-        const author = document.getElementById('storyAuthor').value;
-        const location = document.getElementById('storyLocation').value;
-        const text = document.getElementById('storyText').value;
-        const fileInput = document.getElementById('storyImageFile');
-
-        let imageUrl = "";
-        if (fileInput.files && fileInput.files[0]) {
-          const file = fileInput.files[0];
-          const storageRef = window.ref(window.storage, 'chaupal/' + Date.now() + '_' + file.name);
-          const snapshot = await window.uploadBytes(storageRef, file);
-          imageUrl = await window.getDownloadURL(snapshot.ref);
-        }
-
         try {
+          const author = document.getElementById('storyAuthor').value;
+          const location = document.getElementById('storyLocation').value;
+          const text = document.getElementById('storyText').value;
+          const fileInput = document.getElementById('storyImageFile');
+          let imageUrl = "";
+
+          if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            const storageRef = window.ref(window.storage, 'posts/' + Date.now() + '_' + file.name);
+            const snapshot = await window.uploadBytes(storageRef, file);
+            imageUrl = await window.getDownloadURL(snapshot.ref);
+          }
+
           await window.addDoc(window.collection(window.db, "posts"), {
-            author, location, text, imageUrl, createdAt: window.serverTimestamp()
+            author,
+            location,
+            text,
+            imageUrl,
+            adminEmail: "Dakshsirvi20@gmail.com",
+            createdAt: window.serverTimestamp()
           });
-          window.closeModal('addStoryModal');
+
           document.getElementById('chaupalPostForm').reset();
+          closeModal('addStoryModal');
           alert("Story published successfully!");
         } catch (err) {
-          alert("Error publishing: " + err.message);
+          alert("Error: " + err.message);
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerText = "Publish Story";
@@ -586,66 +600,61 @@
         e.preventDefault();
         const listSubmitBtn = document.getElementById('listSubmitBtn');
         listSubmitBtn.disabled = true;
-        listSubmitBtn.innerText = "Uploading Photos & Publishing...";
-
-        const hostName = document.getElementById('hostName').value;
-        const hostWhatsapp = document.getElementById('hostWhatsapp').value;
-        const bankAcc = document.getElementById('bankAcc').value;
-        const ifscCode = document.getElementById('ifscCode').value;
-        const upiId = document.getElementById('upiId').value;
-        const vName = document.getElementById('vName').value;
-        const vDistrict = document.getElementById('vDistrict').value;
-        const vState = document.getElementById('vState').value;
-        const vStation = document.getElementById('vStation').value;
-        const vDescription = document.getElementById('vDescription').value;
-        const packageName = document.getElementById('packageName').value;
-        const packagePrice = document.getElementById('packagePrice').value;
-        const packageDesc = document.getElementById('packageDesc').value;
-
-        // Upload Multiple Photos to Firebase Storage safely
-        const galleryInput = document.getElementById('villageGalleryFiles');
-        let imagesArray = [];
-        if (galleryInput.files && galleryInput.files.length > 0) {
-          for (let i = 0; i < galleryInput.files.length; i++) {
-            const file = galleryInput.files[i];
-            const storageRef = window.ref(window.storage, 'villages/' + Date.now() + '_' + i + '_' + file.name);
-            const snapshot = await window.uploadBytes(storageRef, file);
-            const downloadURL = await window.getDownloadURL(snapshot.ref);
-            imagesArray.push(downloadURL);
-          }
-        }
-
-        const actNames = Array.from(document.getElementsByName('activityName[]')).map(i => i.value);
-        const actPrices = Array.from(document.getElementsByName('activityPrice[]')).map(i => i.value);
-        const activities = actNames.map((name, idx) => ({
-          name: name,
-          price: actPrices[idx]
-        })).filter(a => a.name !== "");
+        listSubmitBtn.innerText = "Publishing Listing...";
 
         try {
-          await window.addDoc(window.collection(window.db, "villagesListings"), {
-            hostName, hostWhatsapp, bankAcc, ifscCode, upiId,
-            vName, vDistrict, vState, vStation, vDescription,
-            packageName, packagePrice, packageDesc,
-            images: imagesArray,
-            activities: activities,
-            createdAt: window.serverTimestamp()
+          const fileInput = document.getElementById('villageGalleryFiles');
+          let imageUrls = [];
+
+          if (fileInput.files && fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+              const file = fileInput.files[i];
+              const storageRef = window.ref(window.storage, 'villages/' + Date.now() + '_' + file.name);
+              const snapshot = await window.uploadBytes(storageRef, file);
+              const url = await window.getDownloadURL(snapshot.ref);
+              imageUrls.push(url);
+            }
+          }
+
+          const activities = [];
+          document.querySelectorAll('.activity-row').forEach(row => {
+            const name = row.querySelector('input[name="activityName[]"]').value;
+            const price = row.querySelector('input[name="activityPrice[]"]').value;
+            if (name) activities.push({ name, price });
           });
-          window.closeModal('listVillageModal');
+
+          const listingData = {
+            hostName: document.getElementById('hostName').value,
+            hostWhatsapp: document.getElementById('hostWhatsapp').value,
+            bankAcc: document.getElementById('bankAcc').value,
+            ifscCode: document.getElementById('ifscCode').value,
+            upiId: document.getElementById('upiId').value,
+            vName: document.getElementById('vName').value,
+            vDistrict: document.getElementById('vDistrict').value,
+            vState: document.getElementById('vState').value,
+            vStation: document.getElementById('vStation').value,
+            vDescription: document.getElementById('vDescription').value,
+            packageName: document.getElementById('packageName').value,
+            packagePrice: document.getElementById('packagePrice').value,
+            packageDesc: document.getElementById('packageDesc').value,
+            images: imageUrls,
+            activities: activities,
+            adminEmail: "Dakshsirvi20@gmail.com",
+            createdAt: window.serverTimestamp()
+          };
+
+          await window.addDoc(window.collection(window.db, "villagesListings"), listingData);
+
           document.getElementById('listVillageForm').reset();
-          alert("Village and photos published live successfully!");
+          closeModal('listVillageModal');
+          alert("Village listing published successfully!");
         } catch (err) {
-          alert("Error publishing village: " + err.message);
+          alert("Error: " + err.message);
         } finally {
           listSubmitBtn.disabled = false;
           listSubmitBtn.innerText = "Publish Village & Stay Live";
         }
       }
-
-      window.onload = function() {
-        loadVillagesListings();
-        loadChaupalPosts();
-      };
     </script>
 </body>
 </html>
