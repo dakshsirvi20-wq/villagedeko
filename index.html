@@ -300,6 +300,12 @@
 
         <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-xs">
           
+          <!-- Photo Gallery Upload Box -->
+          <div class="bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-300 space-y-2">
+            <label class="block font-black text-amber-900 text-sm">📸 Select Village & Stay Photos (Multiple)</label>
+            <input type="file" id="villageGalleryFiles" accept="image/*" multiple class="w-full text-xs text-slate-700 bg-white border border-amber-200 rounded-xl p-2.5">
+          </div>
+
           <!-- Host Info -->
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -312,7 +318,7 @@
             </div>
           </div>
 
-          <!-- Bank/Payout Details (Optional) -->
+          <!-- Bank/Payout Details -->
           <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
             <p class="font-black text-amber-900">Host Bank Account Details <span class="text-[10px] font-normal text-amber-700">(Optional for now)</span></p>
             <div class="grid grid-cols-2 gap-2">
@@ -363,15 +369,18 @@
             <textarea id="packageDesc" rows="2" placeholder="Stay Description..." class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none"></textarea>
           </div>
 
-          <!-- Activity Options -->
-          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
-            <p class="font-black text-slate-800">🎯 Village Activities & Pricing</p>
-            <div class="grid grid-cols-3 gap-2">
+          <!-- Dynamic Activities Container (Multiple Activities) -->
+          <div id="activitiesContainer" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+            <div class="flex justify-between items-center">
+              <p class="font-black text-slate-800">🎯 Village Activities & Pricing</p>
+              <button type="button" onclick="addActivityField()" class="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded-lg">+ Add More</button>
+            </div>
+            <div class="activity-row grid grid-cols-3 gap-2">
               <div class="col-span-2">
-                <input type="text" id="activityName" placeholder="Activity Name (e.g. Pottery)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+                <input type="text" name="activityName[]" placeholder="Activity Name (e.g. Pottery)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
               </div>
               <div>
-                <input type="text" id="activityPrice" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+                <input type="text" name="activityPrice[]" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
               </div>
             </div>
           </div>
@@ -421,7 +430,23 @@
     </div>
 
     <script>
-      // Load Listed Villages from Firestore
+      // Add Activity Field Dynamically
+      function addActivityField() {
+        const container = document.getElementById('activitiesContainer');
+        const div = document.createElement('div');
+        div.className = 'activity-row grid grid-cols-3 gap-2 mt-2';
+        div.innerHTML = `
+          <div class="col-span-2">
+            <input type="text" name="activityName[]" placeholder="Activity Name" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+          </div>
+          <div>
+            <input type="text" name="activityPrice[]" placeholder="Price" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+          </div>
+        `;
+        container.appendChild(div);
+      }
+
+      // Load Listed Villages from Firestore with Multiple Photos and Activities
       async function loadVillagesListings() {
         const container = document.getElementById('villagesFeedContainer');
         if (!container) return;
@@ -435,6 +460,25 @@
             }
             snapshot.forEach((docSnap) => {
               const d = docSnap.data();
+              
+              let imagesHtml = '';
+              if (d.images && d.images.length > 0) {
+                imagesHtml = `<div class="grid grid-cols-2 gap-2 mt-2">`;
+                d.images.forEach(imgUrl => {
+                  imagesHtml += `<img src="${imgUrl}" class="w-full h-36 object-cover rounded-xl shadow-sm"/>`;
+                });
+                imagesHtml += `</div>`;
+              }
+
+              let activitiesHtml = '';
+              if (d.activities && d.activities.length > 0) {
+                activitiesHtml = `<div class="bg-amber-50/50 p-2.5 rounded-xl border border-amber-100 text-xs space-y-1"><span class="font-bold text-amber-900 block">Activities:</span>`;
+                d.activities.forEach(act => {
+                  activitiesHtml += `<div class="flex justify-between text-slate-700"><span>• ${act.name}</span><span class="font-bold text-amber-800">₹${act.price || 'Free'}</span></div>`;
+                });
+                activitiesHtml += `</div>`;
+              }
+
               container.innerHTML += `
                 <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
                   <div class="flex justify-between items-start">
@@ -446,17 +490,15 @@
                   </div>
                   <p class="text-xs text-slate-600 leading-relaxed">${d.vDescription || ''}</p>
                   
+                  ${imagesHtml}
+
                   <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1">
                     <p class="text-xs font-black text-slate-800">🌟 Stay Package: ${d.packageName || 'Village Experience'}</p>
                     <p class="text-xs font-bold text-amber-700">Price: ₹${d.packagePrice || 'On Request'} / person</p>
                     <p class="text-[11px] text-slate-500">${d.packageDesc || ''}</p>
                   </div>
 
-                  ${d.activityName ? `
-                    <div class="bg-amber-50/50 p-2.5 rounded-xl border border-amber-100 text-xs">
-                      <span class="font-bold text-amber-900">Activity:</span> ${d.activityName} — <span class="font-bold text-amber-800">₹${d.activityPrice || 'Free'}</span>
-                    </div>
-                  ` : ''}
+                  ${activitiesHtml}
 
                   <div class="flex justify-between items-center pt-2 border-t border-slate-100">
                     <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
@@ -544,7 +586,7 @@
         e.preventDefault();
         const listSubmitBtn = document.getElementById('listSubmitBtn');
         listSubmitBtn.disabled = true;
-        listSubmitBtn.innerText = "Publishing Village...";
+        listSubmitBtn.innerText = "Publishing Village & Photos...";
 
         const hostName = document.getElementById('hostName').value;
         const hostWhatsapp = document.getElementById('hostWhatsapp').value;
@@ -559,19 +601,42 @@
         const packageName = document.getElementById('packageName').value;
         const packagePrice = document.getElementById('packagePrice').value;
         const packageDesc = document.getElementById('packageDesc').value;
-        const activityName = document.getElementById('activityName').value;
-        const activityPrice = document.getElementById('activityPrice').value;
+
+        // Multiple Gallery Images Conversion
+        const galleryInput = document.getElementById('villageGalleryFiles');
+        let imagesArray = [];
+        if (galleryInput.files && galleryInput.files.length > 0) {
+          for (let i = 0; i < galleryInput.files.length; i++) {
+            const file = galleryInput.files[i];
+            const base64Img = await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onload = (evt) => resolve(evt.target.result);
+              reader.readAsDataURL(file);
+            });
+            imagesArray.push(base64Img);
+          }
+        }
+
+        // Multiple Activities Collection
+        const actNames = Array.from(document.getElementsByName('activityName[]')).map(i => i.value);
+        const actPrices = Array.from(document.getElementsByName('activityPrice[]')).map(i => i.value);
+        const activities = actNames.map((name, idx) => ({
+          name: name,
+          price: actPrices[idx]
+        })).filter(a => a.name !== "");
 
         try {
           await window.addDoc(window.collection(window.db, "villagesListings"), {
             hostName, hostWhatsapp, bankAcc, ifscCode, upiId,
             vName, vDistrict, vState, vStation, vDescription,
-            packageName, packagePrice, packageDesc, activityName, activityPrice,
+            packageName, packagePrice, packageDesc,
+            images: imagesArray,
+            activities: activities,
             createdAt: window.serverTimestamp()
           });
           window.closeModal('listVillageModal');
           document.getElementById('listVillageForm').reset();
-          alert("Village and Stay published live successfully!");
+          alert("Village and photos published live successfully!");
         } catch (err) {
           alert("Error publishing village: " + err.message);
         } finally {
