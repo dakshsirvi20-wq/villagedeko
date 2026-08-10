@@ -28,7 +28,8 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
-      const storage = getStorage(app);
+      // Explicitly passing storage bucket URL to fix config/ID error
+      const storage = getStorage(app, "gs://villagedekonew.firebasestorage.app");
 
       window.auth = auth;
       window.db = db;
