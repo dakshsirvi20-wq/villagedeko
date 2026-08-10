@@ -108,7 +108,20 @@
             </div>
           </div>
           <div>
-            <span class="text-xs bg-slate-100 border border-slate-200 px-3 py-1 rounded-full font-bold text-slate-700">Rajasthan</span>
+            <!-- All States Dropdown Selector -->
+            <select class="text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl font-bold text-slate-700 outline-none">
+              <option value="All">All States</option>
+              <option value="Rajasthan" selected>Rajasthan</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+            </select>
           </div>
         </div>
 
@@ -160,9 +173,17 @@
               <div>
                 <label class="block text-[11px] font-bold text-slate-600 mb-1">Village Location</label>
                 <select class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-                  <option>Select Region</option>
-                  <option>Pali, Rajasthan</option>
-                  <option>Rohet, Rajasthan</option>
+                  <option>Select Region / State</option>
+                  <option>Rajasthan</option>
+                  <option>Gujarat</option>
+                  <option>Maharashtra</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Punjab</option>
+                  <option>Haryana</option>
+                  <option>Bihar</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
                 </select>
               </div>
             </div>
@@ -238,38 +259,108 @@
       </div>
     </div>
 
-    <!-- List Village Modal (from video) -->
+    <!-- List Village, Stay & Photo Gallery Modal (Updated with Non-Mandatory Bank Details) -->
     <div id="listVillageModal" class="modal">
       <div class="modal-content">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-sm font-black text-slate-900">List Village, Stay & Photo Galleries</h3>
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+          <h3 class="text-sm font-black text-slate-900">🏨 List Your Village, Homestay & Photo Gallery</h3>
           <button onclick="closeModal('listVillageModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
-        <div class="space-y-3 text-xs">
+
+        <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-xs">
+          
+          <!-- Host Info -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-bold text-slate-600 mb-1">Host Name</label>
-              <input type="text" value="Ramesh Patel" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2">
+              <input type="text" id="hostName" required placeholder="e.g. Ramesh Patel" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
             </div>
             <div>
               <label class="block font-bold text-slate-600 mb-1">Host WhatsApp Number</label>
-              <input type="text" value="+919876543210" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2">
+              <input type="text" id="hostWhatsapp" required placeholder="+919876543210" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
             </div>
           </div>
+
+          <!-- Bank/Payout Details (Optional / Non-Mandatory) -->
           <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
-            <p class="font-black text-amber-900">Host Bank Account Details (For Payouts)</p>
+            <p class="font-black text-amber-900">Host Bank Account Details <span class="text-[10px] font-normal text-amber-700">(Optional for now)</span></p>
             <div class="grid grid-cols-2 gap-2">
-              <input type="text" placeholder="Bank Account Number" value="123456789012" class="border border-slate-200 bg-white rounded-xl px-3 py-2">
-              <input type="text" placeholder="IFSC Code" value="SBIN0001234" class="border border-slate-200 bg-white rounded-xl px-3 py-2">
+              <input type="text" id="bankAcc" placeholder="Bank Account Number" class="border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+              <input type="text" id="ifscCode" placeholder="IFSC Code" class="border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
             </div>
-            <input type="text" placeholder="Or Host UPI ID (Optional)" value="ramesh@okaxis" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2">
+            <input type="text" id="upiId" placeholder="Or Host UPI ID (Optional)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
           </div>
-          <button class="w-full py-2.5 text-xs font-bold text-white bg-amber-600 rounded-xl">Publish Village & Galleries Live</button>
-        </div>
+
+          <!-- Location Details -->
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Village Name</label>
+              <input type="text" id="vName" required placeholder="Village name" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">District</label>
+              <input type="text" id="vDistrict" required placeholder="District" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">State</label>
+              <input type="text" id="vState" required placeholder="State" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Nearest Railway Station / Bus Stand</label>
+            <input type="text" id="vStation" placeholder="e.g. Pali Junction (25 km)" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
+          </div>
+
+          <!-- Village Culture Description -->
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Village Culture and Description</label>
+            <textarea id="vDescription" rows="3" required placeholder="Describe how people live here, traditions, food, etc..." class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none"></textarea>
+          </div>
+
+          <!-- Stay & Package Details (Home Stay / Farm Stay) -->
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+            <p class="font-black text-slate-800">🏠 Village Stay & Package Details</p>
+            <div class="grid grid-cols-3 gap-2">
+              <div class="col-span-2">
+                <input type="text" id="packageName" placeholder="Package / Stay Title (e.g. 3 Days Heritage Stay)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+              </div>
+              <div>
+                <input type="text" id="packagePrice" placeholder="Price per person (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+              </div>
+            </div>
+            <textarea id="packageDesc" rows="2" placeholder="Stay Description (e.g. Mud house stay, organic chulha food, farm tour included...)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none"></textarea>
+          </div>
+
+          <!-- Activity Options & Custom Pricing -->
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+            <p class="font-black text-slate-800">🎯 Village Activities & Pricing</p>
+            <div class="grid grid-cols-3 gap-2">
+              <div class="col-span-2">
+                <input type="text" id="activityName" placeholder="Activity Name (e.g. Pottery / Folk Dance)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+              </div>
+              <div>
+                <input type="text" id="activityPrice" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo Gallery Uploads -->
+          <div class="space-y-2">
+            <label class="block font-bold text-slate-600">📸 Village Photo Gallery (Multiple Photos for Guests)</label>
+            <input type="file" id="villageGalleryFiles" accept="image/*" multiple class="w-full text-slate-500 border border-slate-200 bg-slate-50 rounded-xl p-2">
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" onclick="closeModal('listVillageModal')" class="px-4 py-2 font-bold text-slate-600 bg-slate-100 rounded-xl">Cancel</button>
+            <button type="submit" id="listSubmitBtn" class="px-4 py-2 font-bold text-white bg-amber-600 rounded-xl shadow-sm">Publish Village & Stay Live</button>
+          </div>
+
+        </form>
       </div>
     </div>
 
-    <!-- Profile Modal (matching video dashboard) -->
+    <!-- Profile Modal -->
     <div id="profileModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-2">
@@ -389,6 +480,58 @@
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerText = "Publish Story";
+        }
+      }
+
+      async function handleVillageListing(e) {
+        e.preventDefault();
+        const listSubmitBtn = document.getElementById('listSubmitBtn');
+        listSubmitBtn.disabled = true;
+        listSubmitBtn.innerText = "Publishing Village...";
+
+        const hostName = document.getElementById('hostName').value;
+        const hostWhatsapp = document.getElementById('hostWhatsapp').value;
+        const bankAcc = document.getElementById('bankAcc').value;
+        const ifscCode = document.getElementById('ifscCode').value;
+        const upiId = document.getElementById('upiId').value;
+        const vName = document.getElementById('vName').value;
+        const vDistrict = document.getElementById('vDistrict').value;
+        const vState = document.getElementById('vState').value;
+        const vStation = document.getElementById('vStation').value;
+        const vDescription = document.getElementById('vDescription').value;
+        const packageName = document.getElementById('packageName').value;
+        const packagePrice = document.getElementById('packagePrice').value;
+        const packageDesc = document.getElementById('packageDesc').value;
+        const activityName = document.getElementById('activityName').value;
+        const activityPrice = document.getElementById('activityPrice').value;
+
+        try {
+          await window.addDoc(window.collection(window.db, "villagesListings"), {
+            hostName,
+            hostWhatsapp,
+            bankAcc,
+            ifscCode,
+            upiId,
+            vName,
+            vDistrict,
+            vState,
+            vStation,
+            vDescription,
+            packageName,
+            packagePrice,
+            packageDesc,
+            activityName,
+            activityPrice,
+            createdAt: window.serverTimestamp()
+          });
+          closeModal('listVillageModal');
+          document.getElementById('listVillageForm').reset();
+          alert("Village and Stay published live successfully!");
+        } catch (err) {
+          alert("Error publishing village: " + err.message);
+        } finally {
+          listSubmitBtn.disabled = false;
+          listSubmitBtn.innerText = "Publish Village & Stay Live";
         }
       }
 
