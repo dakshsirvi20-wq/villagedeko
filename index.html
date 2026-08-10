@@ -521,7 +521,7 @@
         const container = document.getElementById('chaupalFeedContainer');
         if (!container) return;
         try {
-          const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
+          const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
           window.onSnapshot(q, (snapshot) => {
             container.innerHTML = "";
             if (snapshot.empty) {
