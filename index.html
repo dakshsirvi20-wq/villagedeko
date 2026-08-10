@@ -7,8 +7,6 @@
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Firebase SDKs -->
@@ -30,6 +28,7 @@
       const auth = getAuth(app);
       const db = getFirestore(app);
 
+      // Global Bindings for Mobile & Desktop
       window.auth = auth;
       window.db = db;
       window.query = query;
@@ -41,9 +40,24 @@
       window.deleteDoc = deleteDoc;
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
-      window.signInWithPopup = signInWithPopup;
-      window.GoogleAuthProvider = GoogleAuthProvider;
-      window.signOut = signOut;
+
+      window.switchTab = function(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        const activeTab = document.getElementById('tab-' + tabId);
+        if (activeTab) {
+          activeTab.classList.remove('hidden');
+        }
+      };
+
+      window.openModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) modal.style.display = 'block';
+      };
+
+      window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) modal.style.display = 'none';
+      };
 
       onAuthStateChanged(auth, (user) => {
         const profileNameEl = document.getElementById('profileUserName');
@@ -103,21 +117,22 @@
         max-height: 88vh;
         overflow-y: auto;
       }
+      .hidden { display: none !important; }
     </style>
 </head>
-<body id="appBody" class="text-slate-900 antialiased pb-24">
+<body class="text-slate-900 antialiased pb-24">
 
     <!-- Header -->
-    <header id="appHeader" class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-3xl mx-auto px-4 py-3 space-y-2.5">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div id="headerLogoBg" class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
               🌾
             </div>
             <div>
               <h1 class="text-base font-extrabold tracking-tight text-slate-900 leading-none">
-                <span id="brandTitleColor" class="text-amber-700">Village</span>Deko
+                <span class="text-amber-700">Village</span>Deko
               </h1>
               <span class="text-[10px] font-bold text-slate-500">Village View</span>
             </div>
@@ -141,9 +156,9 @@
         </div>
 
         <div class="flex items-center justify-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
-          <button onclick="switchTab('villages')" class="tab-btn flex-1 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all text-center">Villages</button>
-          <button onclick="switchTab('villageWedding')" class="tab-btn flex-1 py-1.5 rounded-xl text-slate-700 font-extrabold text-xs transition-all text-center">Weddings</button>
-          <button onclick="switchTab('chaupal')" class="tab-btn flex-1 py-1.5 rounded-xl text-slate-700 font-extrabold text-xs transition-all text-center">Chaupal</button>
+          <button type="button" onclick="switchTab('villages')" class="tab-btn flex-1 py-1.5 rounded-xl bg-amber-600 text-white font-extrabold text-xs shadow-xs transition-all text-center">Villages</button>
+          <button type="button" onclick="switchTab('villageWedding')" class="tab-btn flex-1 py-1.5 rounded-xl text-slate-700 font-extrabold text-xs transition-all text-center">Weddings</button>
+          <button type="button" onclick="switchTab('chaupal')" class="tab-btn flex-1 py-1.5 rounded-xl text-slate-700 font-extrabold text-xs transition-all text-center">Chaupal</button>
         </div>
       </div>
     </header>
@@ -159,7 +174,7 @@
         </div>
         <div class="flex justify-between items-center px-1">
           <h3 class="font-extrabold text-slate-900 text-sm">Village World & Galleries</h3>
-          <button onclick="openModal('listVillageModal')" class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">Select Village to View Stay</button>
+          <button type="button" onclick="openModal('listVillageModal')" class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">List Your Village & Stay</button>
         </div>
       </div>
 
@@ -212,7 +227,7 @@
                 <input type="text" placeholder="mm/dd/yyyy" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
               </div>
             </div>
-            <button class="w-full py-2.5 text-xs font-bold text-white bg-rose-600 rounded-xl shadow-sm">Submit Wedding Inquiry</button>
+            <button type="button" class="w-full py-2.5 text-xs font-bold text-white bg-rose-600 rounded-xl shadow-sm">Submit Wedding Inquiry</button>
           </div>
         </div>
       </div>
@@ -227,7 +242,7 @@
             <h3 class="text-sm font-extrabold text-slate-900">🔥 Village Chaupal Stories & Photos</h3>
             <p class="text-[11px] text-slate-500">Stories and photos shared here are visible globally to all visitors in real-time.</p>
           </div>
-          <button onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow shrink-0">+ Share Story & Photo</button>
+          <button type="button" onclick="openModal('addStoryModal')" class="bg-amber-600 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow shrink-0">+ Share Story & Photo</button>
         </div>
         <div id="chaupalFeedContainer" class="space-y-3"></div>
       </div>
@@ -236,10 +251,10 @@
 
     <!-- Bottom Navigation -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-6 z-50 flex justify-around items-center max-w-3xl mx-auto shadow-2xl">
-      <button onclick="switchTab('villages')" class="flex flex-col items-center text-amber-700 font-bold"><span class="text-xl">🏡</span><span class="text-[10px]">Home</span></button>
-      <button onclick="switchTab('villageWedding')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">💍</span><span class="text-[10px]">Weddings</span></button>
-      <button onclick="switchTab('chaupal')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">🔥</span><span class="text-[10px]">Chaupal</span></button>
-      <button onclick="openModal('profileModal')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">👤</span><span class="text-[10px]">Profile</span></button>
+      <button type="button" onclick="switchTab('villages')" class="flex flex-col items-center text-amber-700 font-bold"><span class="text-xl">🏡</span><span class="text-[10px]">Home</span></button>
+      <button type="button" onclick="switchTab('villageWedding')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">💍</span><span class="text-[10px]">Weddings</span></button>
+      <button type="button" onclick="switchTab('chaupal')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">🔥</span><span class="text-[10px]">Chaupal</span></button>
+      <button type="button" onclick="openModal('profileModal')" class="flex flex-col items-center text-slate-600 font-bold"><span class="text-xl">👤</span><span class="text-[10px]">Profile</span></button>
     </nav>
 
     <!-- Modals -->
@@ -247,7 +262,7 @@
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-sm font-black text-slate-900">✨ Share Your Village Story</h3>
-          <button onclick="closeModal('addStoryModal')" class="text-slate-400 font-bold text-xl">&times;</button>
+          <button type="button" onclick="closeModal('addStoryModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
         <form id="chaupalPostForm" onsubmit="handleFirebasePhotoPost(event)" class="space-y-3">
           <div>
@@ -274,12 +289,12 @@
       </div>
     </div>
 
-    <!-- List Village Modal -->
+    <!-- List Village, Stay & Photo Gallery Modal (Non-Mandatory Bank Details) -->
     <div id="listVillageModal" class="modal">
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-2">
           <h3 class="text-sm font-black text-slate-900">🏨 List Your Village, Homestay & Photo Gallery</h3>
-          <button onclick="closeModal('listVillageModal')" class="text-slate-400 font-bold text-xl">&times;</button>
+          <button type="button" onclick="closeModal('listVillageModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
 
         <form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-4 text-xs">
@@ -296,7 +311,7 @@
             </div>
           </div>
 
-          <!-- Bank/Payout Details (Optional) -->
+          <!-- Bank/Payout Details (Optional / Non-Mandatory) -->
           <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
             <p class="font-black text-amber-900">Host Bank Account Details <span class="text-[10px] font-normal text-amber-700">(Optional for now)</span></p>
             <div class="grid grid-cols-2 gap-2">
@@ -338,7 +353,7 @@
             <p class="font-black text-slate-800">🏠 Village Stay & Package Details</p>
             <div class="grid grid-cols-3 gap-2">
               <div class="col-span-2">
-                <input type="text" id="packageName" placeholder="Package / Stay Title (e.g. 3 Days Heritage Stay)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+                <input type="text" id="packageName" placeholder="Package Title (e.g. 3 Days Heritage Stay)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
               </div>
               <div>
                 <input type="text" id="packagePrice" placeholder="Price per person (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
@@ -380,7 +395,7 @@
       <div class="modal-content">
         <div class="flex justify-between items-center mb-4 border-b pb-2">
           <h3 class="font-extrabold text-slate-900 text-sm">Platform Dashboard & User Info</h3>
-          <button onclick="closeModal('profileModal')" class="text-slate-400 font-bold text-xl">&times;</button>
+          <button type="button" onclick="closeModal('profileModal')" class="text-slate-400 font-bold text-xl">&times;</button>
         </div>
         <div class="space-y-3">
           <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
@@ -390,7 +405,7 @@
               <p id="profileUserEmail" class="text-xs text-slate-600">Please sign in to manage bookings</p>
               <p id="profileUserUid" class="text-[11px] font-mono text-amber-800">Status: Guest Mode</p>
             </div>
-            <button id="authActionBtn" class="w-full py-2 bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm">Sign In with Google</button>
+            <button type="button" id="authActionBtn" class="w-full py-2 bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm">Sign In with Google</button>
           </div>
           <div class="space-y-1.5 text-xs font-bold text-slate-700">
             <div onclick="switchTab('villages'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
@@ -398,9 +413,6 @@
             </div>
             <div onclick="switchTab('villageWedding'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
               <span>💍 Village Weddings & Destinations <span class="block text-[10px] font-normal text-slate-500">Submit wedding inquiries and manage bookings</span></span>
-            </div>
-            <div onclick="openModal('addStoryModal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
-              <span>🔥 Wedding Host Post <span class="block text-[10px] font-normal text-slate-500">Post your village wedding events or venue details</span></span>
             </div>
             <div onclick="switchTab('chaupal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
               <span>🔥 Chaupal Stories <span class="block text-[10px] font-normal text-slate-500">Read village folklore and village tales</span></span>
@@ -414,19 +426,6 @@
     </div>
 
     <script>
-      function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        document.getElementById('tab-' + tabId).classList.remove('hidden');
-      }
-
-      function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'block';
-      }
-
-      function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-      }
-
       async function loadChaupalPosts() {
         const container = document.getElementById('chaupalFeedContainer');
         if (!container) return;
@@ -487,7 +486,7 @@
             imageUrl,
             createdAt: window.serverTimestamp()
           });
-          closeModal('addStoryModal');
+          window.closeModal('addStoryModal');
           document.getElementById('chaupalPostForm').reset();
           alert("Story published successfully!");
         } catch (err) {
@@ -510,7 +509,7 @@
         const ifscCode = document.getElementById('ifscCode').value;
         const upiId = document.getElementById('upiId').value;
         const vName = document.getElementById('vName').value;
-        const vDistrict = document.getElementById('vDistrict'].value;
+        const vDistrict = document.getElementById('vDistrict').value;
         const vState = document.getElementById('vState').value;
         const vStation = document.getElementById('vStation').value;
         const vDescription = document.getElementById('vDescription').value;
@@ -539,7 +538,7 @@
             activityPrice,
             createdAt: window.serverTimestamp()
           });
-          closeModal('listVillageModal');
+          window.closeModal('listVillageModal');
           document.getElementById('listVillageForm').reset();
           alert("Village and Stay published live successfully!");
         } catch (err) {
