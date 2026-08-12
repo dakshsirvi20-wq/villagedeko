@@ -603,7 +603,7 @@ async function loadChaupalPosts() {
                         <p class="text-[10px] text-slate-500">📍 ${data.location || 'Gaon'} • ${date}</p>
                     </div>
                 </div>
-                ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Story Photo" class="w-full h-48 object-cover rounded-xl border border-slate-100">` : ''}
+               ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Story Photo" class="w-full max-h-96 object-contain bg-slate-100 rounded-xl border border-slate-100">` : ''}
                 <p class="text-xs text-slate-700 leading-relaxed">${data.text || ''}</p>
             `;
             container.appendChild(card);
