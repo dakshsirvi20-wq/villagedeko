@@ -439,128 +439,11 @@
       </div>
     </div>
 
-    <script>
-      function addActivityField() {
-        const container = document.getElementById('activitiesContainer');
-        const div = document.createElement('div');
-        div.className = 'activity-row grid grid-cols-3 gap-2 mt-2';
-        div.innerHTML = `
-          <div class="col-span-2">
-            <input type="text" name="activityName[]" placeholder="Activity Name" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-          </div>
-          <div>
-            <input type="text" name="activityPrice[]" placeholder="Price" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-          </div>
-        `;
-        container.appendChild(div);
-      }
-
-      async function loadVillagesListings() {
-        const container = document.getElementById('villagesFeedContainer');
-        if (!container) return;
-        try {
-          const q = window.query(window.collection(window.db, "villagesListings"), window.orderBy("createdAt", "desc"));
-          window.onSnapshot(q, (snapshot) => {
-            container.innerHTML = "";
-            if (snapshot.empty) {
-              container.innerHTML = `<div class="bg-white p-6 rounded-2xl text-center border border-slate-200 shadow-sm"><p class="text-xs text-slate-500 font-bold">No villages listed yet. Be the first host to list your village!</p></div>`;
-              return;
-            }
-            snapshot.forEach((docSnap) => {
-              const d = docSnap.data();
-              
-              let imagesHtml = '';
-              if (d.images && d.images.length > 0) {
-                imagesHtml = `<div class="grid grid-cols-2 gap-2 mt-2">`;
-                d.images.forEach(imgUrl => {
-                  imagesHtml += `<img src="${imgUrl}" class="w-full h-36 object-cover rounded-xl shadow-sm"/>`;
-                });
-                imagesHtml += `</div>`;
-              }
-
-              let activitiesHtml = '';
-              if (d.activities && d.activities.length > 0) {
-                activitiesHtml = `<div class="bg-amber-50/50 p-2.5 rounded-xl border border-amber-100 text-xs space-y-1"><span class="font-bold text-amber-900 block">Activities:</span>`;
-                d.activities.forEach(act => {
-                  activitiesHtml += `<div class="flex justify-between text-slate-700"><span>• ${act.name}</span><span class="font-bold text-amber-800">₹${act.price || 'Free'}</span></div>`;
-                });
-                activitiesHtml += `</div>`;
-              }
-
-              // Fixed WhatsApp Number to Jagdish's personal number: 9167588371
-              const myWhatsappNumber = "919167588371";
-
-              container.innerHTML += `
-                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
-                  <div class="flex justify-between items-start">
-                    <div>
-                      <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2.5 py-1 rounded-lg">${d.vDistrict || ''}, ${d.vState || ''}</span>
-                      <h3 class="text-base font-black text-slate-900 mt-1">🏡 ${d.vName || ''}</h3>
-                    </div>
-                    <span class="text-xs font-bold text-slate-500">Host: ${d.hostName || ''}</span>
-                  </div>
-                  <p class="text-xs text-slate-600 leading-relaxed">${d.vDescription || ''}</p>
-                  
-                  ${imagesHtml}
-
-                  <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1">
-                    <p class="text-xs font-black text-slate-800">🌟 Stay Package: ${d.packageName || 'Village Experience'}</p>
-                    <p class="text-xs font-bold text-amber-700">Price: ₹${d.packagePrice || 'On Request'} / person</p>
-                    <p class="text-[11px] text-slate-500">${d.packageDesc || ''}</p>
-                  </div>
-
-                  ${activitiesHtml}
-
-                  <div class="flex justify-between items-center pt-2 border-t border-slate-100">
-                    <span class="text-[11px] font-mono text-slate-400">Nearest Station: ${d.vStation || 'N/A'}</span>
-                    <a href="https://wa.me/${myWhatsappNumber}?text=Hi,%20I%20saw%20your%20village%20${encodeURIComponent(d.vName)}%20on%20Village%20Deko%20and%20want%20to%20book%20a%20stay!" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1">
-                      💬 Contact Host
-                    </a>
-                  </div>
-                </div>
-              `;
-            });
-          });
-        } catch (e) {
-          console.error("Error loading villages:", e);
-        }
-      }
-
-      async function loadChaupalPosts() {
-        const container = document.getElementById('chaupalFeedContainer');
-        if (!container) return;
-        try {
-          const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
-          window.onSnapshot(q, (snapshot) => {
-            container.innerHTML = "";
-            if (snapshot.empty) {
-              container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No stories yet. Be the first to share!</p>`;
-              return;
-            }
-            snapshot.forEach((docSnap) => {
-              const data = docSnap.data();
-              container.innerHTML += `
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                  <div class="flex justify-between items-center">
-                    <span class="font-bold text-xs text-amber-800">${data.author || 'Anonymous'}</span>
-                    <span class="text-[10px] text-slate-400">${data.location || ''}</span>
-                  </div>
-                  ${data.imageUrl ? `<img src="${data.imageUrl}" class="w-full h-48 object-cover rounded-xl mt-2"/>` : ''}
-                  <p class="text-xs text-slate-700 mt-1">${data.text || ''}</p>
-                </div>
-              `;
-            });
-          });
-        } catch (e) {
-          console.error("Error loading posts:", e);
-        }
-      }
-
-      async function handleFirebasePhotoPost(e) {
+  async function handleFirebasePhotoPost(e) {
         e.preventDefault();
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
-        submitBtn.innerText = "Uploading Photo...";
+        submitBtn.innerText = "Uploading...";
 
         try {
           const author = document.getElementById('storyAuthor').value;
@@ -569,27 +452,30 @@
           const fileInput = document.getElementById('storyImageFile');
           let imageUrl = "";
 
+          // Agar photo select ki hai toh Storage me upload karein
           if (fileInput.files && fileInput.files[0]) {
             const file = fileInput.files[0];
-            const storageRef = window.ref(window.storage, 'posts/' + Date.now() + '_' + file.name);
+            const storageRef = window.ref(window.storage, 'chaupal_photos/' + Date.now() + '_' + file.name);
             const snapshot = await window.uploadBytes(storageRef, file);
             imageUrl = await window.getDownloadURL(snapshot.ref);
           }
 
+          // Firestore Database me post save karein
           await window.addDoc(window.collection(window.db, "posts"), {
-            author,
-            location,
-            text,
-            imageUrl,
-            adminEmail: "Dakshsirvi20@gmail.com",
+            author: author,
+            location: location,
+            text: text,
+            imageUrl: imageUrl,
             createdAt: window.serverTimestamp()
           });
 
+          // Form reset aur modal close karein
           document.getElementById('chaupalPostForm').reset();
           closeModal('addStoryModal');
-          alert("Story published successfully!");
+          alert("Story & Photo successfully published!");
         } catch (err) {
-          alert("Error: " + err.message);
+          console.error("Error uploading post:", err);
+          alert("Upload failed: " + err.message);
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerText = "Publish Story";
@@ -600,30 +486,38 @@
         e.preventDefault();
         const listSubmitBtn = document.getElementById('listSubmitBtn');
         listSubmitBtn.disabled = true;
-        listSubmitBtn.innerText = "Publishing Listing...";
+        listSubmitBtn.innerText = "Publishing Village...";
 
         try {
           const fileInput = document.getElementById('villageGalleryFiles');
           let imageUrls = [];
 
+          // Multiple images upload handle karna
           if (fileInput.files && fileInput.files.length > 0) {
             for (let i = 0; i < fileInput.files.length; i++) {
               const file = fileInput.files[i];
-              const storageRef = window.ref(window.storage, 'villages/' + Date.now() + '_' + file.name);
+              const storageRef = window.ref(window.storage, 'villages_gallery/' + Date.now() + '_' + file.name);
               const snapshot = await window.uploadBytes(storageRef, file);
               const url = await window.getDownloadURL(snapshot.ref);
               imageUrls.push(url);
             }
           }
 
-          const activities = [];
-          document.querySelectorAll('.activity-row').forEach(row => {
-            const name = row.querySelector('input[name="activityName[]"]').value;
-            const price = row.querySelector('input[name="activityPrice[]"]').value;
-            if (name) activities.push({ name, price });
-          });
+          // Activities collect karna
+          const activityNames = document.querySelectorAll('input[name="activityName[]"]');
+          const activityPrices = document.querySelectorAll('input[name="activityPrice[]"]');
+          let activities = [];
+          for (let i = 0; i < activityNames.length; i++) {
+            if (activityNames[i].value.trim() !== "") {
+              activities.push({
+                name: activityNames[i].value,
+                price: activityPrices[i].value
+              });
+            }
+          }
 
-          const listingData = {
+          // Firestore me village listing save karna
+          await window.addDoc(window.collection(window.db, "villagesListings"), {
             hostName: document.getElementById('hostName').value,
             hostWhatsapp: document.getElementById('hostWhatsapp').value,
             bankAcc: document.getElementById('bankAcc').value,
@@ -639,22 +533,19 @@
             packageDesc: document.getElementById('packageDesc').value,
             images: imageUrls,
             activities: activities,
-            adminEmail: "Dakshsirvi20@gmail.com",
             createdAt: window.serverTimestamp()
-          };
-
-          await window.addDoc(window.collection(window.db, "villagesListings"), listingData);
+          });
 
           document.getElementById('listVillageForm').reset();
           closeModal('listVillageModal');
           alert("Village listing published successfully!");
         } catch (err) {
-          alert("Error: " + err.message);
+          console.error("Error listing village:", err);
+          alert("Listing failed: " + err.message);
         } finally {
           listSubmitBtn.disabled = false;
           listSubmitBtn.innerText = "Publish Village & Stay Live";
         }
       }
-    </script>
 </body>
 </html>
