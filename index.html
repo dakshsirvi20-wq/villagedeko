@@ -573,6 +573,97 @@
         `;
         container.appendChild(row);
       }
+        // 1. Chaupal Stories ko Database se laakar Website par Dikhana
+async function loadChaupalPosts() {
+    const container = document.getElementById('chaupalFeedContainer');
+    if (!container) return;
+    
+    container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Stories load ho rahi hain...</p>`;
+    
+    try {
+        const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
+        const querySnapshot = await window.getDocs(q);
+        
+        container.innerHTML = "";
+        if (querySnapshot.empty) {
+            container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Abhi tak koi story share nahi ki gayi hai. Aap pehli story share karein!</p>`;
+            return;
+        }
+
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : 'Abhi abhi';
+            
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+            card.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4 class="text-xs font-black text-slate-900">${data.author || 'Anjaan Vyakti'}</h4>
+                        <p class="text-[10px] text-slate-500">📍 ${data.location || 'Gaon'} • ${date}</p>
+                    </div>
+                </div>
+                ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Story Photo" class="w-full h-48 object-cover rounded-xl border border-slate-100">` : ''}
+                <p class="text-xs text-slate-700 leading-relaxed">${data.text || ''}</p>
+            `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Error loading chaupal posts:", err);
+        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">Stories load karne mein error aaya.</p>`;
+    }
+}
+
+// 2. Villages aur Stays ko Database se laakar Website par Dikhana
+async function loadVillagesListings() {
+    const container = document.getElementById('villagesFeedContainer');
+    if (!container) return;
+    
+    container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Villages load ho rahe hain...</p>`;
+    
+    try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, "villagesListings"));
+        
+        container.innerHTML = "";
+        if (querySnapshot.empty) {
+            container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Abhi koi village listed nahi hai.</p>`;
+            return;
+        }
+
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            let mainImg = (data.images && data.images.length > 0) ? data.images[0] : 'https://via.placeholder.com/400x200?text=Village+Deko';
+
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+            card.innerHTML = `
+                <img src="${mainImg}" alt="Village" class="w-full h-48 object-cover rounded-xl border border-slate-100">
+                <div>
+                    <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">${data.vDistrict || ''}, ${data.vState || ''}</span>
+                    <h3 class="text-sm font-black text-slate-900 mt-1">${data.vName || 'Village Stay'}</h3>
+                    <p class="text-xs text-slate-600 mt-1 line-clamp-2">${data.vDescription || ''}</p>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+                    <div>
+                        <p class="text-[10px] text-slate-500">Host: <span class="font-bold text-slate-800">${data.hostName || 'Local'}</span></p>
+                        <p class="text-xs font-black text-amber-700">₹${data.packagePrice || '0'} <span class="text-[10px] font-normal text-slate-500">/ person</span></p>
+                    </div>
+                    <a href="https://wa.me/${data.hostWhatsapp}?text=Namaste,%20maine%20Village%20Deko%20par%20aapka%20gaon%20dekha%20aur%20stay%20ke%20liye%20baat%20karni%20hai." target="_blank" class="px-3 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm">WhatsApp Chat</a>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Error loading villages:", err);
+        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">Villages load karne mein error aaya.</p>`;
+    }
+}
+
+// Page load hone par yeh functions apne aap chal jayenge
+window.addEventListener('DOMContentLoaded', () => {
+    loadChaupalPosts();
+    loadVillagesListings();
+});
     </script>
 </body>
 </html>
