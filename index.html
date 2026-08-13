@@ -630,35 +630,65 @@ async function loadVillagesListings() {
             return;
         }
 
-        querySnapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            let mainImg = (data.images && data.images.length > 0) ? data.images[0] : 'https://via.placeholder.com/400x200?text=Village+Deko';
+       querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    
+    // Agar multiple photos hain toh slider, nahi toh single image
+    let imagesArray = (data.images && data.images.length > 0) ? data.images : ['https://via.placeholder.com/400'];
+    
+    let imagesHtml = '';
+    imagesArray.forEach((imgUrl, index) => {
+        imagesHtml += `
+            <div class="mySlides-${docSnap.id}" style="display: ${index === 0 ? 'block' : 'none'}; width: 100%; height: 250px; background-color: #000; display: flex; align-items: center; justify-content: center;">
+                <img src="${imgUrl}" alt="Village" style="width: 100%; height: 100%; object-fit: contain;" class="rounded-xl">
+            </div>
+        `;
+    });
 
-            const card = document.createElement('div');
-            card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
-            card.innerHTML = `
-                <img src="${mainImg}" alt="Village" class="w-full h-48 object-cover rounded-xl border border-slate-100">
-                <div>
-                    <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">${data.vDistrict || ''}, ${data.vState || ''}</span>
-                    <h3 class="text-sm font-black text-slate-900 mt-1">${data.vName || 'Village Stay'}</h3>
-                    <p class="text-xs text-slate-600 mt-1 line-clamp-2">${data.vDescription || ''}</p>
-                </div>
-                <div class="flex justify-between items-center pt-2 border-t border-slate-100">
-                    <div>
-                        <p class="text-[10px] text-slate-500">Host: <span class="font-bold text-slate-800">${data.hostName || 'Local'}</span></p>
-                        <p class="text-xs font-black text-amber-700">₹${data.packagePrice || '0'} <span class="text-[10px] font-normal text-slate-500">/ person</span></p>
-                    </div>
-                    <a href="https://wa.me/${data.hostWhatsapp}?text=Namaste,%20maine%20Village%20Deko%20par%20aapka%20gaon%20dekha%20aur%20stay%20ke%20liye%20baat%20karni%20hai." target="_blank" class="px-3 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm">WhatsApp Chat</a>
-                </div>
-            `;
-            container.appendChild(card);
-        });
+    const card = document.createElement('div');
+    card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+    card.innerHTML = `
+        <div class="relative overflow-hidden rounded-xl border border-slate-100">
+            ${imagesHtml}
+            ${imagesArray.length > 1 ? `
+                <button onclick="changeSlide('${docSnap.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded-full text-xs">&#10094;</button>
+                <button onclick="changeSlide('${docSnap.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded-full text-xs">&#10095;</button>
+            ` : ''}
+        </div>
+        <div>
+            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">${data.vCategory || 'Village Stay'}</span>
+            <h3 class="text-sm font-black text-slate-900 mt-1">${data.vName || 'Village Stay'}</h3>
+            <p class="text-xs text-slate-600 mt-1 line-clamp-2">${data.vDescription || ''}</p>
+        </div>
+        <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+            <p class="text-[10px] text-slate-500">Host: <span class="font-bold text-slate-700">${data.hostName || 'Local'}</span></p>
+            <p class="text-xs font-black text-amber-700">₹${data.packagePrice || '0'} <span class="text-[10px] font-normal text-slate-500">/night</span></p>
+        </div>
+    `;
+    container.appendChild(card);
+});
     } catch (err) {
         console.error("Error loading villages:", err);
         container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">Villages load karne mein error aaya.</p>`;
     }
 }
-
+function changeSlide(docId, direction) {
+    const slides = document.querySelectorAll('.mySlides-' + docId);
+    let activeIndex = 0;
+    
+    slides.forEach((slide, index) => {
+        if (slide.style.display === 'block') {
+            activeIndex = index;
+        }
+        slide.style.display = 'none';
+    });
+    
+    let newIndex = activeIndex + direction;
+    if (newIndex >= slides.length) newIndex = 0;
+    if (newIndex < 0) newIndex = slides.length - 1;
+    
+    slides[newIndex].style.display = 'block';
+}
 // Page load hone par yeh functions apne aap chal jayenge
 window.addEventListener('DOMContentLoaded', () => {
     loadChaupalPosts();
