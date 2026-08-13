@@ -10,11 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Firebase SDKs -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy, runTransaction, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-      
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
       const firebaseConfig = {
         apiKey: "AIzaSyD4ABiWBvNQdKXFOO4PcUyjiFBvho55We4",
         authDomain: "bhanaram-1308b.firebaseapp.com",
@@ -177,38 +175,40 @@ authActionBtn.onclick = () => {
         <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
         <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
 <!-- Full-Screen Login Overlay -->
-<div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
+<div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.98); z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
   
-  <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 90%; max-width: 350px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
+  <div style="display: flex; flex-direction: column; gap: 14px; align-items: center; width: 90%; max-width: 360px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-radius: 14px; background: #ffffff; box-sizing: border-box;">
     
-    <h2 style="margin: 0; font-size: 20px; color: #111; font-weight: bold;">Welcome to VillageDeko</h2>
-    <p id="instruction-text" style="margin: 0; font-size: 13px; color: #666; text-align: center;">Choose your login method</p>
+    <h2 style="margin: 0 0 4px 0; font-size: 22px; color: #111; font-weight: bold; text-align: center;">Welcome to VillageDeko</h2>
+    <p id="instruction-text" style="margin: 0 0 10px 0; font-size: 13px; color: #666; text-align: center;">Choose your login method</p>
 
     <!-- Input Field -->
-    <input type="text" id="userInput" placeholder="Email or Phone Number" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+    <input type="text" id="userInput" placeholder="Email or Phone Number" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
     
     <!-- Extra Box for Password or OTP -->
     <div id="extra-box" style="width: 100%; display: none;">
-      <input type="text" id="extra-input" placeholder="" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+      <input type="text" id="extra-input" placeholder="" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
     </div>
 
     <!-- Visible Recaptcha Container for Phone OTP -->
-    <div id="recaptcha-container"></div>
+    <div id="recaptcha-container" style="margin: 4px 0;"></div>
 
     <!-- Main Continue Button -->
-    <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
+    <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
     
-    <div style="width: 100%; text-align: center; font-size: 12px; color: #888; margin: 2px 0;">OR</div>
+    <div style="width: 100%; text-align: center; font-size: 12px; color: #888; margin: 6px 0;">OR</div>
 
     <!-- Google Login Button -->
-    <button type="button" onclick="handleGoogleLogin()" style="padding: 12px; width: 100%; background: #f5f5f5; color: #333; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue with Google</button>
+    <button type="button" onclick="handleGoogleLogin()" style="padding: 12px; width: 100%; background: #fff; color: #333; border: 1px solid #ccc; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue with Google</button>
+  
   </div>
+</div>
 
 <script>
   let authStage = 1; 
   let inputIdentifier = "";
+  let recaptchaVerifier = null;
 
-  // Initialize reCAPTCHA for Phone Auth safely
   window.addEventListener('DOMContentLoaded', () => {
     try {
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
@@ -231,7 +231,6 @@ authActionBtn.onclick = () => {
     if (authStage === 1) {
       inputIdentifier = val;
       if (val.includes('@')) {
-        // 1. Email & Password Flow
         document.getElementById('userInput').style.display = 'none';
         document.getElementById('recaptcha-container').style.display = 'none';
         const extra = document.getElementById('extra-input');
@@ -241,11 +240,10 @@ authActionBtn.onclick = () => {
         document.getElementById('instruction-text').innerText = "Enter password for " + val;
         authStage = 'email_pass';
       } else {
-        // 2. Phone Number & OTP Flow
         const phone = val.startsWith('+') ? val : '+91' + val;
         const appVerifier = window.recaptchaVerifier;
 
-        signInWithPhoneNumber(auth, phone, appVerifier)
+        firebase.auth().signInWithPhoneNumber(phone, appVerifier)
           .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
             document.getElementById('userInput').style.display = 'none';
@@ -282,13 +280,13 @@ authActionBtn.onclick = () => {
         alert("Please enter your password!");
         return;
       }
-      signInWithEmailAndPassword(auth, inputIdentifier, pass)
+      firebase.auth().signInWithEmailAndPassword(inputIdentifier, pass)
         .then(() => {
           alert("Login Successful!");
           document.getElementById('login-overlay').style.display = 'none';
         })
         .catch(() => {
-          createUserWithEmailAndPassword(auth, inputIdentifier, pass)
+          firebase.auth().createUserWithEmailAndPassword(inputIdentifier, pass)
             .then(() => {
               alert("Account created and logged in!");
               document.getElementById('login-overlay').style.display = 'none';
@@ -298,10 +296,9 @@ authActionBtn.onclick = () => {
     }
   }
 
-  // 3. Google Login Flow
   function handleGoogleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
+    firebase.auth().signInWithPopup(provider)
       .then(() => {
         alert("Google Login Successful!");
         document.getElementById('login-overlay').style.display = 'none';
