@@ -9,11 +9,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDKs (Firestore & Auth only - No Storage needed now) -->
+    <!-- Firebase SDKs -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy, runTransaction, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       
       const firebaseConfig = {
         apiKey: "AIzaSyCQxzHVjVKCxhAPGSruFcaDQY-UqCh8y_o",
@@ -32,13 +32,18 @@
       window.db = db;
       window.query = query;
       window.orderBy = orderBy;
-      window.onSnapshot = onSnapshot;
       window.collection = collection;
       window.addDoc = addDoc;
       window.getDocs = getDocs;
+      window.getDoc = getDoc;
       window.deleteDoc = deleteDoc;
+      window.updateDoc = updateDoc;
       window.doc = doc;
       window.serverTimestamp = serverTimestamp;
+      window.runTransaction = runTransaction;
+      window.GoogleAuthProvider = GoogleAuthProvider;
+      window.signInWithPopup = signInWithPopup;
+      window.signOut = signOut;
 
       window.switchTab = function(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -58,13 +63,16 @@
         if(modal) modal.style.display = 'none';
       };
 
+      // Instagram-style Login Flow & Auth State
       onAuthStateChanged(auth, (user) => {
         const profileNameEl = document.getElementById('profileUserName');
         const profileEmailEl = document.getElementById('profileUserEmail');
         const profileUidEl = document.getElementById('profileUserUid');
         const authActionBtn = document.getElementById('authActionBtn');
+        const loginOverlay = document.getElementById('loginOverlay');
 
         if (user) {
+          if(loginOverlay) loginOverlay.style.display = 'none'; // Hide login screen on login
           if(profileNameEl) profileNameEl.innerText = user.displayName || user.email.split('@')[0];
           if(profileEmailEl) profileEmailEl.innerText = user.email || "";
           if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
@@ -72,7 +80,10 @@
             authActionBtn.innerText = "Sign Out";
             authActionBtn.onclick = () => signOut(auth);
           }
+          loadChaupalPosts();
+          loadVillagesListings();
         } else {
+          if(loginOverlay) loginOverlay.style.display = 'block'; // Show login screen if not logged in
           if(profileNameEl) profileNameEl.innerText = "Guest User (Not Logged In)";
           if(profileEmailEl) profileEmailEl.innerText = "Please sign in to manage bookings";
           if(profileUidEl) profileUidEl.innerText = "Status: Guest Mode";
@@ -85,11 +96,6 @@
           }
         }
       });
-
-      window.onload = () => {
-        // loadVillagesListings();
-        // loadChaupalPosts();
-      };
     </script>
 
     <style>
@@ -122,22 +128,36 @@
         overflow-y: auto;
       }
       .hidden { display: none !important; }
+      /* Image fit fix to show full image without black cut-offs */
+      .post-image {
+        width: 100%;
+        max-height: 350px;
+        object-fit: contain;
+        background-color: #f8fafc;
+        border-radius: 16px;
+      }
     </style>
 </head>
 <body class="text-slate-900 antialiased pb-24">
+
+    <!-- Instagram-style Mandatory Login Overlay -->
+    <div id="loginOverlay" class="modal" style="display: block; z-index: 99999;">
+      <div class="modal-content text-center space-y-4 my-20">
+        <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
+        <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
+        <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
+        <button type="button" onclick="const provider = new window.GoogleAuthProvider(); window.signInWithPopup(window.auth, provider).catch(err => alert(err.message));" class="w-full py-3 bg-amber-600 text-white font-extrabold rounded-xl text-xs shadow-md">Sign In with Google</button>
+      </div>
+    </div>
 
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-3xl mx-auto px-4 py-3 space-y-2.5">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
-              🌾
-            </div>
+            <div class="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white font-black text-lg shadow-sm">🌾</div>
             <div>
-              <h1 class="text-base font-extrabold tracking-tight text-slate-900 leading-none">
-                <span class="text-amber-700">Village</span>Deko
-              </h1>
+              <h1 class="text-base font-extrabold tracking-tight text-slate-900 leading-none"><span class="text-amber-700">Village</span>Deko</h1>
               <span class="text-[10px] font-bold text-slate-500">Village View</span>
             </div>
           </div>
@@ -302,15 +322,12 @@
         </div>
 
         <form id="listVillageForm" onsubmit="handleVillageListingImgBB(event)" class="space-y-4 text-xs">
-          
-          <!-- Photo Gallery Upload Box -->
           <div class="bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-300 space-y-2">
             <label class="block font-black text-amber-900 text-sm">📸 Select Village & Stay Photos (Multiple)</label>
             <input type="file" id="villageGalleryFiles" accept="image/*" multiple class="w-full text-xs text-slate-700 bg-white border border-amber-200 rounded-xl p-2.5">
-            <p class="text-[10px] text-amber-700">Photos will upload instantly and safely via ImgBB.</p>
+            <p class="text-[10px] text-amber-700">Photos will upload instantly via ImgBB.</p>
           </div>
 
-          <!-- Host Info -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-bold text-slate-600 mb-1">Host Name</label>
@@ -322,17 +339,6 @@
             </div>
           </div>
 
-          <!-- Bank/Payout Details -->
-          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-2">
-            <p class="font-black text-amber-900">Host Bank Account Details <span class="text-[10px] font-normal text-amber-700">(Optional for now)</span></p>
-            <div class="grid grid-cols-2 gap-2">
-              <input type="text" id="bankAcc" placeholder="Bank Account Number" class="border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-              <input type="text" id="ifscCode" placeholder="IFSC Code" class="border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-            </div>
-            <input type="text" id="upiId" placeholder="Or Host UPI ID (Optional)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-          </div>
-
-          <!-- Location Details -->
           <div class="grid grid-cols-3 gap-2">
             <div>
               <label class="block font-bold text-slate-600 mb-1">Village Name</label>
@@ -349,42 +355,18 @@
           </div>
 
           <div>
-            <label class="block font-bold text-slate-600 mb-1">Nearest Railway Station / Bus Stand</label>
-            <input type="text" id="vStation" placeholder="e.g. Pali Junction (25 km)" class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-          </div>
-
-          <!-- Village Culture Description -->
-          <div>
             <label class="block font-bold text-slate-600 mb-1">Village Culture and Description</label>
-            <textarea id="vDescription" rows="3" required placeholder="Describe how people live here, traditions, food, etc..." class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none"></textarea>
+            <textarea id="vDescription" rows="3" required placeholder="Describe traditions, food, etc..." class="w-full border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none"></textarea>
           </div>
 
-          <!-- Stay & Package Details -->
           <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
             <p class="font-black text-slate-800">🏠 Village Stay & Package Details</p>
             <div class="grid grid-cols-3 gap-2">
               <div class="col-span-2">
-                <input type="text" id="packageName" placeholder="Package Title (e.g. 3 Days Heritage Stay)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+                <input type="text" id="packageName" placeholder="Package Title (e.g. Heritage Stay)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
               </div>
               <div>
-                <input type="text" id="packagePrice" placeholder="Price per person (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-              </div>
-            </div>
-            <textarea id="packageDesc" rows="2" placeholder="Stay Description..." class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none"></textarea>
-          </div>
-
-          <!-- Dynamic Activities Container -->
-          <div id="activitiesContainer" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
-            <div class="flex justify-between items-center">
-              <p class="font-black text-slate-800">🎯 Village Activities & Pricing</p>
-              <button type="button" onclick="addActivityField()" class="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded-lg">+ Add More</button>
-            </div>
-            <div class="activity-row grid grid-cols-3 gap-2">
-              <div class="col-span-2">
-                <input type="text" name="activityName[]" placeholder="Activity Name (e.g. Pottery)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-              </div>
-              <div>
-                <input type="text" name="activityPrice[]" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
+                <input type="text" id="packagePrice" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
               </div>
             </div>
           </div>
@@ -393,7 +375,6 @@
             <button type="button" onclick="closeModal('listVillageModal')" class="px-4 py-2 font-bold text-slate-600 bg-slate-100 rounded-xl">Cancel</button>
             <button type="submit" id="listSubmitBtn" class="px-4 py-2 font-bold text-white bg-amber-600 rounded-xl shadow-sm">Publish Village & Stay Live</button>
           </div>
-
         </form>
       </div>
     </div>
@@ -409,35 +390,20 @@
           <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
             <div>
               <p class="text-[10px] font-bold text-amber-800 uppercase">Active Account Details</p>
-              <p id="profileUserName" class="text-sm font-black text-slate-900">Guest User (Not Logged In)</p>
-              <p id="profileUserEmail" class="text-xs text-slate-600">Please sign in to manage bookings</p>
+              <p id="profileUserName" class="text-sm font-black text-slate-900">Guest User</p>
+              <p id="profileUserEmail" class="text-xs text-slate-600">Please sign in</p>
               <p id="profileUserUid" class="text-[11px] font-mono text-amber-800">Status: Guest Mode</p>
             </div>
             <button type="button" id="authActionBtn" class="w-full py-2 bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm">Sign In with Google</button>
-          </div>
-          <div class="space-y-1.5 text-xs font-bold text-slate-700">
-            <div onclick="switchTab('villages'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
-              <span>🏡 Villages & Stays <span class="block text-[10px] font-normal text-slate-500">Explore island villages and book stays</span></span>
-            </div>
-            <div onclick="switchTab('villageWedding'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
-              <span>💍 Village Weddings & Destinations <span class="block text-[10px] font-normal text-slate-500">Submit wedding inquiries and manage bookings</span></span>
-            </div>
-            <div onclick="switchTab('chaupal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
-              <span>🔥 Chaupal Stories <span class="block text-[10px] font-normal text-slate-500">Read village folklore and village tales</span></span>
-            </div>
-            <div onclick="openModal('listVillageModal'); closeModal('profileModal');" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-100">
-              <span>🏨 List Your Village & Stay <span class="block text-[10px] font-normal text-slate-500">Add-on village photos, stay & bank details</span></span>
-            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- JavaScript for ImgBB Upload Functions -->
+    <!-- JavaScript Actions & CRUD Functions -->
     <script>
       const IMGBB_API_KEY = "e84ab1cea009540780712f8c85910840";
 
-      // Helper function to upload single image to ImgBB
       async function uploadToImgBB(file) {
         const formData = new FormData();
         formData.append("image", file);
@@ -466,27 +432,24 @@
           const fileInput = document.getElementById('storyImageFile');
           let imageUrl = "";
 
-          // Upload photo to ImgBB if selected
           if (fileInput.files && fileInput.files[0]) {
-            submitBtn.innerText = "Uploading to ImgBB...";
             imageUrl = await uploadToImgBB(fileInput.files[0]);
           }
 
-          submitBtn.innerText = "Saving to Database...";
-          // Save post to Firestore Database
           await window.addDoc(window.collection(window.db, "posts"), {
             author: author,
             location: location,
             text: text,
             imageUrl: imageUrl,
+            likes: 0,
             createdAt: window.serverTimestamp()
           });
 
           document.getElementById('chaupalPostForm').reset();
           closeModal('addStoryModal');
           alert("Story & Photo successfully published!");
+          loadChaupalPosts();
         } catch (err) {
-          console.error("Error uploading post:", err);
           alert("Upload failed: " + err.message);
         } finally {
           submitBtn.disabled = false;
@@ -504,54 +467,32 @@
           const fileInput = document.getElementById('villageGalleryFiles');
           let imageUrls = [];
 
-          // Multiple images upload handle via ImgBB
           if (fileInput.files && fileInput.files.length > 0) {
             for (let i = 0; i < fileInput.files.length; i++) {
-              listSubmitBtn.innerText = `Uploading photo ${i + 1} of ${fileInput.files.length}...`;
               const url = await uploadToImgBB(fileInput.files[i]);
               imageUrls.push(url);
             }
           }
 
-          // Activities collect karna
-          const activityNames = document.querySelectorAll('input[name="activityName[]"]');
-          const activityPrices = document.querySelectorAll('input[name="activityPrice[]"]');
-          let activities = [];
-          for (let i = 0; i < activityNames.length; i++) {
-            if (activityNames[i].value.trim() !== "") {
-              activities.push({
-                name: activityNames[i].value,
-                price: activityPrices[i].value
-              });
-            }
-          }
-
-          listSubmitBtn.innerText = "Saving Village Listing...";
-          // Firestore me village listing save karna
           await window.addDoc(window.collection(window.db, "villagesListings"), {
             hostName: document.getElementById('hostName').value,
             hostWhatsapp: document.getElementById('hostWhatsapp').value,
-            bankAcc: document.getElementById('bankAcc').value,
-            ifscCode: document.getElementById('ifscCode').value,
-            upiId: document.getElementById('upiId').value,
             vName: document.getElementById('vName').value,
             vDistrict: document.getElementById('vDistrict').value,
             vState: document.getElementById('vState').value,
-            vStation: document.getElementById('vStation').value,
             vDescription: document.getElementById('vDescription').value,
             packageName: document.getElementById('packageName').value,
             packagePrice: document.getElementById('packagePrice').value,
-            packageDesc: document.getElementById('packageDesc').value,
             images: imageUrls,
-            activities: activities,
+            likes: 0,
             createdAt: window.serverTimestamp()
           });
 
           document.getElementById('listVillageForm').reset();
           closeModal('listVillageModal');
           alert("Village listing published successfully!");
+          loadVillagesListings();
         } catch (err) {
-          console.error("Error listing village:", err);
           alert("Listing failed: " + err.message);
         } finally {
           listSubmitBtn.disabled = false;
@@ -559,141 +500,189 @@
         }
       }
 
-      function addActivityField() {
-        const container = document.getElementById('activitiesContainer');
-        const row = document.createElement('div');
-        row.className = 'activity-row grid grid-cols-3 gap-2 mt-2';
-        row.innerHTML = `
-          <div class="col-span-2">
-            <input type="text" name="activityName[]" placeholder="Activity Name (e.g. Folk Dance)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-          </div>
-          <div>
-            <input type="text" name="activityPrice[]" placeholder="Price (INR)" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 outline-none">
-          </div>
-        `;
-        container.appendChild(row);
-      }
-        // 1. Chaupal Stories ko Database se laakar Website par Dikhana
-async function loadChaupalPosts() {
-    const container = document.getElementById('chaupalFeedContainer');
-    if (!container) return;
-    
-    container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Stories load ho rahi hain...</p>`;
-    
-    try {
-        const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
-        const querySnapshot = await window.getDocs(q);
+      // Load Chaupal Posts with Like, Share, Edit, Delete
+      async function loadChaupalPosts() {
+        const container = document.getElementById('chaupalFeedContainer');
+        if (!container) return;
         
-        container.innerHTML = "";
-        if (querySnapshot.empty) {
-            container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Abhi tak koi story share nahi ki gayi hai. Aap pehli story share karein!</p>`;
+        try {
+          const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
+          const querySnapshot = await window.getDocs(q);
+          
+          container.innerHTML = "";
+          if (querySnapshot.empty) {
+            container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Abhi koi story nahi hai. Pehli story share karein!</p>`;
             return;
-        }
+          }
 
-        querySnapshot.forEach((docSnap) => {
+          querySnapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : 'Abhi abhi';
-            
             const card = document.createElement('div');
-            card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+            card.className = "bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3";
             card.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h4 class="text-xs font-black text-slate-900">${data.author || 'Anjaan Vyakti'}</h4>
-                        <p class="text-[10px] text-slate-500">📍 ${data.location || 'Gaon'} • ${date}</p>
-                    </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-extrabold text-slate-900 text-xs">${data.author || 'Anonymous'}</h4>
+                  <p class="text-[10px] text-slate-500">📍 ${data.location || 'Village'}</p>
                 </div>
-               ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Story Photo" class="w-full max-h-96 object-contain bg-slate-100 rounded-xl border border-slate-100">` : ''}
-                <p class="text-xs text-slate-700 leading-relaxed">${data.text || ''}</p>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">${data.text || ''}</p>
+              ${data.imageUrl ? `<img src="${data.imageUrl}" class="post-image" alt="Post Image">` : ''}
+              <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+                <div class="flex items-center gap-4">
+                  <button onclick="handleLike('${docSnap.id}', 'posts')" class="flex items-center gap-1 text-xs text-slate-600 hover:text-orange-500 font-bold">
+                    ❤️ <span id="likes-count-${docSnap.id}">${data.likes || 0}</span>
+                  </button>
+                  <button onclick="handleShare('${data.text || 'VillageDeko'}')" class="text-xs text-slate-600 hover:text-blue-500 font-bold">🔗 Share</button>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="handleEdit('${docSnap.id}', '${data.text || ''}', 'posts')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
+                  <button onclick="handleDelete('${docSnap.id}', 'posts')" class="text-red-600 text-xs px-2 py-1 bg-red-50 rounded font-bold">Delete</button>
+                </div>
+              </div>
             `;
             container.appendChild(card);
-        });
-    } catch (err) {
-        console.error("Error loading chaupal posts:", err);
-        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">Stories load karne mein error aaya.</p>`;
-    }
-}
+          });
+        } catch (err) {
+          console.error("Error loading posts:", err);
+        }
+      }
 
-// 2. Villages aur Stays ko Database se laakar Website par Dikhana
-async function loadVillagesListings() {
-    const container = document.getElementById('villagesFeedContainer');
-    if (!container) return;
-    
-    container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Villages load ho rahe hain...</p>`;
-    
-    try {
-        const querySnapshot = await window.getDocs(window.collection(window.db, "villagesListings"));
-        
-        container.innerHTML = "";
-        if (querySnapshot.empty) {
+      // Load Village Listings with Slider, Like, Share, Edit, Delete
+      async function loadVillagesListings() {
+        const container = document.getElementById('villagesFeedContainer');
+        if (!container) return;
+
+        try {
+          const q = window.query(window.collection(window.db, "villagesListings"), window.orderBy("createdAt", "desc"));
+          const querySnapshot = await window.getDocs(q);
+
+          container.innerHTML = "";
+          if (querySnapshot.empty) {
             container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Abhi koi village listed nahi hai.</p>`;
             return;
-        }
+          }
 
-       querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    
-    // Agar multiple photos hain toh slider, nahi toh single image
-    let imagesArray = (data.images && data.images.length > 0) ? data.images : ['https://via.placeholder.com/400'];
-    
-    let imagesHtml = '';
-    imagesArray.forEach((imgUrl, index) => {
-        imagesHtml += `
-            <div class="mySlides-${docSnap.id}" style="display: ${index === 0 ? 'block' : 'none'}; width: 100%; height: 250px; background-color: #000; display: flex; align-items: center; justify-content: center;">
-                <img src="${imgUrl}" alt="Village" style="width: 100%; height: 100%; object-fit: contain;" class="rounded-xl">
-            </div>
-        `;
-    });
+          querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            let imagesArray = (data.images && data.images.length > 0) ? data.images : [];
+            
+            let imagesHtml = '';
+            imagesArray.forEach((imgUrl, index) => {
+              imagesHtml += `
+                <div class="mySlides-${docSnap.id}" style="display: ${index === 0 ? 'block' : 'none'};">
+                  <img src="${imgUrl}" class="post-image" alt="Village Image">
+                </div>
+              `;
+            });
 
-    const card = document.createElement('div');
-    card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
-    card.innerHTML = `
-        <div class="relative overflow-hidden rounded-xl border border-slate-100">
-            ${imagesHtml}
-            ${imagesArray.length > 1 ? `
-                <button onclick="changeSlide('${docSnap.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded-full text-xs">&#10094;</button>
-                <button onclick="changeSlide('${docSnap.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded-full text-xs">&#10095;</button>
-            ` : ''}
-        </div>
-        <div>
-            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">${data.vCategory || 'Village Stay'}</span>
-            <h3 class="text-sm font-black text-slate-900 mt-1">${data.vName || 'Village Stay'}</h3>
-            <p class="text-xs text-slate-600 mt-1 line-clamp-2">${data.vDescription || ''}</p>
-        </div>
-        <div class="flex justify-between items-center pt-2 border-t border-slate-100">
-            <p class="text-[10px] text-slate-500">Host: <span class="font-bold text-slate-700">${data.hostName || 'Local'}</span></p>
-            <p class="text-xs font-black text-amber-700">₹${data.packagePrice || '0'} <span class="text-[10px] font-normal text-slate-500">/night</span></p>
-        </div>
-    `;
-    container.appendChild(card);
-});
-    } catch (err) {
-        console.error("Error loading villages:", err);
-        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">Villages load karne mein error aaya.</p>`;
-    }
-}
-function changeSlide(docId, direction) {
-    const slides = document.querySelectorAll('.mySlides-' + docId);
-    let activeIndex = 0;
-    
-    slides.forEach((slide, index) => {
-        if (slide.style.display === 'block') {
-            activeIndex = index;
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3";
+            card.innerHTML = `
+              <div>
+                <h4 class="font-extrabold text-slate-900 text-sm">${data.vName || ''}, ${data.vDistrict || ''} (${data.vState || ''})</h4>
+                <p class="text-[10px] text-slate-500">Host: ${data.hostName || ''}</p>
+              </div>
+              
+              <div class="relative overflow-hidden rounded-xl bg-slate-900">
+                ${imagesHtml}
+                ${imagesArray.length > 1 ? `
+                  <button onclick="changeSlide('${docSnap.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 text-white px-2.5 py-1.5 rounded-full text-xs font-bold">&#10094;</button>
+                  <button onclick="changeSlide('${docSnap.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 text-white px-2.5 py-1.5 rounded-full text-xs font-bold">&#10095;</button>
+                ` : ''}
+              </div>
+
+              <p class="text-xs text-slate-700 leading-relaxed">${data.vDescription || ''}</p>
+              <div class="flex justify-between items-center text-xs font-bold text-amber-700 bg-amber-50 p-2.5 rounded-xl">
+                <span>🏠 ${data.packageName || 'Village Stay'}</span>
+                <span>₹${data.packagePrice || '0'}/night</span>
+              </div>
+              <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+                <div class="flex items-center gap-4">
+                  <button onclick="handleLike('${docSnap.id}', 'villagesListings')" class="flex items-center gap-1 text-xs text-slate-600 hover:text-orange-500 font-bold">
+                    ❤️ <span id="likes-count-${docSnap.id}">${data.likes || 0}</span>
+                  </button>
+                  <button onclick="handleShare('${data.vName || 'VillageDeko'}')" class="text-xs text-slate-600 hover:text-blue-500 font-bold">🔗 Share</button>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="handleEdit('${docSnap.id}', '${data.vDescription || ''}', 'villagesListings')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
+                  <button onclick="handleDelete('${docSnap.id}', 'villagesListings')" class="text-red-600 text-xs px-2 py-1 bg-red-50 rounded font-bold">Delete</button>
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        } catch (err) {
+          console.error("Error loading village listings:", err);
         }
-        slide.style.display = 'none';
-    });
-    
-    let newIndex = activeIndex + direction;
-    if (newIndex >= slides.length) newIndex = 0;
-    if (newIndex < 0) newIndex = slides.length - 1;
-    
-    slides[newIndex].style.display = 'block';
-}
-// Page load hone par yeh functions apne aap chal jayenge
-window.addEventListener('DOMContentLoaded', () => {
-    loadChaupalPosts();
-    loadVillagesListings();
-});
+      }
+
+      function changeSlide(docId, direction) {
+        const slides = document.querySelectorAll('.mySlides-' + docId);
+        let activeIndex = 0;
+        slides.forEach((slide, index) => {
+          if (slide.style.display === 'block') activeIndex = index;
+          slide.style.display = 'none';
+        });
+        let newIndex = activeIndex + direction;
+        if (newIndex >= slides.length) newIndex = 0;
+        if (newIndex < 0) newIndex = slides.length - 1;
+        slides[newIndex].style.display = 'block';
+      }
+
+      // Global Handlers for Like, Share, Edit, Delete
+      async function handleLike(postId, collectionName) {
+        const postRef = window.doc(window.db, collectionName, postId);
+        try {
+          await window.runTransaction(window.db, async (transaction) => {
+            const postDoc = await window.getDoc(postRef);
+            if (!postDoc.exists()) throw "Post exist nahi karti!";
+            const newLikes = (postDoc.data().likes || 0) + 1;
+            transaction.update(postRef, { likes: newLikes });
+          });
+          if(collectionName === 'posts') loadChaupalPosts();
+          else loadVillagesListings();
+        } catch (error) {
+          console.error("Like error:", error);
+        }
+      }
+
+      function handleShare(title) {
+        if (navigator.share) {
+          navigator.share({ title: 'VillageDeko', text: `Check out: ${title}`, url: window.location.href }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          alert('Link copied to clipboard!');
+        }
+      }
+
+      async function handleEdit(postId, currentDesc, collectionName) {
+        const newDescription = prompt("Apni post update karein:", currentDesc);
+        if (newDescription !== null && newDescription.trim() !== "") {
+          try {
+            const fieldName = collectionName === 'posts' ? 'text' : 'vDescription';
+            await window.updateDoc(window.doc(window.db, collectionName, postId), { [fieldName]: newDescription });
+            alert('Successfully updated!');
+            if(collectionName === 'posts') loadChaupalPosts();
+            else loadVillagesListings();
+          } catch (error) {
+            alert('Error updating: ' + error.message);
+          }
+        }
+      }
+
+      async function handleDelete(postId, collectionName) {
+        if (confirm("Kya aap sach mein isse delete karna chahte hain?")) {
+          try {
+            await window.deleteDoc(window.doc(window.db, collectionName, postId));
+            alert('Successfully deleted!');
+            if(collectionName === 'posts') loadChaupalPosts();
+            else loadVillagesListings();
+          } catch (error) {
+            alert('Error deleting: ' + error.message);
+          }
+        }
+      }
     </script>
 </body>
 </html>
