@@ -176,51 +176,48 @@ authActionBtn.onclick = () => {
         <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
         <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
         <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
-       <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; max-width: 320px; margin: 0 auto; font-family: sans-serif;">
+     <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; max-width: 320px; margin: 0 auto; font-family: sans-serif;">
   
-  <h3 style="margin: 0 0 5px 0; font-size: 16px; color: #333;">VillageDeko mein Swagat hai</h3>
-  <p style="margin: 0 0 10px 0; font-size: 12px; color: #666; text-align: center;">Apna Email ya Phone Number daal kar login karein</p>
+  <h3 style="margin: 0 0 2px 0; font-size: 18px; color: #333;">Welcome to VillageDeko</h3>
+  <p style="margin: 0 0 10px 0; font-size: 13px; color: #666; text-align: center;">Enter your Email or Phone Number</p>
 
   <!-- Single Universal Input -->
-  <input type="text" id="userInput" placeholder="Email ya Phone Number (+91...)" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+  <input type="text" id="userInput" placeholder="Email or Phone Number (+91...)" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
   
   <div id="password-box" style="width: 100%; display: none;">
-    <input type="password" id="password-input" placeholder="Password daalein" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; margin-top: 10px;">
+    <input type="password" id="password-input" placeholder="Enter Password" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; margin-top: 5px;">
   </div>
 
   <div id="recaptcha-container"></div>
 
   <!-- Single Action Button -->
-  <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Aage Badhein</button>
+  <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
 
 </div>
 
 <script>
-  let step = 1; // 1: Input check, 2: Password/OTP verification
+  let step = 1; 
 
   function handleUnifiedLogin() {
     const val = document.getElementById('userInput').value.trim();
     
     if(!val) {
-      alert("Kripya Email ya Phone Number daalein!");
+      alert("Please enter Email or Phone Number!");
       return;
     }
 
-    // Check karein ki ye Email hai ya Phone Number
     const isEmail = val.includes('@');
 
     if (step === 1) {
       if (isEmail) {
-        // Agar email hai toh password box dikhayein
         document.getElementById('password-box').style.display = 'block';
         step = 'email_login';
       } else {
-        // Agar phone number hai toh turant OTP bhej dein
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
         signInWithPhoneNumber(auth, val, window.recaptchaVerifier)
           .then((confirmationResult) => {
             window.confResult = confirmationResult;
-            const otp = prompt("Aapke phone par OTP bheja gaya hai, yahan daalein:");
+            const otp = prompt("Enter the OTP sent to your phone:");
             if(otp) {
               return confirmationResult.confirm(otp);
             }
@@ -235,7 +232,7 @@ authActionBtn.onclick = () => {
       signInWithEmailAndPassword(auth, val, pass)
         .catch(() => {
           createUserWithEmailAndPassword(auth, val, pass)
-            .then(() => alert("Account ban gaya aur login ho gaya!"))
+            .then(() => alert("Account created and logged in!"))
             .catch(err => alert(err.message));
         });
     }
