@@ -179,122 +179,78 @@ authActionBtn.onclick = () => {
 <!-- Full-Screen Login Overlay -->
 <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
   
-  <div style="display: flex; flex-direction: column; gap: 14px; align-items: center; width: 90%; max-width: 350px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
+  <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 90%; max-width: 350px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
     
-    <h2 style="margin: 0; font-size: 22px; color: #111; font-weight: bold;">Welcome to VillageDeko</h2>
-    <p id="instruction-text" style="margin: 0 0 10px 0; font-size: 13px; color: #666; text-align: center;">Enter your Email or Phone Number to continue</p>
+    <h2 style="margin: 0; font-size: 20px; color: #111; font-weight: bold;">Welcome to VillageDeko</h2>
+    <p id="instruction-text" style="margin: 0; font-size: 13px; color: #666; text-align: center;">Enter Details to continue</p>
 
-    <!-- Single Universal Input -->
-    <input type="text" id="userInput" placeholder="Email or Phone Number (+91...)" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+    <input type="text" id="userInput" placeholder="Email or Phone Number" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc;">
     
-    <!-- Dynamic Input Box -->
     <div id="extra-box" style="width: 100%; display: none;">
-      <input type="text" id="extra-input" placeholder="" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+      <input type="text" id="extra-input" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc;">
     </div>
 
-    <!-- Required for Firebase Phone Auth -->
+    <!-- Visible Recaptcha: Yeh hona hi chahiye OTP ke liye -->
     <div id="recaptcha-container"></div>
 
-    <!-- Action Button -->
-    <button type="button" onclick="handleFinalLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
-
+    <button type="button" onclick="handleLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Continue</button>
+    
+    <button type="button" onclick="handleGoogleLogin()" style="padding: 10px; width: 100%; background: #fff; color: #555; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; margin-top: 10px;">Continue with Google</button>
   </div>
 </div>
 
 <script>
-  let loginStep = 1; 
-  let globalInputVal = "";
+  let stage = 1; 
+  let globalInput = "";
 
-  function handleFinalLogin() {
+  // reCAPTCHA initialize kar rahe hain
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'normal' });
+  window.recaptchaVerifier.render();
+
+  function handleLogin() {
     const val = document.getElementById('userInput').value.trim();
-    
-    if(!val && loginStep === 1) {
-      alert("Please enter Email or Phone Number!");
-      return;
-    }
+    if(!val && stage === 1) return alert("Please enter details!");
 
-    const isEmail = val.includes('@');
-
-    if (loginStep === 1) {
-      globalInputVal = val;
-      if (isEmail) {
-        // Email Flow: Ask for Password securely without crashing
+    if (stage === 1) {
+      globalInput = val;
+      if (val.includes('@')) {
         document.getElementById('userInput').style.display = 'none';
-        const extraInput = document.getElementById('extra-input');
-        extraInput.type = "password";
-        extraInput.placeholder = "Enter your password";
+        const e = document.getElementById('extra-input');
+        e.type = "password"; e.placeholder = "Enter Password";
         document.getElementById('extra-box').style.display = 'block';
-        document.getElementById('instruction-text').innerText = "Enter password for " + val;
-        loginStep = 'email_pass';
+        stage = 'email_pass';
       } else {
-        // Phone Number OTP Flow
-        if (!window.recaptchaVerifier) {
-          try {
-            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-              'size': 'invisible'
-            });
-          } catch(e) {
-            console.log(e);
-          }
-        }
-
-        const phoneNumber = val.startsWith('+') ? val : '+91' + val;
-        const appVerifier = window.recaptchaVerifier;
-
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-          .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
+        const phone = val.startsWith('+') ? val : '+91' + val;
+        signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+          .then((res) => {
+            window.confirmationResult = res;
             document.getElementById('userInput').style.display = 'none';
-            const extraInput = document.getElementById('extra-input');
-            extraInput.type = "text";
-            extraInput.placeholder = "Enter 6-digit OTP";
+            const e = document.getElementById('extra-input');
+            e.type = "text"; e.placeholder = "Enter 6-digit OTP";
             document.getElementById('extra-box').style.display = 'block';
-            document.getElementById('instruction-text').innerText = "Enter OTP sent to " + phoneNumber;
-            loginStep = 'verify_phone';
-          })
-          .catch((error) => {
-            alert("SMS Error: " + error.message);
-            if (window.recaptchaVerifier) {
-              try {
-                window.recaptchaVerifier.render().then(function(widgetId) {
-                  grecaptcha.reset(widgetId);
-                });
-              } catch(er) {}
-            }
-          });
+            stage = 'verify_phone';
+            alert("OTP sent!");
+          }).catch(err => { alert("SMS Error: " + err.message); grecaptcha.reset(); });
       }
-    } else if (loginStep === 'verify_phone') {
-      const otpCode = document.getElementById('extra-input').value.trim();
-      if(!otpCode) {
-        alert("Please enter the OTP!");
-        return;
-      }
-      window.confirmationResult.confirm(otpCode).then((result) => {
-        alert("Phone Login Successful!");
-        document.getElementById('login-overlay').style.display = 'none';
-      }).catch((error) => {
-        alert("Invalid OTP: " + error.message);
-      });
-    } else if (loginStep === 'email_pass') {
-      const pass = document.getElementById('extra-input').value.trim();
-      if(!pass) {
-        alert("Please enter your password!");
-        return;
-      }
-      signInWithEmailAndPassword(auth, globalInputVal, pass)
-        .then(() => {
-          alert("Login Successful!");
-          document.getElementById('login-overlay').style.display = 'none';
-        })
+    } else if (stage === 'verify_phone') {
+      window.confirmationResult.confirm(document.getElementById('extra-input').value)
+        .then(() => { alert("Login Successful!"); document.getElementById('login-overlay').style.display = 'none'; })
+        .catch(e => alert("Wrong OTP"));
+    } else if (stage === 'email_pass') {
+      signInWithEmailAndPassword(auth, globalInput, document.getElementById('extra-input').value)
+        .then(() => { document.getElementById('login-overlay').style.display = 'none'; })
         .catch(() => {
-          createUserWithEmailAndPassword(auth, globalInputVal, pass)
-            .then(() => {
-              alert("Account created and logged in!");
-              document.getElementById('login-overlay').style.display = 'none';
-            })
-            .catch(err => alert(err.message));
+          createUserWithEmailAndPassword(auth, globalInput, document.getElementById('extra-input').value)
+          .then(() => { document.getElementById('login-overlay').style.display = 'none'; });
         });
     }
+  }
+
+  function handleGoogleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(() => {
+      document.getElementById('login-overlay').style.display = 'none';
+    }).catch(err => alert(err.message));
   }
 </script>
     <!-- Header -->
