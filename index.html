@@ -176,36 +176,71 @@ authActionBtn.onclick = () => {
         <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
         <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
         <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
-       <!-- Email Login Section -->
-<div style="margin-bottom: 20px;">
-  <h3>Email se Login Karein</h3>
-  <input type="email" id="email-input" placeholder="Email dalein" style="padding: 8px; margin: 5px 0;">
-  <br>
-  <input type="password" id="password-input" placeholder="Password dalein" style="padding: 8px; margin: 5px 0;">
-  <br>
-  <button type="button" onclick="handleEmailLogin()" style="padding: 8px 15px; background: #4CAF50; color: white; border: none; cursor: pointer;">Login / Signup</button>
-</div>
-
-<hr>
-
-<!-- Phone OTP Login Section -->
-<div>
-  <h3>Phone OTP se Login Karein</h3>
-  <input type="text" id="phone-input" placeholder="+91 Phone Number dalein" style="padding: 8px; margin: 5px 0;">
-  <br>
-  <button type="button" onclick="sendOTPCode()" style="padding: 8px 15px; background: #2196F3; color: white; border: none; cursor: pointer;">OTP Bhejein</button>
+       <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; max-width: 320px; margin: 0 auto; font-family: sans-serif;">
   
-  <!-- reCAPTCHA container -->
-  <div id="recaptcha-container" style="margin: 10px 0;"></div>
+  <h3 style="margin: 0 0 5px 0; font-size: 16px; color: #333;">VillageDeko mein Swagat hai</h3>
+  <p style="margin: 0 0 10px 0; font-size: 12px; color: #666; text-align: center;">Apna Email ya Phone Number daal kar login karein</p>
 
-  <br>
-  <input type="text" id="otp-input" placeholder="OTP dalein" style="padding: 8px; margin: 5px 0;">
-  <br>
-  <button type="button" onclick="verifyOTPCode()" style="padding: 8px 15px; background: #FF9800; color: white; border: none; cursor: pointer;">OTP Verify Karein</button>
+  <!-- Single Universal Input -->
+  <input type="text" id="userInput" placeholder="Email ya Phone Number (+91...)" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+  
+  <div id="password-box" style="width: 100%; display: none;">
+    <input type="password" id="password-input" placeholder="Password daalein" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; margin-top: 10px;">
+  </div>
+
+  <div id="recaptcha-container"></div>
+
+  <!-- Single Action Button -->
+  <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Aage Badhein</button>
+
 </div>
-      </div>
-    </div>
 
+<script>
+  let step = 1; // 1: Input check, 2: Password/OTP verification
+
+  function handleUnifiedLogin() {
+    const val = document.getElementById('userInput').value.trim();
+    
+    if(!val) {
+      alert("Kripya Email ya Phone Number daalein!");
+      return;
+    }
+
+    // Check karein ki ye Email hai ya Phone Number
+    const isEmail = val.includes('@');
+
+    if (step === 1) {
+      if (isEmail) {
+        // Agar email hai toh password box dikhayein
+        document.getElementById('password-box').style.display = 'block';
+        step = 'email_login';
+      } else {
+        // Agar phone number hai toh turant OTP bhej dein
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
+        signInWithPhoneNumber(auth, val, window.recaptchaVerifier)
+          .then((confirmationResult) => {
+            window.confResult = confirmationResult;
+            const otp = prompt("Aapke phone par OTP bheja gaya hai, yahan daalein:");
+            if(otp) {
+              return confirmationResult.confirm(otp);
+            }
+          })
+          .then(() => {
+            if(window.confResult) alert("Phone Login Successful!");
+          })
+          .catch(err => alert("Error: " + err.message));
+      }
+    } else if (step === 'email_login') {
+      const pass = document.getElementById('password-input').value;
+      signInWithEmailAndPassword(auth, val, pass)
+        .catch(() => {
+          createUserWithEmailAndPassword(auth, val, pass)
+            .then(() => alert("Account ban gaya aur login ho gaya!"))
+            .catch(err => alert(err.message));
+        });
+    }
+  }
+</script>
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-3xl mx-auto px-4 py-3 space-y-2.5">
