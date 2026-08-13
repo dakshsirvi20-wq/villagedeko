@@ -209,18 +209,19 @@ authActionBtn.onclick = () => {
   let inputIdentifier = "";
   let recaptchaVerifier = null;
 
-  window.addEventListener('DOMContentLoaded', () => {
+ window.addEventListener('DOMContentLoaded', () => {
     try {
-      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        'size': 'normal'
-      });
-      window.recaptchaVerifier.render();
+      if (window.auth && window.RecaptchaVerifier) {
+        window.recaptchaVerifier = new window.RecaptchaVerifier('recaptcha-container', {
+          'size': 'normal'
+        }, window.auth);
+        window.recaptchaVerifier.render();
+      }
     } catch (e) {
       console.log("Recaptcha load error:", e);
     }
   });
-
-  function handleUnifiedLogin() {
+ function handleUnifiedLogin() {
     const val = document.getElementById('userInput').value.trim();
     
     if(!val && authStage === 1) {
@@ -243,7 +244,7 @@ authActionBtn.onclick = () => {
         const phone = val.startsWith('+') ? val : '+91' + val;
         const appVerifier = window.recaptchaVerifier;
 
-        firebase.auth().signInWithPhoneNumber(phone, appVerifier)
+        window.signInWithPhoneNumber(window.auth, phone, appVerifier)
           .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
             document.getElementById('userInput').style.display = 'none';
@@ -280,13 +281,13 @@ authActionBtn.onclick = () => {
         alert("Please enter your password!");
         return;
       }
-      firebase.auth().signInWithEmailAndPassword(inputIdentifier, pass)
+      window.signInWithEmailAndPassword(window.auth, inputIdentifier, pass)
         .then(() => {
           alert("Login Successful!");
           document.getElementById('login-overlay').style.display = 'none';
         })
         .catch(() => {
-          firebase.auth().createUserWithEmailAndPassword(inputIdentifier, pass)
+          window.createUserWithEmailAndPassword(window.auth, inputIdentifier, pass)
             .then(() => {
               alert("Account created and logged in!");
               document.getElementById('login-overlay').style.display = 'none';
@@ -294,8 +295,7 @@ authActionBtn.onclick = () => {
             .catch(err => alert(err.message));
         });
     }
-  }
-
+}
  function handleGoogleLogin() {
     // Modular SDK ke liye sahi Google provider
     const provider = new window.GoogleAuthProvider();
