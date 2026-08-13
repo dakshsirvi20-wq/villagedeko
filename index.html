@@ -176,7 +176,33 @@ authActionBtn.onclick = () => {
         <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
         <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
         <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
-        <button type="button" onclick="const provider = new window.GoogleAuthProvider(); window.signInWithPopup(window.auth, provider).catch(err => alert(err.message));" class="w-full py-3 bg-amber-600 text-white font-extrabold rounded-xl text-xs shadow-md">Sign In with Google</button>
+       <!-- Email Login Section -->
+<div style="margin-bottom: 20px;">
+  <h3>Email se Login Karein</h3>
+  <input type="email" id="email-input" placeholder="Email dalein" style="padding: 8px; margin: 5px 0;">
+  <br>
+  <input type="password" id="password-input" placeholder="Password dalein" style="padding: 8px; margin: 5px 0;">
+  <br>
+  <button type="button" onclick="handleEmailLogin()" style="padding: 8px 15px; background: #4CAF50; color: white; border: none; cursor: pointer;">Login / Signup</button>
+</div>
+
+<hr>
+
+<!-- Phone OTP Login Section -->
+<div>
+  <h3>Phone OTP se Login Karein</h3>
+  <input type="text" id="phone-input" placeholder="+91 Phone Number dalein" style="padding: 8px; margin: 5px 0;">
+  <br>
+  <button type="button" onclick="sendOTPCode()" style="padding: 8px 15px; background: #2196F3; color: white; border: none; cursor: pointer;">OTP Bhejein</button>
+  
+  <!-- reCAPTCHA container -->
+  <div id="recaptcha-container" style="margin: 10px 0;"></div>
+
+  <br>
+  <input type="text" id="otp-input" placeholder="OTP dalein" style="padding: 8px; margin: 5px 0;">
+  <br>
+  <button type="button" onclick="verifyOTPCode()" style="padding: 8px 15px; background: #FF9800; color: white; border: none; cursor: pointer;">OTP Verify Karein</button>
+</div>
       </div>
     </div>
 
