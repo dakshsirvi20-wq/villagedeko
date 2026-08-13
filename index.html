@@ -12,7 +12,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy, runTransaction, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       
       const firebaseConfig = {
@@ -203,7 +203,6 @@ authActionBtn.onclick = () => {
     <!-- Google Login Button -->
     <button type="button" onclick="handleGoogleLogin()" style="padding: 12px; width: 100%; background: #f5f5f5; color: #333; border: 1px solid #ccc; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue with Google</button>
   </div>
-</div>
 
 <script>
   let authStage = 1; 
