@@ -182,7 +182,7 @@ authActionBtn.onclick = () => {
   <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; width: 90%; max-width: 350px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
     
     <h2 style="margin: 0; font-size: 20px; color: #111; font-weight: bold;">Welcome to VillageDeko</h2>
-    <p id="instruction-text" style="margin: 0; font-size: 13px; color: #666; text-align: center;">Enter Email or Phone to continue</p>
+    <p id="instruction-text" style="margin: 0; font-size: 13px; color: #666; text-align: center;">Choose your login method</p>
 
     <!-- Input Field -->
     <input type="text" id="userInput" placeholder="Email or Phone Number" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
@@ -192,8 +192,11 @@ authActionBtn.onclick = () => {
       <input type="text" id="extra-input" placeholder="" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
     </div>
 
+    <!-- Visible Recaptcha Container for Phone OTP -->
+    <div id="recaptcha-container"></div>
+
     <!-- Main Continue Button -->
-    <button type="button" onclick="handleSecureLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
+    <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
     
     <div style="width: 100%; text-align: center; font-size: 12px; color: #888; margin: 2px 0;">OR</div>
 
@@ -203,67 +206,90 @@ authActionBtn.onclick = () => {
 </div>
 
 <script>
-  let loginStep = 1; 
-  let savedIdentifier = "";
+  let authStage = 1; 
+  let inputIdentifier = "";
 
-  function handleSecureLogin() {
+  // Initialize reCAPTCHA for Phone Auth safely
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        'size': 'normal'
+      });
+      window.recaptchaVerifier.render();
+    } catch (e) {
+      console.log("Recaptcha load error:", e);
+    }
+  });
+
+  function handleUnifiedLogin() {
     const val = document.getElementById('userInput').value.trim();
     
-    if(!val && loginStep === 1) {
-      alert("Please enter your Email or Phone Number!");
+    if(!val && authStage === 1) {
+      alert("Please enter Email or Phone Number!");
       return;
     }
 
-    if (loginStep === 1) {
-      savedIdentifier = val;
+    if (authStage === 1) {
+      inputIdentifier = val;
       if (val.includes('@')) {
-        // Email Flow: Ask for Password securely
+        // 1. Email & Password Flow
         document.getElementById('userInput').style.display = 'none';
+        document.getElementById('recaptcha-container').style.display = 'none';
         const extra = document.getElementById('extra-input');
         extra.type = "password";
         extra.placeholder = "Enter your password";
         document.getElementById('extra-box').style.display = 'block';
         document.getElementById('instruction-text').innerText = "Enter password for " + val;
-        loginStep = 'email_password';
+        authStage = 'email_pass';
       } else {
-        // Phone Number Direct Flow (No reCAPTCHA freeze)
+        // 2. Phone Number & OTP Flow
         const phone = val.startsWith('+') ? val : '+91' + val;
-        
-        // Using a clean fallback confirmation flow if recaptcha container is absent
-        const dummyConfirmation = {
-          confirm: function(otp) {
-            return new Promise((resolve, reject) => {
-              if(otp.length === 6) resolve(true);
-              else reject(new Error("Invalid OTP length"));
-            });
-          }
-        };
-        
-        // Triggering standard prompt for smooth testing without UI freeze
-        const enteredOtp = prompt("Enter the 6-digit OTP sent to " + phone + ":");
-        if (enteredOtp) {
-          window.confirmationResult = dummyConfirmation;
-          dummyConfirmation.confirm(enteredOtp).then(() => {
-            alert("Phone Login Successful!");
-            document.getElementById('login-overlay').style.display = 'none';
-          }).catch(err => {
-            alert("Verification failed: " + err.message);
+        const appVerifier = window.recaptchaVerifier;
+
+        signInWithPhoneNumber(auth, phone, appVerifier)
+          .then((confirmationResult) => {
+            window.confirmationResult = confirmationResult;
+            document.getElementById('userInput').style.display = 'none';
+            document.getElementById('recaptcha-container').style.display = 'none';
+            const extra = document.getElementById('extra-input');
+            extra.type = "text";
+            extra.placeholder = "Enter 6-digit OTP";
+            document.getElementById('extra-box').style.display = 'block';
+            document.getElementById('instruction-text').innerText = "Enter OTP sent to " + phone;
+            authStage = 'verify_otp';
+          })
+          .catch((error) => {
+            alert("SMS Error: " + error.message);
+            if(window.recaptchaVerifier) {
+              try { window.recaptchaVerifier.render(); } catch(err){}
+            }
           });
-        }
       }
-    } else if (loginStep === 'email_password') {
+    } else if (authStage === 'verify_otp') {
+      const otpCode = document.getElementById('extra-input').value.trim();
+      if(!otpCode) {
+        alert("Please enter the OTP!");
+        return;
+      }
+      window.confirmationResult.confirm(otpCode).then(() => {
+        alert("Phone Login Successful!");
+        document.getElementById('login-overlay').style.display = 'none';
+      }).catch((error) => {
+        alert("Invalid OTP: " + error.message);
+      });
+    } else if (authStage === 'email_pass') {
       const pass = document.getElementById('extra-input').value.trim();
       if(!pass) {
         alert("Please enter your password!");
         return;
       }
-      signInWithEmailAndPassword(auth, savedIdentifier, pass)
+      signInWithEmailAndPassword(auth, inputIdentifier, pass)
         .then(() => {
           alert("Login Successful!");
           document.getElementById('login-overlay').style.display = 'none';
         })
         .catch(() => {
-          createUserWithEmailAndPassword(auth, savedIdentifier, pass)
+          createUserWithEmailAndPassword(auth, inputIdentifier, pass)
             .then(() => {
               alert("Account created and logged in!");
               document.getElementById('login-overlay').style.display = 'none';
@@ -273,14 +299,17 @@ authActionBtn.onclick = () => {
     }
   }
 
+  // 3. Google Login Flow
   function handleGoogleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(() => {
-      alert("Google Login Successful!");
-      document.getElementById('login-overlay').style.display = 'none';
-    }).catch(err => {
-      alert("Google Login Error: " + err.message);
-    });
+    auth.signInWithPopup(provider)
+      .then(() => {
+        alert("Google Login Successful!");
+        document.getElementById('login-overlay').style.display = 'none';
+      })
+      .catch((err) => {
+        alert("Google Login Error: " + err.message);
+      });
   }
 </script>
     <!-- Header -->
