@@ -296,16 +296,10 @@ authActionBtn.onclick = () => {
         });
     }
 }
- function handleGoogleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-      .then(() => {
-        alert("Google Login Successful!");
+function handleGoogleLogin() {
+    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(() => {
         document.getElementById('login-overlay').style.display = 'none';
-      })
-      .catch((err) => {
-        alert("Google Login Error: " + err.message);
-      });
+    }).catch(err => alert(err.message));
 }
 </script>
     <!-- Header -->
