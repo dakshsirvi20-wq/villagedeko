@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VillageDeko - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+  <main class="login-page">
+    <section class="login-card">
+      <div class="logo">🌾</div>
+
+      <h1><span>Village</span>Deko</h1>
+      <p class="subtitle">Asli Gaon aur Sanskriti</p>
+
+      <div id="authMessage" class="message hidden"></div>
+
+      <div class="auth-section">
+        <h2>Email Login</h2>
+
+        <input id="email" type="email" placeholder="Email address" autocomplete="email">
+        <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+
+        <button id="emailLoginBtn" class="primary-btn" onclick="emailLogin()">Login</button>
+        <button id="createAccountBtn" class="secondary-btn" onclick="createAccount()">Create New Account</button>
+      </div>
+
+      <div class="divider"><span>OR</span></div>
+
+      <div class="auth-section">
+        <h2>Phone Login</h2>
+
+        <div id="phoneBox">
+          <input id="phone" type="tel" placeholder="+919876543210" autocomplete="tel">
+        </div>
+
+        <div id="otpBox" class="hidden">
+          <input id="otp" type="text" inputmode="numeric" maxlength="6" placeholder="6 digit OTP" autocomplete="one-time-code">
+        </div>
+
+        <button id="sendOtpBtn" class="primary-btn phone-btn" onclick="sendOtp()">Send OTP</button>
+        <button id="verifyOtpBtn" class="primary-btn phone-btn hidden" onclick="verifyOtp()">Verify OTP</button>
+
+        <div id="recaptcha-container"></div>
+      </div>
+
+      <p class="login-note">
+        Login ke baad hi VillageDeko app open hoga.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="auth.js"></script>
+</body>
+</html>
