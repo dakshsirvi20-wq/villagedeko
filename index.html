@@ -9,10 +9,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Firebase v9 Compat SDKs (App, Auth, Firestore) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
       const firebaseConfig = {
         apiKey: "AIzaSyD4ABiWBvNQdKXFOO4PcUyjiFBvho55We4",
         authDomain: "bhanaram-1308b.firebaseapp.com",
@@ -23,26 +25,13 @@
         measurementId: "G-5WG8JCVM2Y"
       };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      // Initialize Firebase using compat syntax
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
 
       window.auth = auth;
       window.db = db;
-      window.query = query;
-      window.orderBy = orderBy;
-      window.collection = collection;
-      window.addDoc = addDoc;
-      window.getDocs = getDocs;
-      window.getDoc = getDoc;
-      window.deleteDoc = deleteDoc;
-      window.updateDoc = updateDoc;
-      window.doc = doc;
-      window.serverTimestamp = serverTimestamp;
-      window.runTransaction = runTransaction;
-      window.GoogleAuthProvider = GoogleAuthProvider;
-      window.signInWithPopup = signInWithPopup;
-      window.signOut = signOut;
 
       window.switchTab = function(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -62,66 +51,37 @@
         if(modal) modal.style.display = 'none';
       };
 
-      // Instagram-style Login Flow & Auth State
-      onAuthStateChanged(auth, (user) => {
-        const profileNameEl = document.getElementById('profileUserName');
-        const profileEmailEl = document.getElementById('profileUserEmail');
-        const profileUidEl = document.getElementById('profileUserUid');
-        const authActionBtn = document.getElementById('authActionBtn');
-        const loginOverlay = document.getElementById('loginOverlay');
+      // Auth State Observer & Feed Loaders
+      document.addEventListener("DOMContentLoaded", () => {
+        auth.onAuthStateChanged((user) => {
+          const loginOverlay = document.getElementById('login-overlay');
+          const profileNameEl = document.getElementById('profileUserName');
+          const profileEmailEl = document.getElementById('profileUserEmail');
+          const profileUidEl = document.getElementById('profileUserUid');
+          const authActionBtn = document.getElementById('authActionBtn');
 
-        if (user) {
-          if(loginOverlay) loginOverlay.style.display = 'none'; // Hide login screen on login
-          if(profileNameEl) profileNameEl.innerText = user.displayName || user.email.split('@')[0];
-          if(profileEmailEl) profileEmailEl.innerText = user.email || "";
-          if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
-          if(authActionBtn) {
-            authActionBtn.innerText = "Sign Out";
-            authActionBtn.onclick = () => signOut(auth);
+          if (user) {
+            if(loginOverlay) loginOverlay.style.display = 'none';
+            if(profileNameEl) profileNameEl.innerText = user.displayName || user.email.split('@')[0];
+            if(profileEmailEl) profileEmailEl.innerText = user.email || user.phoneNumber || "";
+            if(profileUidEl) profileUidEl.innerText = "UID: " + user.uid;
+            if(authActionBtn) {
+              authActionBtn.innerText = "Sign Out";
+              authActionBtn.onclick = () => auth.signOut();
+            }
+            loadChaupalPosts();
+            loadVillagesListings();
+          } else {
+            if(loginOverlay) loginOverlay.style.display = 'flex';
+            if(profileNameEl) profileNameEl.innerText = "Guest User (Not Logged In)";
+            if(profileEmailEl) profileEmailEl.innerText = "Please sign in to manage bookings";
+            if(profileUidEl) profileUidEl.innerText = "Status: Guest Mode";
+            if(authActionBtn) {
+              authActionBtn.innerText = "Sign In / Login";
+              authActionBtn.onclick = () => { if(loginOverlay) loginOverlay.style.display = 'flex'; };
+            }
           }
-          loadChaupalPosts();
-          loadVillagesListings();
-        } else {
-          if(loginOverlay) loginOverlay.style.display = 'block'; // Show login screen if not logged in
-          if(profileNameEl) profileNameEl.innerText = "Guest User (Not Logged In)";
-          if(profileEmailEl) profileEmailEl.innerText = "Please sign in to manage bookings";
-          if(profileUidEl) profileUidEl.innerText = "Status: Guest Mode";
-          if(authActionBtn) {
-           authActionBtn.innerText = "Email / Phone se Login Karein";
-authActionBtn.onclick = () => {
-    // Yahan hum ek simple prompt ya chhota input box khol sakte hain, ya apna naya HTML form laga sakte hain
-    const loginTypechahiye = prompt("Login kis se karna hai? 'email' ya 'phone' type karein:");
-    
-    if (loginTypechahiye === 'email') {
-        const email = prompt("Apna Email dalein:");
-        const password = prompt("Apna Password dalein:");
-        if(email && password) {
-            signInWithEmailAndPassword(auth, email, password)
-                .catch(() => {
-                    createUserWithEmailAndPassword(auth, email, password)
-                        .then(() => alert("Account ban gaya aur login ho gaya!"))
-                        .catch(err => alert(err.message));
-                });
-        }
-    } else if (loginTypechahiye === 'phone') {
-        const phone = prompt("Apna Phone Number dalein (+91 ke sath):");
-        if(phone) {
-            // Phone OTP ke liye recaptcha zaroori hai
-            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
-            signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
-                .then((confirmationResult) => {
-                    const otp = prompt("Aapke phone par OTP aaya hoga, yahan dalein:");
-                    if(otp) {
-                        return confirmationResult.confirm(otp);
-                    }
-                })
-                .then(() => alert("Phone Login Successful!"))
-                .catch(err => alert("Error: " + err.message));
-        }
-    }
-};
-          }
-        }
+        });
       });
     </script>
 
@@ -155,153 +115,154 @@ authActionBtn.onclick = () => {
         overflow-y: auto;
       }
       .hidden { display: none !important; }
-      /* Image fit fix to show full image without black cut-offs */
-     .post-image {
-      width: 100%;
-      height: auto;
-      max-height: 500px;
-      object-fit: cover;
-      background-color: #f8fafc;
-      border-radius: 16px;
-    }
+      .post-image {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: cover;
+        background-color: #f8fafc;
+        border-radius: 16px;
+      }
     </style>
 </head>
 <body class="text-slate-900 antialiased pb-24">
 
-    <!-- Instagram-style Mandatory Login Overlay -->
-    <div id="loginOverlay" class="modal" style="display: block; z-index: 99999;">
-      <div class="modal-content text-center space-y-4 my-20">
-        <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
-        <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
-        <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
-<!-- Full-Screen Login Overlay -->
-<div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.98); z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
-  
-  <div style="display: flex; flex-direction: column; gap: 14px; align-items: center; width: 90%; max-width: 360px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-radius: 14px; background: #ffffff; box-sizing: border-box;">
-    
-    <h2 style="margin: 0 0 4px 0; font-size: 22px; color: #111; font-weight: bold; text-align: center;">Welcome to VillageDeko</h2>
-    <p id="instruction-text" style="margin: 0 0 10px 0; font-size: 13px; color: #666; text-align: center;">Choose your login method</p>
+    <!-- Full-Screen Login Overlay -->
+    <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.98); z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
+      <div style="display: flex; flex-direction: column; gap: 14px; align-items: center; width: 90%; max-width: 360px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-radius: 14px; background: #ffffff; box-sizing: border-box;">
+        
+        <div class="w-14 h-14 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-2xl mb-1 shadow-md">🌾</div>
+        <h2 style="margin: 0 0 4px 0; font-size: 22px; color: #111; font-weight: bold; text-align: center;">Welcome to VillageDeko</h2>
+        <p id="instruction-text" style="margin: 0 0 10px 0; font-size: 13px; color: #666; text-align: center;">Choose your login method</p>
 
-    <!-- Input Field -->
-    <input type="text" id="userInput" placeholder="Email or Phone Number" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
-    
-    <!-- Extra Box for Password or OTP -->
-    <div id="extra-box" style="width: 100%; display: none;">
-      <input type="text" id="extra-input" placeholder="" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
+        <!-- Input Field -->
+        <input type="text" id="userInput" placeholder="Email or Phone Number (+91...)" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
+        
+        <!-- Extra Box for Password or OTP -->
+        <div id="extra-box" style="width: 100%; display: none;">
+          <input type="text" id="extra-input" placeholder="" style="padding: 12px 14px; width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none;">
+        </div>
+
+        <!-- Visible Recaptcha Container for Phone OTP -->
+        <div id="recaptcha-container" style="margin: 4px 0;"></div>
+
+        <!-- Main Continue Button -->
+        <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
+        
+        <div style="width: 100%; text-align: center; font-size: 12px; color: #888; margin: 6px 0;">OR</div>
+
+        <!-- Google Login Button -->
+        <button type="button" onclick="handleGoogleLogin()" style="padding: 12px; width: 100%; background: #fff; color: #333; border: 1px solid #ccc; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue with Google</button>
+      
+      </div>
     </div>
 
-    <!-- Visible Recaptcha Container for Phone OTP -->
-    <div id="recaptcha-container" style="margin: 4px 0;"></div>
+    <script>
+      let authStage = 1; 
+      let inputIdentifier = "";
+      let recaptchaVerifier = null;
 
-    <!-- Main Continue Button -->
-    <button type="button" onclick="handleUnifiedLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
-    
-    <div style="width: 100%; text-align: center; font-size: 12px; color: #888; margin: 6px 0;">OR</div>
+      window.addEventListener('DOMContentLoaded', () => {
+        try {
+          if (window.auth && !window.recaptchaVerifier) {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+              'size': 'normal'
+            }, window.auth);
+            window.recaptchaVerifier.render();
+          }
+        } catch (e) {
+          console.log("Recaptcha load error:", e);
+        }
+      });
 
-    <!-- Google Login Button -->
-    <button type="button" onclick="handleGoogleLogin()" style="padding: 12px; width: 100%; background: #fff; color: #333; border: 1px solid #ccc; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue with Google</button>
-  
-  </div>
-</div>
+      function handleUnifiedLogin() {
+        const val = document.getElementById('userInput').value.trim();
+        
+        if(!val && authStage === 1) {
+          alert("Please enter Email or Phone Number!");
+          return;
+        }
 
-<script>
-  let authStage = 1; 
-  let inputIdentifier = "";
-  let recaptchaVerifier = null;
-
- window.addEventListener('DOMContentLoaded', () => {
-    try {
-      if (window.auth && window.RecaptchaVerifier) {
-        window.recaptchaVerifier = new window.RecaptchaVerifier('recaptcha-container', {
-          'size': 'normal'
-        }, window.auth);
-        window.recaptchaVerifier.render();
-      }
-    } catch (e) {
-      console.log("Recaptcha load error:", e);
-    }
-  });
- function handleUnifiedLogin() {
-    const val = document.getElementById('userInput').value.trim();
-    
-    if(!val && authStage === 1) {
-      alert("Please enter Email or Phone Number!");
-      return;
-    }
-
-    if (authStage === 1) {
-      inputIdentifier = val;
-      if (val.includes('@')) {
-        document.getElementById('userInput').style.display = 'none';
-        document.getElementById('recaptcha-container').style.display = 'none';
-        const extra = document.getElementById('extra-input');
-        extra.type = "password";
-        extra.placeholder = "Enter your password";
-        document.getElementById('extra-box').style.display = 'block';
-        document.getElementById('instruction-text').innerText = "Enter password for " + val;
-        authStage = 'email_pass';
-      } else {
-        const phone = val.startsWith('+') ? val : '+91' + val;
-        const appVerifier = window.recaptchaVerifier;
-
-        window.signInWithPhoneNumber(window.auth, phone, appVerifier)
-          .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
+        if (authStage === 1) {
+          inputIdentifier = val;
+          if (val.includes('@')) {
             document.getElementById('userInput').style.display = 'none';
             document.getElementById('recaptcha-container').style.display = 'none';
             const extra = document.getElementById('extra-input');
-            extra.type = "text";
-            extra.placeholder = "Enter 6-digit OTP";
+            extra.type = "password";
+            extra.placeholder = "Enter your password";
             document.getElementById('extra-box').style.display = 'block';
-            document.getElementById('instruction-text').innerText = "Enter OTP sent to " + phone;
-            authStage = 'verify_otp';
-          })
-          .catch((error) => {
-            alert("SMS Error: " + error.message);
-            if(window.recaptchaVerifier) {
-              try { window.recaptchaVerifier.render(); } catch(err){}
-            }
+            document.getElementById('instruction-text').innerText = "Enter password for " + val;
+            authStage = 'email_pass';
+          } else {
+            const phone = val.startsWith('+') ? val : '+91' + val;
+            const appVerifier = window.recaptchaVerifier;
+
+            window.auth.signInWithPhoneNumber(phone, appVerifier)
+              .then((confirmationResult) => {
+                window.confirmationResult = confirmationResult;
+                document.getElementById('userInput').style.display = 'none';
+                document.getElementById('recaptcha-container').style.display = 'none';
+                const extra = document.getElementById('extra-input');
+                extra.type = "text";
+                extra.placeholder = "Enter 6-digit OTP";
+                document.getElementById('extra-box').style.display = 'block';
+                document.getElementById('instruction-text').innerText = "Enter OTP sent to " + phone;
+                authStage = 'verify_otp';
+              })
+              .catch((error) => {
+                alert("SMS Error: " + error.message);
+                if(window.recaptchaVerifier) {
+                  try { window.recaptchaVerifier.render(); } catch(err){}
+                }
+              });
+          }
+        } else if (authStage === 'verify_otp') {
+          const otpCode = document.getElementById('extra-input').value.trim();
+          if(!otpCode) {
+            alert("Please enter the OTP!");
+            return;
+          }
+          window.confirmationResult.confirm(otpCode).then(() => {
+            alert("Phone Login Successful!");
+            document.getElementById('login-overlay').style.display = 'none';
+          }).catch((error) => {
+            alert("Invalid OTP: " + error.message);
           });
-      }
-    } else if (authStage === 'verify_otp') {
-      const otpCode = document.getElementById('extra-input').value.trim();
-      if(!otpCode) {
-        alert("Please enter the OTP!");
-        return;
-      }
-      window.confirmationResult.confirm(otpCode).then(() => {
-        alert("Phone Login Successful!");
-        document.getElementById('login-overlay').style.display = 'none';
-      }).catch((error) => {
-        alert("Invalid OTP: " + error.message);
-      });
-    } else if (authStage === 'email_pass') {
-      const pass = document.getElementById('extra-input').value.trim();
-      if(!pass) {
-        alert("Please enter your password!");
-        return;
-      }
-      window.signInWithEmailAndPassword(window.auth, inputIdentifier, pass)
-        .then(() => {
-          alert("Login Successful!");
-          document.getElementById('login-overlay').style.display = 'none';
-        })
-        .catch(() => {
-          window.createUserWithEmailAndPassword(window.auth, inputIdentifier, pass)
+        } else if (authStage === 'email_pass') {
+          const pass = document.getElementById('extra-input').value.trim();
+          if(!pass) {
+            alert("Please enter your password!");
+            return;
+          }
+          window.auth.signInWithEmailAndPassword(inputIdentifier, pass)
             .then(() => {
-              alert("Account created and logged in!");
+              alert("Login Successful!");
               document.getElementById('login-overlay').style.display = 'none';
             })
-            .catch(err => alert(err.message));
-        });
-    }
-}
-function handleGoogleLogin() {
-    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(() => {
-        document.getElementById('login-overlay').style.display = 'none';
-    }).catch(err => alert(err.message));
-}
-</script>
+            .catch(() => {
+              window.auth.createUserWithEmailAndPassword(inputIdentifier, pass)
+                .then(() => {
+                  alert("Account created and logged in!");
+                  document.getElementById('login-overlay').style.display = 'none';
+                })
+                .catch(err => alert(err.message));
+            });
+        }
+      }
+
+      function handleGoogleLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        window.auth.signInWithPopup(provider)
+          .then((result) => {
+            document.getElementById('login-overlay').style.display = 'none';
+          })
+          .catch((error) => {
+            alert("Google Login Error: " + error.message);
+          });
+      } 
+    </script>
+
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-3xl mx-auto px-4 py-3 space-y-2.5">
@@ -363,48 +324,6 @@ function handleGoogleLogin() {
           <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">✨ Special Experience</span>
           <h3 class="text-base font-extrabold">Village Wedding Darshan & Destination Booking</h3>
           <p class="text-xs text-pink-100 leading-relaxed">Experience authentic rural celebrations or plan your royal destination wedding managed securely by Village Deko experts.</p>
-        </div>
-        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">Destination Wedding Inquiry</h4>
-          <div class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-bold text-slate-600 mb-1">Your Full Name</label>
-              <input type="text" placeholder="Enter your name" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600 mb-1">Phone Number</label>
-                <input type="text" placeholder="Enter mobile number" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600 mb-1">Village Location</label>
-                <select class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-                  <option>Select Region / State</option>
-                  <option>Rajasthan</option>
-                  <option>Gujarat</option>
-                  <option>Maharashtra</option>
-                  <option>Madhya Pradesh</option>
-                  <option>Uttar Pradesh</option>
-                  <option>Punjab</option>
-                  <option>Haryana</option>
-                  <option>Bihar</option>
-                  <option>Karnataka</option>
-                  <option>Kerala</option>
-                </select>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600 mb-1">Guest Count</label>
-                <input type="text" placeholder="e.g. 150-200" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600 mb-1">Wedding Date</label>
-                <input type="text" placeholder="mm/dd/yyyy" class="w-full text-xs border border-slate-200 bg-slate-50 rounded-xl px-3 py-2 outline-none">
-              </div>
-            </div>
-            <button type="button" class="w-full py-2.5 text-xs font-bold text-white bg-rose-600 rounded-xl shadow-sm">Submit Wedding Inquiry</button>
-          </div>
         </div>
       </div>
 
@@ -546,7 +465,7 @@ function handleGoogleLogin() {
               <p id="profileUserEmail" class="text-xs text-slate-600">Please sign in</p>
               <p id="profileUserUid" class="text-[11px] font-mono text-amber-800">Status: Guest Mode</p>
             </div>
-            <button type="button" id="authActionBtn" class="w-full py-2 bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm">Sign In with Google</button>
+            <button type="button" id="authActionBtn" class="w-full py-2 bg-amber-600 text-white font-bold rounded-xl text-xs shadow-sm">Sign In / Login</button>
           </div>
         </div>
       </div>
@@ -588,13 +507,13 @@ function handleGoogleLogin() {
             imageUrl = await uploadToImgBB(fileInput.files[0]);
           }
 
-          await window.addDoc(window.collection(window.db, "posts"), {
+          await db.collection("posts").add({
             author: author,
             location: location,
             text: text,
             imageUrl: imageUrl,
             likes: 0,
-            createdAt: window.serverTimestamp()
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
 
           document.getElementById('chaupalPostForm').reset();
@@ -626,7 +545,7 @@ function handleGoogleLogin() {
             }
           }
 
-          await window.addDoc(window.collection(window.db, "villagesListings"), {
+          await db.collection("villagesListings").add({
             hostName: document.getElementById('hostName').value,
             hostWhatsapp: document.getElementById('hostWhatsapp').value,
             vName: document.getElementById('vName').value,
@@ -637,7 +556,7 @@ function handleGoogleLogin() {
             packagePrice: document.getElementById('packagePrice').value,
             images: imageUrls,
             likes: 0,
-            createdAt: window.serverTimestamp()
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
 
           document.getElementById('listVillageForm').reset();
@@ -658,8 +577,8 @@ function handleGoogleLogin() {
         if (!container) return;
         
         try {
-          const q = window.query(window.collection(window.db, "posts"), window.orderBy("createdAt", "desc"));
-          const querySnapshot = await window.getDocs(q);
+          const q = db.collection("posts").orderBy("createdAt", "desc");
+          const querySnapshot = await q.get();
           
           container.innerHTML = "";
           if (querySnapshot.empty) {
@@ -688,7 +607,7 @@ function handleGoogleLogin() {
                   <button onclick="handleShare('${data.text || 'VillageDeko'}')" class="text-xs text-slate-600 hover:text-blue-500 font-bold">🔗 Share</button>
                 </div>
                 <div class="flex items-center gap-2">
-                  <button onclick="handleEdit('${docSnap.id}', '${data.text || ''}', 'posts')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
+                  <button onclick="handleEdit('${docSnap.id}', '${(data.text || '').replace(/'/g, "\\'")}', 'posts')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
                   <button onclick="handleDelete('${docSnap.id}', 'posts')" class="text-red-600 text-xs px-2 py-1 bg-red-50 rounded font-bold">Delete</button>
                 </div>
               </div>
@@ -706,8 +625,8 @@ function handleGoogleLogin() {
         if (!container) return;
 
         try {
-          const q = window.query(window.collection(window.db, "villagesListings"), window.orderBy("createdAt", "desc"));
-          const querySnapshot = await window.getDocs(q);
+          const q = db.collection("villagesListings").orderBy("createdAt", "desc");
+          const querySnapshot = await q.get();
 
           container.innerHTML = "";
           if (querySnapshot.empty) {
@@ -757,7 +676,7 @@ function handleGoogleLogin() {
                   <button onclick="handleShare('${data.vName || 'VillageDeko'}')" class="text-xs text-slate-600 hover:text-blue-500 font-bold">🔗 Share</button>
                 </div>
                 <div class="flex items-center gap-2">
-                  <button onclick="handleEdit('${docSnap.id}', '${data.vDescription || ''}', 'villagesListings')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
+                  <button onclick="handleEdit('${docSnap.id}', '${(data.vDescription || '').replace(/'/g, "\\'")}', 'villagesListings')" class="text-blue-600 text-xs px-2 py-1 bg-blue-50 rounded font-bold">Edit</button>
                   <button onclick="handleDelete('${docSnap.id}', 'villagesListings')" class="text-red-600 text-xs px-2 py-1 bg-red-50 rounded font-bold">Delete</button>
                 </div>
               </div>
@@ -784,11 +703,11 @@ function handleGoogleLogin() {
 
       // Global Handlers for Like, Share, Edit, Delete
       async function handleLike(postId, collectionName) {
-        const postRef = window.doc(window.db, collectionName, postId);
+        const postRef = db.collection(collectionName).doc(postId);
         try {
-          await window.runTransaction(window.db, async (transaction) => {
-            const postDoc = await window.getDoc(postRef);
-            if (!postDoc.exists()) throw "Post exist nahi karti!";
+          await db.runTransaction(async (transaction) => {
+            const postDoc = await transaction.get(postRef);
+            if (!postDoc.exists) throw "Post exist nahi karti!";
             const newLikes = (postDoc.data().likes || 0) + 1;
             transaction.update(postRef, { likes: newLikes });
           });
@@ -813,7 +732,7 @@ function handleGoogleLogin() {
         if (newDescription !== null && newDescription.trim() !== "") {
           try {
             const fieldName = collectionName === 'posts' ? 'text' : 'vDescription';
-            await window.updateDoc(window.doc(window.db, collectionName, postId), { [fieldName]: newDescription });
+            await db.collection(collectionName).doc(postId).update({ [fieldName]: newDescription });
             alert('Successfully updated!');
             if(collectionName === 'posts') loadChaupalPosts();
             else loadVillagesListings();
@@ -826,7 +745,7 @@ function handleGoogleLogin() {
       async function handleDelete(postId, collectionName) {
         if (confirm("Kya aap sach mein isse delete karna chahte hain?")) {
           try {
-            await window.deleteDoc(window.doc(window.db, collectionName, postId));
+            await db.collection(collectionName).doc(postId).delete();
             alert('Successfully deleted!');
             if(collectionName === 'posts') loadChaupalPosts();
             else loadVillagesListings();
