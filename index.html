@@ -637,13 +637,13 @@ async function loadVillagesListings() {
     let imagesArray = (data.images && data.images.length > 0) ? data.images : ['https://via.placeholder.com/400'];
     
     let imagesHtml = '';
-   imagesArray.forEach((imgUrl, index) => {
-    imagesHtml += `
-        <div class="mySlides-${docSnap.id}" style="display: ${index === 0 ? 'block' : 'none'}; width: 100%;">
-            <img src="${imgUrl}" alt="Village" style="width: 100%; height: 220px; object-fit: cover;" class="rounded-xl">
-        </div>
-    `;
-});
+    imagesArray.forEach((imgUrl, index) => {
+        imagesHtml += `
+            <div class="mySlides-${docSnap.id}" style="display: ${index === 0 ? 'block' : 'none'}; width: 100%; height: 250px; background-color: #000; display: flex; align-items: center; justify-content: center;">
+                <img src="${imgUrl}" alt="Village" style="width: 100%; height: 100%; object-fit: contain;" class="rounded-xl">
+            </div>
+        `;
+    });
 
     const card = document.createElement('div');
     card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
@@ -694,183 +694,6 @@ window.addEventListener('DOMContentLoaded', () => {
     loadChaupalPosts();
     loadVillagesListings();
 });
- <!-- Login / Signup Modal -->
-<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-2xl w-96 shadow-lg relative">
-        <h2 id="authTitle" class="text-2xl font-bold mb-4 text-center">Login to VillageDeko</h2>
-        
-        <div id="authError" class="text-red-500 text-sm mb-2 text-center"></div>
-
-        <!-- Google Login Button -->
-        <button onclick="loginWithGoogle()" class="w-full border border-gray-300 flex items-center justify-center gap-2 p-3 rounded-xl font-bold mb-4 hover:bg-gray-50">
-            <svg class="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.19v3.15C3.17 21.32 7.23 24 12 24z"/>
-                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.19C.43 8.1 0 9.8 0 12s.43 3.9 1.19 5.42l4.09-3.15z"/>
-                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.17 2.68 1.19 6.58l4.09 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-            </svg>
-            Continue with Google
-        </button>
-
-        <div class="flex items-center my-4">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <span class="px-2 text-gray-400 text-sm">OR</span>
-            <div class="flex-grow border-t border-gray-300"></div>
-        </div>
-
-        <input type="email" id="authEmail" placeholder="Email address" class="w-full p-3 border rounded-xl mb-3">
-        <input type="password" id="authPassword" placeholder="Password" class="w-full p-3 border rounded-xl mb-4">
-        
-        <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-orange-500 text-white p-3 rounded-xl font-bold mb-3">Login</button>
-        
-        <p class="text-center text-sm text-gray-600">
-            <span id="authToggleText">Don't have an account?</span> 
-            <button onclick="toggleAuthMode()" class="text-orange-500 font-bold underline ml-1">Sign Up</button>
-        </p>
-    </div>
-</div>
-
-<script>
-let isSignUpMode = false;
-
-function openAuthModal() {
-    document.getElementById('authModal').classList.remove('hidden');
-}
-
-function closeAuthModal() {
-    document.getElementById('authModal').classList.add('hidden');
-}
-
-function toggleAuthMode() {
-    isSignUpMode = !isSignUpMode;
-    document.getElementById('authTitle').innerText = isSignUpMode ? 'Create Account' : 'Login to VillageDeko';
-    document.getElementById('authSubmitBtn').innerText = isSignUpMode ? 'Sign Up' : 'Login';
-    document.getElementById('authToggleText').innerText = isSignUpMode ? 'Already have an account?' : "Don't have an account?";
-}
-
-// Email & Password Authentication
-async function handleAuthSubmit() {
-    const email = document.getElementById('authEmail').value;
-    const password = document.getElementById('authPassword').value;
-    const errorElement = document.getElementById('authError');
-    
-    errorElement.innerText = '';
-
-    try {
-        if (isSignUpMode) {
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
-            alert('Account successfully ban gaya!');
-        } else {
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-            alert('Successfully Login ho gaye!');
-        }
-        closeAuthModal();
-    } catch (error) {
-        errorElement.innerText = error.message;
-    }
-}
-
-// Google Sign-In Function
-async function loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-        await firebase.auth().signInWithPopup(provider);
-        alert('Google se successfully login ho gaye!');
-        closeAuthModal();
-    } catch (error) {
-        document.getElementById('authError').innerText = error.message;
-    }
-}
-
-// Page load hote hi check karein ki user logged-in hai ya nahi
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        // Agar login nahi hai, toh turant modal khol do (jaise Instagram mein hota hai)
-        openAuthModal();
-    } else {
-        // Agar login hai, toh modal band rakho
-        closeAuthModal();
-    }
-});  
-        // 1. Like Functionality
-async function handleLike(postId) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        alert('Pehle login kijiye like karne ke liye!');
-        openAuthModal();
-        return;
-    }
-    
-    const postRef = firebase.firestore().collection('chaupalPosts').doc(postId);
-    try {
-        await firebase.firestore().runTransaction(async (transaction) => {
-            const postDoc = await transaction.get(postRef);
-            if (!postDoc.exists) throw "Post exist nahi karti!";
-            
-            const newLikes = (postDoc.data().likes || 0) + 1;
-            transaction.update(postRef, { likes: newLikes });
-        });
-        alert('Post liked!');
-        location.reload();
-    } catch (error) {
-        console.error("Like error: ", error);
-    }
-}
-
-// 2. Share Functionality
-function handleShare(title) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'VillageDeko',
-            text: `Check out this post: ${title}`,
-            url: window.location.href,
-        }).catch((error) => console.log('Sharing failed', error));
-    } else {
-        navigator.clipboard.writeText(window.location.href);
-        alert('Link copied to clipboard!');
-    }
-}
-
-// 3. Edit Functionality
-async function handleEdit(postId, currentDesc) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        alert('Pehle login kijiye!');
-        return;
-    }
-
-    const newDescription = prompt("Apni post update karein:", currentDesc);
-    if (newDescription !== null && newDescription.trim() !== "") {
-        try {
-            await firebase.firestore().collection('chaupalPosts').doc(postId).update({
-                description: newDescription
-            });
-            alert('Post successfully update ho gayi!');
-            location.reload();
-        } catch (error) {
-            alert('Error updating post: ' + error.message);
-        }
-    }
-}
-
-// 4. Delete Functionality
-async function handleDelete(postId) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-        alert('Pehle login kijiye!');
-        return;
-    }
-
-    if (confirm("Kya aap sach mein is post ko delete karna chahte hain?")) {
-        try {
-            await firebase.firestore().collection('chaupalPosts').doc(postId).delete();
-            alert('Post successfully delete ho gayi!');
-            location.reload();
-        } catch (error) {
-            alert('Error deleting post: ' + error.message);
-        }
-    }
-}
     </script>
 </body>
 </html>
