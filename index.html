@@ -12,7 +12,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
       import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy, runTransaction, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       
       const firebaseConfig = {
@@ -89,11 +89,39 @@
           if(profileEmailEl) profileEmailEl.innerText = "Please sign in to manage bookings";
           if(profileUidEl) profileUidEl.innerText = "Status: Guest Mode";
           if(authActionBtn) {
-            authActionBtn.innerText = "Sign In with Google";
-            authActionBtn.onclick = () => {
-              const provider = new GoogleAuthProvider();
-              signInWithPopup(auth, provider).catch(err => alert(err.message));
-            };
+           authActionBtn.innerText = "Email / Phone se Login Karein";
+authActionBtn.onclick = () => {
+    // Yahan hum ek simple prompt ya chhota input box khol sakte hain, ya apna naya HTML form laga sakte hain
+    const loginTypechahiye = prompt("Login kis se karna hai? 'email' ya 'phone' type karein:");
+    
+    if (loginTypechahiye === 'email') {
+        const email = prompt("Apna Email dalein:");
+        const password = prompt("Apna Password dalein:");
+        if(email && password) {
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(() => {
+                    createUserWithEmailAndPassword(auth, email, password)
+                        .then(() => alert("Account ban gaya aur login ho gaya!"))
+                        .catch(err => alert(err.message));
+                });
+        }
+    } else if (loginTypechahiye === 'phone') {
+        const phone = prompt("Apna Phone Number dalein (+91 ke sath):");
+        if(phone) {
+            // Phone OTP ke liye recaptcha zaroori hai
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
+            signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+                .then((confirmationResult) => {
+                    const otp = prompt("Aapke phone par OTP aaya hoga, yahan dalein:");
+                    if(otp) {
+                        return confirmationResult.confirm(otp);
+                    }
+                })
+                .then(() => alert("Phone Login Successful!"))
+                .catch(err => alert("Error: " + err.message));
+        }
+    }
+};
           }
         }
       });
