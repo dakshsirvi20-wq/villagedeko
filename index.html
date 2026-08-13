@@ -297,17 +297,13 @@ authActionBtn.onclick = () => {
     }
 }
  function handleGoogleLogin() {
-    // Modular SDK ke liye sahi Google provider
-    const provider = new window.GoogleAuthProvider();
-    
-    // window.auth ka use karke pop-up open karega
-    window.signInWithPopup(window.auth, provider)
-      .then((result) => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(() => {
         alert("Google Login Successful!");
         document.getElementById('login-overlay').style.display = 'none';
       })
       .catch((err) => {
-        console.error("Google error:", err);
         alert("Google Login Error: " + err.message);
       });
 }
