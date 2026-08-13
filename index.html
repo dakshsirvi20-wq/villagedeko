@@ -176,7 +176,7 @@ authActionBtn.onclick = () => {
         <div class="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-3xl mx-auto shadow-md">🌾</div>
         <h2 class="text-xl font-black text-slate-900">Welcome to <span class="text-amber-700">Village</span>Deko</h2>
         <p class="text-xs text-slate-500">Asli Gaon aur Sanskriti explore karne ke liye pehle login kijiye.</p>
-  <!-- Full-Screen Login Overlay -->
+<!-- Full-Screen Login Overlay -->
 <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999; display: flex; justify-content: center; align-items: center; font-family: sans-serif;">
   
   <div style="display: flex; flex-direction: column; gap: 14px; align-items: center; width: 90%; max-width: 350px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; background: #fff;">
@@ -187,58 +187,55 @@ authActionBtn.onclick = () => {
     <!-- Single Universal Input -->
     <input type="text" id="userInput" placeholder="Email or Phone Number (+91...)" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
     
-    <!-- Dynamic OTP Input for Email/Phone -->
-    <div id="otp-box" style="width: 100%; display: none;">
-      <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
+    <!-- Dynamic Input Box -->
+    <div id="extra-box" style="width: 100%; display: none;">
+      <input type="text" id="extra-input" placeholder="" style="padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;">
     </div>
 
     <!-- Required for Firebase Phone Auth -->
     <div id="recaptcha-container"></div>
 
     <!-- Action Button -->
-    <button type="button" onclick="handleSmartLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
+    <button type="button" onclick="handleFinalLogin()" style="padding: 12px; width: 100%; background: #0095f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Continue</button>
 
   </div>
 </div>
 
 <script>
-  let loginStage = 1; 
-  let targetEmail = "";
+  let loginStep = 1; 
+  let globalInputVal = "";
 
-  function handleSmartLogin() {
+  function handleFinalLogin() {
     const val = document.getElementById('userInput').value.trim();
     
-    if(!val && loginStage === 1) {
+    if(!val && loginStep === 1) {
       alert("Please enter Email or Phone Number!");
       return;
     }
 
     const isEmail = val.includes('@');
 
-    if (loginStage === 1) {
+    if (loginStep === 1) {
+      globalInputVal = val;
       if (isEmail) {
-        targetEmail = val;
-        // Sending Email Link / Code simulation for passwordless experience
-        sendSignInLinkToEmail(auth, targetEmail, {
-          url: window.location.href,
-          handleCodeInApp: true
-        }).then(() => {
-          window.localStorage.setItem('emailForSignIn', targetEmail);
-          alert("Verification link / OTP sent to your email! Check your inbox.");
-          document.getElementById('userInput').style.display = 'none';
-          document.getElementById('otp-box').style.display = 'block';
-          document.getElementById('instruction-text').innerText = "Enter the code/confirmation from your email";
-          loginStage = 'verify_email';
-        }).catch((error) => {
-          alert("Error sending email: " + error.message);
-        });
-
+        // Email Flow: Ask for Password securely without crashing
+        document.getElementById('userInput').style.display = 'none';
+        const extraInput = document.getElementById('extra-input');
+        extraInput.type = "password";
+        extraInput.placeholder = "Enter your password";
+        document.getElementById('extra-box').style.display = 'block';
+        document.getElementById('instruction-text').innerText = "Enter password for " + val;
+        loginStep = 'email_pass';
       } else {
         // Phone Number OTP Flow
         if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-            'size': 'invisible'
-          });
+          try {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+              'size': 'invisible'
+            });
+          } catch(e) {
+            console.log(e);
+          }
         }
 
         const phoneNumber = val.startsWith('+') ? val : '+91' + val;
@@ -248,21 +245,26 @@ authActionBtn.onclick = () => {
           .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
             document.getElementById('userInput').style.display = 'none';
-            document.getElementById('otp-box').style.display = 'block';
-            document.getElementById('instruction-text').innerText = "Enter the 6-digit OTP sent to " + phoneNumber;
-            loginStage = 'verify_phone';
+            const extraInput = document.getElementById('extra-input');
+            extraInput.type = "text";
+            extraInput.placeholder = "Enter 6-digit OTP";
+            document.getElementById('extra-box').style.display = 'block';
+            document.getElementById('instruction-text').innerText = "Enter OTP sent to " + phoneNumber;
+            loginStep = 'verify_phone';
           })
           .catch((error) => {
-            alert("SMS could not be sent: " + error.message);
+            alert("SMS Error: " + error.message);
             if (window.recaptchaVerifier) {
-              window.recaptchaVerifier.render().then(function(widgetId) {
-                grecaptcha.reset(widgetId);
-              });
+              try {
+                window.recaptchaVerifier.render().then(function(widgetId) {
+                  grecaptcha.reset(widgetId);
+                });
+              } catch(er) {}
             }
           });
       }
-    } else if (loginStage === 'verify_phone') {
-      const otpCode = document.getElementById('otp-input').value.trim();
+    } else if (loginStep === 'verify_phone') {
+      const otpCode = document.getElementById('extra-input').value.trim();
       if(!otpCode) {
         alert("Please enter the OTP!");
         return;
@@ -273,27 +275,25 @@ authActionBtn.onclick = () => {
       }).catch((error) => {
         alert("Invalid OTP: " + error.message);
       });
-    } else if (loginStage === 'verify_email') {
-      const emailCode = document.getElementById('otp-input').value.trim();
-      // Completing sign in with email link/code
-      if (isSignInWithEmailLink(auth, window.location.href)) {
-        let email = window.localStorage.getItem('emailForSignIn');
-        if (!email) {
-          email = targetEmail;
-        }
-        signInWithEmailLink(auth, email, window.location.href)
-          .then((result) => {
-            window.localStorage.removeItem('emailForSignIn');
-            alert("Email Login Successful!");
-            document.getElementById('login-overlay').style.display = 'none';
-          })
-          .catch((error) => {
-            alert("Error logging in with email: " + error.message);
-          });
-      } else {
-        // Fallback for direct token input if configured
-        alert("Please click the secure link sent to your email inbox to complete login.");
+    } else if (loginStep === 'email_pass') {
+      const pass = document.getElementById('extra-input').value.trim();
+      if(!pass) {
+        alert("Please enter your password!");
+        return;
       }
+      signInWithEmailAndPassword(auth, globalInputVal, pass)
+        .then(() => {
+          alert("Login Successful!");
+          document.getElementById('login-overlay').style.display = 'none';
+        })
+        .catch(() => {
+          createUserWithEmailAndPassword(auth, globalInputVal, pass)
+            .then(() => {
+              alert("Account created and logged in!");
+              document.getElementById('login-overlay').style.display = 'none';
+            })
+            .catch(err => alert(err.message));
+        });
     }
   }
 </script>
