@@ -5,7 +5,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebas
 
 const firebaseConfig = {
   apiKey: "AIzaSyD4ABiWBvNQdKXFOO4PcUyjiFBvho55We4",
-  authDomain: "villagedeko.in",
+  authDomain: "bhanaram-13086.firebaseapp.com",
   projectId: "bhanaram-1308b",
   storageBucket: "bhanaram-1308b.firebasestorage.app",
   messagingSenderId: "245762338349",
