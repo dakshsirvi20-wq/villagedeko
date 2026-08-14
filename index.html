@@ -5,104 +5,1287 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#b45309">
   <title>VillageDeko — India ke Gaon</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="text-slate-900 antialiased pb-24">
 
-<!-- LOGIN GATE: app remains hidden until Google authentication succeeds. -->
+<!-- =========================================================
+     LOGIN GATE
+     App remains hidden until Google authentication succeeds.
+========================================================= -->
+
 <section id="loginGate" class="login-gate">
+
   <div class="login-box">
+
     <div class="login-logo">🌾</div>
+
     <p class="login-kicker">WELCOME TO</p>
-    <h1><span>Village</span>Deko</h1>
-    <p class="login-subtitle">India ke asli gaon</p>
-    <div class="login-art">🏡 &nbsp; 📸 &nbsp; 🌿</div>
-    <h2>Gaon explore karo, post karo aur follow karo.</h2>
-    <button id="googleLoginGateBtn" onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button>
+
+    <h1>
+      <span>Village</span>Deko
+    </h1>
+
+    <p class="login-subtitle">
+      India ke asli gaon
+    </p>
+
+    <div class="login-art">
+      🏡 &nbsp; 📸 &nbsp; 🌿
+    </div>
+
+    <h2>
+      Gaon explore karo, post karo aur follow karo.
+    </h2>
+
+    <button
+      id="googleLoginGateBtn"
+      onclick="googleLogin()"
+      class="google-btn"
+    >
+      <span class="google-g">G</span>
+      Continue with Google
+    </button>
+
     <p id="loginError" class="login-error hidden"></p>
-    <p class="login-note">VillageDeko par dekhne, post karne, follow karne aur apni post manage karne ke liye Google se login zaroori hai.</p>
+
+    <p class="login-note">
+      VillageDeko par dekhne, post karne, follow karne aur
+      apni post manage karne ke liye Google se login zaroori hai.
+    </p>
+
   </div>
+
 </section>
 
+
+<!-- =========================================================
+     APP SHELL
+========================================================= -->
+
 <div id="appShell" class="hidden">
-<header class="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-  <div class="max-w-4xl mx-auto px-4 py-3 space-y-3">
-    <div class="flex items-center justify-between gap-3">
-      <button onclick="goHome()" class="flex items-center gap-2 text-left">
-        <div class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-sm">🌾</div>
-        <div><h1 class="text-base font-extrabold tracking-tight"><span class="text-amber-700">Village</span>Deko</h1><span class="text-[10px] font-bold text-slate-500">India ke asli gaon</span></div>
+
+  <!-- =======================================================
+       HEADER
+  ======================================================== -->
+
+  <header class="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+
+    <div class="max-w-4xl mx-auto px-4 py-3 space-y-3">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <button
+          onclick="goHome()"
+          class="flex items-center gap-2 text-left"
+        >
+
+          <div class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-sm">
+            🌾
+          </div>
+
+          <div>
+            <h1 class="text-base font-extrabold tracking-tight">
+              <span class="text-amber-700">Village</span>Deko
+            </h1>
+
+            <span class="text-[10px] font-bold text-slate-500">
+              India ke asli gaon
+            </span>
+          </div>
+
+        </button>
+
+        <button
+          onclick="openDrawer()"
+          class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 text-lg"
+        >
+          👤
+        </button>
+
+      </div>
+
+
+      <!-- SEARCH + STATE FILTER -->
+
+      <div class="flex gap-2">
+
+        <div class="relative flex-1">
+
+          <span class="absolute left-3 top-2.5">
+            🔎
+          </span>
+
+          <input
+            id="globalSearch"
+            oninput="filterExplore(this.value)"
+            placeholder="Search village, state, district, activity..."
+            class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 outline-none"
+          >
+
+        </div>
+
+        <select
+          id="stateSelect"
+          onchange="selectState(this.value)"
+          class="w-32 text-xs bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 font-bold outline-none"
+        >
+          <option value="">All India</option>
+        </select>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       MAIN
+  ======================================================== -->
+
+  <main class="max-w-4xl mx-auto p-4 space-y-5">
+
+    <!-- =====================================================
+         HOME VIEW
+    ====================================================== -->
+
+    <section id="homeView" class="space-y-5">
+
+
+      <!-- HERO -->
+
+      <div class="hero-card rounded-3xl p-5 text-white shadow-lg">
+
+        <p class="text-[10px] uppercase tracking-widest font-black text-amber-100">
+          🇮🇳 Explore India
+        </p>
+
+        <h2 class="text-2xl font-black mt-1">
+          Gaon dekho, follow karo, yaad rakho.
+        </h2>
+
+        <p class="text-xs text-amber-50 mt-2 leading-relaxed">
+          India ke gaon ki Instagram-style live feed.
+          Har post ke saath village, district aur state clearly dikhega.
+        </p>
+
+        <div class="grid grid-cols-3 gap-2 mt-4">
+
+          <div class="stat-chip">
+            <b id="stateCount">36</b>
+            <span>States/UTs</span>
+          </div>
+
+          <div class="stat-chip">
+            <b id="villageCount">0</b>
+            <span>Listed villages</span>
+          </div>
+
+          <div class="stat-chip">
+            <b id="postCount">0</b>
+            <span>Posts</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           VILLAGE LISTING BUTTON
+      ==================================================== -->
+
+      <div class="flex items-center justify-between">
+
+        <div>
+
+          <h3 class="font-black text-sm">
+            📸 Gaon ki Feed
+          </h3>
+
+          <p class="text-[10px] text-slate-500">
+            Logo ke listed gaon ki posts yahan dikhenge.
+          </p>
+
+        </div>
+
+        <button
+          onclick="openModal('listVillageModal')"
+          class="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl"
+        >
+          + List Village
+        </button>
+
+      </div>
+
+
+      <!-- ===================================================
+           HIDDEN STATES GRID
+           Kept for existing app.js compatibility.
+           User ko Home par visible nahi hoga.
+      ==================================================== -->
+
+      <div
+        id="statesGrid"
+        class="hidden"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- ===================================================
+           MAIN INSTAGRAM-STYLE VILLAGE FEED
+      ==================================================== -->
+
+      <div class="section-card">
+
+        <div class="flex items-center justify-between mb-3">
+
+          <div>
+
+            <h3 class="font-black text-sm">
+              🏘️ Village Feed
+            </h3>
+
+            <p class="text-[10px] text-slate-500">
+              Har post par gaon, district aur state clearly dikhega.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openPostModal()"
+            class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl"
+          >
+            + Post
+          </button>
+
+        </div>
+
+        <div
+          id="homePostsFeed"
+          class="space-y-4"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATE VIEW
+         Kept for existing app.js compatibility.
+    ====================================================== -->
+
+    <section
+      id="stateView"
+      class="hidden space-y-5"
+    >
+
+      <button
+        onclick="goHome()"
+        class="text-xs font-bold text-amber-700"
+      >
+        ← All India
       </button>
-      <button onclick="openDrawer()" class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 text-lg">👤</button>
-    </div>
-    <div class="flex gap-2">
-      <div class="relative flex-1"><span class="absolute left-3 top-2.5">🔎</span><input id="globalSearch" oninput="filterExplore(this.value)" placeholder="Search village, state, district, activity..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 outline-none"></div>
-      <select id="stateSelect" onchange="selectState(this.value)" class="w-32 text-xs bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 font-bold outline-none"><option value="">All India</option></select>
-    </div>
-  </div>
-</header>
 
-<main class="max-w-4xl mx-auto p-4 space-y-5">
-  <section id="homeView" class="space-y-5">
-    <div class="hero-card rounded-3xl p-5 text-white shadow-lg">
-      <p class="text-[10px] uppercase tracking-widest font-black text-amber-100">🇮🇳 Explore India</p>
-      <h2 class="text-2xl font-black mt-1">Gaon dekho, follow karo, yaad rakho.</h2>
-      <p class="text-xs text-amber-50 mt-2 leading-relaxed">State → district → village. Har village ka apna Instagram-style feed, photos, activities, stays aur packages.</p>
-      <div class="grid grid-cols-3 gap-2 mt-4"><div class="stat-chip"><b id="stateCount">36</b><span>States/UTs</span></div><div class="stat-chip"><b id="villageCount">0</b><span>Listed villages</span></div><div class="stat-chip"><b id="postCount">0</b><span>Posts</span></div></div>
-    </div>
+      <div class="state-hero section-card">
 
-    <div class="flex items-center justify-between"><div><h3 class="font-black text-sm">🇮🇳 India ke States</h3><p class="text-[10px] text-slate-500">Kisi state par click karo.</p></div><button onclick="openModal('listVillageModal')" class="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl">+ List Village</button></div>
-    <div id="statesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+        <div>
 
-    <div class="section-card">
-      <div class="flex items-center justify-between mb-3"><div><h3 class="font-black text-sm">📸 Village Feed</h3><p class="text-[10px] text-slate-500">Instagram-style feed — har post par village, district aur state clearly dikhega.</p></div><button onclick="openPostModal()" class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl">+ Post</button></div>
-      <div id="homePostsFeed" class="space-y-4"></div>
-    </div>
-  </section>
+          <p class="text-[10px] uppercase tracking-widest font-black text-amber-700">
+            State Explorer
+          </p>
 
-  <section id="stateView" class="hidden space-y-5">
-    <button onclick="goHome()" class="text-xs font-bold text-amber-700">← All India</button>
-    <div class="state-hero section-card"><div><p class="text-[10px] uppercase tracking-widest font-black text-amber-700">State Explorer</p><h2 id="stateTitle" class="text-2xl font-black">State</h2><p id="stateSubtitle" class="text-xs text-slate-500 mt-1"></p></div><button onclick="openPostModal()" class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl">+ Post</button></div>
-    <div class="section-card"><div class="flex justify-between items-center mb-3"><h3 class="font-black text-sm">Villages in this state</h3><span id="stateVillageCount" class="pill"></span></div><div id="stateVillages" class="grid gap-4 sm:grid-cols-2"></div></div>
-    <div class="section-card"><div class="flex items-center justify-between mb-3"><h3 class="font-black text-sm">📸 State Feed</h3><span class="text-[10px] text-slate-500">Village posts</span></div><div id="statePostsFeed" class="space-y-4"></div></div>
-  </section>
+          <h2
+            id="stateTitle"
+            class="text-2xl font-black"
+          >
+            State
+          </h2>
 
-  <section id="villageView" class="hidden space-y-4">
-    <button onclick="goBackFromVillage()" class="text-xs font-bold text-amber-700">← Back</button>
-    <div id="villageHeader"></div>
-    <div class="section-card"><div class="flex gap-2 border-b border-slate-100 pb-2 overflow-x-auto"><button class="vtab active" onclick="showVillageSection('feed',this)">📸 Feed</button><button class="vtab" onclick="showVillageSection('details',this)">🏡 Details</button><button class="vtab" onclick="showVillageSection('activities',this)">🎯 Activities</button><button class="vtab" onclick="showVillageSection('packages',this)">📦 Packages</button></div><div id="villageSectionFeed" class="pt-4"></div><div id="villageSectionDetails" class="hidden pt-4"></div><div id="villageSectionActivities" class="hidden pt-4"></div><div id="villageSectionPackages" class="hidden pt-4"></div></div>
-  </section>
+          <p
+            id="stateSubtitle"
+            class="text-xs text-slate-500 mt-1"
+          ></p>
 
-  <section id="weddingView" class="hidden space-y-4">
-    <div class="section-card wedding-banner"><p class="text-[10px] font-black uppercase tracking-widest">✨ Village Weddings</p><h2 class="text-xl font-black">Shaadi, venue aur rural experience</h2><p class="text-xs mt-1 text-pink-50">Village wedding listings aur enquiries ek jagah.</p></div>
-    <div class="section-card"><h3 class="font-black text-sm mb-3">Destination Wedding Inquiry</h3><form id="weddingForm" onsubmit="submitWedding(event)" class="grid gap-2"><input id="wName" required placeholder="Your name" class="input"><input id="wPhone" required placeholder="Phone" class="input"><select id="wState" class="input"><option value="">Select state</option></select><input id="wGuests" placeholder="Guest count" class="input"><input id="wDate" type="date" class="input"><textarea id="wMessage" rows="3" placeholder="What do you need?" class="input"></textarea><button class="primary">Submit Inquiry</button></form></div>
-  </section>
+        </div>
 
-  <section id="chaupalView" class="hidden space-y-4">
-    <div class="section-card bg-amber-50 border-amber-200"><div class="flex justify-between gap-3 items-center"><div><h3 class="font-black text-sm">🔥 Chaupal</h3><p class="text-[10px] text-slate-500">Gaon ki baat, announcements aur stories.</p></div><button onclick="openPostModal()" class="primary shrink-0">+ Share</button></div></div>
-    <div id="chaupalFeedContainer" class="space-y-4"></div>
-  </section>
-</main>
+        <button
+          onclick="openPostModal()"
+          class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl"
+        >
+          + Post
+        </button>
 
-<nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 py-2.5 px-5 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
-  <button onclick="goHome()" class="nav-btn">🏡<span>Home</span></button><button onclick="openWedding()" class="nav-btn">💍<span>Wedding</span></button><button onclick="openChaupal()" class="nav-btn">🔥<span>Chaupal</span></button><button onclick="openPostModal()" class="nav-post">＋</button><button onclick="openDrawer()" class="nav-btn">👤<span>Profile</span></button>
-</nav>
+      </div>
+
+
+      <div class="section-card">
+
+        <div class="flex justify-between items-center mb-3">
+
+          <h3 class="font-black text-sm">
+            Villages in this state
+          </h3>
+
+          <span
+            id="stateVillageCount"
+            class="pill"
+          ></span>
+
+        </div>
+
+        <div
+          id="stateVillages"
+          class="grid gap-4 sm:grid-cols-2"
+        ></div>
+
+      </div>
+
+
+      <div class="section-card">
+
+        <div class="flex items-center justify-between mb-3">
+
+          <h3 class="font-black text-sm">
+            📸 State Feed
+          </h3>
+
+          <span class="text-[10px] text-slate-500">
+            Village posts
+          </span>
+
+        </div>
+
+        <div
+          id="statePostsFeed"
+          class="space-y-4"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         VILLAGE PROFILE / FEED
+    ====================================================== -->
+
+    <section
+      id="villageView"
+      class="hidden space-y-4"
+    >
+
+      <button
+        onclick="goBackFromVillage()"
+        class="text-xs font-bold text-amber-700"
+      >
+        ← Back
+      </button>
+
+      <div id="villageHeader"></div>
+
+      <div class="section-card">
+
+        <div class="flex gap-2 border-b border-slate-100 pb-2 overflow-x-auto">
+
+          <button
+            class="vtab active"
+            onclick="showVillageSection('feed',this)"
+          >
+            📸 Feed
+          </button>
+
+          <button
+            class="vtab"
+            onclick="showVillageSection('details',this)"
+          >
+            🏡 Details
+          </button>
+
+          <button
+            class="vtab"
+            onclick="showVillageSection('activities',this)"
+          >
+            🎯 Activities
+          </button>
+
+          <button
+            class="vtab"
+            onclick="showVillageSection('packages',this)"
+          >
+            📦 Packages
+          </button>
+
+        </div>
+
+        <div
+          id="villageSectionFeed"
+          class="pt-4"
+        ></div>
+
+        <div
+          id="villageSectionDetails"
+          class="hidden pt-4"
+        ></div>
+
+        <div
+          id="villageSectionActivities"
+          class="hidden pt-4"
+        ></div>
+
+        <div
+          id="villageSectionPackages"
+          class="hidden pt-4"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         WEDDING
+    ====================================================== -->
+
+    <section
+      id="weddingView"
+      class="hidden space-y-4"
+    >
+
+      <div class="section-card wedding-banner">
+
+        <p class="text-[10px] font-black uppercase tracking-widest">
+          ✨ Village Weddings
+        </p>
+
+        <h2 class="text-xl font-black">
+          Shaadi, venue aur rural experience
+        </h2>
+
+        <p class="text-xs mt-1 text-pink-50">
+          Village wedding listings aur enquiries ek jagah.
+        </p>
+
+      </div>
+
+
+      <div class="section-card">
+
+        <h3 class="font-black text-sm mb-3">
+          Destination Wedding Inquiry
+        </h3>
+
+        <form
+          id="weddingForm"
+          onsubmit="submitWedding(event)"
+          class="grid gap-2"
+        >
+
+          <input
+            id="wName"
+            required
+            placeholder="Your name"
+            class="input"
+          >
+
+          <input
+            id="wPhone"
+            required
+            placeholder="Phone"
+            class="input"
+          >
+
+          <select
+            id="wState"
+            class="input"
+          >
+            <option value="">
+              Select state
+            </option>
+          </select>
+
+          <input
+            id="wGuests"
+            placeholder="Guest count"
+            class="input"
+          >
+
+          <input
+            id="wDate"
+            type="date"
+            class="input"
+          >
+
+          <textarea
+            id="wMessage"
+            rows="3"
+            placeholder="What do you need?"
+            class="input"
+          ></textarea>
+
+          <button class="primary">
+            Submit Inquiry
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHAUPAL
+    ====================================================== -->
+
+    <section
+      id="chaupalView"
+      class="hidden space-y-4"
+    >
+
+      <div class="section-card bg-amber-50 border-amber-200">
+
+        <div class="flex justify-between gap-3 items-center">
+
+          <div>
+
+            <h3 class="font-black text-sm">
+              🔥 Chaupal
+            </h3>
+
+            <p class="text-[10px] text-slate-500">
+              Gaon ki baat, announcements aur stories.
+            </p>
+
+          </div>
+
+          <button
+            onclick="openPostModal()"
+            class="primary shrink-0"
+          >
+            + Share
+          </button>
+
+        </div>
+
+      </div>
+
+      <div
+        id="chaupalFeedContainer"
+        class="space-y-4"
+      ></div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       BOTTOM NAVIGATION
+  ======================================================== -->
+
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 py-2.5 px-5 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
+
+    <button
+      onclick="goHome()"
+      class="nav-btn"
+    >
+      🏡
+      <span>Home</span>
+    </button>
+
+    <button
+      onclick="openWedding()"
+      class="nav-btn"
+    >
+      💍
+      <span>Wedding</span>
+    </button>
+
+    <button
+      onclick="openChaupal()"
+      class="nav-btn"
+    >
+      🔥
+      <span>Chaupal</span>
+    </button>
+
+    <button
+      onclick="openPostModal()"
+      class="nav-post"
+    >
+      ＋
+    </button>
+
+    <button
+      onclick="openDrawer()"
+      class="nav-btn"
+    >
+      👤
+      <span>Profile</span>
+    </button>
+
+  </nav>
+
 </div>
 
-<div id="drawer" class="drawer"><div class="drawer-panel"><div class="flex items-center justify-between p-4 border-b"><div><p class="text-[10px] font-black uppercase text-amber-700">My VillageDeko</p><h3 id="drawerName" class="font-black">Guest</h3><p id="drawerEmail" class="text-[10px] text-slate-500"></p></div><button onclick="closeDrawer()" class="text-2xl text-slate-400">&times;</button></div><div class="p-4 space-y-2 overflow-y-auto" style="max-height:calc(100vh - 100px)"><button onclick="openPostModal();closeDrawer()" class="drawer-item">📸 My Post <span>＋</span></button><button onclick="showMyListings();closeDrawer()" class="drawer-item">🏘️ My Village Listings <span>›</span></button><button onclick="showMyHosts();closeDrawer()" class="drawer-item">🏡 My Host Listings <span>›</span></button><button onclick="showMyWeddings();closeDrawer()" class="drawer-item">💍 My Wedding Listings <span>›</span></button><button onclick="openChaupal();closeDrawer()" class="drawer-item">🔥 My Chaupal <span>›</span></button><button onclick="openSettings();closeDrawer()" class="drawer-item">⚙️ Settings <span>›</span></button><button onclick="openPrivacy();closeDrawer()" class="drawer-item">🔐 Privacy <span>›</span></button><button onclick="logout()" class="drawer-item text-red-600">🚪 Logout <span>›</span></button></div></div></div>
 
-<div id="loginModal" class="modal"><div class="login-box"><button onclick="closeModal('loginModal')" class="modal-x">&times;</button><div class="login-logo">🌾</div><p class="login-kicker">WELCOME TO</p><h2><span class="text-amber-700">Village</span>Deko</h2><p class="text-sm text-slate-500 mt-2">Continue with Google karke app use karein.</p><button onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button><p id="loginModalError" class="login-error hidden"></p></div></div>
+<!-- =========================================================
+     DRAWER
+========================================================= -->
 
-<div id="addStoryModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">✨ Create Village Post</h3><button onclick="closeModal('addStoryModal')" class="modal-x">&times;</button></div><form id="chaupalPostForm" onsubmit="handleImgBBPhotoPost(event)" class="space-y-3"><input id="storyAuthor" required placeholder="Your name" class="input"><select id="storyVillage" required class="input"><option value="">Select village</option></select><input id="storyLocation" placeholder="Village / Location" class="input"><input type="file" id="storyImageFile" accept="image/*" class="input"><textarea id="storyText" rows="4" required placeholder="Caption / story" class="input"></textarea><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('addStoryModal')" class="secondary">Cancel</button><button id="submitBtn" class="primary">Publish Post</button></div></form></div></div>
+<div id="drawer" class="drawer">
 
-<div id="listVillageModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🏘️ List Your Village, Stay & Gallery</h3><button onclick="closeModal('listVillageModal')" class="modal-x">&times;</button></div><form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3 text-xs"><input type="file" id="villageGalleryFiles" accept="image/*" multiple class="input"><div class="grid sm:grid-cols-3 gap-2"><input id="hostName" required placeholder="Host name" class="input"><input id="hostWhatsapp" required placeholder="Host WhatsApp" class="input"><input id="vName" required placeholder="Village name" class="input"></div><div class="grid sm:grid-cols-2 gap-2"><input id="vDistrict" required placeholder="District" class="input"><select id="vState" required class="input"></select></div><textarea id="vDescription" required rows="4" placeholder="Village culture, story, how to reach..." class="input"></textarea><div class="section-mini"><div class="flex justify-between items-center"><b>🎯 Activities</b><button type="button" onclick="addActivityRow()" class="add-btn">+ Add Activity</button></div><div id="activitiesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><div class="flex justify-between items-center"><b>📦 Packages</b><button type="button" onclick="addPackageRow()" class="add-btn">+ Add Package</button></div><div id="packagesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><b>🏦 Bank Details <span class="text-slate-400">(Optional)</span></b><input id="bankName" placeholder="Bank name" class="input mt-2"><input id="accountName" placeholder="Account holder" class="input mt-2"><input id="accountNumber" placeholder="Account number" class="input mt-2"><input id="ifsc" placeholder="IFSC" class="input mt-2"></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('listVillageModal')" class="secondary">Cancel</button><button id="listSubmitBtn" class="primary">Publish Village Live</button></div></form></div></div>
+  <div class="drawer-panel">
 
-<div id="settingsModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">⚙️ Settings</h3><button onclick="closeModal('settingsModal')" class="modal-x">&times;</button></div><label class="setting-row"><span>Show my email in profile</span><input id="settingEmail" type="checkbox" onchange="saveSetting('showEmail',this.checked)"></label><label class="setting-row"><span>Notifications</span><input id="settingNotifications" type="checkbox" checked onchange="saveSetting('notifications',this.checked)"></label></div></div>
-<div id="privacyModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🔐 Privacy</h3><button onclick="closeModal('privacyModal')" class="modal-x">&times;</button></div><div class="info-box"><b>Post ownership</b><p>Sirf jis Google account ne post/listing banayi hai, wahi usko edit ya delete kar sakta hai.</p></div><div class="info-box"><b>Bank details</b><p>Bank details optional hain aur public village feed mein show nahi kiye jayenge.</p></div></div></div>
-<div id="genericModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 id="genericTitle" class="font-black">My Activity</h3><button onclick="closeModal('genericModal')" class="modal-x">&times;</button></div><div id="genericBody"></div></div></div>
-<div id="imageViewerModal" class="image-viewer" onclick="closeImageViewer(event)"><button class="image-viewer-close" onclick="closeImageViewer(event)">&times;</button><img id="imageViewerImg" src="" alt="Full size village photo" onclick="event.stopPropagation()"></div>
+    <div class="flex items-center justify-between p-4 border-b">
 
-<script type="module" src="app.js"></script>
+      <div>
+
+        <p class="text-[10px] font-black uppercase text-amber-700">
+          My VillageDeko
+        </p>
+
+        <h3
+          id="drawerName"
+          class="font-black"
+        >
+          Guest
+        </h3>
+
+        <p
+          id="drawerEmail"
+          class="text-[10px] text-slate-500"
+        ></p>
+
+      </div>
+
+      <button
+        onclick="closeDrawer()"
+        class="text-2xl text-slate-400"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <div
+      class="p-4 space-y-2 overflow-y-auto"
+      style="max-height:calc(100vh - 100px)"
+    >
+
+      <button
+        onclick="openPostModal();closeDrawer()"
+        class="drawer-item"
+      >
+        📸 My Post
+        <span>＋</span>
+      </button>
+
+      <button
+        onclick="showMyListings();closeDrawer()"
+        class="drawer-item"
+      >
+        🏘️ My Village Listings
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="showMyHosts();closeDrawer()"
+        class="drawer-item"
+      >
+        🏡 My Host Listings
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="showMyWeddings();closeDrawer()"
+        class="drawer-item"
+      >
+        💍 My Wedding Listings
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="openChaupal();closeDrawer()"
+        class="drawer-item"
+      >
+        🔥 My Chaupal
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="openSettings();closeDrawer()"
+        class="drawer-item"
+      >
+        ⚙️ Settings
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="openPrivacy();closeDrawer()"
+        class="drawer-item"
+      >
+        🔐 Privacy
+        <span>›</span>
+      </button>
+
+      <button
+        onclick="logout()"
+        class="drawer-item text-red-600"
+      >
+        🚪 Logout
+        <span>›</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGIN MODAL
+========================================================= -->
+
+<div id="loginModal" class="modal">
+
+  <div class="login-box">
+
+    <button
+      onclick="closeModal('loginModal')"
+      class="modal-x"
+    >
+      &times;
+    </button>
+
+    <div class="login-logo">
+      🌾
+    </div>
+
+    <p class="login-kicker">
+      WELCOME TO
+    </p>
+
+    <h2>
+      <span class="text-amber-700">Village</span>Deko
+    </h2>
+
+    <p class="text-sm text-slate-500 mt-2">
+      Continue with Google karke app use karein.
+    </p>
+
+    <button
+      onclick="googleLogin()"
+      class="google-btn"
+    >
+      <span class="google-g">G</span>
+      Continue with Google
+    </button>
+
+    <p
+      id="loginModalError"
+      class="login-error hidden"
+    ></p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     CREATE POST MODAL
+========================================================= -->
+
+<div id="addStoryModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <h3 class="font-black">
+        ✨ Create Village Post
+      </h3>
+
+      <button
+        onclick="closeModal('addStoryModal')"
+        class="modal-x"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <form
+      id="chaupalPostForm"
+      onsubmit="handleImgBBPhotoPost(event)"
+      class="space-y-3"
+    >
+
+      <input
+        id="storyAuthor"
+        required
+        placeholder="Your name"
+        class="input"
+      >
+
+      <select
+        id="storyVillage"
+        required
+        class="input"
+      >
+        <option value="">
+          Select village
+        </option>
+      </select>
+
+      <input
+        id="storyLocation"
+        placeholder="Village / Location"
+        class="input"
+      >
+
+      <input
+        type="file"
+        id="storyImageFile"
+        accept="image/*"
+        class="input"
+      >
+
+      <textarea
+        id="storyText"
+        rows="4"
+        required
+        placeholder="Caption / story"
+        class="input"
+      ></textarea>
+
+      <div class="flex justify-end gap-2">
+
+        <button
+          type="button"
+          onclick="closeModal('addStoryModal')"
+          class="secondary"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="submitBtn"
+          class="primary"
+        >
+          Publish Post
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     LIST VILLAGE MODAL
+========================================================= -->
+
+<div id="listVillageModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <h3 class="font-black">
+        🏘️ List Your Village, Stay & Gallery
+      </h3>
+
+      <button
+        onclick="closeModal('listVillageModal')"
+        class="modal-x"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <form
+      id="listVillageForm"
+      onsubmit="handleVillageListing(event)"
+      class="space-y-3 text-xs"
+    >
+
+      <input
+        type="file"
+        id="villageGalleryFiles"
+        accept="image/*"
+        multiple
+        class="input"
+      >
+
+
+      <div class="grid sm:grid-cols-3 gap-2">
+
+        <input
+          id="hostName"
+          required
+          placeholder="Host name"
+          class="input"
+        >
+
+        <input
+          id="hostWhatsapp"
+          required
+          placeholder="Host WhatsApp"
+          class="input"
+        >
+
+        <input
+          id="vName"
+          required
+          placeholder="Village name"
+          class="input"
+        >
+
+      </div>
+
+
+      <div class="grid sm:grid-cols-2 gap-2">
+
+        <input
+          id="vDistrict"
+          required
+          placeholder="District"
+          class="input"
+        >
+
+        <select
+          id="vState"
+          required
+          class="input"
+        ></select>
+
+      </div>
+
+
+      <textarea
+        id="vDescription"
+        required
+        rows="4"
+        placeholder="Village culture, story, how to reach..."
+        class="input"
+      ></textarea>
+
+
+      <div class="section-mini">
+
+        <div class="flex justify-between items-center">
+
+          <b>
+            🎯 Activities
+          </b>
+
+          <button
+            type="button"
+            onclick="addActivityRow()"
+            class="add-btn"
+          >
+            + Add Activity
+          </button>
+
+        </div>
+
+        <div
+          id="activitiesRows"
+          class="space-y-2 mt-2"
+        ></div>
+
+      </div>
+
+
+      <div class="section-mini">
+
+        <div class="flex justify-between items-center">
+
+          <b>
+            📦 Packages
+          </b>
+
+          <button
+            type="button"
+            onclick="addPackageRow()"
+            class="add-btn"
+          >
+            + Add Package
+          </button>
+
+        </div>
+
+        <div
+          id="packagesRows"
+          class="space-y-2 mt-2"
+        ></div>
+
+      </div>
+
+
+      <div class="section-mini">
+
+        <b>
+          🏦 Bank Details
+          <span class="text-slate-400">
+            (Optional)
+          </span>
+        </b>
+
+        <input
+          id="bankName"
+          placeholder="Bank name"
+          class="input mt-2"
+        >
+
+        <input
+          id="accountName"
+          placeholder="Account holder"
+          class="input mt-2"
+        >
+
+        <input
+          id="accountNumber"
+          placeholder="Account number"
+          class="input mt-2"
+        >
+
+        <input
+          id="ifsc"
+          placeholder="IFSC"
+          class="input mt-2"
+        >
+
+      </div>
+
+
+      <div class="flex justify-end gap-2">
+
+        <button
+          type="button"
+          onclick="closeModal('listVillageModal')"
+          class="secondary"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="listSubmitBtn"
+          class="primary"
+        >
+          Publish Village Live
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     SETTINGS
+========================================================= -->
+
+<div id="settingsModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <h3 class="font-black">
+        ⚙️ Settings
+      </h3>
+
+      <button
+        onclick="closeModal('settingsModal')"
+        class="modal-x"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <label class="setting-row">
+
+      <span>
+        Show my email in profile
+      </span>
+
+      <input
+        id="settingEmail"
+        type="checkbox"
+        onchange="saveSetting('showEmail',this.checked)"
+      >
+
+    </label>
+
+
+    <label class="setting-row">
+
+      <span>
+        Notifications
+      </span>
+
+      <input
+        id="settingNotifications"
+        type="checkbox"
+        checked
+        onchange="saveSetting('notifications',this.checked)"
+      >
+
+    </label>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PRIVACY
+========================================================= -->
+
+<div id="privacyModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <h3 class="font-black">
+        🔐 Privacy
+      </h3>
+
+      <button
+        onclick="closeModal('privacyModal')"
+        class="modal-x"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <b>
+        Post ownership
+      </b>
+
+      <p>
+        Sirf jis Google account ne post/listing banayi hai,
+        wahi usko edit ya delete kar sakta hai.
+      </p>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <b>
+        Bank details
+      </b>
+
+      <p>
+        Bank details optional hain aur public village feed
+        mein show nahi kiye jayenge.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     GENERIC MODAL
+========================================================= -->
+
+<div id="genericModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <h3
+        id="genericTitle"
+        class="font-black"
+      >
+        My Activity
+      </h3>
+
+      <button
+        onclick="closeModal('genericModal')"
+        class="modal-x"
+      >
+        &times;
+      </button>
+
+    </div>
+
+    <div id="genericBody"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     IMAGE VIEWER
+========================================================= -->
+
+<div
+  id="imageViewerModal"
+  class="image-viewer"
+  onclick="closeImageViewer(event)"
+>
+
+  <button
+    class="image-viewer-close"
+    onclick="closeImageViewer(event)"
+  >
+    &times;
+  </button>
+
+  <img
+    id="imageViewerImg"
+    src=""
+    alt="Full size village photo"
+    onclick="event.stopPropagation()"
+  >
+
+</div>
+
+
+<!-- =========================================================
+     APP JS
+========================================================= -->
+
+<script
+  type="module"
+  src="app.js"
+></script>
+
 </body>
 </html>
