@@ -658,14 +658,10 @@ async function googleLogin() {
       new GoogleAuthProvider();
 
 
-   const provider =
-    new GoogleAuthProvider();
-
 await signInWithPopup(
     auth,
     provider
 );
-
 
 
 
