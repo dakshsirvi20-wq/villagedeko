@@ -658,15 +658,15 @@ async function googleLogin() {
       new GoogleAuthProvider();
 
 
-    provider.setCustomParameters({
-      prompt: "select_account"
-    });
+   const provider =
+    new GoogleAuthProvider();
+
+await signInWithPopup(
+    auth,
+    provider
+);
 
 
-    await signInWithPopup(
-      auth,
-      provider
-    );
 
 
     location.replace(
