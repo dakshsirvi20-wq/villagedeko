@@ -97,7 +97,6 @@ function renderVillageList(list,container){
         </div>
       </button>
       <button onclick="toggleFollow('${esc(v.id)}',event)" class="follow-btn ${following?'following':''} shrink-0">${following?'✓ Following':'＋ Follow'}</button>
-      ${v.ownerUid===uid()?`<button onclick="handleDeleteVillage('${esc(v.id)}',event)" class="owner-delete shrink-0">Delete</button>`:""}
     </div>`;
   }).join("");
 }
@@ -113,7 +112,7 @@ function findVillageForPost(p){
 
 function postCard(p){
   const v=findVillageForPost(p);
-  const mine=currentUser?.uid===p.ownerUid;
+  const mine=!p.isGalleryPhoto && currentUser?.uid===p.ownerUid;
   const villageName=v?.vName || p.villageName || p.location || "Village";
   const district=v?.vDistrict || p.vDistrict || "";
   const state=v?.vState || p.vState || "";
@@ -126,10 +125,9 @@ function postCard(p){
       <button onclick="handleShare('${esc(villageName)}',event)" class="ml-auto icon-btn">↗</button>
     </div>
     ${p.imageUrl?`<img src="${esc(p.imageUrl)}" class="post-photo" onclick="openImageViewer(this.src)" loading="lazy">`:``}
-    <div class="px-4 pt-3 pb-2"><p class="text-sm leading-relaxed">${esc(p.text)}</p></div>
+    ${p.text?`<div class="px-4 pt-3 pb-2"><p class="text-sm leading-relaxed">${esc(p.text)}</p></div>`:``}
     <div class="post-actions">
-      <button onclick="toggleLike('${p.id}',event)">❤️ Like</button>
-      <button onclick="openComments('${p.id}')">💬 Comment</button>
+      ${p.isGalleryPhoto?``:`<><button onclick="toggleLike('${p.id}',event)">❤️ Like</button><button onclick="openComments('${p.id}')">💬 Comment</button></>`}
       <button onclick="handleShare('${esc(villageName)}',event)">↗ Share</button>
       ${mine?`<button onclick="handleEdit('${p.id}',event)" class="owner-edit">Edit</button><button onclick="handleDelete('${p.id}',event)" class="owner-delete">Delete</button>`:``}
     </div>
@@ -141,73 +139,10 @@ function renderPosts(posts,container){
   container.innerHTML=posts.length?posts.map(postCard).join(""):`<div class="empty">Abhi koi post nahi hai. Pehli village photo aap post kar sakte ho.</div>`;
 }
 
-async function galleryLikeCount(villageId,index){
-  const snap=await getDocs(collection(db,"villagesListings",villageId,"galleryLikes",String(index),"users"));
-  return snap.size;
-}
-
-async function toggleGalleryLike(villageId,index,event){
-  event?.stopPropagation();
-  if(!requireLogin())return;
-  const ref=doc(db,"villagesListings",villageId,"galleryLikes",String(index),"users",uid());
-  const snap=await getDoc(ref);
-  if(snap.exists()) await deleteDoc(ref);
-  else await setDoc(ref,{uid:uid(),createdAt:serverTimestamp()});
-  await loadVillagePosts();
-}
-
-async function openGalleryComments(villageId,index){
-  if(!requireLogin())return;
-  const snap=await getDocs(query(collection(db,"villagesListings",villageId,"galleryComments",String(index),"items"),orderBy("createdAt","desc")));
-  $("genericTitle").textContent="💬 Comments";
-  $("genericBody").innerHTML=`<div class="space-y-2">${snap.docs.map(d=>{const x=d.data();return `<div class="info-box"><b>${esc(x.author||"User")}</b><p>${esc(x.text||"")}</p></div>`}).join("")||`<p class="empty">No comments yet.</p>`}</div><form onsubmit="addGalleryComment(event,'${villageId}',${index})" class="flex gap-2 mt-3"><input id="galleryCommentText" required class="input flex-1" placeholder="Write a comment..."><button class="primary">Post</button></form>`;
-  openModal("genericModal");
-}
-
-async function addGalleryComment(e,villageId,index){
-  e.preventDefault();
-  if(!requireLogin())return;
-  const input=$("galleryCommentText");
-  const text=input?.value.trim();
-  if(!text)return;
-  await addDoc(collection(db,"villagesListings",villageId,"galleryComments",String(index),"items"),{
-    uid:uid(),author:currentUser.displayName||"User",text,createdAt:serverTimestamp()
-  });
-  closeModal("genericModal");
-  await loadVillagePosts();
-}
-
-async function renderVillageGallery(v,c){
-  const gallery=v.images||[];
-  if(!gallery.length)return "";
-  const cards=await Promise.all(gallery.map(async(img,index)=>{
-    const likes=await galleryLikeCount(v.id,index);
-    const mineRef=doc(db,"villagesListings",v.id,"galleryLikes",String(index),"users",uid()||"guest");
-    const mine=uid()? (await getDoc(mineRef)).exists() : false;
-    return `<article class="post-card">
-      <div class="post-top">
-        <div class="mini-avatar">🌾</div>
-        <div class="min-w-0"><b>${esc(v.vName)}</b><small>🏘️ ${esc(v.vName)} · 📍 ${esc(v.vDistrict)}, ${esc(v.vState)}</small></div>
-      </div>
-      <img src="${esc(img)}" class="post-photo" onclick="openImageViewer(this.src)" loading="lazy">
-      <div class="post-actions">
-        <button onclick="toggleGalleryLike('${esc(v.id)}',${index},event)">❤️ ${mine?"Unlike":"Like"}${likes?` ${likes}`:""}</button>
-        <button onclick="openGalleryComments('${esc(v.id)}',${index})">💬 Comment</button>
-        <button onclick="handleShare('${esc(v.vName)}',event)">↗ Share</button>
-      </div>
-    </article>`;
-  }));
-  return cards.join("");
-}
-
-async function loadVillagePosts(){
-  const c=$("villageSectionFeed");
-  try{
-    const snap=await getDocs(query(collection(db,"posts"),where("villageId","==",currentVillage.id)));
-    const posts=snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.postType!=="chaupal").sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-    const galleryHtml=await renderVillageGallery(currentVillage,c);
-    c.innerHTML=galleryHtml + (posts.length?posts.map(postCard).join(""):`${galleryHtml?"":"<div class='empty'>Abhi koi post nahi hai.</div>"}`);
-  }catch(e){console.error(e);c.innerHTML=`<div class="empty">Feed load nahi ho paaya.</div>`;}
+async function loadHome(){
+  renderVillageCards(villages,$("homeVillagesList"));
+  $("villageCount").textContent=villages.length;
+  $("postCount").textContent=allPosts.length;
 }
 
 function filterExplore(term){
@@ -272,11 +207,41 @@ function renderVillageHeader(){
 
 async function loadVillagePosts(){
   const c=$("villageSectionFeed");
+  if(!c || !currentVillage)return;
   try{
     const snap=await getDocs(query(collection(db,"posts"),where("villageId","==",currentVillage.id)));
-    const posts=snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.postType!=="chaupal").sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-    renderPosts(posts,c);
-  }catch(e){c.innerHTML=`<div class="empty">Feed load nahi ho paaya.</div>`;}
+    const posts=snap.docs
+      .map(d=>({id:d.id,...d.data()}))
+      .filter(p=>p.postType!=="chaupal")
+      .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+
+    // Also show all photos uploaded while listing the village. The first image is the cover;
+    // the remaining gallery images should appear in the village feed as well.
+    const galleryImages=Array.isArray(currentVillage.images)?currentVillage.images.filter(Boolean):[];
+    const galleryPosts=galleryImages.map((imageUrl,index)=>({
+      id:`village-gallery-${currentVillage.id}-${index}`,
+      ownerUid:currentVillage.ownerUid||"",
+      author:currentVillage.hostName||currentVillage.vName||"VillageDeko",
+      location:currentVillage.vName||"Village",
+      villageId:currentVillage.id,
+      villageName:currentVillage.vName||"",
+      vDistrict:currentVillage.vDistrict||"",
+      vState:currentVillage.vState||"",
+      text:index===0?"Village cover photo":"Village photo",
+      imageUrl,
+      postType:"village",
+      createdAt:currentVillage.createdAt||null,
+      isGalleryPhoto:true
+    }));
+
+    // Avoid showing a listing photo twice if the same URL was also posted as a post.
+    const postImageUrls=new Set(posts.map(p=>p.imageUrl).filter(Boolean));
+    const uniqueGalleryPosts=galleryPosts.filter(p=>!postImageUrls.has(p.imageUrl));
+    renderPosts([...posts,...uniqueGalleryPosts].sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)),c);
+  }catch(e){
+    console.error("Village feed load failed",e);
+    c.innerHTML=`<div class="empty">Feed load nahi ho paaya.</div>`;
+  }
 }
 
 function renderVillageDetails(){
@@ -391,6 +356,7 @@ async function handleImgBBPhotoPost(event){
     $("storyText").placeholder="Caption / story";
     closeModal("addStoryModal");
     await loadAllPosts();
+    // For Chaupal posts there is no village object. Do not access village.id here.
     if(village?.id && currentVillage?.id===village.id)await loadVillagePosts();
     loadHome();
     alert("Post published.");
@@ -410,20 +376,6 @@ function addPackageRow(data={}){
 }
 
 function collectRows(id){return [...$(id).children].map(row=>Object.fromEntries([...row.querySelectorAll("[data-field]")].map(i=>[i.dataset.field,i.value.trim()]))).filter(x=>x.name);}
-
-async function handleDeleteVillage(id,event){
-  event?.stopPropagation();
-  if(!requireLogin())return;
-  const v=villages.find(x=>x.id===id);
-  if(!v)return;
-  if(v.ownerUid!==uid()){alert("Sirf apna listed village delete kar sakte ho.");return;}
-  if(!confirm(`${v.vName} village listing delete karni hai?`))return;
-  await deleteDoc(doc(db,"villagesListings",id));
-  villages=villages.filter(x=>x.id!==id);
-  if(currentVillage?.id===id){currentVillage=null;goHome();}
-  loadHome();
-  alert("Village listing delete ho gayi.");
-}
 
 async function handleVillageListing(event){
   event.preventDefault();if(!requireLogin())return;
@@ -536,7 +488,7 @@ function closeImageViewer(e){if(e)e.stopPropagation();$("imageViewerModal").clas
 document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("is-open");}));
 $("drawer")?.addEventListener("click",e=>{if(e.target===$("drawer"))closeDrawer();});
 
-Object.assign(window,{openModal,closeModal,openLogin:showLoginGate,googleLogin,openDrawer,closeDrawer,goHome,selectState,filterExplore,openVillage,goBackFromVillage,toggleFollow,showVillageSection,openPostModal,handleImgBBPhotoPost,handleVillageListing,addActivityRow,addPackageRow,toggleLike,savePost,openComments,addComment,handleEdit,handleDelete,handleDeleteVillage,handleShare,openWedding,openChaupal,submitWedding,showMyListings,showMyHosts,showMyWeddings,openSettings,openPrivacy,saveSetting,logout,openImageViewer,closeImageViewer,handleProfilePhoto,toggleGalleryLike,openGalleryComments,addGalleryComment});
+Object.assign(window,{openModal,closeModal,openLogin:showLoginGate,googleLogin,openDrawer,closeDrawer,goHome,selectState,filterExplore,openVillage,goBackFromVillage,toggleFollow,showVillageSection,openPostModal,handleImgBBPhotoPost,handleVillageListing,addActivityRow,addPackageRow,toggleLike,savePost,openComments,addComment,handleEdit,handleDelete,handleShare,openWedding,openChaupal,submitWedding,showMyListings,showMyHosts,showMyWeddings,openSettings,openPrivacy,saveSetting,logout,openImageViewer,closeImageViewer,handleProfilePhoto});
 
 fillStates();renderStates();addActivityRow();addPackageRow();
 
@@ -545,13 +497,9 @@ onAuthStateChanged(auth,async user=>{
   updateAuthUI();
   if(!user){showLoginGate();return;}
   showApp();
-  // Render the shell as soon as possible; data fills in progressively.
   await loadVillages();
-  loadHome();
   await loadProfilePhoto();
+  await Promise.all(villages.map(v=>refreshVillageFollowers(v.id).catch(()=>{})));
   await loadAllPosts();
   loadHome();
-  // Followers are secondary data; update them in the background.
-  Promise.all(villages.map(v=>refreshVillageFollowers(v.id).catch(()=>{})))
-    .then(()=>{ renderVillageCards(villages,$("homeVillagesList")); });
 });
