@@ -1,247 +1,310 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VillageDeko - Discover, Feel & Experience Rural India</title>
+  <title>VillageDeko - Instagram Rural Feed</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    body { font-family: 'Poppins', sans-serif; }
+    body { font-family: 'Poppins', sans-serif; background-color: #FAF9F6; }
     .font-serif-heading { font-family: 'Playfair Display', serif; }
-    
-    .hero-bg {
-      background: linear-gradient(180deg, rgba(20, 35, 15, 0.55) 0%, rgba(15, 30, 10, 0.85) 100%), 
-                  url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1800&q=80');
-      background-size: cover;
-      background-position: center;
-    }
-
     .olive-bg { background-color: #4C6B22; }
-    .olive-bg:hover { background-color: #3B541A; }
     .dark-green-bg { background-color: #1B290E; }
-
-    .modern-card {
-      background: #FFFFFF;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .modern-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 24px -4px rgba(27, 41, 14, 0.12);
-    }
-
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .story-ring {
+      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    }
   </style>
 </head>
-<body class="bg-[#FAF9F6] text-slate-800 antialiased">
+<body class="text-slate-800 pb-20">
 
-  <div class="dark-green-bg text-white text-xs py-2 px-6 flex justify-between items-center font-light border-b border-white/10">
+  <!-- TOP INSTA HEADER -->
+  <header class="bg-white sticky top-0 z-50 border-b border-gray-200 px-4 py-3 flex justify-between items-center max-w-md mx-auto">
     <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-location-dot text-amber-400 text-xs"></i>
-      <span>Experience the Real Indian Villages</span>
+      <i class="fa-solid fa-tree-city text-2xl text-[#3B541A]"></i>
+      <h1 class="text-xl font-bold font-serif-heading text-[#1B290E] tracking-wide">VillageDeko</h1>
     </div>
-    <div class="flex items-center space-x-6">
-      <div class="flex items-center space-x-3 text-sm">
-        <span class="text-xs">Follow Us :</span>
-        <a href="#" class="hover:text-amber-400"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" class="hover:text-amber-400"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="hover:text-amber-400"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-      <div class="h-3 w-[1px] bg-white/30"></div>
-      <div class="flex items-center space-x-1.5 text-xs">
-        <i class="fa-solid fa-phone text-amber-400"></i>
-        <span>+91 98765 43210</span>
-      </div>
+    <div class="flex items-center space-x-5 text-xl text-slate-800">
+      <button onclick="openTab('market-tab')"><i class="fa-solid fa-store text-lg"></i></button>
+      <button onclick="openTab('explore-tab')"><i class="fa-regular fa-compass text-lg"></i></button>
+      <i class="fa-regular fa-heart"></i>
     </div>
-  </div>
+  </header>
 
-  <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-sm py-3.5 px-6 md:px-12 flex justify-between items-center border-b border-gray-100">
-    <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('explore-tab')">
-      <div class="text-[#3B541A]">
-        <i class="fa-solid fa-tree-city text-3xl"></i>
+  <!-- MAIN APP CONTAINER (Insta Mobile Frame Width) -->
+  <main class="max-w-md mx-auto min-h-screen bg-[#FAF9F6]">
+
+    <!-- INSTA STORIES: 28 STATES & EXPERIENCES -->
+    <section class="bg-white border-b border-gray-200 py-3 px-3">
+      <div class="flex space-x-3 overflow-x-auto no-scrollbar">
+        <!-- Story Item 1 -->
+        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('explore-tab')">
+          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
+          </div>
+          <span class="text-[10px] text-gray-700 mt-1 font-medium">Rajasthan</span>
+        </div>
+        <!-- Story Item 2 -->
+        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('explore-tab')">
+          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
+          </div>
+          <span class="text-[10px] text-gray-700 mt-1 font-medium">Kerala</span>
+        </div>
+        <!-- Story Item 3 -->
+        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('timeline-tab')">
+          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
+          </div>
+          <span class="text-[10px] text-gray-700 mt-1 font-medium">A Day 🌅</span>
+        </div>
+        <!-- Story Item 4 -->
+        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('food-tab')">
+          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
+          </div>
+          <span class="text-[10px] text-gray-700 mt-1 font-medium">Food 🍞</span>
+        </div>
+        <!-- Story Item 5 -->
+        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('market-tab')">
+          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
+          </div>
+          <span class="text-[10px] text-gray-700 mt-1 font-medium">Bazaar 🌾</span>
+        </div>
       </div>
-      <div>
-        <h1 class="text-xl md:text-2xl font-bold font-serif-heading text-[#1B290E] leading-none">VillageDeko</h1>
-        <p class="text-[9px] text-gray-500 font-medium tracking-wider uppercase mt-0.5">Discover the Soul of India</p>
+    </section>
+
+    <!-- TAB 1: FEED & STORIES (Default Home View) -->
+    <div id="home-tab" class="space-y-4 py-3">
+      
+      <!-- Post 1 -->
+      <div class="bg-white border-y border-gray-200">
+        <!-- Post Header -->
+        <div class="flex justify-between items-center px-3 py-2.5">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center text-xs font-bold">RJ</div>
+            <div>
+              <span class="text-xs font-bold text-slate-900 block leading-none">Khuri_Heritage_Village</span>
+              <span class="text-[9px] text-gray-500">Jaisalmer, Rajasthan</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-ellipsis text-gray-500 text-xs"></i>
+        </div>
+        <!-- Post Image -->
+        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80" class="w-full h-80 object-cover" />
+        <!-- Action Buttons -->
+        <div class="px-3 py-2 flex justify-between items-center text-lg text-slate-800">
+          <div class="flex space-x-4">
+            <i class="fa-regular fa-heart hover:text-red-500 cursor-pointer"></i>
+            <i class="fa-regular fa-comment cursor-pointer"></i>
+            <i class="fa-regular fa-paper-plane cursor-pointer"></i>
+          </div>
+          <i class="fa-regular fa-bookmark cursor-pointer"></i>
+        </div>
+        <!-- Likes & Caption -->
+        <div class="px-3 pb-3 text-xs">
+          <span class="font-bold block mb-1">1,482 likes</span>
+          <p><strong class="font-semibold">Khuri_Heritage_Village</strong> Experiencing traditional mud-hut stays and clay-stove cooked bajra roti with organic ghee! 🌾✨ #VillageTourism #Rajasthan</p>
+          <span class="text-[10px] text-gray-400 mt-1 block">2 hours ago</span>
+        </div>
       </div>
-    </div>
-    
-    <div class="hidden lg:flex items-center space-x-7 text-sm font-medium text-gray-700">
-      <button onclick="switchTab('explore-tab')" class="hover:text-[#3B541A] transition">Discover & Map</button>
-      <button onclick="switchTab('timeline-tab')" class="hover:text-[#3B541A] transition">A Day in Village</button>
-      <button onclick="switchTab('food-tab')" class="hover:text-[#3B541A] transition">Food Journey</button>
-      <button onclick="switchTab('feed-tab')" class="hover:text-[#3B541A] transition">Village Stories</button>
-      <button onclick="switchTab('market-tab')" class="hover:text-[#3B541A] transition">Village Bazaar</button>
+
+      <!-- Post 2 -->
+      <div class="bg-white border-y border-gray-200">
+        <!-- Post Header -->
+        <div class="flex justify-between items-center px-3 py-2.5">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center text-xs font-bold">KL</div>
+            <div>
+              <span class="text-xs font-bold text-slate-900 block leading-none">Kumarakom_Backwaters</span>
+              <span class="text-[9px] text-gray-500">Kerala Backwaters</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-ellipsis text-gray-500 text-xs"></i>
+        </div>
+        <!-- Post Image -->
+        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-80 object-cover" />
+        <!-- Action Buttons -->
+        <div class="px-3 py-2 flex justify-between items-center text-lg text-slate-800">
+          <div class="flex space-x-4">
+            <i class="fa-regular fa-heart hover:text-red-500 cursor-pointer"></i>
+            <i class="fa-regular fa-comment cursor-pointer"></i>
+            <i class="fa-regular fa-paper-plane cursor-pointer"></i>
+          </div>
+          <i class="fa-regular fa-bookmark cursor-pointer"></i>
+        </div>
+        <!-- Likes & Caption -->
+        <div class="px-3 pb-3 text-xs">
+          <span class="font-bold block mb-1">2,305 likes</span>
+          <p><strong class="font-semibold">Kumarakom_Backwaters</strong> Morning boat ride through green paddy fields and peaceful village waterways. 🛶🌴 #GodsOwnCountry</p>
+          <span class="text-[10px] text-gray-400 mt-1 block">5 hours ago</span>
+        </div>
+      </div>
+
     </div>
 
-    <div class="flex items-center space-x-3">
-      <button onclick="switchTab('visit-tab')" class="olive-bg text-white text-xs font-semibold px-5 py-2.5 rounded-md shadow transition flex items-center space-x-2">
-        <i class="fa-solid fa-suitcase text-amber-300"></i>
-        <span>Visit Village</span>
-      </button>
+    <!-- TAB 2: DISCOVER & MAP (28 States Explorer) -->
+    <div id="explore-tab" class="hidden p-4 space-y-4">
+      <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center shadow-sm">
+        <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2 text-xs"></i>
+        <input type="text" placeholder="Search 28 States & Villages..." class="w-full text-xs outline-none" />
+      </div>
 
-      <button id="menu-toggle" class="lg:hidden text-gray-700 text-xl p-1">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <h3 class="font-serif-heading font-bold text-sm text-[#1B290E]">Explore All 28 States</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+          <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
+          <div class="p-2.5">
+            <h4 class="font-bold text-xs">Rajasthan Villages</h4>
+            <p class="text-[10px] text-gray-500">Deserts & Havelis</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
+          <div class="p-2.5">
+            <h4 class="font-bold text-xs">Kerala Backwaters</h4>
+            <p class="text-[10px] text-gray-500">Greenery & Canals</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
+          <div class="p-2.5">
+            <h4 class="font-bold text-xs">Himachal Hills</h4>
+            <p class="text-[10px] text-gray-500">Orchards & Mountains</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+          <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
+          <div class="p-2.5">
+            <h4 class="font-bold text-xs">Uttarakhand Valleys</h4>
+            <p class="text-[10px] text-gray-500">Rivers & Temples</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- TAB 3: A DAY IN VILLAGE TIMELINE -->
+    <div id="timeline-tab" class="hidden p-4 space-y-4">
+      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">A Day in the Village 🌅</h3>
+      <div class="space-y-3">
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
+          <div class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2 py-1 rounded h-fit">05:30 AM</div>
+          <div>
+            <h4 class="font-bold text-xs text-[#1B290E]">Morning Dawn</h4>
+            <p class="text-[10px] text-gray-500">Fresh air, bird songs & temple bell sounds.</p>
+          </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
+          <div class="bg-emerald-100 text-emerald-900 text-[10px] font-bold px-2 py-1 rounded h-fit">07:00 AM</div>
+          <div>
+            <h4 class="font-bold text-xs text-[#1B290E]">Farming & Cattle</h4>
+            <p class="text-[10px] text-gray-500">Milking cows and watering organic fields.</p>
+          </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
+          <div class="bg-orange-100 text-orange-900 text-[10px] font-bold px-2 py-1 rounded h-fit">01:00 PM</div>
+          <div>
+            <h4 class="font-bold text-xs text-[#1B290E]">Earthen Kitchen Lunch</h4>
+            <p class="text-[10px] text-gray-500">Clay stove cooked traditional meal.</p>
+          </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
+          <div class="bg-indigo-100 text-indigo-900 text-[10px] font-bold px-2 py-1 rounded h-fit">09:00 PM</div>
+          <div>
+            <h4 class="font-bold text-xs text-[#1B290E]">Bonfire & Stories</h4>
+            <p class="text-[10px] text-gray-500">Folk tales under the clear starry night sky.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: FOOD JOURNEY -->
+    <div id="food-tab" class="hidden p-4 space-y-4">
+      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">Seed to Plate Journey 🌱</h3>
+      <div class="space-y-2">
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">1</div>
+          <span class="text-xs font-semibold">🌱 Selecting Organic Seeds in Village</span>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">2</div>
+          <span class="text-xs font-semibold">🌾 Traditional Soil Sowing</span>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">3</div>
+          <span class="text-xs font-semibold">🚜 Natural Crop Care & Watering</span>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">4</div>
+          <span class="text-xs font-semibold">✂️ Hand Harvest by Farmers</span>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-full amber-600 bg-amber-600 text-white flex items-center justify-center font-bold text-xs">5</div>
+          <span class="text-xs font-semibold text-amber-900">🍞 Served Fresh on Clay Plates</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: VILLAGE BAZAAR MARKETPLACE -->
+    <div id="market-tab" class="hidden p-4 space-y-4">
+      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">Village Marketplace 🛍️</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">ORGANIC</span>
+          <h4 class="font-bold text-xs mt-2">Pearl Millet Flour</h4>
+          <span class="text-[10px] text-gray-500 block">₹120 / kg</span>
+          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">NATURAL</span>
+          <h4 class="font-bold text-xs mt-2">Wild Forest Honey</h4>
+          <span class="text-[10px] text-gray-500 block">₹450 / 500g</span>
+          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">HANDICRAFT</span>
+          <h4 class="font-bold text-xs mt-2">Clay Cooking Pot</h4>
+          <span class="text-[10px] text-gray-500 block">₹290 / set</span>
+          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">SPICES</span>
+          <h4 class="font-bold text-xs mt-2">Ground Turmeric</h4>
+          <span class="text-[10px] text-gray-500 block">₹180 / 250g</span>
+          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- INSTA BOTTOM NAVIGATION BAR -->
+  <nav class="bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto py-3 px-6 flex justify-between items-center text-slate-700 text-xl">
+    <button onclick="openTab('home-tab')" class="text-[#3B541A]"><i class="fa-solid fa-house"></i></button>
+    <button onclick="openTab('explore-tab')"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button onclick="openTab('timeline-tab')"><i class="fa-solid fa-clapperboard"></i></button>
+    <button onclick="openTab('food-tab')"><i class="fa-solid fa-bowl-food"></i></button>
+    <button onclick="openTab('market-tab')"><i class="fa-solid fa-bag-shopping"></i></button>
   </nav>
 
-  <div id="mobile-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden">
-    <div class="bg-white w-4/5 max-w-xs h-full p-6 shadow-2xl flex flex-col justify-between">
-      <div>
-        <div class="flex justify-between items-center border-b pb-4 mb-6">
-          <span class="font-serif-heading font-bold text-lg text-[#1B290E]">VillageDeko Menu</span>
-          <button id="menu-close" class="text-gray-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="flex flex-col space-y-4 font-medium text-gray-700 text-sm">
-          <button onclick="mobileNav('explore-tab')" class="text-left py-2 border-b">Discover & Map</button>
-          <button onclick="mobileNav('timeline-tab')" class="text-left py-2 border-b">A Day in Village</button>
-          <button onclick="mobileNav('food-tab')" class="text-left py-2 border-b">Food Journey</button>
-          <button onclick="mobileNav('feed-tab')" class="text-left py-2 border-b">Village Stories</button>
-          <button onclick="mobileNav('market-tab')" class="text-left py-2 border-b">Village Bazaar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- SCRIPT FOR SWITCHING INSTA TABS -->
+  <script>
+    function openTab(tabId) {
+      const tabs = ['home-tab', 'explore-tab', 'timeline-tab', 'food-tab', 'market-tab'];
+      tabs.forEach(t => {
+        const el = document.getElementById(t);
+        if(el) el.classList.add('hidden');
+      });
+      const target = document.getElementById(tabId);
+      if(target) target.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 
-  <main>
-
-    <header class="hero-bg min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-12">
-      <span class="font-serif-heading italic text-amber-200 text-lg md:text-xl mb-1">~ Welcome to ~</span>
-      <h1 class="text-3xl md:text-6xl font-extrabold font-serif-heading tracking-wider uppercase drop-shadow-md max-w-4xl">
-        Village Tourism
-      </h1>
-      <p class="font-serif-heading italic text-lg md:text-2xl text-amber-100 mt-2 mb-3">Live. Explore. Connect.</p>
-      <p class="max-w-xl text-xs md:text-sm text-gray-200 font-light leading-relaxed mb-8">
-        Discover the untouched beauty of Indian villages, rich culture, organic food, warm hospitality and peaceful living.
-      </p>
-
-      <div class="bg-white rounded-md p-3 shadow-2xl flex flex-col md:flex-row items-center gap-3 w-full max-w-4xl text-slate-700">
-        <div class="flex items-center px-3 py-2 w-full md:w-2/3 border-b md:border-b-0 md:border-r border-gray-200 text-xs">
-          <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2 text-sm"></i>
-          <input id="state-search-input" type="text" placeholder="Search village, district, or state..." class="w-full outline-none font-normal placeholder-gray-400" />
-        </div>
-        <button onclick="searchState()" class="olive-bg text-white text-xs font-semibold px-8 py-3 rounded-md shadow w-full md:w-auto flex-shrink-0 transition">
-          Search
-        </button>
-      </div>
-    </header>
-
-    <section class="max-w-6xl mx-auto -mt-6 relative z-10 px-4">
-      <div class="bg-white rounded-md shadow-md py-5 px-4 grid grid-cols-2 md:grid-cols-6 gap-4 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100 border border-gray-100">
-        <div class="flex flex-col items-center p-2">
-          <i class="fa-solid fa-house-chimney-window text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Authentic Village<br/>Experience</span>
-        </div>
-        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-          <i class="fa-solid fa-people-hold text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Support Local<br/>Communities</span>
-        </div>
-        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-          <i class="fa-solid fa-leaf text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Eco-Friendly<br/>Tourism</span>
-        </div>
-        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-          <i class="fa-solid fa-camera text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Scenic Beauty &<br/>Photography</span>
-        </div>
-        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-          <i class="fa-solid fa-bowl-food text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Traditional Food<br/>& Culture</span>
-        </div>
-        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-          <i class="fa-solid fa-shield-halved text-2xl text-[#3B541A] mb-2"></i>
-          <span class="text-xs font-semibold text-gray-800 leading-tight">Safe & Secure<br/>Travel</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="explore-tab" class="py-12 max-w-6xl mx-auto px-4">
-      <div class="flex justify-between items-end mb-6">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">Explore All 28 Indian States</h2>
-          <div class="w-12 h-0.5 bg-amber-500 mt-1"></div>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button id="state-left" class="bg-white border border-gray-300 text-[#1B290E] hover:bg-[#1B290E] hover:text-white w-8 h-8 rounded-md flex items-center justify-center transition shadow-sm">
-            <i class="fa-solid fa-chevron-left text-xs"></i>
-          </button>
-          <button id="state-right" class="olive-bg text-white w-8 h-8 rounded-md flex items-center justify-center transition shadow-sm">
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-          </button>
-        </div>
-      </div>
-
-      <div id="states-grid" class="flex space-x-4 overflow-x-auto scroll-smooth no-scrollbar py-2">
-        </div>
-    </section>
-
-    <section id="timeline-tab" class="py-12 bg-[#F4F1EA] border-y border-amber-900/10">
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="text-center mb-8">
-          <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">A Day in the Village</h2>
-          <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
-          <p class="text-xs text-gray-600 font-light mt-2">Experience life from morning cattle grazing to night storytelling.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
-            <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2.5 py-1 rounded">05:30 AM</span>
-            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Morning Dawn</h4>
-            <p class="text-xs text-gray-500 font-light mt-1">Bird songs & temple bells in clean fresh air.</p>
-          </div>
-
-          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
-            <span class="bg-emerald-100 text-emerald-900 text-[10px] font-bold px-2.5 py-1 rounded">06:00 AM</span>
-            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Dairy & Cattle</h4>
-            <p class="text-xs text-gray-500 font-light mt-1">Fresh milking & caring for domestic animals.</p>
-          </div>
-
-          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
-            <span class="bg-green-100 text-green-900 text-[10px] font-bold px-2.5 py-1 rounded">07:00 AM</span>
-            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Farming Experience</h4>
-            <p class="text-xs text-gray-500 font-light mt-1">Field plowing & watering crops with farmers.</p>
-          </div>
-
-          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
-            <span class="bg-orange-100 text-orange-900 text-[10px] font-bold px-2.5 py-1 rounded">01:00 PM</span>
-            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Earthen Kitchen</h4>
-            <p class="text-xs text-gray-500 font-light mt-1">Clay stove cooked traditional warm lunch.</p>
-          </div>
-
-          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
-            <span class="bg-indigo-100 text-indigo-900 text-[10px] font-bold px-2.5 py-1 rounded">09:00 PM</span>
-            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Night Gathering</h4>
-            <p class="text-xs text-gray-500 font-light mt-1">Folk tales, bonfire and stargazing.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="food-tab" class="py-12 max-w-6xl mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">Seed to Plate Food Journey</h2>
-        <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
-        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">1</div>
-          <span class="font-bold text-xs text-[#1B290E]">🌱 Seeds</span>
-          <span class="text-[10px] text-gray-400 font-light mt-0.5">Organic Choice</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">2</div>
-          <span class="font-bold text-xs text-[#1B290E]">🌾 Sowing</span>
-          <span class="text-[10px] text-gray-400 font-light mt-0.5">Soil Prep</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">3</div>
-          <span class="font-bold text-xs text-[#1B290E]">🚜 Care</span>
-          <span class="text-[10px] text-gray-400 font-light mt-0.5">Natural Growth</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full olive-bg text-white flex
+</body>
+</html>
