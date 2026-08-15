@@ -5,7 +5,22 @@
 @media (max-width: 768px) {
   input,
   select,
-  textarea {
+  textarea,
+  button {
     font-size: 16px !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 16px !important;
+  }
+
+  select {
+    min-height: 44px;
+  }
+
+  input,
+  textarea {
+    min-height: 44px;
   }
 }
