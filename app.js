@@ -6,7 +6,6 @@ import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from
 import { db, auth } from "./firebase-config.js";
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./media-config.js";
 
-
 const $ = id => document.getElementById(id);
 let currentUser = null;
 let villages = [];
@@ -26,28 +25,27 @@ function requireLogin(){
   return true;
 }
 
-function showLoginGate(){
-  $("appShell")?.classList.add("hidden");
-  $("loginGate")?.classList.remove("hidden");
-}
+function showLoginGate(){ openModal("loginModal"); }
 
-function showApp(){
-  $("loginGate")?.classList.add("hidden");
-  $("appShell")?.classList.remove("hidden");
-}
+function showApp(){ closeModal("loginModal"); }
 
 function openModal(id){ const m=$(id); if(m){m.classList.add("is-open");m.classList.remove("hidden");} }
 function closeModal(id){ const m=$(id); if(m){m.classList.remove("is-open");m.classList.add("hidden");} }
 function openDrawer(){ if(!requireLogin())return; $("drawer")?.classList.add("is-open"); }
 function closeDrawer(){ $("drawer")?.classList.remove("is-open"); }
 function goHome(){ showView("homeView"); loadHome(); }
-function showView(id){ ["homeView","stateView","villageView","weddingView","chaupalView"].forEach(v=>$(v)?.classList.add("hidden")); $(id)?.classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"}); }
+function showView(id){ ["homeView","exploreView","experienceView","visitView","profileView","marketView","stateView","villageView","weddingView","chaupalView"].forEach(v=>$(v)?.classList.add("hidden")); $(id)?.classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"}); }
+function openExplore(){ showView("exploreView"); renderStates(); renderVillageCards(villages,$("exploreVillages")); }
+function openExperience(){ showView("experienceView"); renderExperience(); }
+function openVisit(){ showView("visitView"); renderVisit(); }
+function openProfile(){ if(!requireLogin())return; showView("profileView"); renderProfile(); }
 function openWedding(){ if(!requireLogin())return; showView("weddingView"); }
+function openMarket(){ if(!requireLogin())return; showView("marketView"); loadMarketplace(); }
 function openChaupal(){ if(!requireLogin())return; showView("chaupalView"); renderPosts(allPosts.filter(p=>p.postType==="chaupal"),$("chaupalFeedContainer")); }
-function goBackFromVillage(){ showView(previousView); }
+function goBackFromVillage(){ showView(previousView||"exploreView"); }
 
 function fillStates(){
-  const selects=[$("stateSelect"),$("vState"),$("wState")];
+  const selects=[$("stateSelect"),$("vState"),$("wState"),$("productState")];
   selects.forEach(s=>{
     if(!s)return;
     const first=s.options[0];
@@ -125,7 +123,7 @@ function postCard(p){
       ${villageButton}
       <button onclick="handleShare('${esc(villageName)}',event)" class="ml-auto icon-btn">↗</button>
     </div>
-    ${p.imageUrl?`<img src="${esc(optimizedImageUrl(p.imageUrl,900))}" data-full-src="${esc(p.imageUrl)}" class="post-photo" onclick="openImageViewer(this.dataset.fullSrc)" loading="lazy" decoding="async">`:``}
+    ${p.imageUrl?`<img src="${esc(p.imageUrl)}" class="post-photo" onclick="openImageViewer(this.src)" loading="lazy">`:``}
     ${p.text?`<div class="px-4 pt-3 pb-2"><p class="text-sm leading-relaxed">${esc(p.text)}</p></div>`:``}
     <div class="post-actions">
       ${p.isGalleryPhoto?``:`<><button onclick="toggleLike('${p.id}',event)">❤️ Like</button><button onclick="openComments('${p.id}')">💬 Comment</button></>`}
@@ -140,62 +138,68 @@ function renderPosts(posts,container){
   container.innerHTML=posts.length?posts.map(postCard).join(""):`<div class="empty">Abhi koi post nahi hai. Pehli village photo aap post kar sakte ho.</div>`;
 }
 
-async function loadHome(){
-  const villagePosts=allPosts.filter(p=>p.postType!=="chaupal");
-  renderVillageCards(villages,$("homeVillagesList"));
-  const postsBox=$("homePostsFeed");
-  if(postsBox){
-    postsBox.classList.remove("hidden");
-    renderPosts(villagePosts,postsBox);
+function renderExperience(){
+  const c=$("experienceFeed"); if(!c)return;
+  const stories=allPosts.filter(p=>p.postType!=="chaupal").slice(0,12);
+  c.innerHTML=stories.length?stories.map(p=>postCard(p)).join(""):`<div class="empty">Abhi stories nahi hain. Pehli kahani aap share kar sakte ho.</div>`;
+}
+function renderVisit(){
+  const c=$("visitVillages"); if(!c)return;
+  const visitReady=villages.filter(v=>(v.activities||[]).length || (v.packages||[]).length || v.hostName);
+  renderVillageCards(visitReady.length?visitReady:villages,c);
+}
+function renderProfile(){
+  const c=$("profileBody"); if(!c)return;
+  const name=currentUser?.displayName||"VillageDeko User";
+  const email=currentUser?.email||"";
+  const mine=allPosts.filter(p=>p.ownerUid===uid()).length;
+  const listed=villages.filter(v=>v.ownerUid===uid()).length;
+  c.innerHTML=`<div class="profile-card"><div class="profile-avatar">${esc((name||"U").charAt(0).toUpperCase())}</div><div><h2>${esc(name)}</h2><p>${esc(email)}</p><div class="profile-stats"><span><b>${mine}</b> posts</span><span><b>${listed}</b> villages</span></div></div></div>
+  <div class="profile-menu-title">Your VillageDeko</div>
+  <div class="profile-actions">
+    <button onclick="openPostModal()" class="profile-action">📸 My Posts <small>Stories, photos & village life</small></button>
+    <button onclick="openMarket()" class="profile-action">🛒 Gaon Ka Bazaar <small>Farmer → Product → Village → Story</small></button>
+    <button onclick="openProductModal()" class="profile-action">🌾 Add My Product <small>Sell village products with their story</small></button>
+    <button onclick="openModal('listVillageModal')" class="profile-action">🏡 My Village / Host <small>List stay, activities & packages</small></button>
+    <button onclick="openWedding()" class="profile-action">💍 Weddings <small>Village & destination wedding enquiries</small></button>
+    <button onclick="openExperience()" class="profile-action">🎵 Stories & Culture <small>Life, food, people & traditions</small></button>
+    <button onclick="openChaupal()" class="profile-action">🔥 Chaupal <small>Community updates</small></button>
+    <button onclick="openSettings()" class="profile-action">⚙️ Settings <small>Privacy & preferences</small></button>
+  </div>`;
+}
+
+async function loadMarketplace(){
+  const c=$("marketplaceGrid"); if(!c)return;
+  c.innerHTML='<div class="empty">Loading Gaon Ka Bazaar...</div>';
+  try{
+    const snap=await getDocs(query(collection(db,"products"),orderBy("createdAt","desc")));
+    const products=snap.docs.map(d=>({id:d.id,...d.data()}));
+    c.innerHTML=products.length?products.map(productCard).join(""):'<div class="empty">Abhi koi village product listed nahi hai.</div>';
+  }catch(e){
+    try{const snap=await getDocs(collection(db,"products"));const products=snap.docs.map(d=>({id:d.id,...d.data()}));c.innerHTML=products.length?products.map(productCard).join(""):'<div class="empty">Abhi koi village product listed nahi hai.</div>';}catch(err){c.innerHTML=`<div class="empty">Marketplace load nahi hua: ${esc(err.message)}</div>`;}
   }
+}
+
+function productCard(p){
+  return `<article class="product-card">${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.name||'Village product')}" class="product-photo">`:''}<div class="product-body"><div class="product-tag">${esc(p.category||'Village Product')}</div><h3>${esc(p.name||'Product')}</h3><p>${esc(p.story||'Gaon se seedha product aur uski kahani.')}</p><div class="product-meta"><span>👨‍🌾 ${esc(p.farmer||'Village Farmer')}</span><span>📍 ${esc(p.village||'Village')}${p.state?`, ${esc(p.state)}`:''}</span></div><div class="product-bottom"><b>${p.price?`₹${esc(p.price)}`:'Price on request'}</b><button class="primary" onclick="contactProduct('${esc(p.farmer||'Farmer')}','${esc(p.village||'Village')}','${esc(p.name||'Product')}')">Know this farmer →</button></div></div></article>`;
+}
+function contactProduct(farmer,village,name){alert(`${name}\n\nFarmer: ${farmer}\nVillage: ${village}\n\nProduct story saved on VillageDeko. Direct seller/order connection can be added next.`);}
+function openProductModal(){if(!requireLogin())return;openModal('productModal');}
+
+async function loadHome(){
+  renderVillageCards(villages,$("villagesFeedContainer"));
   $("villageCount").textContent=villages.length;
   $("postCount").textContent=allPosts.length;
 }
 
 function filterExplore(term){
-  const q=String(term||"").trim().toLowerCase();
-  const villagesBox=$("homeVillagesList");
-  const postsBox=$("homePostsFeed");
-
-  if(!q){
-    renderVillageCards(villages,villagesBox);
-    if(postsBox){
-      postsBox.classList.remove("hidden");
-      renderPosts(allPosts.filter(p=>p.postType!=="chaupal"),postsBox);
-    }
-    return;
-  }
-
-  const matchingVillages=villages.filter(v=>{
-    const hay=[
-      v.vName,v.vDistrict,v.vState,v.vDescription,v.hostName,
-      ...(v.activities||[]).map(a=>a.name),
-      ...(v.packages||[]).map(p=>p.name)
-    ].filter(Boolean).join(" ").toLowerCase();
+  const q=term.trim().toLowerCase();
+  if(!q){ renderVillageCards(villages,$("villagesFeedContainer")); renderVillageCards(villages,$("exploreVillages")); return; }
+  const matching=villages.filter(v=>{
+    const hay=[v.vName,v.vDistrict,v.vState,v.vDescription,v.hostName,...(v.activities||[]).map(a=>a.name)].join(" ").toLowerCase();
     return hay.includes(q);
   });
-
-  const matchingPosts=allPosts.filter(p=>{
-    if(p.postType==="chaupal")return false;
-    const v=findVillageForPost(p);
-    const hay=[
-      p.text,p.story,p.caption,p.author,p.authorName,p.userName,p.location,
-      p.villageName,p.vDistrict,p.vState,
-      v?.vName,v?.vDistrict,v?.vState,v?.vDescription,v?.hostName
-    ].filter(Boolean).join(" ").toLowerCase();
-    return hay.includes(q);
-  });
-
-  renderVillageCards(matchingVillages,villagesBox);
-  if(postsBox){
-    postsBox.classList.remove("hidden");
-    postsBox.innerHTML="";
-    if(matchingPosts.length){
-      renderPosts(matchingPosts,postsBox);
-    }else{
-      postsBox.innerHTML=`<div class="empty">Is search ke liye koi village post nahi mili.</div>`;
-    }
-  }
+  renderVillageCards(matching,$("villagesFeedContainer")); renderVillageCards(matching,$("exploreVillages"));
 }
 
 async function loadVillages(){
@@ -239,10 +243,6 @@ async function openVillage(id,event){
   renderVillageHeader();
   await loadVillagePosts();
   renderVillageDetails();
-  renderVillageDay();
-  renderVillageFoodJourney();
-  await loadVillagePeople();
-  await loadVillageExplore();
   renderVillageExtras();
 }
 
@@ -291,144 +291,6 @@ async function loadVillagePosts(){
   }
 }
 
-function renderVillageDay(){
-  const v=currentVillage;
-  const moments=[
-    ["05:30 AM","🌅","Gaon ki subah","Suraj ki pehli roshni, galiyon ki khamoshi aur gaon ke din ki shuruaat."],
-    ["06:00 AM","🐄","Pashu / Dairy","Pashuon ki dekhbhal, doodh nikalna aur subah ke dairy kaam."],
-    ["07:00 AM","🌾","Khet","Khet ki taiyari, fasal dekhna aur din ke farming kaam ki shuruaat."],
-    ["09:00 AM","☕","Chai / Nashta","Ghar ya chaupal par chai, nashta aur subah ki baatcheet."],
-    ["11:00 AM","🧑‍🌾","Village Work","Kheti, pashupalan, dukaan, karigar aur roz ke gaon ke kaam."],
-    ["01:00 PM","🍲","Ghar ka Khana","Local ingredients se bana ghar ka khana aur parivaar ke saath dopahar."],
-    ["03:00 PM","🌤️","Dopahar","Thoda aaram, chhote kaam aur gaon ki dheemi dopahari zindagi."],
-    ["05:00 PM","🏡","Village Life","Shaam ki halchal, bachche, pashu, kheton se lautte log aur milna-julna."],
-    ["07:00 PM","🛕","Mandir / Bhajan","Mandir, bhajan, aarti aur shaam ki samudaayik zindagi."],
-    ["09:00 PM","🌙","Gaon ki Raat","Raat ka khana, parivaar aur shaant gaon — agle din ki taiyari." ]
-  ];
-  $("villageSectionDay").innerHTML=`
-    <div class="day-experience-head">
-      <p class="day-kicker">VILLAGEDEKO EXPERIENCE</p>
-      <h3>🌅 Ek Din Gaon Mein</h3>
-      <p>📍 ${esc(v.vName)}, ${esc(v.vDistrict)}, ${esc(v.vState)}</p>
-      <span>Gaon ko ek poore din ki rhythm mein samjho.</span>
-    </div>
-    <div class="day-timeline">${moments.map((m,i)=>`
-      <article class="day-moment">
-        <div class="day-time">${m[0]}</div>
-        <div class="day-line"><span>${m[1]}</span>${i<moments.length-1?'<i></i>':''}</div>
-        <div class="day-copy"><h4>${m[2]}</h4><p>${m[3]}</p><small>📍 ${esc(v.vName)} · ${esc(v.vDistrict)} · ${esc(v.vState)}</small></div>
-      </article>`).join('')}</div>
-    <div class="day-future-note"><b>🌾 Agla connection</b><p>Isi timeline ko future mein real photo, video, local voice aur gaon ke logon ki story se connect kiya jayega.</p></div>`;
-}
-
-function renderVillageFoodJourney(category="wheat"){
-  const v=currentVillage;
-  const journeys={
-    wheat:{label:"Gehu",icon:"🌾",intro:"Beej se roti tak gehu ki poori journey — gaon ke khet se ghar ki plate tak.",stages:[
-      ["01","🌱","Beej","Achha beej chunna aur agle season ki taiyari."],
-      ["02","🚜","Buwai","Khet taiyar karke sahi samay par gehu boya jata hai."],
-      ["03","💧","Paani","Fasal ki zarurat ke hisaab se sinchai aur dekhbhal."],
-      ["04","🌾","Fasal","Fasal badhti hai; kisan rog, keet aur mausam par nazar rakhta hai."],
-      ["05","🌾","Katai","Pakne par gehu ki katai aur dana alag karne ka kaam."],
-      ["06","🧺","Mandi","Anaj mandi ya local buyer tak pahunchta hai."],
-      ["07","⚙️","Chakki / Processing","Gehu saaf hokar chakki mein pis kar aata banta hai."],
-      ["08","🍞","Ghar → Plate","Aata ghar pahunchta hai aur roti ban kar plate tak aata hai."]
-    ]},
-    vegetables:{label:"Sabzi",icon:"🥕",intro:"Beej/paudha se bazaar aur kitchen tak fresh sabzi ki journey.",stages:[
-      ["01","🌱","Beej / Paudha","Season aur mitti ke hisaab se crop select ki jati hai."],
-      ["02","🌱","Buwai / Ropai","Khet ya nursery mein paudhe lagaye jate hain."],
-      ["03","💧","Paani & Care","Sinchai, ghaas safai aur crop care hoti hai."],
-      ["04","🥬","Todai","Sabzi ko sahi size aur freshness par toda jata hai."],
-      ["05","🧺","Sorting","Quality ke hisaab se sorting aur packing hoti hai."],
-      ["06","🛺","Mandi / Bazaar","Sabzi local mandi, dukaan ya buyer tak jati hai."],
-      ["07","🏠","Ghar","City ya village ghar tak fresh produce pahunchta hai."],
-      ["08","🍲","Plate","Dhuli, kati aur pakai gayi sabzi meal ka hissa banti hai."]
-    ]},
-    milk:{label:"Doodh",icon:"🥛",intro:"Pashu ki dekhbhal se doodh collection aur ghar ki chai tak.",stages:[
-      ["01","🐄","Pashu ki Dekhbhal","Chara, paani, safai aur daily care."],
-      ["02","🥛","Doodh Dohana","Subah/shaam doodh nikala jata hai."],
-      ["03","🧪","Quality Check","Doodh ki safai aur quality check ki ja sakti hai."],
-      ["04","🧊","Collection","Doodh collection point ya dairy tak pahunchta hai."],
-      ["05","🚚","Transport","Cold-chain ya local transport se aage jata hai."],
-      ["06","🏭","Processing","Dairy mein chilling aur zarurat ke hisaab se processing."],
-      ["07","🏠","Ghar / Dukaan","Milk packet ya local fresh milk consumer tak."],
-      ["08","☕","Plate / Cup","Chai, dahi, paneer ya seedha doodh ban kar use hota hai."]
-    ]},
-    dal:{label:"Dal",icon:"🫘",intro:"Dal ki crop se cleaning, processing aur kitchen tak ka safar.",stages:[
-      ["01","🌱","Beej","Dal ki crop ke liye seed selection."],
-      ["02","🌾","Khet","Buwai, paani aur crop care."],
-      ["03","🌾","Harvest","Pakne par crop ki katai aur threshing."],
-      ["04","🧺","Cleaning","Dana saaf aur grade kiya jata hai."],
-      ["05","⚙️","Milling","Dal mill mein processing se edible dal taiyar hoti hai."],
-      ["06","🛒","Mandi / Market","Dal wholesale ya retail market tak pahunchti hai."],
-      ["07","🏠","Ghar","Kitchen mein dal store aur prepare hoti hai."],
-      ["08","🍲","Plate","Pak kar dal meal ka hissa banti hai."]
-    ]},
-    spices:{label:"Masale",icon:"🌶️",intro:"Khet se sukhane, processing aur kitchen tak masalon ki journey.",stages:[
-      ["01","🌱","Crop","Masale ki crop season aur soil ke hisaab se ugai jati hai."],
-      ["02","🌾","Harvest","Sahi maturity par crop harvest hoti hai."],
-      ["03","☀️","Drying","Kai masalon ko drying/sukhaane ki zarurat hoti hai."],
-      ["04","🧺","Cleaning","Safai, sorting aur grading hoti hai."],
-      ["05","⚙️","Processing","Whole spice ya powder ke roop mein processing."],
-      ["06","🛍️","Market","Local market ya packaged supply chain tak."],
-      ["07","🏠","Kitchen","Ghar ke kitchen mein masala ready hota hai."],
-      ["08","🍛","Plate","Khane ko taste aur aroma dene ke liye use hota hai."]
-    ]}
-  };
-  const data=journeys[category]||journeys.wheat;
-  const buttons=Object.entries(journeys).map(([key,item])=>`<button class="food-chip ${key===category?'active':''}" onclick="renderVillageFoodJourney('${key}')">${item.icon} ${item.label}</button>`).join('');
-  $("villageSectionFood").innerHTML=`
-    <div class="food-journey-head">
-      <p class="food-kicker">VILLAGEDEKO FOOD JOURNEY</p>
-      <h3>${data.icon} ${data.label}: Khet Se Plate Tak</h3>
-      <p>${esc(data.intro)}</p>
-      <small>📍 ${esc(v.vName)} · ${esc(v.vDistrict)} · ${esc(v.vState)}</small>
-    </div>
-    <div class="food-chips">${buttons}</div>
-    <div class="food-path">${data.stages.map((stage,i)=>`<article class="food-stage"><div class="food-stage-no">${stage[0]}</div><div class="food-stage-icon">${stage[1]}</div><div class="food-stage-copy"><h4>${stage[2]}</h4><p>${esc(stage[3])}</p><small>📍 ${esc(v.vName)} · ${esc(v.vDistrict)} · ${esc(v.vState)}</small></div>${i<data.stages.length-1?'<div class="food-arrow">↓</div>':''}</article>`).join('')}</div>
-    <div class="food-story-note"><b>🌾 VillageDeko ka rule</b><p>Food ko sirf product nahi — farmer, village aur real story ke saath samjhenge. Agle phase mein har stage ko real photo, video aur local voice se connect kiya ja sakta hai.</p></div>`;
-}
-
-async function loadVillagePeople(){
-  const c=$("villageSectionPeople");
-  if(!c || !currentVillage)return;
-  try{
-    const snap=await getDocs(query(collection(db,"villagePeople"),where("villageId","==",currentVillage.id)));
-    const people=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-    renderVillagePeople(people);
-  }catch(e){
-    console.error("Village people load failed",e);
-    c.innerHTML='<div class="empty">Log load nahi ho paaye. Firestore rules check karein.</div>';
-  }
-}
-
-function renderVillagePeople(people=[]){
-  const c=$("villageSectionPeople"); if(!c || !currentVillage)return;
-  const add=`<div class="people-head"><div><p class="people-kicker">VILLAGEDEKO PEOPLE</p><h3>👨‍🌾 Gaon Ke Log</h3><p>Gaon ke asli log, unka kaam aur unki apni kahani.</p></div><button class="primary" onclick="openAddVillagePerson()">+ Add Person</button></div>`;
-  if(!people.length){c.innerHTML=add+'<div class="empty">Abhi is village ke log add nahi kiye gaye. Pehla person aap add kar sakte hain.</div>';return;}
-  c.innerHTML=add+`<div class="people-grid">${people.map(p=>`<article class="person-card">${p.photoUrl?`<img src="${esc(optimizedImageUrl(p.photoUrl,700))}" loading="lazy" alt="${esc(p.name)}">`:`<div class="person-photo-placeholder">👨‍🌾</div>`}<div class="person-body"><h4>${esc(p.name)}</h4><b>${esc(p.role)}</b><p class="person-location">📍 ${esc(currentVillage.vName)} · ${esc(currentVillage.vDistrict)} · ${esc(currentVillage.vState)}</p><div class="person-story"><span>“</span>${esc(p.story)}<span>”</span></div>${currentUser?.uid===p.ownerUid?`<button class="person-owner" onclick="deleteVillagePerson('${esc(p.id)}')">Delete</button>`:''}</div></article>`).join('')}</div>`;
-}
-
-function openAddVillagePerson(){ if(!requireLogin()||!currentVillage)return; $("personName").value='';$("personRole").value='';$("personStory").value='';$("personPhotoFile").value='';openModal("addPersonModal"); }
-
-async function handleAddVillagePerson(event){
-  event.preventDefault(); if(!requireLogin()||!currentVillage)return;
-  const btn=$("personSubmitBtn"); btn.disabled=true; btn.textContent="Saving...";
-  try{
-    const name=$("personName").value.trim(), role=$("personRole").value.trim(), story=$("personStory").value.trim(), file=$("personPhotoFile").files?.[0];
-    if(!name||!role||!story)throw new Error("Name, role aur kahani zaroori hai.");
-    const photoUrl=file?await uploadImage(file,"people"):"";
-    await addDoc(collection(db,"villagePeople"),{name,role,story,photoUrl,ownerUid:uid(),villageId:currentVillage.id,villageName:currentVillage.vName,vDistrict:currentVillage.vDistrict,vState:currentVillage.vState,createdAt:serverTimestamp()});
-    closeModal("addPersonModal"); await loadVillagePeople();
-  }catch(e){alert(e.message||"Person save nahi hua.");}
-  finally{btn.disabled=false;btn.textContent="Save Person";}
-}
-
-async function deleteVillagePerson(id){
-  if(!requireLogin()||!confirm("Is person ko delete karna hai?"))return;
-  try{await deleteDoc(doc(db,"villagePeople",id));await loadVillagePeople();}catch(e){alert(e.message||"Delete failed.");}
-}
-
 function renderVillageDetails(){
   const v=currentVillage;
   $("villageSectionDetails").innerHTML=`<div class="space-y-3"><p class="text-sm leading-relaxed">${esc(v.vDescription)}</p><div class="grid grid-cols-2 gap-2"><div class="info-box"><b>Host</b><p>${esc(v.hostName)}</p></div><div class="info-box"><b>Contact</b><p>${esc(v.hostWhatsapp)}</p></div></div>${v.bankDetails?`<p class="text-[10px] text-slate-400">Bank details are kept private.</p>`:``}</div>`;
@@ -441,7 +303,7 @@ function renderVillageExtras(){
 }
 
 function showVillageSection(name,btn){
-  ["feed","day","food","people","explore","details","activities","packages"].forEach(x=>$("villageSection"+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==name));
+  ["feed","details","activities","packages"].forEach(x=>$("villageSection"+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==name));
   document.querySelectorAll(".vtab").forEach(b=>b.classList.remove("active"));
   btn?.classList.add("active");
 }
@@ -470,13 +332,8 @@ async function toggleLike(id,event){
   if(!requireLogin())return;
   const ref=doc(db,"posts",id,"likes",uid());
   const snap=await getDoc(ref);
-  if(snap.exists()){
-    await deleteDoc(ref);
-  }else{
-    await setDoc(ref,{uid:uid(),createdAt:serverTimestamp()});
-  }
-  await loadAllPosts();
-  if(currentVillage?.id)await loadVillagePosts();
+  if(snap.exists())await deleteDoc(ref);else await setDoc(ref,{uid:uid(),createdAt:serverTimestamp()});
+  if(currentVillage?.id){await loadVillagePosts();}
   renderPosts(allPosts.filter(p=>p.postType==="chaupal"),$("chaupalFeedContainer"));
 }
 
@@ -517,46 +374,26 @@ function populateVillageSelect(){
   $("storyVillage").innerHTML='<option value="">Select village</option>'+villages.map(v=>`<option value="${v.id}">${esc(v.vName)} — ${esc(v.vDistrict)}, ${esc(v.vState)}</option>`).join("");
 }
 
-async function uploadImage(file,folder="uploads"){
-  if(!file?.type?.startsWith("image/"))throw new Error("Sirf image upload karein.");
-  if(file.size>8*1024*1024)throw new Error("Image 8MB se chhoti honi chahiye.");
-  if(!CLOUDINARY_CLOUD_NAME || CLOUDINARY_CLOUD_NAME==="YOUR_CLOUD_NAME" ||
-     !CLOUDINARY_UPLOAD_PRESET || CLOUDINARY_UPLOAD_PRESET==="YOUR_UNSIGNED_UPLOAD_PRESET"){
-    throw new Error("Cloudinary setup pending: media-config.js mein Cloud Name aur Upload Preset set karein.");
-  }
-
-  const fd=new FormData();
-  fd.append("file",file);
-  fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-  fd.append("folder",`villagedeko/${folder}/${uid()}`);
-
-  const r=await fetch(`https://api.cloudinary.com/v1_1/${encodeURIComponent(CLOUDINARY_CLOUD_NAME)}/image/upload`,{
-    method:"POST",body:fd
-  });
-  const d=await r.json();
-  if(!r.ok || !d.secure_url) throw new Error(d.error?.message||"Image upload failed.");
-
-  // Store the original Cloudinary URL; delivery is optimized through Cloudinary's CDN.
-  return d.secure_url;
+async function uploadToStorage(file, folder="uploads"){
+  if(!currentUser) throw new Error("Login required");
+  if(!file) return "";
+  if(!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) throw new Error("Cloudinary configuration missing");
+  const form=new FormData();
+  form.append("file",file);
+  form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+  form.append("folder",`villagedeko/${folder}/${uid()}`);
+  const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,{method:"POST",body:form});
+  if(!res.ok){const text=await res.text();throw new Error(`Cloudinary upload failed (${res.status}): ${text.slice(0,180)}`);}
+  const data=await res.json();
+  return data.secure_url;
 }
 
-function optimizedImageUrl(url,width=900){
-  if(!url || !url.includes("res.cloudinary.com/")) return url;
-  return url.replace("/image/upload/","/image/upload/f_auto,q_auto,c_limit,w_"+Math.round(width)+"/");
-}
-
-async function handleCloudinaryPhotoPost(event){
+async function handlePhotoPost(event){
   event.preventDefault();if(!requireLogin())return;
   const btn=$("submitBtn");btn.disabled=true;btn.textContent="Publishing...";
   try{
     const file=$("storyImageFile").files?.[0];
-    if(file){
-      if(!file.type.startsWith("image/"))throw new Error("Sirf image upload karein.");
-      if(file.size>8*1024*1024)throw new Error("Image 8MB se chhoti honi chahiye.");
-    }
-    const text=$("storyText").value.trim();
-    if(!text)throw new Error("Caption / story likhein.");
-    const imageUrl=file?await uploadImage(file,"posts"):"";
+    const imageUrl=file?await uploadToStorage(file):"";
     const postType=$("postType").value||"village";
     const village=villages.find(v=>v.id===$("storyVillage").value);
     if(postType==="village" && !village)throw new Error("Village select karein.");
@@ -565,8 +402,8 @@ async function handleCloudinaryPhotoPost(event){
       location:$("storyLocation").value.trim()||(village?.vName||"Chaupal"),
       villageId:village?.id||null,villageName:village?.vName||"",
       vDistrict:village?.vDistrict||"",vState:village?.vState||"",
-      text,imageUrl,postType,likesCount:0,
-      createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+      text:$("storyText").value.trim(),imageUrl,postType,
+      createdAt:serverTimestamp()
     });
     $("chaupalPostForm").reset();
     $("postType").value="village";
@@ -578,10 +415,7 @@ async function handleCloudinaryPhotoPost(event){
     if(village?.id && currentVillage?.id===village.id)await loadVillagePosts();
     loadHome();
     alert("Post published.");
-  }catch(e){
-    console.error("Post failed",e);
-    alert("Post failed: "+(e?.message||"Unknown error"));
-  }finally{btn.disabled=false;btn.textContent="Publish Post";}
+  }catch(e){alert("Post failed: "+e.message);}finally{btn.disabled=false;btn.textContent="Publish Post";}
 }
 
 function addActivityRow(data={}){
@@ -602,13 +436,24 @@ async function handleVillageListing(event){
   event.preventDefault();if(!requireLogin())return;
   const btn=$("listSubmitBtn");btn.disabled=true;btn.textContent="Publishing...";
   try{
-    const files=[...($('villageGalleryFiles').files||[])];const images=[];for(const f of files)images.push(await uploadImage(f,"village-gallery"));
+    const files=[...($('villageGalleryFiles').files||[])];const images=[];for(const f of files)images.push(await uploadToStorage(f));
     const bank={bankName:$("bankName").value.trim(),accountName:$("accountName").value.trim(),accountNumber:$("accountNumber").value.trim(),ifsc:$("ifsc").value.trim()};
     const bankDetails=Object.values(bank).some(Boolean)?bank:null;
     await addDoc(collection(db,"villagesListings"),{ownerUid:uid(),hostName:$("hostName").value.trim(),hostWhatsapp:$("hostWhatsapp").value.trim(),vName:$("vName").value.trim(),vDistrict:$("vDistrict").value.trim(),vState:$("vState").value,vDescription:$("vDescription").value.trim(),images,activities:collectRows("activitiesRows"),packages:collectRows("packagesRows"),bankDetails,createdAt:serverTimestamp()});
     $("listVillageForm").reset();$("activitiesRows").innerHTML="";$("packagesRows").innerHTML="";addActivityRow();addPackageRow();closeModal("listVillageModal");
     await loadVillages();loadHome();alert("Village listed successfully.");
   }catch(e){alert("Listing failed: "+e.message);}finally{btn.disabled=false;btn.textContent="Publish Village Live";}
+}
+
+async function handleProductListing(event){
+  event.preventDefault(); if(!requireLogin())return;
+  const btn=$("productSubmitBtn"); btn.disabled=true; btn.textContent="Publishing...";
+  try{
+    const file=$("productImageFile").files?.[0];
+    const imageUrl=file?await uploadToStorage(file,"products"):"";
+    await addDoc(collection(db,"products"),{ownerUid:uid(),farmer:$("productFarmer").value.trim(),name:$("productName").value.trim(),category:$("productCategory").value,price:$("productPrice").value.trim(),village:$("productVillage").value.trim(),state:$("productState").value,story:$("productStory").value.trim(),imageUrl,createdAt:serverTimestamp()});
+    event.target.reset(); closeModal("productModal"); alert("Product VillageDeko Bazaar mein add ho gaya."); loadMarketplace();
+  }catch(e){alert("Product upload failed: "+e.message);}finally{btn.disabled=false;btn.textContent="Publish Product";}
 }
 
 async function handleEdit(id,event){
@@ -687,7 +532,7 @@ async function handleProfilePhoto(event){
   const input=event.target;
   try{
     input.disabled=true;
-    const url=await uploadImage(file,"profile");
+    const url=await uploadToStorage(file);
     await setDoc(doc(db,"users",uid()),{uid:uid(),displayName:currentUser.displayName||"",email:currentUser.email||"",photoURL:url,updatedAt:serverTimestamp()},{merge:true});
     setProfilePhotoUI(url);
     alert("Profile photo update ho gayi.");
@@ -697,9 +542,9 @@ async function handleProfilePhoto(event){
 
 function updateAuthUI(){
   const logged=!!currentUser;
-  $("drawerName").textContent=logged?(currentUser.displayName||"VillageDeko User"):"Guest";
-  $("drawerEmail").textContent=logged?(currentUser.email||""):"";
-  $("drawerProfileLabel").textContent=logged?(currentUser.displayName||"Your Profile"):"Your Profile";
+  if($("drawerName"))$("drawerName").textContent=logged?(currentUser.displayName||"VillageDeko User"):"Guest";
+  if($("drawerEmail"))$("drawerEmail").textContent=logged?(currentUser.email||""):"";
+  if($("drawerProfileLabel"))$("drawerProfileLabel").textContent=logged?(currentUser.displayName||"Your Profile"):"Your Profile";
   if(!logged)setProfilePhotoUI("");
 }
 
@@ -709,7 +554,7 @@ function closeImageViewer(e){if(e)e.stopPropagation();$("imageViewerModal").clas
 document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("is-open");}));
 $("drawer")?.addEventListener("click",e=>{if(e.target===$("drawer"))closeDrawer();});
 
-Object.assign(window,{openModal,closeModal,openLogin:showLoginGate,googleLogin,openDrawer,closeDrawer,goHome,selectState,filterExplore,openVillage,goBackFromVillage,toggleFollow,showVillageSection,openAddVillagePerson,handleAddVillagePerson,deleteVillagePerson,openPostModal,handleCloudinaryPhotoPost,handleVillageListing,addActivityRow,addPackageRow,toggleLike,savePost,openComments,addComment,handleEdit,handleDelete,handleShare,openWedding,openChaupal,submitWedding,showMyListings,showMyHosts,showMyWeddings,openSettings,openPrivacy,saveSetting,logout,openImageViewer,closeImageViewer,handleProfilePhoto});
+Object.assign(window,{openModal,closeModal,openLogin:showLoginGate,googleLogin,openDrawer,closeDrawer,goHome,openExplore,openExperience,openVisit,openProfile,selectState,filterExplore,openVillage,goBackFromVillage,toggleFollow,showVillageSection,openPostModal,handlePhotoPost,handleVillageListing,addActivityRow,addPackageRow,toggleLike,savePost,openComments,addComment,handleEdit,handleDelete,handleShare,openWedding,openChaupal,submitWedding,showMyListings,showMyHosts,showMyWeddings,openSettings,openPrivacy,saveSetting,logout,openImageViewer,closeImageViewer,handleProfilePhoto});
 
 fillStates();renderStates();addActivityRow();addPackageRow();
 
@@ -724,310 +569,3 @@ onAuthStateChanged(auth,async user=>{
   await loadAllPosts();
   loadHome();
 });
-
-
-const EXPLORE_SECTIONS = [
-  {icon:"🌾", name:"Khet", hint:"Farming, fasal aur kheti ki kahani"},
-  {icon:"🐄", name:"Dairy", hint:"Pashu, doodh aur pashupalak ki zindagi"},
-  {icon:"🏠", name:"Ghar & Daily Life", hint:"Rozmarra ki village life"},
-  {icon:"🛕", name:"Mandir", hint:"Mandir, parampara aur aastha"},
-  {icon:"💧", name:"Paani", hint:"Kuan, talab aur paani ki kahani"},
-  {icon:"🏫", name:"School", hint:"School aur village education"},
-  {icon:"🛍️", name:"Local Market", hint:"Haat, dukaan aur local bazaar"},
-  {icon:"🍲", name:"Local Food", hint:"Gaon ka khaana aur recipes"},
-  {icon:"🎵", name:"Culture", hint:"Geet, utsav aur traditions"},
-  {icon:"🎨", name:"Local Art", hint:"Hunar, handicraft aur kala"}
-];
-let villageExploreStories=[];
-
-async function loadVillageExplore(){
-  if(!currentVillage){ villageExploreStories=[]; return; }
-  try{
-    const snap=await getDocs(collection(db,"villagesListings",currentVillage.id,"exploreStories"));
-    villageExploreStories=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-  }catch(e){ console.error("Explore load failed",e); villageExploreStories=[]; }
-  renderVillageExplore();
-}
-
-function renderVillageExplore(){
-  const c=$("villageSectionExplore"); if(!c||!currentVillage)return;
-  const cards=EXPLORE_SECTIONS.map(sec=>{
-    const stories=villageExploreStories.filter(x=>x.section===`${sec.icon} ${sec.name}` || x.section===sec.name);
-    const storyHtml=stories.length?stories.map(st=>`<article class="explore-story-card">${st.imageUrl?`<img src="${esc(optimizedImageUrl(st.imageUrl,700))}" loading="lazy" alt="${esc(st.title||sec.name)}">`:``}<div class="p-3"><b class="text-sm">${esc(st.title||sec.name)}</b><p class="text-xs text-slate-600 mt-1 leading-relaxed">${esc(st.story||"")}</p><small class="text-[10px] text-slate-400">${esc(st.author||"VillageDeko Contributor")}</small></div></article>`).join(""):`<div class="explore-empty">Abhi is section ki story add nahi hui.</div>`;
-    return `<section class="explore-section"><div class="explore-section-head"><div><h4>${sec.icon} ${sec.name}</h4><p>${sec.hint}</p></div><button class="add-btn" onclick="openExploreStoryModal('${esc(sec.icon+" "+sec.name)}')">+ Story</button></div><div class="explore-stories-grid">${storyHtml}</div></section>`;
-  }).join("");
-  c.innerHTML=`<div class="explore-intro"><div><p class="text-[10px] font-black uppercase tracking-widest text-amber-700">EXPLORE VILLAGE</p><h3 class="text-lg font-black mt-1">${esc(currentVillage.vName)} ko section-by-section samjho</h3><p class="text-xs text-slate-500 mt-1">Village → Section → Story. Har section mein real village context aur kahani add ki ja sakti hai.</p></div><button class="primary" onclick="openExploreStoryModal()">+ Add Story</button></div>${cards}`;
-}
-
-function openExploreStoryModal(section=""){
-  if(!requireLogin())return;
-  $("exploreSection").value=section||"";
-  $("exploreTitle").value=""; $("exploreStory").value=""; $("exploreImageFile").value="";
-  openModal("addExploreStoryModal");
-}
-
-async function handleAddExploreStory(e){
-  e.preventDefault(); if(!requireLogin()||!currentVillage)return;
-  const btn=$("exploreSubmitBtn"); btn.disabled=true; btn.textContent="Saving...";
-  try{
-    const file=$("exploreImageFile")?.files?.[0];
-    const imageUrl=file?await uploadImage(file):"";
-    await addDoc(collection(db,"villagesListings",currentVillage.id,"exploreStories"),{
-      ownerUid:uid(), villageId:currentVillage.id, villageName:currentVillage.vName,
-      vDistrict:currentVillage.vDistrict, vState:currentVillage.vState,
-      section:$("exploreSection").value, title:$("exploreTitle").value.trim(),
-      story:$("exploreStory").value.trim(), imageUrl, author:currentUser?.displayName||"VillageDeko Contributor",
-      createdAt:serverTimestamp()
-    });
-    closeModal("addExploreStoryModal"); await loadVillageExplore(); alert("Explore story added.");
-  }catch(err){ alert("Story save failed: "+err.message); }
-  finally{ btn.disabled=false; btn.textContent="Save Story"; }
-}
-
-
-/* ===== STEP 7 — REAL VILLAGE FEED ===== */
-function normalizeVillagePostForFeed(post = {}) {
-  return { ...post, village: post.village || post.villageName || "", district: post.district || "", state: post.state || "", story: post.story || post.caption || post.description || "", personName: post.personName || post.authorName || post.userName || "Village contributor", imageUrl: post.imageUrl || post.image || post.photoURL || "" };
-}
-function getVillageFeedContext(post) {
-  const p=normalizeVillagePostForFeed(post);
-  return { story:p.story, personName:p.personName, location:[p.village,p.district,p.state].filter(Boolean).join(" · "), imageUrl:p.imageUrl, postId:p.id || p.postId || "" };
-}
-function getVillageFeedNavigation(post) {
-  const p=normalizeVillagePostForFeed(post);
-  return { village:p.village, district:p.district, state:p.state, villageId:p.villageId || p.villageRef || "" };
-}
-
-
-/* ===== STEP 8 — REAL EK DIN GAON MEIN ===== */
-const EK_DIN_MOMENTS = [
-  { id:"05-30", time:"05:30 AM", title:"Gaon ki subah", icon:"🌅" },
-  { id:"06-00", time:"06:00 AM", title:"Pashu / Dairy", icon:"🐄" },
-  { id:"07-00", time:"07:00 AM", title:"Khet", icon:"🌾" },
-  { id:"09-00", time:"09:00 AM", title:"Chai / Nashta", icon:"☕" },
-  { id:"11-00", time:"11:00 AM", title:"Village Work", icon:"🧑‍🌾" },
-  { id:"13-00", time:"01:00 PM", title:"Ghar ka Khana", icon:"🍲" },
-  { id:"15-00", time:"03:00 PM", title:"Dopahar", icon:"🌤️" },
-  { id:"17-00", time:"05:00 PM", title:"Village Life", icon:"🏡" },
-  { id:"19-00", time:"07:00 PM", title:"Mandir / Bhajan", icon:"🛕" },
-  { id:"21-00", time:"09:00 PM", title:"Gaon ki Raat", icon:"🌙" }
-];
-
-function normalizeEkDinMoment(item = {}) {
-  return {
-    ...item,
-    time: item.time || "",
-    title: item.title || "",
-    photoUrl: item.photoUrl || item.imageUrl || item.image || "",
-    videoUrl: item.videoUrl || "",
-    audioUrl: item.audioUrl || "",
-    voiceUrl: item.voiceUrl || "",
-    explanation: item.explanation || item.description || "",
-    personName: item.personName || item.authorName || "",
-    village: item.village || item.villageName || "",
-    district: item.district || "",
-    state: item.state || ""
-  };
-}
-
-function getEkDinMomentContext(moment = {}) {
-  const m = normalizeEkDinMoment(moment);
-  return {
-    id: m.id || "",
-    time: m.time,
-    title: m.title,
-    photoUrl: m.photoUrl,
-    videoUrl: m.videoUrl,
-    audioUrl: m.audioUrl || m.voiceUrl,
-    explanation: m.explanation,
-    personName: m.personName,
-    location: [m.village,m.district,m.state].filter(Boolean).join(" · ")
-  };
-}
-
-/* ===== STEP 9 — REAL FOOD JOURNEY ===== */
-const REAL_FOOD_JOURNEYS = {
-  gehu: {
-    name: "Gehu",
-    icon: "🌾",
-    stages: [
-      "Beej","Khet","Buwai","Paani","Fasal","Katai","Mandi","Chakki","Aata","Roti"
-    ]
-  },
-  sabzi: {
-    name: "Sabzi",
-    icon: "🥕",
-    stages: [
-      "Beej / Ropai","Khet","Paani","Crop Care","Todai","Sorting","Mandi","Ghar","Plate"
-    ]
-  },
-  doodh: {
-    name: "Doodh",
-    icon: "🥛",
-    stages: [
-      "Pashu","Doodh","Collection","Transport","Processing","Ghar","Cup / Plate"
-    ]
-  },
-  dal: {
-    name: "Dal",
-    icon: "🫘",
-    stages: [
-      "Beej","Khet","Harvest","Cleaning","Milling","Market","Ghar","Plate"
-    ]
-  },
-  masale: {
-    name: "Masale",
-    icon: "🌶️",
-    stages: [
-      "Crop","Harvest","Drying","Cleaning","Processing","Market","Kitchen","Plate"
-    ]
-  }
-};
-
-function normalizeFoodJourneyStage(stage = {}, index = 0) {
-  return {
-    ...stage,
-    order: stage.order ?? index + 1,
-    title: stage.title || "",
-    explanation: stage.explanation || stage.description || "",
-    farmerName: stage.farmerName || stage.personName || "",
-    village: stage.village || "",
-    district: stage.district || "",
-    state: stage.state || "",
-    photoUrl: stage.photoUrl || stage.imageUrl || "",
-    videoUrl: stage.videoUrl || "",
-    audioUrl: stage.audioUrl || stage.voiceUrl || ""
-  };
-}
-
-function getFoodJourneyLocation(stage = {}) {
-  return [stage.village, stage.district, stage.state].filter(Boolean).join(" · ");
-}
-
-/* ===== STEP 10 — INDIA VILLAGE MAP ===== */
-const VILLAGE_NAV_LEVELS = ["India","State","District","Village"];
-
-function normalizeVillageLocation(v = {}) {
-  return {
-    ...v,
-    village: v.village || v.villageName || v.name || "",
-    district: v.district || "",
-    state: v.state || "",
-    latitude: v.latitude ?? v.lat ?? null,
-    longitude: v.longitude ?? v.lng ?? null,
-    imageUrl: v.imageUrl || v.photoUrl || ""
-  };
-}
-
-function getVillageHierarchy(v = {}) {
-  const item = normalizeVillageLocation(v);
-  return {
-    state: item.state,
-    district: item.district,
-    village: item.village
-  };
-}
-
-function villageLocationLabel(v = {}) {
-  const item = normalizeVillageLocation(v);
-  return [item.village,item.district,item.state].filter(Boolean).join(" · ");
-}
-
-/* ===== STEP 11 — VISIT THIS VILLAGE ===== */
-const VILLAGE_VISIT_EXPERIENCES = [
-  "Homestay",
-  "Farming Experience",
-  "Dairy Experience",
-  "Local Food",
-  "Culture",
-  "Temple",
-  "Local Guide"
-];
-
-const FAMILY_VILLAGE_PLAN = {
-  day1: ["Village","Farming","Food","Culture"],
-  day2: ["Dairy","Market","Local Life"]
-};
-
-function normalizeVillageVisit(v = {}) {
-  return {
-    ...v,
-    village: v.village || v.villageName || "",
-    district: v.district || "",
-    state: v.state || "",
-    homestay: v.homestay || null,
-    experiences: v.experiences || [],
-    localGuide: v.localGuide || null
-  };
-}
-
-function getVillageVisitLocation(v = {}) {
-  const item = normalizeVillageVisit(v);
-  return [item.village,item.district,item.state].filter(Boolean).join(" · ");
-}
-
-/* ===== STEP 12 — FAMILY VILLAGE EXPERIENCE ===== */
-const FAMILY_LEARNING_STOPS = [
-  { id:"seed", title:"Beej", icon:"🌱", lesson:"Beej se fasal ki shuruaat hoti hai." },
-  { id:"field", title:"Khet", icon:"🌾", lesson:"Khet mein fasal grow hoti hai." },
-  { id:"milk", title:"Doodh", icon:"🐄", lesson:"Doodh animal se aata hai." },
-  { id:"farmer", title:"Farmer", icon:"👨‍🌾", lesson:"Farmer food journey ka important hissa hai." },
-  { id:"food", title:"Local Food", icon:"🍲", lesson:"Local food ke peeche village ki mehnat aur story hoti hai." },
-  { id:"culture", title:"Culture", icon:"🎵", lesson:"Culture ko logon ki stories aur traditions se samjha ja sakta hai." }
-];
-
-const FAMILY_LESSONS = [
-  "Roti supermarket mein nahi ugti.",
-  "Doodh packet se pehle animal se aata hai."
-];
-
-function normalizeFamilyVillageExperience(data = {}) {
-  return {
-    ...data,
-    village: data.village || data.villageName || "",
-    district: data.district || "",
-    state: data.state || "",
-    stops: data.stops || FAMILY_LEARNING_STOPS,
-    lessons: data.lessons || FAMILY_LESSONS
-  };
-}
-
-/* ===== STEP 13 — VILLAGE STORIES ===== */
-const VILLAGE_STORY_TYPES = [
-  {id:"farmer", title:"Kheti ki Kahani", icon:"👨‍🌾"},
-  {id:"old-village", title:"Purane Gaon ki Yaadein", icon:"🧓"},
-  {id:"recipe", title:"Local Recipe", icon:"👩‍🍳"},
-  {id:"temple", title:"Mandir ki Kahani", icon:"🛕"},
-  {id:"old-new", title:"Old Village → New Village", icon:"📸"}
-];
-
-function normalizeVillageStory(story = {}) {
-  return {
-    ...story,
-    title: story.title || "",
-    story: story.story || story.description || "",
-    personName: story.personName || story.authorName || "",
-    village: story.village || story.villageName || "",
-    district: story.district || "",
-    state: story.state || "",
-    photoUrl: story.photoUrl || story.imageUrl || "",
-    videoUrl: story.videoUrl || "",
-    audioUrl: story.audioUrl || story.voiceUrl || "",
-    oldPhotoUrl: story.oldPhotoUrl || "",
-    currentPhotoUrl: story.currentPhotoUrl || ""
-  };
-}
-
-/* ===== STEP 14 — RURAL CULTURE ===== */
-const RURAL_CULTURE_CATEGORIES=[
-{id:"folk-songs",title:"Lok Geet",icon:"🎶"},{id:"instruments",title:"Local Instruments",icon:"🥁"},
-{id:"bhajan",title:"Bhajan / Kirtan",icon:"🛕"},{id:"folk-dance",title:"Lok Nritya",icon:"💃"},
-{id:"festivals",title:"Festivals",icon:"🎉"},{id:"marriage",title:"Marriage Traditions",icon:"👰"},
-{id:"old-stories",title:"Old Stories",icon:"🧓"},{id:"food-traditions",title:"Food Traditions",icon:"🍲"},
-{id:"clothes",title:"Traditional Clothes",icon:"👗"},{id:"local-art",title:"Local Art",icon:"🎨"}];
-function normalizeRuralCultureStory(item={}){return {...item,title:item.title||"",category:item.category||"",story:item.story||item.description||"",personName:item.personName||item.authorName||"",village:item.village||item.villageName||"",district:item.district||"",state:item.state||"",photoUrl:item.photoUrl||item.imageUrl||"",videoUrl:item.videoUrl||"",audioUrl:item.audioUrl||item.voiceUrl||""};}
-
-/* ===== STEP 15 — KISAN SE SEEKHO ===== */
-const KISAN_LEARNING_STEPS=[{id:"land",title:"Land Preparation",icon:"🚜"},{id:"seed",title:"Seed",icon:"🌱"},{id:"sowing",title:"Sowing",icon:"🌾"},{id:"water",title:"Water",icon:"💧"},{id:"care",title:"Crop Care",icon:"🌿"},{id:"harvest",title:"Harvest",icon:"🌾"},{id:"mandi",title:"Mandi",icon:"🛒"},{id:"food",title:"Food",icon:"🍲"}];
-const KISAN_KIDS_QUESTIONS=["Fasal ko paani kyun chahiye?","Tractor kya karta hai?","Kisan mandi kyun jaata hai?"];
-function normalizeKisanLesson(lesson={}){return {...lesson,title:lesson.title||"",explanation:lesson.explanation||lesson.description||"",farmerName:lesson.farmerName||lesson.personName||"",village:lesson.village||lesson.villageName||"",district:lesson.district||"",state:lesson.state||"",photoUrl:lesson.photoUrl||lesson.imageUrl||"",videoUrl:lesson.videoUrl||"",audioUrl:lesson.audioUrl||lesson.voiceUrl||""};}
