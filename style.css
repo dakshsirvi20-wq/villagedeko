@@ -621,7 +621,282 @@ button {
   .day-timeline {
     grid-template-columns: 1fr;
   }
+/* =========================================
+   VILLAGEDEKO — VILLAGE FEED POSTS
+========================================= */
 
+#villageFeed {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Individual post */
+.village-post-card {
+  width: 100%;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* Image container */
+.post-image-wrapper {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  background: var(--green-light);
+}
+
+/* Actual post image */
+.post-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image fallback */
+.post-image-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  place-items: center;
+  background: var(--green-light);
+  color: var(--green);
+  font-size: 60px;
+}
+
+/* Post content */
+.post-content {
+  padding: 18px 20px 20px;
+}
+
+/* Location + delete */
+.post-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.post-location {
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.post-delete-button {
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #f5e8e5;
+  color: #9b3d32;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Author */
+.post-author {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Caption */
+.post-text {
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Like + comment */
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.post-like-button,
+.post-comment-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 13px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.post-like-button.liked {
+  background: #f9e7e7;
+  color: #b33b3b;
+}
+
+.post-like-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+/* Comments */
+.comments-area {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}
+
+.comments-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.comment-item {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--cream);
+}
+
+.comment-item strong {
+  color: var(--green-dark);
+  font-size: 13px;
+}
+
+.comment-item p {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.comment-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--white);
+}
+
+.comment-input:focus {
+  border-color: var(--green);
+}
+
+.comment-submit {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 15px;
+  background: var(--green);
+  color: var(--white);
+  font-weight: 700;
+}
+
+/* Loading / empty message */
+.feed-loading,
+.feed-message {
+  padding: 30px 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--white);
+  color: var(--muted);
+  text-align: center;
+}
+
+
+/* =========================================
+   MOBILE FEED
+========================================= */
+
+@media (max-width: 700px) {
+
+  #villageFeed {
+    width: 100%;
+  }
+
+  .village-post-card {
+    margin-bottom: 18px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  /*
+    IMPORTANT:
+    Image ab full original height mein nahi jayegi.
+    Fixed mobile height rakhi hai.
+  */
+  .post-image-wrapper {
+    height: 330px;
+  }
+
+  .post-content {
+    padding: 14px 15px 16px;
+  }
+
+  .post-location {
+    font-size: 12px;
+  }
+
+  .post-author {
+    font-size: 12px;
+  }
+
+  .post-text {
+    font-size: 14px;
+  }
+
+  .post-actions {
+    gap: 7px;
+  }
+
+  .post-like-button,
+  .post-comment-button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .comment-form {
+    flex-direction: column;
+  }
+
+  .comment-submit {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+
+  .post-image-wrapper {
+    height: 280px;
+  }
+
+  .post-content {
+    padding: 13px;
+  }
+
+}
   .experience-card {
     min-height: auto;
   }
