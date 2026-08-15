@@ -1,3 +1,4 @@
+```css
 /* =========================================
    VILLAGEDEKO — FOUNDATION STYLES
 ========================================= */
@@ -16,6 +17,11 @@
   --shadow: 0 12px 35px rgba(43, 62, 47, 0.09);
   --radius: 22px;
 }
+
+
+/* =========================================
+   RESET
+========================================= */
 
 * {
   box-sizing: border-box;
@@ -42,6 +48,11 @@ input {
 button {
   cursor: pointer;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .site-header {
   position: sticky;
@@ -87,6 +98,11 @@ button {
   color: var(--green);
   font-size: 19px;
 }
+
+
+/* =========================================
+   HERO
+========================================= */
 
 .hero {
   min-height: 600px;
@@ -140,6 +156,11 @@ button {
   font-size: 18px;
 }
 
+
+/* =========================================
+   SEARCH
+========================================= */
+
 .search-box {
   display: flex;
   align-items: center;
@@ -172,6 +193,11 @@ button {
   color: var(--white);
   font-weight: 700;
 }
+
+
+/* =========================================
+   SECTIONS
+========================================= */
 
 .section {
   width: min(1180px, 88%);
@@ -206,6 +232,11 @@ button {
   font-weight: 700;
   white-space: nowrap;
 }
+
+
+/* =========================================
+   VILLAGE CARD
+========================================= */
 
 .village-card {
   display: grid;
@@ -285,6 +316,11 @@ button {
   transform: translateY(-1px);
 }
 
+
+/* =========================================
+   EXPERIENCE
+========================================= */
+
 .experience-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -323,6 +359,11 @@ button {
   margin-top: 4px;
   color: var(--muted);
 }
+
+
+/* =========================================
+   DAY SECTION
+========================================= */
 
 .day-section {
   margin-top: 55px;
@@ -363,6 +404,11 @@ button {
   color: var(--muted);
 }
 
+
+/* =========================================
+   FOOD
+========================================= */
+
 .food-section {
   padding-bottom: 55px;
 }
@@ -399,6 +445,11 @@ button {
   color: var(--brown);
   font-size: 22px;
 }
+
+
+/* =========================================
+   STORIES
+========================================= */
 
 .stories-grid {
   display: grid;
@@ -441,6 +492,11 @@ button {
   color: var(--muted);
 }
 
+
+/* =========================================
+   FINAL CTA
+========================================= */
+
 .final-cta {
   width: min(1050px, 88%);
   margin: 90px auto;
@@ -467,6 +523,11 @@ button {
   color: #dbe7da;
 }
 
+
+/* =========================================
+   FOOTER
+========================================= */
+
 .site-footer {
   padding: 45px 6%;
   border-top: 1px solid var(--border);
@@ -490,177 +551,8 @@ button {
 
 
 /* =========================================
-   RESPONSIVE
+   VILLAGEDEKO — VILLAGE FEED
 ========================================= */
-
-@media (max-width: 900px) {
-
-  .hero {
-    min-height: 560px;
-  }
-
-  .experience-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .day-timeline {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .stories-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 700px) {
-
-  .site-header {
-    padding: 13px 5%;
-  }
-
-  .brand h1 {
-    font-size: 20px;
-  }
-
-  .brand p {
-    display: none;
-  }
-
-  .hero {
-    min-height: 650px;
-    padding: 55px 6%;
-  }
-
-  .hero h2 {
-    font-size: 45px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-
-  .search-box {
-    flex-wrap: wrap;
-    padding: 7px;
-  }
-
-  .search-box input {
-    width: calc(100% - 45px);
-  }
-
-  .search-box button {
-    width: 100%;
-    margin-top: 5px;
-  }
-
-  .section {
-    width: 90%;
-    padding-top: 60px;
-  }
-
-  .section-heading {
-    display: block;
-  }
-
-  .section-heading .text-button {
-    margin-top: 15px;
-  }
-
-  .village-card {
-    grid-template-columns: 1fr;
-  }
-
-  .village-image,
-  .image-placeholder {
-    min-height: 260px;
-  }
-
-  .village-card-content {
-    padding: 28px;
-  }
-
-  .village-card h3 {
-    font-size: 27px;
-  }
-
-  .experience-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .experience-card {
-    min-height: 155px;
-    padding: 18px;
-  }
-
-  .day-section {
-    padding: 55px 5%;
-  }
-
-  .day-timeline {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .food-journey {
-    justify-content: flex-start;
-  }
-
-  .final-cta {
-    width: 90%;
-    margin: 65px auto;
-    padding: 55px 22px;
-  }
-}
-
-@media (max-width: 430px) {
-
-  .hero h2 {
-    font-size: 39px;
-  }
-
-  .experience-grid,
-  .day-timeline {
-    grid-template-columns: 1fr;
-  }
-   /* =========================================
-   VILLAGE FEED — DESKTOP IMAGE FIX
-========================================= */
-
-.post-image-wrapper {
-  width: 100% !important;
-  height: 420px !important;
-  max-height: 420px !important;
-  overflow: hidden !important;
-}
-
-.post-image {
-  display: block !important;
-  width: 100% !important;
-  height: 420px !important;
-  max-height: 420px !important;
-  object-fit: cover !important;
-}
-
-/* Desktop */
-@media (min-width: 701px) {
-  .village-post-card {
-    max-width: 850px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  .post-image-wrapper {
-    height: 420px !important;
-    max-height: 420px !important;
-  }
-
-  .post-image {
-    height: 420px !important;
-    max-height: 420px !important;
-  }
-}
-   /* =========================================
-   VILLAGEDEKO — VILLAGE FEED POSTS
- ========================================= */
 
 #villageFeed {
   width: 100%;
@@ -668,10 +560,15 @@ button {
   margin: 0 auto;
 }
 
-/* Individual post */
+
+/* =========================================
+   INDIVIDUAL POST
+========================================= */
+
 .village-post-card {
   width: 100%;
-  margin-bottom: 24px;
+  max-width: 850px;
+  margin: 0 auto 30px;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -679,35 +576,37 @@ button {
   box-shadow: var(--shadow);
 }
 
-/* Image container */
+
+/* =========================================
+   POST IMAGE
+
+   IMPORTANT:
+   No fixed 330px / 420px height.
+   Image keeps its original ratio.
+========================================= */
+
 .post-image-wrapper {
-  width: 100% !important;
-  height: 330px !important;
-  max-height: 330px !important;
-  overflow: hidden !important;
-  position: relative !important;
+  width: 100%;
+  overflow: hidden;
+  background: #eef3eb;
 }
 
-.post-image {
-  display: block !important;
-  width: 100% !important;
-  height: 330px !important;
-  max-height: 330px !important;
-  object-fit: cover !important;
-}
-/* Actual post image */
 .post-image {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
-/* Image fallback */
+
+/* =========================================
+   IMAGE FALLBACK
+========================================= */
+
 .post-image-placeholder {
   display: grid;
   width: 100%;
-  height: 100%;
   min-height: 250px;
   place-items: center;
   background: var(--green-light);
@@ -715,12 +614,20 @@ button {
   font-size: 60px;
 }
 
-/* Post content */
+
+/* =========================================
+   POST CONTENT
+========================================= */
+
 .post-content {
   padding: 18px 20px 20px;
 }
 
-/* Location + delete */
+
+/* =========================================
+   LOCATION + DELETE
+========================================= */
+
 .post-top-row {
   display: flex;
   align-items: center;
@@ -745,7 +652,11 @@ button {
   font-weight: 700;
 }
 
-/* Author */
+
+/* =========================================
+   AUTHOR
+========================================= */
+
 .post-author {
   margin-top: 8px;
   color: var(--muted);
@@ -753,7 +664,11 @@ button {
   font-weight: 600;
 }
 
-/* Caption */
+
+/* =========================================
+   CAPTION
+========================================= */
+
 .post-text {
   margin-top: 12px;
   color: var(--text);
@@ -762,7 +677,11 @@ button {
   white-space: pre-wrap;
 }
 
-/* Like + comment */
+
+/* =========================================
+   LIKE + COMMENT
+========================================= */
+
 .post-actions {
   display: flex;
   align-items: center;
@@ -793,7 +712,11 @@ button {
   opacity: 0.6;
 }
 
-/* Comments */
+
+/* =========================================
+   COMMENTS
+========================================= */
+
 .comments-area {
   margin-top: 15px;
   padding-top: 15px;
@@ -852,7 +775,11 @@ button {
   font-weight: 700;
 }
 
-/* Loading / empty message */
+
+/* =========================================
+   FEED LOADING / EMPTY
+========================================= */
+
 .feed-loading,
 .feed-message {
   padding: 30px 20px;
@@ -865,36 +792,179 @@ button {
 
 
 /* =========================================
-   MOBILE FEED
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .hero {
+    min-height: 560px;
+  }
+
+  .experience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .day-timeline {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
 ========================================= */
 
 @media (max-width: 700px) {
 
+  .site-header {
+    padding: 13px 5%;
+  }
+
+  .brand h1 {
+    font-size: 20px;
+  }
+
+  .brand p {
+    display: none;
+  }
+
+  .hero {
+    min-height: 650px;
+    padding: 55px 6%;
+  }
+
+  .hero h2 {
+    font-size: 45px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+
+  /* Search */
+
+  .search-box {
+    flex-wrap: wrap;
+    padding: 7px;
+  }
+
+  .search-box input {
+    width: calc(100% - 45px);
+  }
+
+  .search-box button {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+
+  /* Sections */
+
+  .section {
+    width: 90%;
+    padding-top: 60px;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading .text-button {
+    margin-top: 15px;
+  }
+
+
+  /* Village card */
+
+  .village-card {
+    grid-template-columns: 1fr;
+  }
+
+  .village-image,
+  .image-placeholder {
+    min-height: 260px;
+  }
+
+  .village-card-content {
+    padding: 28px;
+  }
+
+  .village-card h3 {
+    font-size: 27px;
+  }
+
+
+  /* Experience */
+
+  .experience-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .experience-card {
+    min-height: 155px;
+    padding: 18px;
+  }
+
+
+  /* Day */
+
+  .day-section {
+    padding: 55px 5%;
+  }
+
+  .day-timeline {
+    grid-template-columns: 1fr 1fr;
+  }
+
+
+  /* Food */
+
+  .food-journey {
+    justify-content: flex-start;
+  }
+
+
+  /* CTA */
+
+  .final-cta {
+    width: 90%;
+    margin: 65px auto;
+    padding: 55px 22px;
+  }
+
+
+  /* Feed */
+
   #villageFeed {
     width: 100%;
+    max-width: none;
   }
 
   .village-post-card {
+    width: 100%;
+    max-width: none;
     margin-bottom: 18px;
     border-radius: 0;
     border-left: 0;
     border-right: 0;
   }
 
-  /*
-    IMPORTANT:
-    Image ab full original height mein nahi jayegi.
-    Fixed mobile height rakhi hai.
-  */
- .post-image-wrapper {
-  height: 280px !important;
-  max-height: 280px !important;
-}
+  .post-image-wrapper {
+    width: 100%;
+  }
 
-.post-image {
-  height: 280px !important;
-  max-height: 280px !important;
-}
+  .post-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
 
   .post-content {
     padding: 14px 15px 16px;
@@ -939,52 +1009,26 @@ button {
 
 @media (max-width: 430px) {
 
-  .post-image-wrapper {
-    height: 280px;
+  .hero h2 {
+    font-size: 39px;
+  }
+
+  .experience-grid,
+  .day-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-card {
+    min-height: auto;
+  }
+
+  .post-image {
+    width: 100%;
+    height: auto;
   }
 
   .post-content {
     padding: 13px;
-  }
-
-}
-  .experience-card {
-    min-height: auto;
-  }
-}
-```css
-/* =========================================
-   VILLAGEDEKO — DESKTOP FEED FINAL FIX
-========================================= */
-
-@media (min-width: 701px) {
-
-  #villageFeed {
-    width: 100% !important;
-    max-width: 900px !important;
-    margin: 0 auto !important;
-  }
-
-  .village-post-card {
-    width: 100% !important;
-    max-width: 850px !important;
-    margin: 0 auto 30px auto !important;
-    overflow: hidden !important;
-  }
-
-  .post-image-wrapper {
-    width: 100% !important;
-    height: 420px !important;
-    max-height: 420px !important;
-    overflow: hidden !important;
-  }
-
-  .post-image {
-    display: block !important;
-    width: 100% !important;
-    height: 420px !important;
-    max-height: 420px !important;
-    object-fit: cover !important;
   }
 
 }
