@@ -952,3 +952,40 @@ button {
     min-height: auto;
   }
 }
+```css
+/* =========================================
+   VILLAGEDEKO — DESKTOP FEED FINAL FIX
+========================================= */
+
+@media (min-width: 701px) {
+
+  #villageFeed {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+
+  .village-post-card {
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 0 auto 30px auto !important;
+    overflow: hidden !important;
+  }
+
+  .post-image-wrapper {
+    width: 100% !important;
+    height: 420px !important;
+    max-height: 420px !important;
+    overflow: hidden !important;
+  }
+
+  .post-image {
+    display: block !important;
+    width: 100% !important;
+    height: 420px !important;
+    max-height: 420px !important;
+    object-fit: cover !important;
+  }
+
+}
+```
