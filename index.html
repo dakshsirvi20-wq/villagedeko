@@ -1,109 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#b45309">
-  <title>VillageDeko — India ke Gaon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Village Tourism - Discover the Soul of India</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
 </head>
-<body class="text-slate-900 antialiased pb-24">
+<body class="font-sans antialiased bg-gray-50 text-gray-800">
 
-<!-- LOGIN GATE: app remains hidden until Google authentication succeeds. -->
-<section id="loginGate" class="login-gate">
-  <div class="login-box">
-    <div class="login-logo">🌾</div>
-    <p class="login-kicker">WELCOME TO</p>
-    <h1><span>Village</span>Deko</h1>
-    <p class="login-subtitle">India ke asli gaon</p>
-    <div class="login-art">🏡 &nbsp; 📸 &nbsp; 🌿</div>
-    <h2>Gaon explore karo, post karo aur follow karo.</h2>
-    <button id="googleLoginGateBtn" onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button>
-    <p id="loginError" class="login-error hidden"></p>
-    <p class="login-note">VillageDeko par dekhne, post karne, follow karne aur apni post manage karne ke liye Google se login zaroori hai.</p>
+  <!-- Top Bar -->
+  <div class="bg-[#1b2a14] text-white text-xs py-2 px-6 flex justify-between items-center">
+    <div><i class="fa-solid fa-compass mr-2"></i> Experience the Real India</div>
+    <div class="flex items-center space-x-4">
+      <span>Follow Us :</span>
+      <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      <span class="ml-4"><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</span>
+    </div>
   </div>
-</section>
 
-<div id="appShell" class="hidden">
-<header class="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-<div class="max-w-4xl xl mx-auto px-4 py-3 space-y-3">
-    <div class="flex items-center justify-between gap-3">
-      <button onclick="goHome()" class="flex items-center gap-2 text-left">
-        <div class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-sm">🌾</div>
-        <div><h1 class="text-base font-extrabold tracking-tight"><span class="text-amber-700">Village</span>Deko</h1><span class="text-[10px] font-bold text-slate-500">India ke asli gaon</span></div>
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <div class="bg-amber-800 text-white p-2 rounded-md"><i class="fa-solid fa-house-chimney text-xl"></i></div>
+      <div>
+        <h1 class="text-xl font-bold text-amber-900 leading-tight">Village Tourism</h1>
+        <p class="text-[10px] text-gray-500 tracking-wide uppercase">Discover the Soul of India</p>
+      </div>
+    </div>
+    
+    <div class="hidden md:flex space-x-6 text-sm font-semibold text-gray-700">
+      <a href="#" class="text-green-700">Home</a>
+      <a href="#destinations" class="hover:text-green-700">Destinations <i class="fa-solid fa-chevron-down text-xs"></i></a>
+      <a href="#experiences" class="hover:text-green-700">Experiences <i class="fa-solid fa-chevron-down text-xs"></i></a>
+      <a href="#" class="hover:text-green-700">Stay</a>
+      <a href="#" class="hover:text-green-700">Packages</a>
+      <a href="#" class="hover:text-green-700">About Us</a>
+      <a href="#" class="hover:text-green-700">Contact Us</a>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <button id="auth-btn" class="bg-[#3b591b] hover:bg-green-900 text-white text-sm font-semibold py-2 px-5 rounded-md">
+        Plan Your Trip
       </button>
-      <button onclick="openDrawer()" id="topProfileBtn" class="profile-trigger" aria-label="Open profile"><span id="topProfileEmoji">👤</span><img id="topProfilePhoto" class="profile-photo hidden" alt="Profile photo"></button>
     </div>
-    <div class="flex gap-2">
-      <div class="relative flex-1"><span class="absolute left-3 top-2.5">🔎</span><input id="globalSearch" oninput="filterExplore(this.value)" placeholder="Search village, state, district, activity..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 outline-none"></div>
-      <select id="stateSelect" onchange="selectState(this.value)" class="w-32 text-xs bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 font-bold outline-none"><option value="">All India</option></select>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-bg h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative">
+    <p class="italic text-lg text-amber-200">~~ Welcome to ~~</p>
+    <h1 class="text-5xl font-extrabold uppercase tracking-wide my-2">Village Tourism</h1>
+    <h2 class="text-2xl font-serif italic text-amber-100 mb-3">Live. Explore. Connect.</h2>
+    <p class="max-w-xl text-sm opacity-90 mb-12">
+      Discover the untouched beauty of Indian villages, rich culture, warm hospitality and peaceful living.
+    </p>
+
+    <!-- Search Box Floating -->
+    <div class="bg-white text-gray-800 rounded-lg p-3 shadow-2xl flex flex-wrap md:flex-nowrap items-center gap-3 w-full max-w-4xl absolute -bottom-8">
+      <div class="flex items-center border-r px-3 flex-1">
+        <i class="fa-solid fa-location-dot text-gray-400 mr-2"></i>
+        <input type="text" id="search-location" placeholder="Where do you want to go?" class="w-full text-sm outline-none" />
+      </div>
+      <div class="flex items-center border-r px-3">
+        <i class="fa-solid fa-calendar-days text-gray-400 mr-2"></i>
+        <input type="text" placeholder="Check In" class="w-full text-sm outline-none" />
+      </div>
+      <div class="flex items-center border-r px-3">
+        <i class="fa-solid fa-calendar-days text-gray-400 mr-2"></i>
+        <input type="text" placeholder="Check Out" class="w-full text-sm outline-none" />
+      </div>
+      <div class="flex items-center px-3">
+        <i class="fa-solid fa-user text-gray-400 mr-2"></i>
+        <input type="text" placeholder="Guests" class="w-20 text-sm outline-none" />
+      </div>
+      <button id="search-btn" class="bg-[#4d6b24] hover:bg-green-800 text-white font-semibold py-2.5 px-6 rounded-md">
+        Search
+      </button>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="max-w-4xl mx-auto p-4 space-y-5">
-  <section id="homeView" class="space-y-5">
-    <div class="hero-card rounded-3xl p-5 text-white shadow-lg">
-      <p class="text-[10px] uppercase tracking-widest font-black text-amber-100">🇮🇳 Explore India</p>
-      <h2 class="text-2xl font-black mt-1">Gaon dekho, follow karo, yaad rakho.</h2>
-      
-      <div class="grid grid-cols-3 gap-2 mt-4"><div class="stat-chip"><b id="stateCount">36</b><span>States/UTs</span></div><div class="stat-chip"><b id="villageCount">0</b><span>Listed villages</span></div><div class="stat-chip"><b id="postCount">0</b><span>Posts</span></div></div>
+  <!-- Highlights Bar -->
+  <section class="pt-16 pb-10 bg-white border-b">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-6 gap-6 text-center px-4">
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-house"></i></div>
+        <p class="text-xs font-semibold">Authentic Village Experience</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-people-group"></i></div>
+        <p class="text-xs font-semibold">Support Local Communities</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-leaf"></i></div>
+        <p class="text-xs font-semibold">Eco-Friendly Tourism</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-camera"></i></div>
+        <p class="text-xs font-semibold">Scenic Beauty & Photography</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-bowl-food"></i></div>
+        <p class="text-xs font-semibold">Traditional Food & Culture</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full border border-green-700 text-green-700 flex items-center justify-center mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+        <p class="text-xs font-semibold">Safe & Secure Travel</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Destinations (Dynamic Container) -->
+  <section id="destinations" class="py-12 max-w-6xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-6">
+      <div class="text-center w-full">
+        <h2 class="text-2xl font-serif font-bold text-[#3b591b]">Popular Destinations</h2>
+        <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
+      </div>
+      <button class="bg-[#3b591b] text-white text-xs px-4 py-2 rounded-md whitespace-nowrap">View All Destinations</button>
     </div>
 
-    <div class="flex items-center justify-between"><div><h3 class="font-black text-sm">🏘️ Listed Villages</h3><p class="text-[10px] text-slate-500"> </p></div><button onclick="openModal('listVillageModal')" class="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl">+ List Village</button></div>
-
-    <div class="section-card">
-      <div class="flex items-center justify-between mb-3"><div><h3 class="font-black text-sm">🌾 Villages</h3><p class="text-[10px] text-slate-500">Village name + district + state</p></div></div>
-      <div id="homeVillagesList" class="space-y-4"></div>
-      <div id="homePostsFeed" class="hidden"></div>
-      <div id="statesGrid" class="hidden"></div>
+    <div id="destinations-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+      <!-- Fallback static items -->
+      <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=400&q=80" class="h-32 w-full object-cover" />
+        <div class="p-3">
+          <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> Rajasthan Villages</h3>
+          <p class="text-[11px] text-gray-500 mt-1">Royal heritage, deserts, folk culture & traditions.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=400&q=80" class="h-32 w-full object-cover" />
+        <div class="p-3">
+          <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> Kerala Villages</h3>
+          <p class="text-[11px] text-gray-500 mt-1">Backwaters, greenery, peace & local life.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="h-32 w-full object-cover" />
+        <div class="p-3">
+          <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> Himachal Villages</h3>
+          <p class="text-[11px] text-gray-500 mt-1">Hills, nature, adventure & fresh air.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="h-32 w-full object-cover" />
+        <div class="p-3">
+          <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> Uttarakhand Villages</h3>
+          <p class="text-[11px] text-gray-500 mt-1">Spirituality, trekking, rivers & temples.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80" class="h-32 w-full object-cover" />
+        <div class="p-3">
+          <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> North East Villages</h3>
+          <p class="text-[11px] text-gray-500 mt-1">Unique culture, scenery & warm people.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="stateView" class="hidden space-y-5">
-    <button onclick="goHome()" class="text-xs font-bold text-amber-700">← All India</button>
-    <div class="state-hero section-card"><div><p class="text-[10px] uppercase tracking-widest font-black text-amber-700">State Explorer</p><h2 id="stateTitle" class="text-2xl font-black">State</h2><p id="stateSubtitle" class="text-xs text-slate-500 mt-1"></p></div><button onclick="openPostModal()" class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl">+ Post</button></div>
-    <div class="section-card"><div class="flex justify-between items-center mb-3"><h3 class="font-black text-sm">Villages in this state</h3><span id="stateVillageCount" class="pill"></span></div><div id="stateVillages" class="space-y-2"></div></div>
-    <div class="section-card"><div class="flex items-center justify-between mb-3"><h3 class="font-black text-sm">📸 State Feed</h3><span class="text-[10px] text-slate-500">Village posts</span></div><div id="statePostsFeed" class="space-y-4"></div></div>
+  <!-- Unique Experiences -->
+  <section id="experiences" class="py-12 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-serif font-bold text-[#3b591b]">Unique Experiences</h2>
+        <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="bg-white rounded-xl overflow-hidden shadow">
+          <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=400&q=80" class="h-36 w-full object-cover" />
+          <div class="p-3 text-center">
+            <h4 class="font-bold text-xs">Farm Life</h4>
+            <p class="text-[10px] text-gray-500 mt-1">Experience farming & rural activities</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow">
+          <img src="https://images.unsplash.com/photo-1514222709107-a180c68d72b4?auto=format&fit=crop&w=400&q=80" class="h-36 w-full object-cover" />
+          <div class="p-3 text-center">
+            <h4 class="font-bold text-xs">Local Culture</h4>
+            <p class="text-[10px] text-gray-500 mt-1">Enjoy folk dance, music & festivals</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow">
+          <img src="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=400&q=80" class="h-36 w-full object-cover" />
+          <div class="p-3 text-center">
+            <h4 class="font-bold text-xs">Traditional Food</h4>
+            <p class="text-[10px] text-gray-500 mt-1">Taste authentic village food & recipes</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow">
+          <img src="https://images.unsplash.com/photo-1582560475093-ba66accbc424?auto=format&fit=crop&w=400&q=80" class="h-36 w-full object-cover" />
+          <div class="p-3 text-center">
+            <h4 class="font-bold text-xs">Art & Handicrafts</h4>
+            <p class="text-[10px] text-gray-500 mt-1">Explore local art, crafts & skills</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow">
+          <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=400&q=80" class="h-36 w-full object-cover" />
+          <div class="p-3 text-center">
+            <h4 class="font-bold text-xs">Wellness & Peace</h4>
+            <p class="text-[10px] text-gray-500 mt-1">Yoga, meditation & relaxing environment</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="villageView" class="hidden space-y-4">
-    <button onclick="goBackFromVillage()" class="text-xs font-bold text-amber-700">← Back</button>
-    <div id="villageHeader"></div>
-    <div class="section-card"><div class="flex gap-2 border-b border-slate-100 pb-2 overflow-x-auto"><button class="vtab active" onclick="showVillageSection('feed',this)">📸 Feed</button><button class="vtab" onclick="showVillageSection('details',this)">🏡 Details</button><button class="vtab" onclick="showVillageSection('activities',this)">🎯 Activities</button><button class="vtab" onclick="showVillageSection('packages',this)">📦 Packages</button></div><div id="villageSectionFeed" class="pt-4"></div><div id="villageSectionDetails" class="hidden pt-4"></div><div id="villageSectionActivities" class="hidden pt-4"></div><div id="villageSectionPackages" class="hidden pt-4"></div></div>
+  <!-- Stats Banner -->
+  <section class="bg-[#f7f5ec] py-8 border-y">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 items-center px-4">
+      <div>
+        <h3 class="font-serif font-bold text-lg text-green-900 leading-tight">Why Choose Village Tourism?</h3>
+        <div class="w-8 h-0.5 bg-amber-500 mt-1"></div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-house-user text-3xl text-gray-600"></i>
+        <div><h4 class="font-bold text-lg">500+</h4><p class="text-[11px] text-gray-500">Village Experiences</p></div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-users text-3xl text-gray-600"></i>
+        <div><h4 class="font-bold text-lg">1000+</h4><p class="text-[11px] text-gray-500">Happy Travelers</p></div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-map-pin text-3xl text-gray-600"></i>
+        <div><h4 class="font-bold text-lg">50+</h4><p class="text-[11px] text-gray-500">Destinations</p></div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-headset text-3xl text-gray-600"></i>
+        <div><h4 class="font-bold text-lg">24/7</h4><p class="text-[11px] text-gray-500">Travel Support</p></div>
+      </div>
+    </div>
   </section>
 
-  <section id="weddingView" class="hidden space-y-4">
-    <div class="section-card wedding-banner"><p class="text-[10px] font-black uppercase tracking-widest">✨ Village Weddings</p><h2 class="text-xl font-black">Shaadi, venue aur rural experience</h2><p class="text-xs mt-1 text-pink-50">Village wedding listings aur enquiries ek jagah.</p></div>
-    <div class="section-card"><h3 class="font-black text-sm mb-3">Destination Wedding Inquiry</h3><form id="weddingForm" onsubmit="submitWedding(event)" class="grid gap-2"><input id="wName" required placeholder="Your name" class="input"><input id="wPhone" required placeholder="Phone" class="input"><select id="wState" class="input"><option value="">Select state</option></select><input id="wGuests" placeholder="Guest count" class="input"><input id="wDate" type="date" class="input"><textarea id="wMessage" rows="3" placeholder="What do you need?" class="input"></textarea><button class="primary">Submit Inquiry</button></form></div>
-  </section>
+  <!-- Footer -->
+  <footer class="bg-[#1b2a14] text-gray-300 py-10 px-4 text-xs">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-3">
+          <i class="fa-solid fa-house-chimney text-lg text-white"></i>
+          <span class="font-bold text-sm text-white">Village Tourism</span>
+        </div>
+        <p class="text-gray-400 leading-relaxed">Promoting responsible tourism and supporting rural communities by bringing travelers closer to the real India.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Quick Links</h4>
+        <ul class="space-y-1.5 text-gray-400">
+          <li><a href="#">Home</a></li>
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#">Stay</a></li>
+          <li><a href="#">Packages</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Contact Us</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li><i class="fa-solid fa-phone mr-2"></i> +91 98765 43210</li>
+          <li><i class="fa-solid fa-envelope mr-2"></i> info@villagetourism.com</li>
+          <li><i class="fa-solid fa-location-dot mr-2"></i> 123, Rural Tourism Office, India</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Newsletter</h4>
+        <p class="text-gray-400 mb-2">Subscribe to get updates on new destinations & offers.</p>
+        <input type="email" placeholder="Enter your email" class="w-full p-2 text-gray-800 rounded-sm mb-2 outline-none" />
+        <button class="w-full bg-[#4d6b24] text-white py-2 rounded-sm font-semibold">Subscribe</button>
+      </div>
+    </div>
+  </footer>
 
-  <section id="chaupalView" class="hidden space-y-4">
-    <div class="section-card bg-amber-50 border-amber-200"><div class="flex justify-between gap-3 items-center"><div><h3 class="font-black text-sm">🔥 Chaupal</h3><p class="text-[10px] text-slate-500">Gaon ki baat, announcements aur stories.</p></div><button onclick="openPostModal('chaupal')" class="primary shrink-0">+ Share</button></div></div>
-    <div id="chaupalFeedContainer" class="space-y-4"></div>
-  </section>
-</main>
+  <!-- Script importing from firebase-config.js -->
+  <script type="module">
+    import { db, auth } from './firebase-config.js';
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-<nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 py-2.5 px-5 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
-  <button onclick="goHome()" class="nav-btn">🏡<span>Home</span></button><button onclick="openWedding()" class="nav-btn">💍<span>Wedding</span></button><button onclick="openChaupal()" class="nav-btn">🔥<span>Chaupal</span></button>
-</nav>
-</div>
+    // Auth state check
+    onAuthStateChanged(auth, (user) => {
+      const authBtn = document.getElementById('auth-btn');
+      if (user) {
+        authBtn.innerText = "My Profile";
+      } else {
+        authBtn.innerText = "Plan Your Trip";
+      }
+    });
 
-<div id="drawer" class="drawer"><div class="drawer-panel"><div class="flex items-center justify-between p-4 border-b"><div><p class="text-[10px] font-black uppercase text-amber-700">My VillageDeko</p><h3 id="drawerName" class="font-black">Guest</h3><p id="drawerEmail" class="text-[10px] text-slate-500"></p></div><button onclick="closeDrawer()" class="text-2xl text-slate-400">&times;</button></div><div class="p-4 space-y-2 overflow-y-auto" style="max-height:calc(100vh - 100px)"><div class="profile-panel"><div class="profile-panel-avatar"><span id="drawerProfileEmoji">👤</span><img id="drawerProfilePhoto" class="profile-photo hidden" alt="Profile photo"></div><div class="min-w-0 flex-1"><b id="drawerProfileLabel">Your Profile</b><p class="text-[10px] text-slate-500">Apni profile photo lagayein</p></div><label class="profile-upload-btn">📷<input id="profilePhotoFile" type="file" accept="image/*" onchange="handleProfilePhoto(event)" hidden></label></div><button onclick="openPostModal();closeDrawer()" class="drawer-item">📸 My Post <span>＋</span></button><button onclick="showMyListings();closeDrawer()" class="drawer-item">🏘️ My Village Listings <span>›</span></button><button onclick="showMyHosts();closeDrawer()" class="drawer-item">🏡 My Host Listings <span>›</span></button><button onclick="showMyWeddings();closeDrawer()" class="drawer-item">💍 My Wedding Listings <span>›</span></button><button onclick="openChaupal();closeDrawer()" class="drawer-item">🔥 My Chaupal <span>›</span></button><button onclick="openSettings();closeDrawer()" class="drawer-item">⚙️ Settings <span>›</span></button><button onclick="openPrivacy();closeDrawer()" class="drawer-item">🔐 Privacy <span>›</span></button><button onclick="logout()" class="drawer-item text-red-600">🚪 Logout <span>›</span></button></div></div></div>
+    // Fetch destinations
+    async function fetchVillagesFromFirestore() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "villages"));
+        if (!querySnapshot.empty) {
+          const grid = document.getElementById('destinations-grid');
+          grid.innerHTML = "";
 
-<div id="loginModal" class="modal"><div class="login-box"><button onclick="closeModal('loginModal')" class="modal-x">&times;</button><div class="login-logo">🌾</div><p class="login-kicker">WELCOME TO</p><h2><span class="text-amber-700">Village</span>Deko</h2><p class="text-sm text-slate-500 mt-2">Continue with Google karke app use karein.</p><button onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button><p id="loginModalError" class="login-error hidden"></p></div></div>
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const cardHtml = `
+              <div class="bg-white rounded-lg overflow-hidden border shadow-sm">
+                <img src="${data.imageUrl || 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=400&q=80'}" class="h-32 w-full object-cover" />
+                <div class="p-3">
+                  <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> ${data.name || 'Village'}</h3>
+                  <p class="text-[11px] text-gray-500 mt-1">${data.description || 'Rural experience & culture.'}</p>
+                </div>
+              </div>
+            `;
+            grid.innerHTML += cardHtml;
+          });
+        }
+      } catch (error) {
+        console.log("Firestore fetch note: Using default items.", error);
+      }
+    }
 
-<div id="addStoryModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">✨ Create Village Post</h3><button onclick="closeModal('addStoryModal')" class="modal-x">&times;</button></div><form id="chaupalPostForm" onsubmit="handleCloudinaryPhotoPost(event)" class="space-y-3"><input type="hidden" id="postType" value="village"><input id="storyAuthor" required placeholder="Your name" class="input"><select id="storyVillage" required class="input"><option value="">Select village</option></select><input id="storyLocation" placeholder="Village / Location" class="input"><input type="file" id="storyImageFile" accept="image/*" class="input"><textarea id="storyText" rows="4" required placeholder="Caption / story" class="input"></textarea><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('addStoryModal')" class="secondary">Cancel</button><button id="submitBtn" class="primary">Publish Post</button></div></form></div></div>
-
-<div id="listVillageModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🏘️ List Your Village, Stay & Gallery</h3><button onclick="closeModal('listVillageModal')" class="modal-x">&times;</button></div><form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3 text-xs"><input type="file" id="villageGalleryFiles" accept="image/*" multiple class="input"><div class="grid sm:grid-cols-3 gap-2"><input id="hostName" required placeholder="Host name" class="input"><input id="hostWhatsapp" required placeholder="Host WhatsApp" class="input"><input id="vName" required placeholder="Village name" class="input"></div><div class="grid sm:grid-cols-2 gap-2"><input id="vDistrict" required placeholder="District" class="input"><select id="vState" required class="input"></select></div><textarea id="vDescription" required rows="4" placeholder="Village culture, story, how to reach..." class="input"></textarea><div class="section-mini"><div class="flex justify-between items-center"><b>🎯 Activities</b><button type="button" onclick="addActivityRow()" class="add-btn">+ Add Activity</button></div><div id="activitiesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><div class="flex justify-between items-center"><b>📦 Packages</b><button type="button" onclick="addPackageRow()" class="add-btn">+ Add Package</button></div><div id="packagesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><b>🏦 Bank Details <span class="text-slate-400">(Optional)</span></b><input id="bankName" placeholder="Bank name" class="input mt-2"><input id="accountName" placeholder="Account holder" class="input mt-2"><input id="accountNumber" placeholder="Account number" class="input mt-2"><input id="ifsc" placeholder="IFSC" class="input mt-2"></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('listVillageModal')" class="secondary">Cancel</button><button id="listSubmitBtn" class="primary">Publish Village Live</button></div></form></div></div>
-
-<div id="settingsModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">⚙️ Settings</h3><button onclick="closeModal('settingsModal')" class="modal-x">&times;</button></div><label class="setting-row"><span>Show my email in profile</span><input id="settingEmail" type="checkbox" onchange="saveSetting('showEmail',this.checked)"></label><label class="setting-row"><span>Notifications</span><input id="settingNotifications" type="checkbox" checked onchange="saveSetting('notifications',this.checked)"></label></div></div>
-<div id="privacyModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🔐 Privacy</h3><button onclick="closeModal('privacyModal')" class="modal-x">&times;</button></div><div class="info-box"><b>Post ownership</b><p>Sirf jis Google account ne post/listing banayi hai, wahi usko edit ya delete kar sakta hai.</p></div><div class="info-box"><b>Bank details</b><p>Bank details optional hain aur public village feed mein show nahi kiye jayenge.</p></div></div></div>
-<div id="genericModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 id="genericTitle" class="font-black">My Activity</h3><button onclick="closeModal('genericModal')" class="modal-x">&times;</button></div><div id="genericBody"></div></div></div>
-<div id="imageViewerModal" class="image-viewer" onclick="closeImageViewer(event)"><button class="image-viewer-close" onclick="closeImageViewer(event)">&times;</button><img id="imageViewerImg" src="" alt="Full size village photo" onclick="event.stopPropagation()"></div>
-
-<script type="module" src="app.js"></script>
+    window.addEventListener('DOMContentLoaded', fetchVillagesFromFirestore);
+  </script>
 </body>
 </html>
