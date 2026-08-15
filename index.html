@@ -34,7 +34,6 @@
 </head>
 <body class="font-sans antialiased bg-[#FAF8F5] text-[#1E293B]">
 
-  <!-- Top Announcement Bar -->
   <div class="bg-[#0F2C23] text-[#F3E5AB] text-[11px] sm:text-xs py-2 px-4 md:px-6 flex justify-between items-center font-medium border-b border-emerald-900/40">
     <div class="flex items-center space-x-2 truncate">
       <span class="bg-[#B85042] text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider flex-shrink-0">Vision</span>
@@ -45,7 +44,6 @@
     </div>
   </div>
 
-  <!-- Sticky Glass Navbar -->
   <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-emerald-950/10 py-3 px-4 md:px-12 flex justify-between items-center">
     <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchTab('explore-tab')">
       <div class="bg-gradient-to-br from-[#B85042] to-[#8C402B] text-white p-2 md:p-2.5 rounded-xl shadow-md">
@@ -57,7 +55,6 @@
       </div>
     </div>
     
-    <!-- Desktop Navigation Tabs -->
     <div class="hidden lg:flex items-center space-x-6 text-sm font-bold text-[#0F2C23]">
       <button onclick="switchTab('explore-tab')" class="hover:text-[#B85042] transition">Discover & Map</button>
       <button onclick="switchTab('timeline-tab')" class="hover:text-[#B85042] transition">Ek Din Gaon Mein</button>
@@ -66,21 +63,18 @@
       <button onclick="switchTab('market-tab')" class="hover:text-[#B85042] transition">Gaon Ka Bazaar</button>
     </div>
 
-    <!-- Right Controls & Mobile Menu Toggle -->
     <div class="flex items-center space-x-2 md:space-x-3">
       <button onclick="switchTab('visit-tab')" class="bg-[#0F2C23] hover:bg-[#1A4739] text-white text-xs font-bold py-2 px-3.5 md:px-5 rounded-xl shadow transition active:scale-95 flex items-center gap-1.5">
         <i class="fa-solid fa-suitcase text-amber-300"></i>
         <span>Visit Village</span>
       </button>
 
-      <!-- Hamburger Button (Mobile) -->
       <button id="menu-toggle" class="lg:hidden bg-gray-100 text-[#0F2C23] p-2 rounded-xl text-lg focus:outline-none">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile Menu Drawer -->
   <div id="mobile-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-300">
     <div class="bg-white w-4/5 max-w-xs h-full p-6 shadow-2xl flex flex-col justify-between">
       <div>
@@ -112,10 +106,8 @@
     </div>
   </div>
 
-  <!-- Main Container -->
   <main id="main-container">
 
-    <!-- HERO SECTION -->
     <header class="hero-gradient min-h-[420px] md:min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-10">
       <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-[#F3E5AB] text-[10px] md:text-xs font-bold px-3 py-1 rounded-full mb-3 md:mb-4 shadow-xl">
         <i class="fa-solid fa-sparkles text-amber-400"></i> Step 1 to 20 Integrated Ecosystem
@@ -127,26 +119,23 @@
         Khet-khalihaan, choolhe ka khana, buzurgon ki kahaniyan aur asli homestays. Supermarket ke piche ka asli sach samjhein.
       </p>
 
-      <!-- Responsive Search Bar -->
       <div class="bg-white rounded-2xl p-2 md:p-3 shadow-2xl border border-emerald-900/10 flex flex-col sm:flex-row items-center gap-2 w-full max-w-3xl">
         <div class="flex items-center px-3 py-2 w-full border-b sm:border-b-0 sm:border-r border-gray-200">
           <i class="fa-solid fa-magnifying-glass text-[#B85042] text-sm md:text-lg mr-2"></i>
-          <input type="text" placeholder="Gaon, Jila ya Rajya search karein..." class="w-full text-xs md:text-sm outline-none font-semibold text-slate-800 placeholder-gray-400" />
+          <input id="state-search-input" type="text" placeholder="Gaon, Jila ya Rajya search karein..." class="w-full text-xs md:text-sm outline-none font-semibold text-slate-800 placeholder-gray-400" />
         </div>
-        <button class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-2.5 sm:py-3 px-6 rounded-xl shadow-md transition w-full sm:w-auto text-xs md:text-sm flex-shrink-0">
+        <button onclick="searchState()" class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-2.5 sm:py-3 px-6 rounded-xl shadow-md transition w-full sm:w-auto text-xs md:text-sm flex-shrink-0">
           Explore
         </button>
       </div>
     </header>
 
-    <!-- SECTION: MAP & DISCOVERY (FIXED HORIZONTAL SCROLLER & MOBILE CARD SIZES) -->
     <section id="explore-tab" class="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-8">
       <div class="flex justify-between items-end mb-4 md:mb-6">
         <div>
           <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">India Village Map 🗺️</span>
-          <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">State → District → Village</h2>
+          <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Explore 28 States of India</h2>
         </div>
-        <!-- Scroll Buttons -->
         <div class="flex items-center space-x-2">
           <button id="state-left" class="bg-white border border-gray-300 text-[#0F2C23] hover:bg-[#0F2C23] hover:text-white w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition shadow-sm">
             <i class="fa-solid fa-chevron-left text-xs md:text-base"></i>
@@ -157,13 +146,10 @@
         </div>
       </div>
 
-      <!-- Scrollable States Track (Mobile Grid Ready) -->
       <div id="states-grid" class="flex space-x-3 md:space-x-4 overflow-x-auto scroll-smooth no-scrollbar py-2 px-1">
-        <!-- JS Dynamic Data for 28 States -->
-      </div>
+        </div>
     </section>
 
-    <!-- SECTION: EK DIN GAON MEIN -->
     <section id="timeline-tab" class="py-8 md:py-12 bg-[#F3EFEA] border-y border-emerald-900/10">
       <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="text-left md:text-center max-w-2xl md:mx-auto mb-6 md:mb-10">
@@ -172,7 +158,6 @@
           <p class="text-xs text-gray-600 font-semibold mt-1">Pashu paalan se lekar mandir bhajan aur gaon ki raat tak ki real timeline.</p>
         </div>
 
-        <!-- 2 Column Grid on Mobile, 5 Column on Laptop -->
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
           <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
             <span class="bg-amber-100 text-amber-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">05:30 AM</span>
@@ -227,7 +212,6 @@
       </div>
     </section>
 
-    <!-- SECTION: FOOD JOURNEY -->
     <section id="food-tab" class="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-8">
       <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-3">
         <div>
@@ -278,7 +262,6 @@
       </div>
     </section>
 
-    <!-- SECTION: VILLAGE FEED -->
     <section id="feed-tab" class="py-8 md:py-12 bg-[#F3EFEA]">
       <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="flex justify-between items-end mb-6">
@@ -337,7 +320,6 @@
       </div>
     </section>
 
-    <!-- SECTION: VISIT VILLAGE -->
     <section id="visit-tab" class="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-8">
       <div class="mb-6 text-left md:text-center max-w-2xl md:mx-auto">
         <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Gaon Dekho → Gaon Jao 🧳</span>
@@ -345,11 +327,9 @@
       </div>
 
       <div id="villages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        <!-- Dynamic Village Cards -->
-      </div>
+        </div>
     </section>
 
-    <!-- SECTION: BAZAAR -->
     <section id="market-tab" class="py-8 md:py-12 bg-[#F3EFEA] border-t border-emerald-900/10">
       <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="flex justify-between items-end mb-6">
@@ -359,7 +339,6 @@
           </div>
         </div>
 
-        <!-- 2 Column Grid on Mobile for compact look -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
             <span class="bg-amber-100 text-amber-900 text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded uppercase">Organic</span>
@@ -423,18 +402,36 @@
     </div>
   </footer>
 
-  <!-- DYNAMIC JAVASCRIPT ENGINE WITH ALL STATES AND WORKING SCROLL -->
   <script>
-    // Expanded States List
     const indianStates = [
-      { name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Khuri & Bishnoi Haveli Villages' },
-      { name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Kumarakom Backwater Stays' },
-      { name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Apple orchards & hill huts' },
-      { name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson Khet & Farm Homestays' },
-      { name: 'Uttarakhand', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Kumaon & Garhwal Traditional Huts' },
-      { name: 'Gujarat', img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=500&q=80', desc: 'Rann of Kutch Bhunga Stays' },
+      { name: 'Andhra Pradesh', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Araku Valley & Coastal Villages' },
+      { name: 'Arunachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Ziro Valley & Monpa Huts' },
       { name: 'Assam', img: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80', desc: 'Majuli Island Tribal Heritage' },
-      { name: 'Nagaland', img: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80', desc: 'Khonoma Eco Tribal Village' }
+      { name: 'Bihar', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80', desc: 'Madhubani & Heritage Farming' },
+      { name: 'Chhattisgarh', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=500&q=80', desc: 'Bastar Tribal Art & Villages' },
+      { name: 'Goa', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=500&q=80', desc: 'Spice Plantation & Hinterland Huts' },
+      { name: 'Gujarat', img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=500&q=80', desc: 'Rann of Kutch Bhunga Stays' },
+      { name: 'Haryana', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Desi Dairies & Organic Farms' },
+      { name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Apple orchards & hill huts' },
+      { name: 'Jharkhand', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Sohrai Art & Forest Villages' },
+      { name: 'Karnataka', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Coorg Coffee Estates & Villages' },
+      { name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Kumarakom Backwater Stays' },
+      { name: 'Madhya Pradesh', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Orchha Rural & Gond Tribal Art' },
+      { name: 'Maharashtra', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=500&q=80', desc: 'Konkan Agri-Tourism & Warli Villages' },
+      { name: 'Manipur', img: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80', desc: 'Loktak Lake Floating Villages' },
+      { name: 'Meghalaya', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Mawlynnong Cleanest Village' },
+      { name: 'Mizoram', img: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80', desc: 'Reiek Hill Heritage Village' },
+      { name: 'Nagaland', img: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80', desc: 'Khonoma Eco Tribal Village' },
+      { name: 'Odisha', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Raghurajpur Crafts Village' },
+      { name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson Khet & Farm Homestays' },
+      { name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Khuri & Bishnoi Haveli Villages' },
+      { name: 'Sikkim', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Lachen Organic Mountain Stays' },
+      { name: 'Tamil Nadu', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Chettinad Heritage Villages' },
+      { name: 'Telangana', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Pochampally Weaving Villages' },
+      { name: 'Tripura', img: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80', desc: 'Bamboo & Tribal Handicraft Villages' },
+      { name: 'Uttar Pradesh', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80', desc: 'Braj Culture & Rural Avadh' },
+      { name: 'Uttarakhand', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Kumaon & Garhwal Traditional Huts' },
+      { name: 'West Bengal', img: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80', desc: 'Sunderbans & Terracotta Villages' }
     ];
 
     const stateVillagesData = [
@@ -443,10 +440,10 @@
       { name: 'Khonoma Eco Village', stay: 'Bamboo Cottage', price: '₹1,899/night', desc: 'Organic farming, local tribal stories aur craft workshops.' }
     ];
 
-    function renderStates() {
+    function renderStates(list = indianStates) {
       const grid = document.getElementById('states-grid');
       grid.innerHTML = "";
-      indianStates.forEach(state => {
+      list.forEach(state => {
         grid.innerHTML += `
           <div onclick="switchTab('visit-tab')" class="modern-card rounded-2xl overflow-hidden border border-gray-200 min-w-[170px] sm:min-w-[220px] max-w-[170px] sm:max-w-[220px] flex-shrink-0 cursor-pointer group">
             <div class="relative overflow-hidden h-28 sm:h-36">
@@ -493,6 +490,17 @@
       }
     }
 
+    function searchState() {
+      const query = document.getElementById('state-search-input').value.toLowerCase().trim();
+      if(!query) {
+        renderStates(indianStates);
+        return;
+      }
+      const filtered = indianStates.filter(s => s.name.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query));
+      renderStates(filtered);
+      switchTab('explore-tab');
+    }
+
     // Mobile Navigation Drawer Toggle
     const menuToggle = document.getElementById('menu-toggle');
     const menuClose = document.getElementById('menu-close');
@@ -509,10 +517,10 @@
     // State Horizontal Scroller Logic
     const statesGrid = document.getElementById('states-grid');
     document.getElementById('state-left').onclick = () => {
-      statesGrid.scrollBy({ left: -260, behavior: 'smooth' });
+      statesGrid.scrollBy({ left: -280, behavior: 'smooth' });
     };
     document.getElementById('state-right').onclick = () => {
-      statesGrid.scrollBy({ left: 260, behavior: 'smooth' });
+      statesGrid.scrollBy({ left: 280, behavior: 'smooth' });
     };
 
     renderStates();
