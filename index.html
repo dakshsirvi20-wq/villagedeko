@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Village Deko - Discover Rural India</title>
-  <!-- Tailwind CSS CDN -->
+  <title>VillageDeko - Gaon Ko Samjho, Mehsoos Karo Aur Experience Karo</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Yatra+One&display=swap" rel="stylesheet">
   
   <style>
@@ -16,10 +13,16 @@
     .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
     
     .hero-gradient {
-      background: linear-gradient(180deg, rgba(15, 44, 35, 0.4) 0%, rgba(15, 44, 35, 0.85) 100%), 
+      background: linear-gradient(180deg, rgba(15, 44, 35, 0.45) 0%, rgba(15, 44, 35, 0.90) 100%), 
                   url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1800&q=80');
       background-size: cover;
       background-position: center;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(15, 44, 35, 0.08);
     }
 
     .modern-card {
@@ -27,8 +30,8 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .modern-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 25px -5px rgba(15, 44, 35, 0.1), 0 8px 10px -6px rgba(15, 44, 35, 0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 24px -4px rgba(15, 44, 35, 0.12);
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -38,203 +41,425 @@
 <body class="font-sans antialiased bg-[#FAF8F5] text-[#1E293B]">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-[#0F2C23] text-[#F3E5AB] text-xs py-2 px-6 flex justify-between items-center font-medium">
+  <div class="bg-[#0F2C23] text-[#F3E5AB] text-xs py-2 px-6 flex justify-between items-center font-medium border-b border-emerald-900/40">
     <div class="flex items-center space-x-2">
-      <span class="bg-[#B85042] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">NEW</span>
-      <span>Experience Authentic Desi Life, Organic Food & Culture</span>
+      <span class="bg-[#B85042] text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">Vision</span>
+      <span>Ab Duniya Dekhegi Har Asli Indian Gaon Ki Zindagi 🌾</span>
     </div>
     <div class="hidden md:flex items-center space-x-4 text-emerald-300 font-semibold">
-      <span><i class="fa-solid fa-phone mr-1"></i> Helpline: +91 98765 43210</span>
+      <span><i class="fa-solid fa-heart mr-1 text-rose-400"></i> Verified Local Communities</span>
     </div>
   </div>
 
-  <!-- Modern Sticky Glass Navbar -->
-  <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-emerald-950/10 py-3.5 px-6 md:px-12 flex justify-between items-center">
+  <!-- Sticky Glass Navbar -->
+  <nav class="bg-white/85 backdrop-blur-md sticky top-0 z-50 border-b border-emerald-950/10 py-3 px-4 md:px-12 flex justify-between items-center">
     <div class="flex items-center space-x-3 cursor-pointer">
       <div class="bg-gradient-to-br from-[#B85042] to-[#8C402B] text-white p-2.5 rounded-2xl shadow-lg shadow-red-900/20">
-        <i class="fa-solid fa-campground text-xl"></i>
+        <i class="fa-solid fa-wheat-awn text-xl"></i>
       </div>
       <div>
-        <h1 class="text-2xl font-deshi text-[#0F2C23] tracking-wide leading-none">Village Deko</h1>
-        <p class="text-[10px] text-[#B85042] font-black uppercase tracking-widest mt-0.5">Asli Bharat Ka Anubhav</p>
+        <h1 class="text-2xl font-deshi text-[#0F2C23] tracking-wide leading-none">VillageDeko</h1>
+        <p class="text-[9px] text-[#B85042] font-black uppercase tracking-widest mt-0.5">Gaon Ko Samjho, Mehsoos Karo</p>
       </div>
     </div>
     
-    <div class="hidden md:flex items-center space-x-8 text-sm font-bold text-[#0F2C23]">
-      <a href="#" class="text-[#B85042] transition">Home</a>
-      <a href="#states-section" class="hover:text-[#B85042] transition">36 States & UTs</a>
-      <a href="#villages-section" class="hover:text-[#B85042] transition">Top Villages</a>
-      <a href="#" class="hover:text-[#B85042] transition">Experiences</a>
+    <!-- Dynamic Navigation Tabs -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-bold text-[#0F2C23]">
+      <button onclick="switchTab('explore-tab')" class="nav-btn text-[#B85042] hover:text-[#B85042] transition">Discover & Map</button>
+      <button onclick="switchTab('timeline-tab')" class="nav-btn hover:text-[#B85042] transition">Ek Din Gaon Mein</button>
+      <button onclick="switchTab('food-tab')" class="nav-btn hover:text-[#B85042] transition">Food Journey</button>
+      <button onclick="switchTab('feed-tab')" class="nav-btn hover:text-[#B85042] transition">Village Feed</button>
+      <button onclick="switchTab('market-tab')" class="nav-btn hover:text-[#B85042] transition">Gaon Ka Bazaar</button>
     </div>
 
     <div class="flex items-center space-x-3">
-      <button class="bg-[#0F2C23] hover:bg-[#1A4739] text-white text-xs md:text-sm font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-emerald-950/20 transition transform active:scale-95">
-        Explore Stays
+      <button onclick="switchTab('visit-tab')" class="bg-[#0F2C23] hover:bg-[#1A4739] text-white text-xs md:text-sm font-bold py-2.5 px-5 rounded-xl shadow-lg transition active:scale-95 flex items-center gap-2">
+        <i class="fa-solid fa-suitcase text-amber-300"></i>
+        <span>Visit Village</span>
       </button>
     </div>
   </nav>
 
-  <!-- Hero Section with Modern Floating Search -->
-  <header class="hero-gradient h-[520px] flex flex-col justify-center items-center text-center text-white px-4 relative">
-    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-[#F3E5AB] text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-xl">
-      <i class="fa-solid fa-sparkles text-amber-400"></i> Explore 36 Indian States & Union Territories
-    </div>
-    <h1 class="text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-lg max-w-3xl leading-tight">
-      Apne Gaon Ki Shanti Aur Sugandh Me Khogayein
-    </h1>
-    <p class="max-w-xl text-sm md:text-base text-emerald-100/90 mt-3 mb-16 font-medium">
-      Khet-khalihaan, choolhe ka shuddh desi khana, aur paramparik homestays ka anubhav karein.
-    </p>
+  <!-- Dynamic Content Container -->
+  <main id="main-container">
 
-    <!-- Modern Floating Search Card -->
-    <div class="bg-white rounded-2xl p-3 shadow-2xl border border-emerald-900/10 flex flex-col md:flex-row items-center gap-3 w-[92%] max-w-4xl absolute -bottom-10 z-20">
-      <div class="flex items-center px-4 py-2 w-full md:w-auto flex-1 border-b md:border-b-0 md:border-r border-gray-200">
-        <i class="fa-solid fa-location-dot text-[#B85042] text-xl mr-3"></i>
-        <input type="text" placeholder="State ya Village ka naam khojein (e.g. Rajasthan, Coorg)..." class="w-full text-sm outline-none font-semibold text-slate-800 placeholder-gray-400" />
+    <!-- HERO SECTION -->
+    <header class="hero-gradient min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-12">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-[#F3E5AB] text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-xl">
+        <i class="fa-solid fa-sparkles text-amber-400"></i> Step 1 to 20 Integrated Rural Ecosystem
       </div>
-      <div class="flex items-center px-4 py-2 w-full md:w-auto flex-1 border-b md:border-b-0 md:border-r border-gray-200">
-        <i class="fa-solid fa-calendar-days text-emerald-700 text-lg mr-3"></i>
-        <span class="text-sm font-semibold text-gray-500">Dates: Flexible</span>
-      </div>
-      <button class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-3.5 px-8 rounded-xl shadow-md transition w-full md:w-auto text-sm tracking-wide">
-        Explore Now
-      </button>
-    </div>
-  </header>
+      <h1 class="text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-lg max-w-4xl leading-tight">
+        Gaon Dekho Nahi — Samjho, Mehsoos Karo Aur Experience Karo
+      </h1>
+      <p class="max-w-2xl text-sm md:text-base text-emerald-100/90 mt-3 mb-12 font-medium">
+        Khet-khalihaan, choolhe ka khana, buzurgon ki kahaniyan aur asli paramparik homestays. Supermarket ke piche ka asli sach samjhein.
+      </p>
 
-  <!-- Section 1: 36 States Dynamic Carousel -->
-  <section id="states-section" class="pt-28 pb-12 max-w-7xl mx-auto px-4 md:px-8">
-    <div class="flex justify-between items-end mb-8">
-      <div>
-        <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Select Destination</span>
-        <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">Sabhi 36 Rajya Aur Unki Khasiyat</h2>
-      </div>
-      
-      <!-- Modern Navigation Controls -->
-      <div class="flex items-center space-x-3">
-        <button id="state-left" class="bg-white border border-gray-200 text-[#0F2C23] hover:bg-[#0F2C23] hover:text-white w-11 h-11 rounded-xl flex items-center justify-center shadow-sm transition active:scale-90">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <button id="state-right" class="bg-[#0F2C23] text-white hover:bg-[#1A4739] w-11 h-11 rounded-xl flex items-center justify-center shadow-sm transition active:scale-90">
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Cards Slider -->
-    <div id="states-grid" class="flex space-x-5 overflow-x-auto scroll-smooth no-scrollbar py-4 px-1 cursor-grab active:cursor-grabbing">
-      <!-- Dynamic JS Cards -->
-    </div>
-  </section>
-
-  <!-- Section 2: Village Stays Grid -->
-  <section id="villages-section" class="py-16 bg-[#F3EFEA] border-t border-emerald-900/5">
-    <div class="max-w-7xl mx-auto px-4 md:px-8">
-      <div class="mb-10 flex flex-col md:flex-row justify-between md:items-end gap-4 border-b border-gray-300/60 pb-5">
-        <div>
-          <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Authentic Experiences</span>
-          <h2 id="selected-state-title" class="text-3xl font-deshi text-[#0F2C23] mt-1">Rajasthan Ke Top Gaon</h2>
+      <!-- Global Search Bar -->
+      <div class="bg-white rounded-2xl p-3 shadow-2xl border border-emerald-900/10 flex flex-col md:flex-row items-center gap-3 w-[92%] max-w-4xl">
+        <div class="flex items-center px-4 py-2 w-full flex-1 border-b md:border-b-0 md:border-r border-gray-200">
+          <i class="fa-solid fa-magnifying-glass text-[#B85042] text-lg mr-3"></i>
+          <input type="text" placeholder="Gaon, Jila, ya Rajya ka naam search karein (e.g. Kankroli, Rajsamand)..." class="w-full text-sm outline-none font-semibold text-slate-800 placeholder-gray-400" />
         </div>
-        <p class="text-xs font-bold text-gray-600 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-200 inline-block">
-          💡 Tips: Kisi bhi state card par click karke wahan ke villages explore karein
-        </p>
+        <div class="flex items-center px-4 py-2 w-full md:w-auto border-b md:border-b-0 md:border-r border-gray-200">
+          <i class="fa-solid fa-wheat-awn text-emerald-700 text-lg mr-3"></i>
+          <span class="text-sm font-semibold text-gray-500">All 36 States & UTs</span>
+        </div>
+        <button class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-3.5 px-8 rounded-xl shadow-md transition w-full md:w-auto text-sm">
+          Explore Ecosystem
+        </button>
+      </div>
+    </header>
+
+    <!-- SECTION: MAP & DISCOVERY (STEP 2 & 10) -->
+    <section id="explore-tab" class="tab-content py-12 max-w-7xl mx-auto px-4 md:px-8">
+      <div class="flex justify-between items-end mb-6">
+        <div>
+          <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">India Village Map 🗺️</span>
+          <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">State → District → Village Identity</h2>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button id="state-left" class="bg-white border border-gray-200 text-[#0F2C23] hover:bg-[#0F2C23] hover:text-white w-10 h-10 rounded-xl flex items-center justify-center transition"><i class="fa-solid fa-arrow-left"></i></button>
+          <button id="state-right" class="bg-[#0F2C23] text-white hover:bg-[#1A4739] w-10 h-10 rounded-xl flex items-center justify-center transition"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
       </div>
 
-      <!-- Village Cards Container -->
-      <div id="villages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Dynamic Cards -->
+      <!-- State Carousel Cards -->
+      <div id="states-grid" class="flex space-x-5 overflow-x-auto scroll-smooth no-scrollbar py-3 px-1 cursor-grab">
+        <!-- JS Dynamic Data -->
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- SECTION: EK DIN GAON MEIN (STEP 3 & 8) -->
+    <section id="timeline-tab" class="tab-content py-12 bg-[#F3EFEA] border-y border-emerald-900/10">
+      <div class="max-w-7xl mx-auto px-4 md:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Real Village Day Experience 🌅</span>
+          <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">Ek Din Gaon Mein: Subah Se Raat Tak</h2>
+          <p class="text-xs text-gray-600 font-semibold mt-2">Pashu paalan se lekar mandir bhajan aur gaon ki raat tak ki real timeline.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <!-- Timeline Card 1 -->
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-md">05:30 AM</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Gaon Ki Subah 🌅</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Pakshiyon ki chahchahat aur mandir ki pehli ghanti.</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
+              <span><i class="fa-solid fa-microphone mr-1"></i> Audio Story</span>
+              <i class="fa-solid fa-circle-play text-lg"></i>
+            </div>
+          </div>
+
+          <!-- Timeline Card 2 -->
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-emerald-100 text-emerald-900 text-[10px] font-black px-2.5 py-1 rounded-md">06:00 AM</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Pashu & Dairy 🐄</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Doodh dohana aur gaayon ko charane ki tayyari.</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
+              <span><i class="fa-solid fa-video mr-1"></i> Ramesh Ji</span>
+              <i class="fa-solid fa-circle-play text-lg"></i>
+            </div>
+          </div>
+
+          <!-- Timeline Card 3 -->
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-green-100 text-green-900 text-[10px] font-black px-2.5 py-1 rounded-md">07:00 AM</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Khet & Kheti 🌾</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Khet ki jutai, paani dena aur kisan ki mehnat.</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
+              <span><i class="fa-solid fa-camera mr-1"></i> Photo View</span>
+              <i class="fa-solid fa-image text-lg"></i>
+            </div>
+          </div>
+
+          <!-- Timeline Card 4 -->
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-orange-100 text-orange-900 text-[10px] font-black px-2.5 py-1 rounded-md">01:00 PM</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Ghar Ka Khana 🍲</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Choolhe ki roti, bajra, desi ghee aur mitti ka saag.</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
+              <span><i class="fa-solid fa-utensils mr-1"></i> Kitchen Tour</span>
+              <i class="fa-solid fa-circle-play text-lg"></i>
+            </div>
+          </div>
+
+          <!-- Timeline Card 5 -->
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-indigo-100 text-indigo-900 text-[10px] font-black px-2.5 py-1 rounded-md">09:00 PM</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Gaon Ki Raat 🌙</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Chaupal par buzurgon ki kahania aur taaron bhara aasmaan.</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
+              <span><i class="fa-solid fa-moon mr-1"></i> Night View</span>
+              <i class="fa-solid fa-headphones text-lg"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FOOD JOURNEY & KISAN SE SEEKHO (STEP 4, 9 & 15) -->
+    <section id="food-tab" class="tab-content py-12 max-w-7xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row justify-between md:items-end mb-8 gap-4">
+        <div>
+          <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Food Journey 🌾➡️🍞</span>
+          <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">Beej Se Thali Tak Ka Asli Safar</h2>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl text-xs font-bold text-[#0F2C23]">
+          💡 Kids Mode Enabled: "Roti Supermarket Mein Nahi Ugti!"
+        </div>
+      </div>
+
+      <!-- Food Flow Interactive Pipeline -->
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">1</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">🌱 Beej</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Seed Selection</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">2</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">🌾 Buwai & Paani</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Soil Prep & Water</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">3</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">🚜 Crop Care</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Organic Farming</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">4</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">✂️ Katai</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Harvesting Time</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">5</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">🚛 Mandi</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Local Market</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">6</div>
+          <span class="font-extrabold text-xs text-[#0F2C23]">⚙️ Chakki</span>
+          <span class="text-[10px] text-gray-400 font-semibold mt-1">Fresh Grinding</span>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center bg-gradient-to-b from-amber-50 to-white border-amber-300">
+          <div class="w-10 h-10 rounded-full bg-[#B85042] text-white flex items-center justify-center font-bold text-sm mb-2">7</div>
+          <span class="font-extrabold text-xs text-[#B85042]">🍞 Plate Par</span>
+          <span class="text-[10px] text-gray-500 font-semibold mt-1">Shuddh Food</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: REAL VILLAGE FEED & PEOPLE (STEP 1, 5, 7, 13 & 16) -->
+    <section id="feed-tab" class="tab-content py-12 bg-[#F3EFEA]">
+      <div class="max-w-7xl mx-auto px-4 md:px-8">
+        <div class="flex justify-between items-end mb-8">
+          <div>
+            <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Village Feed & Stories 📸</span>
+            <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">Gaon Ke Log Aur Unki Asli Kahaniyan</h2>
+          </div>
+          <button class="bg-[#0F2C23] text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow">
+            + Share Village Story
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Feed Post 1 -->
+          <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
+            <div class="p-4 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-10 h-10 rounded-full bg-emerald-800 text-white flex items-center justify-center font-black text-sm">
+                RJ
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-[#0F2C23] leading-none">Ramesh Kumar (Kisan)</h4>
+                <p class="text-[11px] font-semibold text-[#B85042] mt-1">📍 Kankroli · Rajsamand · Rajasthan</p>
+              </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" />
+            <div class="p-4">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
+                "Aaj sarson ki pehli katai shuru ho gayi hai. 40 saal se kheti kar raha hoon, mitti ki khushboo hi meri zindagi hai."
+              </p>
+              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
+                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 248</button>
+                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 34</button>
+                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feed Post 2 -->
+          <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
+            <div class="p-4 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-10 h-10 rounded-full bg-[#B85042] text-white flex items-center justify-center font-black text-sm">
+                SD
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-[#0F2C23] leading-none">Saraswati Devi (Local Cook)</h4>
+                <p class="text-[11px] font-semibold text-[#B85042] mt-1">📍 Khuri · Jaisalmer · Rajasthan</p>
+              </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" />
+            <div class="p-4">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
+                "Hamari mitti ke choolhe ka bajre ka sogra aur ker sangri ki sabzi. Iska swad shehar ke hotel mein nahi milta."
+              </p>
+              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
+                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 512</button>
+                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 89</button>
+                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feed Post 3 -->
+          <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
+            <div class="p-4 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-10 h-10 rounded-full bg-amber-700 text-white flex items-center justify-center font-black text-sm">
+                KS
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-[#0F2C23] leading-none">Kaka Shivsingh (Buzurg)</h4>
+                <p class="text-[11px] font-semibold text-[#B85042] mt-1">📍 Kumarakom · Kottayam · Kerala</p>
+              </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" />
+            <div class="p-4">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
+                "Buzurgon Se Suno: 50 saal pehle hamara gaon kaisa tha aur hum kaise prakriti ke saath milkar rehte the."
+              </p>
+              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
+                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 430</button>
+                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 62</button>
+                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: VISIT VILLAGE & HOMESTAYS (STEP 11 & 12) -->
+    <section id="visit-tab" class="tab-content py-12 max-w-7xl mx-auto px-4 md:px-8">
+      <div class="mb-8 text-center max-w-2xl mx-auto">
+        <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Gaon Dekho → Gaon Jao 🧳</span>
+        <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">2-Day Family Village Experience</h2>
+        <p class="text-xs text-gray-600 font-semibold mt-2">Apne bacho ko asli gaon dikhayein: Farming, Daily life, Organic food & Culture.</p>
+      </div>
+
+      <div id="villages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS Dynamic Village Cards -->
+      </div>
+    </section>
+
+    <!-- SECTION: GAON KA BAZAAR (STEP 18 & 19) -->
+    <section id="market-tab" class="tab-content py-12 bg-[#F3EFEA] border-t border-emerald-900/10">
+      <div class="max-w-7xl mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between md:items-end mb-8 gap-4">
+          <div>
+            <span class="text-xs font-black text-[#B85042] uppercase tracking-widest">Village Marketplace 🛒</span>
+            <h2 class="text-3xl font-deshi text-[#0F2C23] mt-1">Gaon Ka Bazaar: Shuddh Desi Products</h2>
+          </div>
+          <p class="text-xs font-bold text-gray-600 bg-white px-4 py-2 rounded-xl border border-gray-200">
+            🌱 Know Your Farmer: Har product ke piche kisan aur gaon ki story hai.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">Organic Food</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Shuddh Organic Bajra</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Grown by Ramesh Ji · Kankroli Village</p>
+            <div class="mt-4 flex justify-between items-center">
+              <span class="font-black text-sm text-[#B85042]">₹120 / kg</span>
+              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+            </div>
+          </div>
+
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">Natural Honey</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Pahadi Wild Honey</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Collected by Local Tribe · Himachal</p>
+            <div class="mt-4 flex justify-between items-center">
+              <span class="font-black text-sm text-[#B85042]">₹450 / 500g</span>
+              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+            </div>
+          </div>
+
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">Handicrafts</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Mitti Ke Handcrafted H pots</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Made by Local Artisans · Bishnoi Village</p>
+            <div class="mt-4 flex justify-between items-center">
+              <span class="font-black text-sm text-[#B85042]">₹290 / set</span>
+              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+            </div>
+          </div>
+
+          <div class="modern-card p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">Spices</span>
+            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Handground Haldi Powder</h4>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Processed by Village Women Self Help Group</p>
+            <div class="mt-4 flex justify-between items-center">
+              <span class="font-black text-sm text-[#B85042]">₹180 / 250g</span>
+              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <!-- Footer -->
   <footer class="bg-[#0F2C23] text-[#F3E5AB] py-12 px-6 border-t-4 border-[#B85042]">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="flex items-center space-x-3">
-        <div class="bg-[#B85042] text-white p-2 rounded-xl">
-          <i class="fa-solid fa-campground text-xl"></i>
+        <div class="bg-[#B85042] text-white p-2.5 rounded-xl">
+          <i class="fa-solid fa-wheat-awn text-xl"></i>
         </div>
         <div>
-          <span class="font-deshi text-2xl text-[#F3E5AB] leading-none block">Village Deko</span>
-          <span class="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">Desi Tourism Portal</span>
+          <span class="font-deshi text-2xl text-[#F3E5AB] leading-none block">VillageDeko</span>
+          <span class="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">India Rural Experience Platform</span>
         </div>
       </div>
       <p class="text-emerald-100/70 text-xs text-center md:text-right">
-        © 2026 Village Deko. Bharat ke sabhi 36 states aur UTs ke rural experience ka platform.
+        © 2026 VillageDeko. "Ab Duniya Dekhegi Har Asli Indian Gaon Ki Zindagi." 🇮🇳
       </p>
     </div>
   </footer>
 
-  <!-- Script for Dynamic Rendering & Smooth Drag/Slide -->
+  <!-- Dynamic JS Engine -->
   <script>
     const indian36States = [
-      { id: 'rajasthan', name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Ret ke dhoro aur haveli stay' },
-      { id: 'kerala', name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Backwaters & nariyal ke bagaan' },
-      { id: 'himachal', name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Pahadi hawa aur seb ke baag' },
-      { id: 'punjab', name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson ke khet aur desi lassi' },
-      { id: 'gujarat', name: 'Gujarat', img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=80', desc: 'Rann of Kutch & Bhunga stay' },
-      { id: 'uttarakhand', name: 'Uttarakhand', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80', desc: 'Devbhoomi ke shuddh gaon' },
-      { id: 'jammukashmir', name: 'Jammu & Kashmir', img: 'https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=500&q=80', desc: 'Dal lake, shikara aur chinar' },
-      { id: 'ladakh', name: 'Ladakh', img: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=500&q=80', desc: 'Cold desert & Homestays' },
-      { id: 'assam', name: 'Assam', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Chai ke khet aur Majuli island' },
-      { id: 'meghalaya', name: 'Meghalaya', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=500&q=80', desc: 'Living root bridges & eco village' },
-      { id: 'goa', name: 'Goa (Rural)', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=500&q=80', desc: 'Quiet villages & spice plantations' },
-      { id: 'tamilnadu', name: 'Tamil Nadu', img: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=500&q=80', desc: 'Chettinad haveli aur mandir gaon' },
-      { id: 'karnataka', name: 'Karnataka', img: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=500&q=80', desc: 'Coorg coffee baag aur Malnad' },
-      { id: 'maharashtra', name: 'Maharashtra', img: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=500&q=80', desc: 'Western Ghats & Konkan gaon' },
-      { id: 'mp', name: 'Madhya Pradesh', img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=500&q=80', desc: 'Tribal stay aur Khajuraho gaon' },
-      { id: 'up', name: 'Uttar Pradesh', img: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=500&q=80', desc: 'Ganga ghat aur desi kheti' },
-      { id: 'bihar', name: 'Bihar', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80', desc: 'Madhubani art & litti chokha' },
-      { id: 'westbengal', name: 'West Bengal', img: 'https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=500&q=80', desc: 'Sundarban aur mitti ke ghar' },
-      { id: 'sikkim', name: 'Sikkim', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Organic gaon aur pahad' },
-      { id: 'odisha', name: 'Odisha', img: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=500&q=80', desc: 'Raghurajpur craft village' },
-      { id: 'haryana', name: 'Haryana', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=500&q=80', desc: 'Khet-khalihaan aur doodh dahi' },
-      { id: 'jharkhand', name: 'Jharkhand', img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80', desc: 'Jangal aur waterfalls ke paas stay' },
-      { id: 'chhattisgarh', name: 'Chhattisgarh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Bastar tribal culture & nature' },
-      { id: 'andhra', name: 'Andhra Pradesh', img: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=500&q=80', desc: 'Araku Valley & Konaseema' },
-      { id: 'telangana', name: 'Telangana', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80', desc: 'Pochampally handloom village' },
-      { id: 'nagaland', name: 'Nagaland', img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=80', desc: 'Khonoma eco-village' },
-      { id: 'manipur', name: 'Manipur', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Loktak floating huts' },
-      { id: 'mizoram', name: 'Mizoram', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80', desc: 'Reiek village & bamboo huts' },
-      { id: 'tripura', name: 'Tripura', img: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=500&q=80', desc: 'Bamboo craft village' },
-      { id: 'arunachal', name: 'Arunachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Ziro valley & Apatani culture' },
-      { id: 'andaman', name: 'Andaman & Nicobar', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Island village life & beaches' },
-      { id: 'puducherry', name: 'Puducherry', img: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=500&q=80', desc: 'French style coastal villages' },
-      { id: 'lakshadweep', name: 'Lakshadweep', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Coral island village stay' },
-      { id: 'delhi', name: 'Delhi (Rural Outer)', img: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=500&q=80', desc: 'Dehati farms & organic stay' },
-      { id: 'chandigarh', name: 'Chandigarh / Suburbs', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Green belt farmhouses' },
-      { id: 'daman', name: 'Dadra & Nagar Haveli', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=500&q=80', desc: 'Tribal forestry & village stay' }
+      { id: 'rajasthan', name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Khuri, Bishnoi & Sam Haveli Villages' },
+      { id: 'kerala', name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Kumarakom Backwater Stays' },
+      { id: 'himachal', name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Seb ke baag & Old Pahadi Huts' },
+      { id: 'punjab', name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson Khet & Farm Homestays' },
+      { id: 'gujarat', name: 'Gujarat', img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=80', desc: 'Rann of Kutch & Bhunga Stay' },
+      { id: 'uttarakhand', name: 'Uttarakhand', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80', desc: 'Devbhoomi Traditional Cottages' }
     ];
 
-    const stateVillagesData = {
-      'rajasthan': [
-        { name: 'Khuri Desert Village', stay: 'Traditional Mud Hut', price: '₹1,499/night', desc: 'Ret ke dhoro ke paas choolhe ka khana & Folk Dance.' },
-        { name: 'Bishnoi Heritage Village', stay: 'Eco Cottage', price: '₹1,999/night', desc: 'Wild life spotting, Kheti & Pottery Workshops.' },
-        { name: 'Sam Village', stay: 'Desert Camp & Safari', price: '₹2,499/night', desc: 'Camel safari aur rajasthani thali dinner.' }
-      ],
-      'kerala': [
-        { name: 'Kumarakom Rural Stay', stay: 'Waterfront Hut', price: '₹2,299/night', desc: 'Shuddh nariyal paani, Boating aur traditional fish curry.' },
-        { name: 'Mararikulam Village', stay: 'Beachside Homestay', price: '₹1,899/night', desc: 'Fisherman village life aur peaceful beaches.' }
-      ]
-    };
+    const stateVillagesData = [
+      { name: 'Khuri Heritage Village', state: 'Rajasthan', stay: 'Traditional Mud Hut', price: '₹1,499/night', desc: 'Choolhe ka bajre ka sogra, folk dance aur khet-khalihaan.' },
+      { name: 'Kumarakom Eco Stay', state: 'Kerala', stay: 'Waterfront Hut', price: '₹2,299/night', desc: 'Traditional coconut farming, fresh fish curry & boating.' },
+      { name: 'Khonoma Eco Village', state: 'Nagaland', stay: 'Bamboo Cottage', price: '₹1,899/night', desc: 'Organic farming, local tribal stories aur craft workshops.' }
+    ];
 
-    const statesGrid = document.getElementById('states-grid');
-
-    // Render Cards
+    // Render States Carousel
     function renderStates() {
-      statesGrid.innerHTML = "";
+      const grid = document.getElementById('states-grid');
+      grid.innerHTML = "";
       indian36States.forEach(state => {
-        statesGrid.innerHTML += `
-          <div onclick="selectState('${state.id}', '${state.name}')" class="modern-card rounded-2xl overflow-hidden border border-gray-200/80 min-w-[240px] max-w-[240px] flex-shrink-0 cursor-pointer group select-none">
+        grid.innerHTML += `
+          <div onclick="switchTab('visit-tab')" class="modern-card rounded-2xl overflow-hidden border border-gray-200 min-w-[240px] max-w-[240px] flex-shrink-0 cursor-pointer group">
             <div class="relative overflow-hidden h-36">
-              <img src="${state.img}" draggable="false" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" />
-              <div class="absolute top-2 right-2 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                ⭐ 4.9
-              </div>
+              <img src="${state.img}" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" />
+              <div class="absolute top-2 right-2 bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">⭐ 4.9</div>
             </div>
             <div class="p-4">
               <h3 class="font-extrabold text-base text-[#0F2C23] group-hover:text-[#B85042] transition">
-                <i class="fa-solid fa-location-dot text-[#B85042] text-xs mr-1.5"></i>${state.name}
+                <i class="fa-solid fa-location-dot text-[#B85042] text-xs mr-1"></i>${state.name}
               </h3>
               <p class="text-xs font-semibold text-gray-500 mt-1 leading-relaxed">${state.desc}</p>
             </div>
@@ -243,20 +468,13 @@
       });
     }
 
-    // Select State
-    function selectState(stateId, stateName) {
-      document.getElementById('selected-state-title').innerText = `${stateName} Ke Top Gaon`;
+    // Render Village Visits
+    function renderVillages() {
       const container = document.getElementById('villages-container');
       container.innerHTML = "";
-
-      const list = stateVillagesData[stateId] || [
-        { name: `${stateName} Central Village`, stay: 'Desi Organic Stay', price: '₹1,299/night', desc: 'Desi khana, khet-khalihaan aur shuddh vatavaran.' },
-        { name: `Prakritik ${stateName} Basti`, stay: 'Heritage Eco House', price: '₹1,799/night', desc: 'Paramparik culture, craft workshops aur local stay.' }
-      ];
-
-      list.forEach(v => {
+      stateVillagesData.forEach(v => {
         container.innerHTML += `
-          <div class="modern-card p-5 rounded-2xl border border-gray-200/80 flex flex-col justify-between">
+          <div class="modern-card p-5 rounded-2xl border border-gray-200 flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-center mb-2">
                 <span class="bg-emerald-100 text-[#0F2C23] text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider">${v.stay}</span>
@@ -266,41 +484,29 @@
               <p class="text-xs font-semibold text-gray-500 mt-2 leading-relaxed">${v.desc}</p>
             </div>
             <button class="mt-5 w-full bg-[#0F2C23] hover:bg-[#1A4739] text-white font-bold py-3 rounded-xl text-xs shadow-md transition">
-              Book Village Experience
+              Book 2-Day Experience
             </button>
           </div>
         `;
       });
-
-      document.getElementById('villages-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Mouse Drag & Arrow Scrolling
-    let isDown = false;
-    let startX, scrollLeft;
+    // Dynamic Tab Switching
+    function switchTab(tabId) {
+      const element = document.getElementById(tabId);
+      if(element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
 
-    statesGrid.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - statesGrid.offsetLeft;
-      scrollLeft = statesGrid.scrollLeft;
-    });
+    // Drag Scrolling
+    const statesGrid = document.getElementById('states-grid');
+    document.getElementById('state-left').onclick = () => statesGrid.scrollBy({ left: -280, behavior: 'smooth' });
+    document.getElementById('state-right').onclick = () => statesGrid.scrollBy({ left: 280, behavior: 'smooth' });
 
-    statesGrid.addEventListener('mouseleave', () => { isDown = false; });
-    statesGrid.addEventListener('mouseup', () => { isDown = false; });
-
-    statesGrid.addEventListener('mousemove', (e) => {
-      if(!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - statesGrid.offsetLeft;
-      statesGrid.scrollLeft = scrollLeft - (x - startX) * 2;
-    });
-
-    document.getElementById('state-left').onclick = () => statesGrid.scrollBy({ left: -300, behavior: 'smooth' });
-    document.getElementById('state-right').onclick = () => statesGrid.scrollBy({ left: 300, behavior: 'smooth' });
-
-    // Initialize
+    // Initialize UI
     renderStates();
-    selectState('rajasthan', 'Rajasthan');
+    renderVillages();
   </script>
 </body>
 </html>
