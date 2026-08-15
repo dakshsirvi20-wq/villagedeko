@@ -1,5 +1,8 @@
 /* =========================================
-   VILLAGEDEKO — FIREBASE VILLAGE FEED
+   VILLAGEDEKO — MAIN APP
+   MODERN UI + FIREBASE
+   VILLAGE FEED SEPARATE
+   STORY/SOCIAL FEED SEPARATE
 ========================================= */
 
 import {
@@ -23,52 +26,84 @@ import {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const searchInput = document.getElementById("villageSearch");
-  const searchButton = document.getElementById("searchButton");
-  const exploreButton = document.getElementById("exploreVillage");
-  const villageFeed = document.getElementById("villageFeed");
+  /* =========================================
+     MAIN ELEMENTS
+  ========================================= */
+
+  const searchInput =
+    document.getElementById("villageSearch");
+
+  const searchButton =
+    document.getElementById("searchButton");
+
+  const exploreButton =
+    document.getElementById("exploreVillage");
+
+  const villageFeed =
+    document.getElementById("villageFeed");
 
 
   /* =========================================
-     SEARCH
+     SEARCH VILLAGE
   ========================================= */
 
-  searchButton?.addEventListener("click", searchVillage);
+  searchButton?.addEventListener(
+    "click",
+    searchVillage
+  );
 
-  searchInput?.addEventListener("keydown", (event) => {
 
-    if (event.key === "Enter") {
-      searchVillage();
+  searchInput?.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (event.key === "Enter") {
+        searchVillage();
+      }
+
     }
-
-  });
+  );
 
 
   function searchVillage() {
 
-    const query = searchInput?.value.trim().toLowerCase();
+    const query =
+      searchInput?.value
+        .trim()
+        .toLowerCase();
+
 
     if (!query) {
 
-      showMessage("Kisi village ka naam search karo 🌾");
+      showMessage(
+        "Kisi village ka naam search karo 🌾"
+      );
 
       searchInput?.focus();
 
       return;
     }
 
-    const cards = document.querySelectorAll(".village-post-card");
+
+    const cards =
+      document.querySelectorAll(
+        ".village-post-card"
+      );
+
 
     let found = false;
+
 
     cards.forEach(card => {
 
       const text =
         card.textContent.toLowerCase();
 
+
       if (text.includes(query)) {
 
         card.style.display = "";
+
 
         if (!found) {
 
@@ -78,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
         }
+
 
         found = true;
 
@@ -102,19 +138,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     EXPLORE VILLAGE
+     EXPLORE
   ========================================= */
 
-  exploreButton?.addEventListener("click", () => {
+  exploreButton?.addEventListener(
+    "click",
+    () => {
 
-    document
-      .getElementById("villageFeedSection")
-      ?.scrollIntoView({
+      const target =
+        document.getElementById(
+          "villageFeedSection"
+        ) ||
+        villageFeed;
+
+
+      target?.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
 
-  });
+    }
+  );
 
 
   /* =========================================
@@ -122,21 +166,30 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================================= */
 
   const experienceCards =
-    document.querySelectorAll(".experience-card");
+    document.querySelectorAll(
+      ".experience-card"
+    );
+
 
   experienceCards.forEach(card => {
 
-    card.addEventListener("click", () => {
+    card.addEventListener(
+      "click",
+      () => {
 
-      const title =
-        card.querySelector("strong")?.textContent ||
-        "Village Experience";
+        const title =
+          card.querySelector(
+            "strong"
+          )?.textContent ||
+          "Village Experience";
 
-      showMessage(
-        `${title} section VillageDeko mein build ho raha hai 🌾`
-      );
 
-    });
+        showMessage(
+          `${title} section VillageDeko mein build ho raha hai 🌾`
+        );
+
+      }
+    );
 
   });
 
@@ -145,29 +198,42 @@ document.addEventListener("DOMContentLoaded", () => {
      AUTH
   ========================================= */
 
-  onAuthStateChanged(auth, async (user) => {
+  onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if (!user) {
+      if (!user) {
 
-      renderFeedMessage(
-        "VillageDeko feed dekhne ke liye login karo."
-      );
+        renderFeedMessage(
+          "VillageDeko feed dekhne ke liye login karo."
+        );
 
-      return;
+        return;
+      }
+
+
+      await loadVillageFeed(user);
+
     }
-
-    await loadVillageFeed(user);
-
-  });
+  );
 
 
   /* =========================================
-     LOAD POSTS FROM FIRESTORE
+     VILLAGE FEED
+     
+     ONLY VILLAGE POSTS
+     
+     Collection:
+     posts
+     
+     Story/Social posts ko yahan
+     mix nahi kiya jayega.
   ========================================= */
 
   async function loadVillageFeed(user) {
 
     if (!villageFeed) return;
+
 
     villageFeed.innerHTML = `
       <div class="feed-loading">
@@ -179,13 +245,18 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
 
       const postsSnapshot =
-        await getDocs(collection(db, "posts"));
+        await getDocs(
+          collection(
+            db,
+            "posts"
+          )
+        );
 
 
       if (postsSnapshot.empty) {
 
         renderFeedMessage(
-          "Abhi VillageDeko par koi post nahi hai 🌾"
+          "Abhi VillageDeko par koi village post nahi hai 🌾"
         );
 
         return;
@@ -195,44 +266,86 @@ document.addEventListener("DOMContentLoaded", () => {
       const posts = [];
 
 
-      for (const postDoc of postsSnapshot.docs) {
+      postsSnapshot.forEach(
+        postDoc => {
 
-        const data = postDoc.data();
+          const data =
+            postDoc.data();
 
-        posts.push({
-          id: postDoc.id,
-          ...data
-        });
 
+          /*
+            Sirf woh posts Village Feed
+            mein aayengi jinke paas
+            village information hai.
+          */
+
+          if (
+            data.villageName ||
+            data.villageId ||
+            data.vDistrict ||
+            data.district
+          ) {
+
+            posts.push({
+              id: postDoc.id,
+              ...data
+            });
+
+          }
+
+        }
+      );
+
+
+      if (posts.length === 0) {
+
+        renderFeedMessage(
+          "Abhi koi village post available nahi hai 🌾"
+        );
+
+        return;
       }
 
 
       /* =========================================
-         NEWEST POSTS FIRST
+         NEWEST FIRST
       ========================================= */
 
-      posts.sort((a, b) => {
+      posts.sort(
+        (a, b) => {
 
-        const aTime =
-          getTimestampValue(a.createdAt);
+          return (
+            getTimestampValue(
+              b.createdAt
+            ) -
+            getTimestampValue(
+              a.createdAt
+            )
+          );
 
-        const bTime =
-          getTimestampValue(b.createdAt);
-
-        return bTime - aTime;
-
-      });
+        }
+      );
 
 
       villageFeed.innerHTML = "";
 
 
+      /* =========================================
+         CREATE EACH POST
+      ========================================= */
+
       for (const post of posts) {
 
         const card =
-          await createPostCard(post, user);
+          await createPostCard(
+            post,
+            user
+          );
 
-        villageFeed.appendChild(card);
+
+        villageFeed.appendChild(
+          card
+        );
 
       }
 
@@ -242,6 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "VillageDeko feed error:",
         error
       );
+
 
       renderFeedMessage(
         "Posts load nahi ho pa rahi hain. Firebase connection check karo."
@@ -253,51 +367,131 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     CREATE POST CARD
+     CREATE VILLAGE POST CARD
   ========================================= */
 
-  async function createPostCard(post, user) {
+  async function createPostCard(
+    post,
+    user
+  ) {
 
     const card =
-      document.createElement("article");
+      document.createElement(
+        "article"
+      );
 
-    card.className = "village-post-card";
 
-    card.dataset.postId = post.id;
+    card.className =
+      "village-post-card";
 
+
+    card.dataset.postId =
+      post.id;
+
+
+    /* =========================================
+       VILLAGE INFORMATION
+    ========================================= */
 
     const villageName =
       post.villageName ||
       "Village";
+
 
     const district =
       post.vDistrict ||
       post.district ||
       "";
 
+
     const state =
       post.vState ||
       post.state ||
       "";
 
+
+    const locationText =
+      [
+        villageName,
+        district,
+        state
+      ]
+      .filter(Boolean)
+      .join(" · ");
+
+
+    /* =========================================
+       AUTHOR
+    ========================================= */
+
     const author =
       post.author ||
+      post.authorName ||
       "VillageDeko User";
+
+
+    /* =========================================
+       TEXT
+    ========================================= */
 
     const text =
       post.text ||
+      post.caption ||
       "";
+
+
+    /* =========================================
+       IMAGE
+    ========================================= */
 
     const imageUrl =
       post.imageUrl ||
       "";
 
 
+    let imageHTML = "";
+
+
+    if (imageUrl) {
+
+      imageHTML = `
+        <div class="post-image-wrapper">
+
+          <img
+            class="post-image"
+            src="${escapeHTML(imageUrl)}"
+            alt="${escapeHTML(villageName)}"
+            loading="lazy"
+            onerror="
+              this.style.display='none';
+              this.parentElement.classList.add('image-error');
+            "
+          />
+
+        </div>
+      `;
+
+    } else {
+
+      imageHTML = `
+        <div class="post-image-wrapper">
+
+          <div class="post-image-placeholder">
+            🌾
+          </div>
+
+        </div>
+      `;
+
+    }
+
+
     /* =========================================
-       LIKE COUNT
+       LIKE DATA
     ========================================= */
 
     let likeCount = 0;
+
     let likedByUser = false;
 
 
@@ -313,8 +507,10 @@ document.addEventListener("DOMContentLoaded", () => {
           )
         );
 
+
       likeCount =
         likesSnapshot.size;
+
 
       likedByUser =
         likesSnapshot.docs.some(
@@ -333,50 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       IMAGE
-    ========================================= */
-
-    let imageHTML = "";
-
-    if (imageUrl) {
-
-      imageHTML = `
-        <div class="post-image-wrapper">
-          <img
-            class="post-image"
-            src="${escapeHTML(imageUrl)}"
-            alt="${escapeHTML(villageName)}"
-            loading="lazy"
-            onerror="this.parentElement.innerHTML='<div class=&quot;post-image-placeholder&quot;>🌾</div>'"
-          />
-        </div>
-      `;
-
-    } else {
-
-      imageHTML = `
-        <div class="post-image-wrapper">
-          <div class="post-image-placeholder">
-            🌾
-          </div>
-        </div>
-      `;
-
-    }
-
-
-    /* =========================================
-       LOCATION
-    ========================================= */
-
-    const locationText =
-      [villageName, district, state]
-        .filter(Boolean)
-        .join(" · ");
-
-
-    /* =========================================
-       DELETE BUTTON
+       OWNER
     ========================================= */
 
     const isOwner =
@@ -389,12 +542,17 @@ document.addEventListener("DOMContentLoaded", () => {
           <button
             class="post-delete-button"
             data-action="delete"
+            type="button"
           >
             Delete
           </button>
         `
         : "";
 
+
+    /* =========================================
+       POST HTML
+    ========================================= */
 
     card.innerHTML = `
 
@@ -432,20 +590,34 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="post-actions">
 
           <button
-            class="post-like-button ${likedByUser ? "liked" : ""}"
+            class="post-like-button ${
+              likedByUser
+                ? "liked"
+                : ""
+            }"
             data-action="like"
+            type="button"
           >
-            ${likedByUser ? "❤️" : "🤍"}
+
+            ${
+              likedByUser
+                ? "❤️"
+                : "🤍"
+            }
+
             <span class="like-count">
               ${likeCount}
             </span>
+
             Like
+
           </button>
 
 
           <button
             class="post-comment-button"
             data-action="comments"
+            type="button"
           >
             💬 Comment
           </button>
@@ -472,9 +644,11 @@ document.addEventListener("DOMContentLoaded", () => {
               maxlength="500"
             />
 
+
             <button
               class="comment-submit"
               data-action="add-comment"
+              type="button"
             >
               Post
             </button>
@@ -484,58 +658,94 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
       </div>
+
     `;
 
 
     /* =========================================
-       BUTTON EVENTS
+       LIKE EVENT
     ========================================= */
 
     card
-      .querySelector("[data-action='like']")
+      .querySelector(
+        "[data-action='like']"
+      )
       ?.addEventListener(
         "click",
-        () => toggleLike(
-          post,
-          user,
-          card
-        )
+        () => {
+
+          toggleLike(
+            post,
+            user,
+            card
+          );
+
+        }
       );
 
 
+    /* =========================================
+       COMMENT EVENT
+    ========================================= */
+
     card
-      .querySelector("[data-action='comments']")
+      .querySelector(
+        "[data-action='comments']"
+      )
       ?.addEventListener(
         "click",
-        () => toggleComments(
-          post,
-          user,
-          card
-        )
+        () => {
+
+          toggleComments(
+            post,
+            card
+          );
+
+        }
       );
 
 
+    /* =========================================
+       ADD COMMENT
+    ========================================= */
+
     card
-      .querySelector("[data-action='add-comment']")
+      .querySelector(
+        "[data-action='add-comment']"
+      )
       ?.addEventListener(
         "click",
-        () => addComment(
-          post,
-          user,
-          card
-        )
+        () => {
+
+          addComment(
+            post,
+            user,
+            card
+          );
+
+        }
       );
 
 
+    /* =========================================
+       DELETE
+    ========================================= */
+
     card
-      .querySelector("[data-action='delete']")
+      .querySelector(
+        "[data-action='delete']"
+      )
       ?.addEventListener(
         "click",
-        () => deletePost(
-          post,
-          user,
-          card
-        )
+        () => {
+
+          deletePost(
+            post,
+            user,
+            card
+          );
+
+        }
       );
 
 
@@ -548,12 +758,17 @@ document.addEventListener("DOMContentLoaded", () => {
      LIKE / UNLIKE
   ========================================= */
 
-  async function toggleLike(post, user, card) {
+  async function toggleLike(
+    post,
+    user,
+    card
+  ) {
 
     const likeButton =
       card.querySelector(
         ".post-like-button"
       );
+
 
     const likeCountElement =
       card.querySelector(
@@ -580,37 +795,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       const existingLike =
-        await getDoc(likeRef);
+        await getDoc(
+          likeRef
+        );
 
 
-      if (existingLike.exists()) {
+      const currentCount =
+        Number(
+          likeCountElement?.textContent || 0
+        );
 
-        await deleteDoc(likeRef);
 
-        likeButton.classList.remove("liked");
+      if (
+        existingLike.exists()
+      ) {
 
-        likeButton.innerHTML =
-          `🤍 <span class="like-count">${Math.max(
-            0,
-            Number(likeCountElement?.textContent || 0) - 1
-          )}</span> Like`;
+        await deleteDoc(
+          likeRef
+        );
+
+
+        likeButton.classList.remove(
+          "liked"
+        );
+
+
+        likeButton.innerHTML = `
+          🤍
+          <span class="like-count">
+            ${Math.max(
+              0,
+              currentCount - 1
+            )}
+          </span>
+          Like
+        `;
 
       } else {
 
-        await setDoc(likeRef, {
-          uid: user.uid,
-          createdAt: new Date()
-        });
+        await setDoc(
+          likeRef,
+          {
+            uid: user.uid,
+            createdAt: new Date()
+          }
+        );
 
 
-        likeButton.classList.add("liked");
+        likeButton.classList.add(
+          "liked"
+        );
 
-        likeButton.innerHTML =
-          `❤️ <span class="like-count">${
-            Number(
-              likeCountElement?.textContent || 0
-            ) + 1
-          }</span> Like`;
+
+        likeButton.innerHTML = `
+          ❤️
+          <span class="like-count">
+            ${currentCount + 1}
+          </span>
+          Like
+        `;
 
       }
 
@@ -620,6 +863,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Like error:",
         error
       );
+
 
       showMessage(
         "Like nahi ho paya. Dobara try karo."
@@ -634,12 +878,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================
-     COMMENTS OPEN/CLOSE
+     COMMENTS OPEN / CLOSE
   ========================================= */
 
   async function toggleComments(
     post,
-    user,
     card
   ) {
 
@@ -647,6 +890,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.querySelector(
         ".comments-area"
       );
+
 
     if (!area) return;
 
@@ -684,6 +928,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ".comments-list"
       );
 
+
     if (!list) return;
 
 
@@ -704,7 +949,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-      if (commentsSnapshot.empty) {
+      if (
+        commentsSnapshot.empty
+      ) {
 
         list.innerHTML =
           "<p>Abhi koi comment nahi hai.</p>";
@@ -728,55 +975,67 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      comments.sort((a, b) => {
+      comments.sort(
+        (a, b) => {
 
-        return (
-          getTimestampValue(a.createdAt) -
-          getTimestampValue(b.createdAt)
-        );
+          return (
+            getTimestampValue(
+              a.createdAt
+            ) -
+            getTimestampValue(
+              b.createdAt
+            )
+          );
 
-      });
+        }
+      );
 
 
       list.innerHTML = "";
 
 
-      comments.forEach(comment => {
+      comments.forEach(
+        comment => {
 
-        const item =
-          document.createElement("div");
-
-        item.className =
-          "comment-item";
-
-
-        const commentAuthor =
-          comment.author ||
-          comment.authorName ||
-          "User";
+          const item =
+            document.createElement(
+              "div"
+            );
 
 
-        const commentText =
-          comment.text ||
-          "";
+          item.className =
+            "comment-item";
 
 
-        item.innerHTML = `
-
-          <strong>
-            ${escapeHTML(commentAuthor)}
-          </strong>
-
-          <p>
-            ${escapeHTML(commentText)}
-          </p>
-
-        `;
+          const commentAuthor =
+            comment.author ||
+            comment.authorName ||
+            "User";
 
 
-        list.appendChild(item);
+          item.innerHTML = `
 
-      });
+            <strong>
+              ${escapeHTML(
+                commentAuthor
+              )}
+            </strong>
+
+            <p>
+              ${escapeHTML(
+                comment.text || ""
+              )}
+            </p>
+
+          `;
+
+
+          list.appendChild(
+            item
+          );
+
+        }
+      );
 
     } catch (error) {
 
@@ -784,6 +1043,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Comments error:",
         error
       );
+
 
       list.innerHTML =
         "<p>Comments load nahi ho paaye.</p>";
@@ -807,6 +1067,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.querySelector(
         ".comment-input"
       );
+
 
     const submitButton =
       card.querySelector(
@@ -844,20 +1105,26 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-      await setDoc(commentRef, {
+      await setDoc(
+        commentRef,
+        {
 
-        uid: user.uid,
+          uid:
+            user.uid,
 
-        author:
-          user.displayName ||
-          user.email ||
-          "VillageDeko User",
+          author:
+            user.displayName ||
+            user.email ||
+            "VillageDeko User",
 
-        text: text,
+          text:
+            text,
 
-        createdAt: new Date()
+          createdAt:
+            new Date()
 
-      });
+        }
+      );
 
 
       input.value = "";
@@ -873,13 +1140,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Comment post ho gaya 🌾"
       );
 
-
     } catch (error) {
 
       console.error(
         "Comment error:",
         error
       );
+
 
       showMessage(
         "Comment post nahi ho paya."
@@ -903,7 +1170,10 @@ document.addEventListener("DOMContentLoaded", () => {
     card
   ) {
 
-    if (post.ownerUid !== user.uid) {
+    if (
+      post.ownerUid !==
+      user.uid
+    ) {
 
       showMessage(
         "Aap sirf apni post delete kar sakte ho."
@@ -940,13 +1210,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Post delete ho gayi."
       );
 
-
     } catch (error) {
 
       console.error(
         "Delete error:",
         error
       );
+
 
       showMessage(
         "Post delete nahi ho payi."
@@ -979,7 +1249,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (
-      timestamp.seconds !== undefined
+      timestamp.seconds !==
+      undefined
     ) {
 
       return (
@@ -1007,14 +1278,18 @@ document.addEventListener("DOMContentLoaded", () => {
      FEED MESSAGE
   ========================================= */
 
-  function renderFeedMessage(message) {
+  function renderFeedMessage(
+    message
+  ) {
 
     if (!villageFeed) return;
 
 
     villageFeed.innerHTML = `
       <div class="feed-message">
-        <p>${escapeHTML(message)}</p>
+        <p>
+          ${escapeHTML(message)}
+        </p>
       </div>
     `;
 
@@ -1025,23 +1300,44 @@ document.addEventListener("DOMContentLoaded", () => {
      SAFE HTML
   ========================================= */
 
-  function escapeHTML(value) {
+  function escapeHTML(
+    value
+  ) {
 
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+    return String(
+      value ?? ""
+    )
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
 
   }
 
 
   /* =========================================
-     SIMPLE MESSAGE SYSTEM
+     MESSAGE SYSTEM
   ========================================= */
 
-  function showMessage(message) {
+  function showMessage(
+    message
+  ) {
 
     let box =
       document.getElementById(
@@ -1052,7 +1348,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!box) {
 
       box =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       box.id =
@@ -1105,13 +1403,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "opacity 0.25s ease";
 
 
-      document.body.appendChild(box);
+      document.body.appendChild(
+        box
+      );
 
     }
 
 
     box.textContent =
       message;
+
 
     box.style.opacity =
       "1";
@@ -1123,12 +1424,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     box.hideTimer =
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        box.style.opacity =
-          "0";
+          box.style.opacity =
+            "0";
 
-      }, 3000);
+        },
+        3000
+      );
 
   }
 
