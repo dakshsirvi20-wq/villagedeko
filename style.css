@@ -621,9 +621,46 @@ button {
   .day-timeline {
     grid-template-columns: 1fr;
   }
-/* =========================================
-   VILLAGEDEKO — VILLAGE FEED POSTS
+   /* =========================================
+   VILLAGE FEED — DESKTOP IMAGE FIX
 ========================================= */
+
+.post-image-wrapper {
+  width: 100% !important;
+  height: 420px !important;
+  max-height: 420px !important;
+  overflow: hidden !important;
+}
+
+.post-image {
+  display: block !important;
+  width: 100% !important;
+  height: 420px !important;
+  max-height: 420px !important;
+  object-fit: cover !important;
+}
+
+/* Desktop */
+@media (min-width: 701px) {
+  .village-post-card {
+    max-width: 850px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .post-image-wrapper {
+    height: 420px !important;
+    max-height: 420px !important;
+  }
+
+  .post-image {
+    height: 420px !important;
+    max-height: 420px !important;
+  }
+}
+   /* =========================================
+   VILLAGEDEKO — VILLAGE FEED POSTS
+ ========================================= */
 
 #villageFeed {
   width: 100%;
