@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Village Tourism - Discover the Soul of India</title>
+  <title>VillageDeko - Discover, Feel & Experience Rural India</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,15 +13,24 @@
     .font-serif-heading { font-family: 'Playfair Display', serif; }
     
     .hero-bg {
-      background: linear-gradient(180deg, rgba(20, 35, 15, 0.45) 0%, rgba(15, 30, 10, 0.75) 100%), 
+      background: linear-gradient(180deg, rgba(20, 35, 15, 0.55) 0%, rgba(15, 30, 10, 0.85) 100%), 
                   url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1800&q=80');
       background-size: cover;
       background-position: center;
     }
-    .dark-green-bg { background-color: #2D4018; }
-    .olive-btn { background-color: #4C6B22; }
-    .olive-btn:hover { background-color: #3B541A; }
-    .accent-gold { color: #D4A359; }
+
+    .olive-bg { background-color: #4C6B22; }
+    .olive-bg:hover { background-color: #3B541A; }
+    .dark-green-bg { background-color: #1B290E; }
+
+    .modern-card {
+      background: #FFFFFF;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .modern-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 24px -4px rgba(27, 41, 14, 0.12);
+    }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -29,11 +38,10 @@
 </head>
 <body class="bg-[#FAF9F6] text-slate-800 antialiased">
 
-  <!-- Top Announcement Bar -->
-  <div class="dark-green-[#1E2E10] bg-[#1B290E] text-white text-xs py-2 px-6 flex justify-between items-center font-light border-b border-white/10">
+  <div class="dark-green-bg text-white text-xs py-2 px-6 flex justify-between items-center font-light border-b border-white/10">
     <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-location-dot text-emerald-400 text-xs"></i>
-      <span>Experience the Real India</span>
+      <i class="fa-solid fa-location-dot text-amber-400 text-xs"></i>
+      <span>Experience the Real Indian Villages</span>
     </div>
     <div class="flex items-center space-x-6">
       <div class="flex items-center space-x-3 text-sm">
@@ -50,381 +58,190 @@
     </div>
   </div>
 
-  <!-- Header Navigation -->
-  <nav class="bg-white sticky top-0 z-50 shadow-sm py-3 px-8 flex justify-between items-center border-b border-gray-100">
-    <div class="flex items-center space-x-3 cursor-pointer">
+  <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-sm py-3.5 px-6 md:px-12 flex justify-between items-center border-b border-gray-100">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('explore-tab')">
       <div class="text-[#3B541A]">
         <i class="fa-solid fa-tree-city text-3xl"></i>
       </div>
       <div>
-        <h1 class="text-xl font-bold font-serif-heading text-[#2D4018] tracking-wide leading-none">Village Tourism</h1>
+        <h1 class="text-xl md:text-2xl font-bold font-serif-heading text-[#1B290E] leading-none">VillageDeko</h1>
         <p class="text-[9px] text-gray-500 font-medium tracking-wider uppercase mt-0.5">Discover the Soul of India</p>
       </div>
     </div>
     
     <div class="hidden lg:flex items-center space-x-7 text-sm font-medium text-gray-700">
-      <a href="#" class="text-[#3B541A] font-semibold border-b-2 border-[#3B541A] pb-1">Home</a>
-      <a href="#destinations" class="hover:text-[#3B541A] transition">Destinations <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
-      <a href="#experiences" class="hover:text-[#3B541A] transition">Experiences <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
-      <a href="#" class="hover:text-[#3B541A] transition">Stay <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
-      <a href="#" class="hover:text-[#3B541A] transition">Packages</a>
-      <a href="#" class="hover:text-[#3B541A] transition">About Us</a>
-      <a href="#" class="hover:text-[#3B541A] transition">Contact Us</a>
+      <button onclick="switchTab('explore-tab')" class="hover:text-[#3B541A] transition">Discover & Map</button>
+      <button onclick="switchTab('timeline-tab')" class="hover:text-[#3B541A] transition">A Day in Village</button>
+      <button onclick="switchTab('food-tab')" class="hover:text-[#3B541A] transition">Food Journey</button>
+      <button onclick="switchTab('feed-tab')" class="hover:text-[#3B541A] transition">Village Stories</button>
+      <button onclick="switchTab('market-tab')" class="hover:text-[#3B541A] transition">Village Bazaar</button>
     </div>
 
-    <div>
-      <a href="#booking" class="olive-btn text-white text-xs font-semibold px-5 py-2.5 rounded-md shadow transition">Plan Your Trip</a>
+    <div class="flex items-center space-x-3">
+      <button onclick="switchTab('visit-tab')" class="olive-bg text-white text-xs font-semibold px-5 py-2.5 rounded-md shadow transition flex items-center space-x-2">
+        <i class="fa-solid fa-suitcase text-amber-300"></i>
+        <span>Visit Village</span>
+      </button>
+
+      <button id="menu-toggle" class="lg:hidden text-gray-700 text-xl p-1">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero Banner -->
-  <header class="hero-bg min-h-[500px] flex flex-col justify-center items-center text-center text-white px-4 relative">
-    <span class="font-serif-heading italic text-amber-200 text-lg md:text-xl mb-1">~ Welcome to ~</span>
-    <h1 class="text-4xl md:text-6xl font-extrabold font-serif-heading tracking-wider uppercase drop-shadow-md">Village Tourism</h1>
-    <p class="font-serif-heading italic text-lg md:text-2xl text-amber-100 mt-2 mb-3">Live. Explore. Connect.</p>
-    <p class="max-w-xl text-xs md:text-sm text-gray-200 font-light leading-relaxed mb-8">
-      Discover the untouched beauty of Indian villages, rich culture, warm hospitality and peaceful living.
-    </p>
-
-    <!-- Search Bar Card -->
-    <div class="bg-white rounded-md p-3 shadow-2xl flex flex-col md:flex-row items-center gap-3 w-full max-w-4xl text-slate-700">
-      <div class="flex items-center px-3 py-2 w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 text-xs">
-        <i class="fa-solid fa-location-dot text-gray-400 mr-2 text-sm"></i>
-        <input type="text" placeholder="Where do you want to go?" class="w-full outline-none font-normal placeholder-gray-400" />
-      </div>
-      <div class="flex items-center px-3 py-2 w-full md:w-1/4 border-b md:border-b-0 md:border-r border-gray-200 text-xs">
-        <i class="fa-regular fa-calendar text-gray-400 mr-2 text-sm"></i>
-        <input type="text" placeholder="Check In" onfocus="(this.type='date')" class="w-full outline-none font-normal text-gray-500" />
-      </div>
-      <div class="flex items-center px-3 py-2 w-full md:w-1/4 border-b md:border-b-0 md:border-r border-gray-200 text-xs">
-        <i class="fa-regular fa-calendar text-gray-400 mr-2 text-sm"></i>
-        <input type="text" placeholder="Check Out" onfocus="(this.type='date')" class="w-full outline-none font-normal text-gray-500" />
-      </div>
-      <div class="flex items-center px-3 py-2 w-full md:w-1/4 border-b md:border-b-0 border-gray-200 text-xs">
-        <i class="fa-regular fa-user text-gray-400 mr-2 text-sm"></i>
-        <input type="text" placeholder="Guests" class="w-full outline-none font-normal placeholder-gray-400" />
-      </div>
-      <button class="olive-btn text-white text-xs font-semibold px-6 py-3 rounded-md shadow w-full md:w-auto flex-shrink-0 transition">
-        Search
-      </button>
-    </div>
-  </header>
-
-  <!-- Feature Strip Bar -->
-  <section class="max-w-6xl mx-auto -mt-6 relative z-10 px-4">
-    <div class="bg-white rounded-md shadow-md py-6 px-4 grid grid-cols-2 md:grid-cols-6 gap-4 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100 border border-gray-100">
-      <div class="flex flex-col items-center p-2">
-        <i class="fa-solid fa-house-chimney-window text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Authentic Village<br/>Experience</span>
-      </div>
-      <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-        <i class="fa-solid fa-people-hold text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Support Local<br/>Communities</span>
-      </div>
-      <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-        <i class="fa-solid fa-leaf text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Eco-Friendly<br/>Tourism</span>
-      </div>
-      <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-        <i class="fa-solid fa-camera text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Scenic Beauty &<br/>Photography</span>
-      </div>
-      <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-        <i class="fa-solid fa-bowl-food text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Traditional Food<br/>& Culture</span>
-      </div>
-      <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
-        <i class="fa-solid fa-shield-halved text-2xl text-[#3B541A] mb-2"></i>
-        <span class="text-xs font-semibold text-gray-800 leading-tight">Safe & Secure<br/>Travel</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Popular Destinations Section -->
-  <section id="destinations" class="py-14 max-w-6xl mx-auto px-4">
-    <div class="flex justify-between items-end mb-8">
+  <div id="mobile-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden">
+    <div class="bg-white w-4/5 max-w-xs h-full p-6 shadow-2xl flex flex-col justify-between">
       <div>
-        <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#2D4018] tracking-wide">Popular Destinations</h2>
-        <div class="w-12 h-0.5 bg-amber-500 mt-1"></div>
-      </div>
-      <a href="#" class="olive-btn text-white text-xs font-semibold px-4 py-2 rounded-md shadow">View All Destinations</a>
-    </div>
-
-    <!-- Cards Slider/Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-      <!-- Card 1 -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80" class="h-36 w-full object-cover" />
-        <div class="p-3">
-          <h3 class="font-bold text-xs text-[#2D4018] flex items-center">
-            <i class="fa-solid fa-location-dot text-amber-600 text-[10px] mr-1"></i> Rajasthan Villages
-          </h3>
-          <p class="text-[10px] text-gray-500 mt-1 font-light leading-normal">Royal heritage, deserts, folk culture & traditions.</p>
+        <div class="flex justify-between items-center border-b pb-4 mb-6">
+          <span class="font-serif-heading font-bold text-lg text-[#1B290E]">VillageDeko Menu</span>
+          <button id="menu-close" class="text-gray-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
         </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80" class="h-36 w-full object-cover" />
-        <div class="p-3">
-          <h3 class="font-bold text-xs text-[#2D4018] flex items-center">
-            <i class="fa-solid fa-location-dot text-amber-600 text-[10px] mr-1"></i> Kerala Villages
-          </h3>
-          <p class="text-[10px] text-gray-500 mt-1 font-light leading-normal">Backwaters, greenery, peace & local life.</p>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80" class="h-36 w-full object-cover" />
-        <div class="p-3">
-          <h3 class="font-bold text-xs text-[#2D4018] flex items-center">
-            <i class="fa-solid fa-location-dot text-amber-600 text-[10px] mr-1"></i> Himachal Villages
-          </h3>
-          <p class="text-[10px] text-gray-500 mt-1 font-light leading-normal">Hills, nature, adventure & fresh air.</p>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80" class="h-36 w-full object-cover" />
-        <div class="p-3">
-          <h3 class="font-bold text-xs text-[#2D4018] flex items-center">
-            <i class="fa-solid fa-location-dot text-amber-600 text-[10px] mr-1"></i> Uttarakhand Villages
-          </h3>
-          <p class="text-[10px] text-gray-500 mt-1 font-light leading-normal">Spirituality, trekking, rivers & temples.</p>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80" class="h-36 w-full object-cover" />
-        <div class="p-3">
-          <h3 class="font-bold text-xs text-[#2D4018] flex items-center">
-            <i class="fa-solid fa-location-dot text-amber-600 text-[10px] mr-1"></i> North East Villages
-          </h3>
-          <p class="text-[10px] text-gray-500 mt-1 font-light leading-normal">Unique culture, scenery & warm people.</p>
+        <div class="flex flex-col space-y-4 font-medium text-gray-700 text-sm">
+          <button onclick="mobileNav('explore-tab')" class="text-left py-2 border-b">Discover & Map</button>
+          <button onclick="mobileNav('timeline-tab')" class="text-left py-2 border-b">A Day in Village</button>
+          <button onclick="mobileNav('food-tab')" class="text-left py-2 border-b">Food Journey</button>
+          <button onclick="mobileNav('feed-tab')" class="text-left py-2 border-b">Village Stories</button>
+          <button onclick="mobileNav('market-tab')" class="text-left py-2 border-b">Village Bazaar</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Unique Experiences Section -->
-  <section id="experiences" class="py-10 max-w-6xl mx-auto px-4">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#2D4018]">Unique Experiences</h2>
-      <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
-    </div>
+  <main>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-center">
-      <!-- Exp 1 -->
-      <div class="flex flex-col items-center">
-        <div class="relative rounded-2xl overflow-hidden w-full h-44 shadow-sm mb-3">
-          <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" />
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B541A] text-white p-2 rounded-full text-xs shadow-md border border-white">
-            <i class="fa-solid fa-[#fa-tractor] fa-tractor"></i>
+    <header class="hero-bg min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-12">
+      <span class="font-serif-heading italic text-amber-200 text-lg md:text-xl mb-1">~ Welcome to ~</span>
+      <h1 class="text-3xl md:text-6xl font-extrabold font-serif-heading tracking-wider uppercase drop-shadow-md max-w-4xl">
+        Village Tourism
+      </h1>
+      <p class="font-serif-heading italic text-lg md:text-2xl text-amber-100 mt-2 mb-3">Live. Explore. Connect.</p>
+      <p class="max-w-xl text-xs md:text-sm text-gray-200 font-light leading-relaxed mb-8">
+        Discover the untouched beauty of Indian villages, rich culture, organic food, warm hospitality and peaceful living.
+      </p>
+
+      <div class="bg-white rounded-md p-3 shadow-2xl flex flex-col md:flex-row items-center gap-3 w-full max-w-4xl text-slate-700">
+        <div class="flex items-center px-3 py-2 w-full md:w-2/3 border-b md:border-b-0 md:border-r border-gray-200 text-xs">
+          <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2 text-sm"></i>
+          <input id="state-search-input" type="text" placeholder="Search village, district, or state..." class="w-full outline-none font-normal placeholder-gray-400" />
+        </div>
+        <button onclick="searchState()" class="olive-bg text-white text-xs font-semibold px-8 py-3 rounded-md shadow w-full md:w-auto flex-shrink-0 transition">
+          Search
+        </button>
+      </div>
+    </header>
+
+    <section class="max-w-6xl mx-auto -mt-6 relative z-10 px-4">
+      <div class="bg-white rounded-md shadow-md py-5 px-4 grid grid-cols-2 md:grid-cols-6 gap-4 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100 border border-gray-100">
+        <div class="flex flex-col items-center p-2">
+          <i class="fa-solid fa-house-chimney-window text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Authentic Village<br/>Experience</span>
+        </div>
+        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
+          <i class="fa-solid fa-people-hold text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Support Local<br/>Communities</span>
+        </div>
+        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
+          <i class="fa-solid fa-leaf text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Eco-Friendly<br/>Tourism</span>
+        </div>
+        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
+          <i class="fa-solid fa-camera text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Scenic Beauty &<br/>Photography</span>
+        </div>
+        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
+          <i class="fa-solid fa-bowl-food text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Traditional Food<br/>& Culture</span>
+        </div>
+        <div class="flex flex-col items-center p-2 pt-4 md:pt-2">
+          <i class="fa-solid fa-shield-halved text-2xl text-[#3B541A] mb-2"></i>
+          <span class="text-xs font-semibold text-gray-800 leading-tight">Safe & Secure<br/>Travel</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="explore-tab" class="py-12 max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-end mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">Explore All 28 Indian States</h2>
+          <div class="w-12 h-0.5 bg-amber-500 mt-1"></div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button id="state-left" class="bg-white border border-gray-300 text-[#1B290E] hover:bg-[#1B290E] hover:text-white w-8 h-8 rounded-md flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+          </button>
+          <button id="state-right" class="olive-bg text-white w-8 h-8 rounded-md flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="states-grid" class="flex space-x-4 overflow-x-auto scroll-smooth no-scrollbar py-2">
+        </div>
+    </section>
+
+    <section id="timeline-tab" class="py-12 bg-[#F4F1EA] border-y border-amber-900/10">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">A Day in the Village</h2>
+          <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
+          <p class="text-xs text-gray-600 font-light mt-2">Experience life from morning cattle grazing to night storytelling.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2.5 py-1 rounded">05:30 AM</span>
+            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Morning Dawn</h4>
+            <p class="text-xs text-gray-500 font-light mt-1">Bird songs & temple bells in clean fresh air.</p>
+          </div>
+
+          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
+            <span class="bg-emerald-100 text-emerald-900 text-[10px] font-bold px-2.5 py-1 rounded">06:00 AM</span>
+            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Dairy & Cattle</h4>
+            <p class="text-xs text-gray-500 font-light mt-1">Fresh milking & caring for domestic animals.</p>
+          </div>
+
+          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
+            <span class="bg-green-100 text-green-900 text-[10px] font-bold px-2.5 py-1 rounded">07:00 AM</span>
+            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Farming Experience</h4>
+            <p class="text-xs text-gray-500 font-light mt-1">Field plowing & watering crops with farmers.</p>
+          </div>
+
+          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
+            <span class="bg-orange-100 text-orange-900 text-[10px] font-bold px-2.5 py-1 rounded">01:00 PM</span>
+            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Earthen Kitchen</h4>
+            <p class="text-xs text-gray-500 font-light mt-1">Clay stove cooked traditional warm lunch.</p>
+          </div>
+
+          <div class="modern-card p-4 rounded-lg border border-gray-100 shadow-sm">
+            <span class="bg-indigo-100 text-indigo-900 text-[10px] font-bold px-2.5 py-1 rounded">09:00 PM</span>
+            <h4 class="font-bold text-sm text-[#1B290E] mt-3">Night Gathering</h4>
+            <p class="text-xs text-gray-500 font-light mt-1">Folk tales, bonfire and stargazing.</p>
           </div>
         </div>
-        <h4 class="font-bold text-xs text-[#2D4018]">Farm Life</h4>
-        <p class="text-[10px] text-gray-500 font-light mt-0.5">Experience farming & rural activities</p>
+      </div>
+    </section>
+
+    <section id="food-tab" class="py-12 max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-serif-heading font-bold italic text-[#1B290E]">Seed to Plate Food Journey</h2>
+        <div class="w-12 h-0.5 bg-amber-500 mx-auto mt-1"></div>
       </div>
 
-      <!-- Exp 2 -->
-      <div class="flex flex-col items-center">
-        <div class="relative rounded-2xl overflow-hidden w-full h-44 shadow-sm mb-3">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" />
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B541A] text-white p-2 rounded-full text-xs shadow-md border border-white">
-            <i class="fa-solid fa-masks-theater"></i>
-          </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
+        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">1</div>
+          <span class="font-bold text-xs text-[#1B290E]">🌱 Seeds</span>
+          <span class="text-[10px] text-gray-400 font-light mt-0.5">Organic Choice</span>
         </div>
-        <h4 class="font-bold text-xs text-[#2D4018]">Local Culture</h4>
-        <p class="text-[10px] text-gray-500 font-light mt-0.5">Enjoy folk dance, music & festivals</p>
-      </div>
-
-      <!-- Exp 3 -->
-      <div class="flex flex-col items-center">
-        <div class="relative rounded-2xl overflow-hidden w-full h-44 shadow-sm mb-3">
-          <img src="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" />
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B541A] text-white p-2 rounded-full text-xs shadow-md border border-white">
-            <i class="fa-solid fa-utensils"></i>
-          </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">2</div>
+          <span class="font-bold text-xs text-[#1B290E]">🌾 Sowing</span>
+          <span class="text-[10px] text-gray-400 font-light mt-0.5">Soil Prep</span>
         </div>
-        <h4 class="font-bold text-xs text-[#2D4018]">Traditional Food</h4>
-        <p class="text-[10px] text-gray-500 font-light mt-0.5">Taste authentic village food & recipes</p>
-      </div>
-
-      <!-- Exp 4 -->
-      <div class="flex flex-col items-center">
-        <div class="relative rounded-2xl overflow-hidden w-full h-44 shadow-sm mb-3">
-          <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" />
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B541A] text-white p-2 rounded-full text-xs shadow-md border border-white">
-            <i class="fa-solid fa-palette"></i>
-          </div>
+        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs mb-2">3</div>
+          <span class="font-bold text-xs text-[#1B290E]">🚜 Care</span>
+          <span class="text-[10px] text-gray-400 font-light mt-0.5">Natural Growth</span>
         </div>
-        <h4 class="font-bold text-xs text-[#2D4018]">Art & Handicrafts</h4>
-        <p class="text-[10px] text-gray-500 font-light mt-0.5">Explore local art, crafts & skills</p>
-      </div>
-
-      <!-- Exp 5 -->
-      <div class="flex flex-col items-center">
-        <div class="relative rounded-2xl overflow-hidden w-full h-44 shadow-sm mb-3">
-          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" />
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B541A] text-white p-2 rounded-full text-xs shadow-md border border-white">
-            <i class="fa-solid fa-spa"></i>
-          </div>
-        </div>
-        <h4 class="font-bold text-xs text-[#2D4018]">Wellness & Peace</h4>
-        <p class="text-[10px] text-gray-500 font-light mt-0.5">Yoga, meditation & relaxing environment</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Village Tourism Stat Bar -->
-  <section class="bg-[#F4F1EA] py-8 border-y border-amber-900/10 my-8">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="md:w-1/4">
-        <h3 class="text-xl font-serif-heading font-bold italic text-[#2D4018] leading-tight">Why Choose<br/>Village Tourism?</h3>
-        <div class="w-8 h-0.5 bg-amber-500 mt-1"></div>
-      </div>
-
-      <div class="md:w-3/4 grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
-        <div class="flex items-center space-x-3">
-          <i class="fa-solid fa-house text-2xl text-[#3B541A]"></i>
-          <div>
-            <span class="font-extrabold text-base text-[#2D4018] block leading-none">500+</span>
-            <span class="text-[11px] text-gray-600 font-medium">Village Experiences</span>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-3">
-          <i class="fa-solid fa-face-smile text-2xl text-[#3B541A]"></i>
-          <div>
-            <span class="font-extrabold text-base text-[#2D4018] block leading-none">1000+</span>
-            <span class="text-[11px] text-gray-600 font-medium">Happy Travelers</span>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-3">
-          <i class="fa-solid fa-map-location-dot text-2xl text-[#3B541A]"></i>
-          <div>
-            <span class="font-extrabold text-base text-[#2D4018] block leading-none">50+</span>
-            <span class="text-[11px] text-gray-600 font-medium">Destinations</span>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-3">
-          <i class="fa-solid fa-headset text-2xl text-[#3B541A]"></i>
-          <div>
-            <span class="font-extrabold text-base text-[#2D4018] block leading-none">24/7</span>
-            <span class="text-[11px] text-gray-600 font-medium">Travel Support</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Banner Section -->
-  <section class="max-w-6xl mx-auto px-4 my-10">
-    <div class="bg-[#2D4018] text-white rounded-lg p-6 flex flex-col md:flex-row justify-between items-center shadow-lg">
-      <div>
-        <h3 class="text-xl md:text-2xl font-serif-heading italic font-bold">Let's plan your perfect village escape!</h3>
-        <p class="text-xs text-gray-300 font-light mt-1">Connect with us for customized packages and experiences.</p>
-      </div>
-      <a href="#" class="mt-4 md:mt-0 border border-white/60 hover:bg-white/10 text-white text-xs font-semibold px-5 py-2.5 rounded-md flex items-center space-x-2 transition">
-        <span>Enquire Now</span>
-        <i class="fa-solid fa-paper-plane text-xs"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- Main Footer -->
-  <footer class="bg-[#1B290E] text-white pt-12 pb-6 px-6 border-t-4 border-[#3B541A]">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 pb-10 border-b border-white/10">
-      
-      <!-- Col 1: Brand Info -->
-      <div class="md:col-span-1">
-        <div class="flex items-center space-x-2 mb-3">
-          <i class="fa-solid fa-tree-city text-2xl text-amber-400"></i>
-          <div>
-            <h4 class="font-serif-heading text-lg font-bold leading-none">Village Tourism</h4>
-            <span class="text-[8px] text-gray-400 uppercase tracking-widest">Discover the Soul of India</span>
-          </div>
-        </div>
-        <p class="text-[11px] text-gray-300 font-light leading-relaxed">
-          Promoting responsible tourism and supporting rural communities by bringing travelers closer to the real India.
-        </p>
-      </div>
-
-      <!-- Col 2: Quick Links -->
-      <div>
-        <h5 class="font-semibold text-xs text-amber-300 mb-3 uppercase tracking-wider">Quick Links</h5>
-        <ul class="space-y-1.5 text-xs text-gray-300 font-light">
-          <li><a href="#" class="hover:text-amber-400">Home</a></li>
-          <li><a href="#" class="hover:text-amber-400">Destinations</a></li>
-          <li><a href="#" class="hover:text-amber-400">Experiences</a></li>
-          <li><a href="#" class="hover:text-amber-400">Stay</a></li>
-          <li><a href="#" class="hover:text-amber-400">Packages</a></li>
-          <li><a href="#" class="hover:text-amber-400">About Us</a></li>
-          <li><a href="#" class="hover:text-amber-400">Contact Us</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 3: Top Experiences -->
-      <div>
-        <h5 class="font-semibold text-xs text-amber-300 mb-3 uppercase tracking-wider">Top Experiences</h5>
-        <ul class="space-y-1.5 text-xs text-gray-300 font-light">
-          <li><a href="#" class="hover:text-amber-400">Farm Stay</a></li>
-          <li><a href="#" class="hover:text-amber-400">Village Walks</a></li>
-          <li><a href="#" class="hover:text-amber-400">Local Food Tour</a></li>
-          <li><a href="#" class="hover:text-amber-400">Cultural Programs</a></li>
-          <li><a href="#" class="hover:text-amber-400">Adventure Activities</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 4: Contact Us -->
-      <div>
-        <h5 class="font-semibold text-xs text-amber-300 mb-3 uppercase tracking-wider">Contact Us</h5>
-        <ul class="space-y-2 text-xs text-gray-300 font-light">
-          <li class="flex items-center space-x-2">
-            <i class="fa-solid fa-phone text-amber-400 text-xs"></i>
-            <span>+91 98765 43210</span>
-          </li>
-          <li class="flex items-center space-x-2">
-            <i class="fa-solid fa-envelope text-amber-400 text-xs"></i>
-            <span>info@villagetourism.com</span>
-          </li>
-          <li class="flex items-start space-x-2">
-            <i class="fa-solid fa-location-dot text-amber-400 text-xs mt-0.5"></i>
-            <span>123, Rural Tourism Office, India</span>
-          </li>
-          <li class="flex items-center space-x-2">
-            <i class="fa-regular fa-clock text-amber-400 text-xs"></i>
-            <span>Mon - Sun : 9:00 AM - 7:00 PM</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Col 5: Newsletter -->
-      <div>
-        <h5 class="font-semibold text-xs text-amber-300 mb-3 uppercase tracking-wider">Newsletter</h5>
-        <p class="text-[11px] text-gray-300 font-light mb-3">Subscribe to get updates on new destinations & offers.</p>
-        <div class="space-y-2">
-          <input type="email" placeholder="Enter your email" class="w-full text-xs px-3 py-2 rounded text-slate-800 outline-none" />
-          <button class="olive-btn w-full text-white text-xs font-medium py-2 rounded shadow">Subscribe</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Copyright -->
-    <div class="max-w-6xl mx-auto pt-4 flex flex-col md:flex-row justify-between items-center text-[11px] text-gray-400 font-light">
-      <p>© 2026 Village Tourism. All Rights Reserved.</p>
-      <div class="flex space-x-4 mt-2 md:mt-0">
-        <a href="#" class="hover:text-amber-400">Privacy Policy</a>
-        <span>|</span>
-        <a href="#" class="hover:text-amber-400">Terms & Conditions</a>
-      </div>
-    </div>
-  </footer>
-
-</body>
-</html>
+        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full olive-bg text-white flex
