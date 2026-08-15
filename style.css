@@ -2,3 +2,25 @@
 
 @media(max-width:560px){.search-row{grid-template-columns:minmax(0,1fr) 100px;gap:6px;padding-left:12px;padding-right:12px}.search-box{min-width:0}.search-box input{font-size:11px;min-width:0}.search-filter{font-size:10px;padding:0 7px}.bottom-nav{padding-left:4px;padding-right:4px}.bottom-nav button{min-width:48px;font-size:16px}.bottom-nav .nav-wedding{width:54px;height:44px;font-size:17px}}
 .profile-menu-title{margin:22px 2px 10px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#64746a}.profile-action{cursor:pointer;display:flex;flex-direction:column;gap:4px}.profile-action small{font-size:9px;color:#718077;font-weight:600}.market-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px;margin-bottom:16px}.market-hero h2{font-size:20px;font-weight:900;margin:4px 0}.market-hero p{font-size:10px;color:#718077;margin:0;max-width:620px}.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-card{background:#fff;border:1px solid #e6e9e3;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(27,43,32,.05)}.product-photo{width:100%;height:230px;object-fit:cover;display:block;background:#edf3eb}.product-body{padding:14px}.product-tag{display:inline-block;background:#edf6ee;color:#14532d;border-radius:999px;padding:5px 8px;font-size:8px;font-weight:900}.product-body h3{font-size:18px;font-weight:900;margin:9px 0 5px}.product-body p{font-size:10px;line-height:1.6;color:#718077;min-height:32px}.product-meta{display:flex;flex-direction:column;gap:5px;margin:12px 0;font-size:9px;color:#536158}.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}.product-bottom b{font-size:14px;color:#92400e}.product-bottom .primary{font-size:9px;padding:9px 10px}@media(max-width:700px){.market-hero{align-items:flex-start;flex-direction:column}.product-grid{grid-template-columns:1fr}}@media(max-width:560px){.search-row{grid-template-columns:minmax(0,1fr) 96px}.market-hero .primary{width:100%}}
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 16px !important;
+  }
+
+  select {
+    min-height: 44px;
+  }
+
+  input,
+  textarea {
+    min-height: 44px;
+  }
+}
