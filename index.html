@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,58 +9,63 @@
   <!-- FontAwesome Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts for Desi Aesthetic -->
-  <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     .font-deshi { font-family: 'Yatra One', cursive; }
     .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
+    
     .hero-bg {
-      background: linear-gradient(rgba(45, 24, 16, 0.5), rgba(45, 24, 16, 0.65)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1600&q=80');
+      background: linear-gradient(rgba(30, 15, 10, 0.65), rgba(30, 15, 10, 0.75)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1600&q=80');
       background-size: cover;
       background-position: center;
     }
+    
+    /* Clean & Visible Clay Cards */
     .clay-card {
-      background-color: #FFFDF9;
-      border: 2px solid #E6CBB3;
+      background-color: #FFFFFF;
+      border: 2px solid #D4A373;
       box-shadow: 4px 4px 0px #8C402B;
     }
+
+    /* Scrollbar styling */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="font-sans antialiased bg-[#FAF5EE] text-[#3D2C24]">
+<body class="font-sans antialiased bg-[#FDFBF7] text-[#2D1810]">
 
   <!-- Top Bar -->
-  <div class="bg-[#5C2C1E] text-[#F3E5AB] text-xs py-2 px-6 flex justify-between items-center border-b border-[#8C402B]">
+  <div class="bg-[#3D1E15] text-[#F3E5AB] text-xs py-2.5 px-6 flex justify-between items-center border-b border-[#8C402B]">
     <div class="flex items-center space-x-2">
       <i class="fa-solid fa-sun text-amber-400"></i>
-      <span class="tracking-wide">Padharo Mhare Des — Experience Authentic Indian Village Life</span>
+      <span class="tracking-wide font-medium">Padharo Mhare Des — Experience Authentic Indian Village Life</span>
     </div>
     <div class="flex items-center space-x-4">
-      <span class="text-[#D4A373]"><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</span>
+      <span class="text-[#E79A39] font-bold"><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</span>
     </div>
   </div>
 
   <!-- Navbar -->
-  <nav class="bg-[#FFFDF9] border-b-2 border-[#D4A373]/40 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+  <nav class="bg-[#FFFFFF] border-b-2 border-[#D4A373] py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50 shadow-sm">
     <div class="flex items-center space-x-3">
       <div class="bg-[#B85042] text-[#FFFDF9] p-2.5 rounded-xl shadow-md transform -rotate-3">
         <i class="fa-solid fa-campground text-2xl"></i>
       </div>
       <div>
         <h1 class="text-2xl font-deshi text-[#8C402B] tracking-wide leading-none">Village Deko</h1>
-        <p class="text-[11px] text-[#A77B56] font-semibold uppercase tracking-wider mt-0.5">Asli Bharat Ka Anubhav</p>
+        <p class="text-[11px] text-[#A77B56] font-extrabold uppercase tracking-wider mt-0.5">Asli Bharat Ka Anubhav</p>
       </div>
     </div>
     
-    <div class="hidden md:flex space-x-7 text-sm font-bold text-[#5C2C1E]">
-      <a href="#" class="text-[#B85042] border-b-2 border-[#B85042]">Ghar (Home)</a>
-      <a href="#states-section" class="hover:text-[#B85042] transition">Sabhi 36 Rajya (States)</a>
-      <a href="#villages-section" class="hover:text-[#B85042] transition">Gaon (Villages)</a>
+    <div class="hidden md:flex space-x-8 text-sm font-bold text-[#3D1E15]">
+      <a href="#" class="text-[#B85042] border-b-2 border-[#B85042] pb-1">Ghar (Home)</a>
+      <a href="#states-section" class="hover:text-[#B85042] transition pb-1">36 Rajya (States)</a>
+      <a href="#villages-section" class="hover:text-[#B85042] transition pb-1">Gaon (Villages)</a>
     </div>
 
     <div class="flex items-center space-x-3">
-      <button id="auth-btn" class="bg-[#466242] hover:bg-[#32492F] text-[#FFFDF9] text-sm font-bold py-2.5 px-6 rounded-lg shadow-md transition transform active:scale-95">
+      <button id="auth-btn" class="bg-[#466242] hover:bg-[#32492F] text-[#FFFDF9] text-sm font-bold py-2.5 px-6 rounded-xl shadow-md transition transform active:scale-95">
         Yatra Shuru Karein
       </button>
     </div>
@@ -68,62 +73,64 @@
 
   <!-- Hero Section -->
   <header class="hero-bg h-[460px] flex flex-col justify-center items-center text-center text-white px-4 relative">
-    <span class="bg-[#E79A39] text-[#3D2C24] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3 shadow">
+    <span class="bg-[#E79A39] text-[#2D1810] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3 shadow-lg">
       🌾 Pure 36 States & UTs
     </span>
-    <h1 class="text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-lg my-2">
+    <h1 class="text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-md my-2">
       Apne Gaon Ki Ore Chalo
     </h1>
-    <p class="max-w-xl text-base opacity-95 text-[#FFFDF9] mb-12 font-medium">
-      Bharat ke har kona, har rajya ke sunder gaon aur unke sanskriti ka anubhav.
+    <p class="max-w-xl text-base text-[#FAF5EE] mb-12 font-semibold drop-shadow">
+      Bharat ke har kone, har rajya ke sunder gaon aur unke desi sanskriti ka anubhav karein.
     </p>
 
     <!-- Search Box -->
-    <div class="bg-[#FFFDF9] text-[#3D2C24] rounded-2xl p-4 shadow-2xl border-2 border-[#D4A373] flex flex-wrap md:flex-nowrap items-center gap-3 w-full max-w-4xl absolute -bottom-10">
-      <div class="flex items-center border-r border-[#D4A373]/40 px-3 flex-1">
-        <i class="fa-solid fa-map-location-dot text-[#B85042] mr-3 text-lg"></i>
-        <input type="text" id="search-input" placeholder="Kisi bhi rajya ya gaon ka naam likhein..." class="w-full text-sm outline-none bg-transparent placeholder-gray-500 font-semibold" />
+    <div class="bg-[#FFFFFF] text-[#2D1810] rounded-2xl p-3 md:p-4 shadow-2xl border-2 border-[#D4A373] flex flex-wrap md:flex-nowrap items-center gap-3 w-[92%] max-w-4xl absolute -bottom-10">
+      <div class="flex items-center border-r border-[#D4A373]/50 px-3 flex-1">
+        <i class="fa-solid fa-map-location-dot text-[#B85042] mr-3 text-xl"></i>
+        <input type="text" id="search-input" placeholder="Kisi bhi rajya ya gaon ka naam likhein..." class="w-full text-sm outline-none bg-transparent placeholder-gray-500 font-bold" />
       </div>
-      <button id="search-btn" class="bg-[#B85042] hover:bg-[#8C402B] text-white font-bold py-3 px-8 rounded-xl shadow-md transition">
+      <button id="search-btn" class="bg-[#B85042] hover:bg-[#8C402B] text-white font-extrabold py-3 px-8 rounded-xl shadow-md transition w-full md:w-auto">
         Khoj Karein
       </button>
     </div>
   </header>
 
-  <!-- Section 1: All 36 States & UTs Horizontal Slider -->
-  <section id="states-section" class="pt-24 pb-10 max-w-7xl mx-auto px-4">
-    <div class="flex justify-between items-end mb-6 border-b-2 border-[#D4A373]/30 pb-4">
+  <!-- Section 1: 36 States Horizontal Slider -->
+  <section id="states-section" class="pt-24 pb-12 max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-end mb-6 border-b-2 border-[#D4A373]/40 pb-4">
       <div>
-        <span class="text-xs font-bold text-[#B85042] uppercase tracking-wider">Bharat Ke 36 Rajya Aur Kendra Shashit Pradesh</span>
-        <h2 class="text-3xl font-deshi text-[#5C2C1E] mt-1">Pehle Apna Rajya Chunein</h2>
+        <span class="text-xs font-black text-[#B85042] uppercase tracking-wider">Bharat Ke 36 Rajya Aur Kendra Shashit Pradesh</span>
+        <h2 class="text-3xl font-deshi text-[#3D1E15] mt-1">Pehle Apna Rajya Chunein</h2>
       </div>
       
       <!-- Arrow Controls -->
       <div class="flex items-center space-x-3">
-        <button id="state-left" class="bg-[#FFFDF9] border-2 border-[#8C402B] text-[#8C402B] hover:bg-[#8C402B] hover:text-white w-10 h-10 rounded-full flex items-center justify-center shadow transition">
-          <i class="fa-solid fa-chevron-left text-sm"></i>
+        <button id="state-left" class="bg-[#FFFFFF] border-2 border-[#8C402B] text-[#8C402B] hover:bg-[#8C402B] hover:text-white w-11 h-11 rounded-full flex items-center justify-center shadow-md transition active:scale-90">
+          <i class="fa-solid fa-chevron-left text-base"></i>
         </button>
-        <button id="state-right" class="bg-[#8C402B] text-white hover:bg-[#5C2C1E] w-10 h-10 rounded-full flex items-center justify-center shadow transition">
-          <i class="fa-solid fa-chevron-right text-sm"></i>
+        <button id="state-right" class="bg-[#8C402B] text-white hover:bg-[#3D1E15] w-11 h-11 rounded-full flex items-center justify-center shadow-md transition active:scale-90">
+          <i class="fa-solid fa-chevron-right text-base"></i>
         </button>
       </div>
     </div>
 
-    <!-- 36 Cards Dynamic Slider Container -->
-    <div id="states-grid" class="flex space-x-5 overflow-x-auto scroll-smooth no-scrollbar py-2">
-      <!-- Generated via Javascript -->
+    <!-- 36 Cards Slider -->
+    <div id="states-grid" class="flex space-x-6 overflow-x-auto scroll-smooth no-scrollbar py-3 px-1 cursor-grab active:cursor-grabbing">
+      <!-- Generated via JS -->
     </div>
   </section>
 
   <!-- Section 2: Selected State Ke Gaon -->
-  <section id="villages-section" class="py-12 bg-[#F5EBE0] border-t border-[#E6CBB3]">
+  <section id="villages-section" class="py-14 bg-[#F7F0E6] border-t-2 border-[#E6CBB3]">
     <div class="max-w-6xl mx-auto px-4">
       <div class="mb-8 border-b-2 border-[#8C402B]/20 pb-4 flex justify-between items-center">
         <div>
-          <span class="text-xs font-bold text-[#466242] uppercase tracking-wider">Desi Stay & Anubhav</span>
+          <span class="text-xs font-black text-[#466242] uppercase tracking-wider">Desi Stay & Anubhav</span>
           <h2 id="selected-state-title" class="text-3xl font-deshi text-[#8C402B] mt-1">Rajasthan Ke Gaon</h2>
         </div>
-        <p class="text-xs font-semibold text-gray-600">Kisi bhi State card par click karke uske gaon dekhein</p>
+        <p class="text-xs font-bold text-[#5C2C1E] bg-[#FFFFFF] px-3 py-1.5 rounded-lg border border-[#D4A373]">
+          👈 Upar kisi bhi State par click karke uske gaon dekhein
+        </p>
       </div>
 
       <!-- Village Cards Grid -->
@@ -133,9 +140,19 @@
     </div>
   </section>
 
-  <!-- JavaScript with All 36 States & Dynamic Photo Cards -->
+  <!-- Footer -->
+  <footer class="bg-[#2D1810] text-[#F3E5AB] py-10 px-4 text-xs border-t-4 border-[#B85042]">
+    <div class="max-w-6xl mx-auto text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-campground text-2xl text-[#E79A39]"></i>
+        <span class="font-deshi text-2xl text-[#F3E5AB]">Village Deko</span>
+      </div>
+      <p class="text-gray-300 font-medium">Bharat ke sabhi 36 states aur UTs ke asli gaon se judne ka manch.</p>
+    </div>
+  </footer>
+
+  <!-- Complete Javascript -->
   <script>
-    // Complete 36 States and Union Territories with High-Quality Image URLs
     const indian36States = [
       { id: 'rajasthan', name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=400&q=80', desc: 'Ret ke dhoro aur haveli stay' },
       { id: 'kerala', name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=400&q=80', desc: 'Backwaters & nariyal ke bagaan' },
@@ -175,15 +192,15 @@
       { id: 'daman', name: 'Dadra & Nagar Haveli', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=400&q=80', desc: 'Tribal forestry & village stay' }
     ];
 
-    // Dummy Villages Data
     const stateVillagesData = {
       'rajasthan': [
         { name: 'Khuri Gaon', stay: 'Desert Mud Hut', desc: 'Ret ke dhoro ke paas choolhe ka khana.' },
-        { name: 'Bishnoi Gaon', stay: 'Heritage Stay', desc: 'Kala hiran aur desi kheti ka anubhav.' }
+        { name: 'Bishnoi Gaon', stay: 'Heritage Stay', desc: 'Kala hiran aur desi kheti ka anubhav.' },
+        { name: 'Sam Gaon', stay: 'Royal Camel Stay', desc: 'Kathputli dance aur rajsthani thali.' }
       ],
       'kerala': [
-        { name: 'Kumarakom', stay: 'Water Cottage', desc: 'Shuddh nariyal paani aur shanti.' },
-        { name: 'Mararikulam', stay: 'Beachside Hut', desc: 'Fisherman village life.' }
+        { name: 'Kumarakom', stay: 'Water Cottage', desc: 'Shuddh nariyal paani aur backwaters.' },
+        { name: 'Mararikulam', stay: 'Beachside Hut', desc: 'Fisherman village life aur desi khana.' }
       ],
       'himachal': [
         { name: 'Chhitkul', stay: 'Wooden Home', desc: 'Bharat ka aakhiri gaon, pahadi par.' },
@@ -191,38 +208,42 @@
       ]
     };
 
-    // Render All 36 Cards Into Horizontal Slider
     const statesGrid = document.getElementById('states-grid');
-    indian36States.forEach(state => {
-      statesGrid.innerHTML += `
-        <div onclick="selectState('${state.id}', '${state.name}')" class="clay-card rounded-2xl overflow-hidden group min-w-[220px] max-w-[220px] flex-shrink-0 cursor-pointer hover:border-[#B85042] transition">
-          <img src="${state.img}" class="h-32 w-full object-cover group-hover:scale-105 transition duration-300" />
-          <div class="p-3">
-            <h3 class="font-bold text-sm text-[#8C402B]"><i class="fa-solid fa-map-pin text-[#E79A39] mr-1"></i> ${state.name}</h3>
-            <p class="text-[11px] text-gray-600 mt-0.5 leading-snug">${state.desc}</p>
-          </div>
-        </div>
-      `;
-    });
 
-    // Handle State Card Click -> Load Villages
+    // Render All 36 State Cards
+    function renderStates() {
+      statesGrid.innerHTML = "";
+      indian36States.forEach(state => {
+        statesGrid.innerHTML += `
+          <div onclick="selectState('${state.id}', '${state.name}')" class="clay-card rounded-2xl overflow-hidden group min-w-[220px] max-w-[220px] flex-shrink-0 cursor-pointer hover:border-[#B85042] transition select-none">
+            <img src="${state.img}" draggable="false" class="h-32 w-full object-cover group-hover:scale-105 transition duration-300" />
+            <div class="p-3.5">
+              <h3 class="font-extrabold text-sm text-[#8C402B]"><i class="fa-solid fa-map-pin text-[#E79A39] mr-1"></i> ${state.name}</h3>
+              <p class="text-[11px] font-medium text-gray-700 mt-1 leading-snug">${state.desc}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Select State Handler
     function selectState(stateId, stateName) {
       document.getElementById('selected-state-title').innerText = `${stateName} Ke Gaon`;
       const container = document.getElementById('villages-container');
       container.innerHTML = "";
 
       const list = stateVillagesData[stateId] || [
-        { name: `${stateName} Main Gaon`, stay: 'Desi Stay', desc: 'Desi khana, khet-khalihaan aur shuddh vatavaran.' },
+        { name: `${stateName} Central Gaon`, stay: 'Desi Stay', desc: 'Desi khana, khet-khalihaan aur shuddh vatavaran.' },
         { name: `Prakritik ${stateName} Basti`, stay: 'Mud House', desc: 'Paramparik sanskriti aur rehn-sehn.' }
       ];
 
       list.forEach(v => {
         container.innerHTML += `
           <div class="clay-card p-4 rounded-2xl bg-white">
-            <span class="bg-[#E79A39]/20 text-[#8C402B] text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">${v.stay}</span>
-            <h4 class="font-bold text-base text-[#5C2C1E] mt-2">${v.name}</h4>
-            <p class="text-xs text-gray-600 mt-1">${v.desc}</p>
-            <button class="mt-4 w-full bg-[#466242] text-white font-bold py-2 rounded-xl text-xs hover:bg-[#32492F] transition">Gaon Me Stay Book Karein</button>
+            <span class="bg-[#E79A39]/20 text-[#8C402B] text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider">${v.stay}</span>
+            <h4 class="font-extrabold text-base text-[#3D1E15] mt-2">${v.name}</h4>
+            <p class="text-xs font-semibold text-gray-600 mt-1">${v.desc}</p>
+            <button class="mt-4 w-full bg-[#466242] text-white font-bold py-2.5 rounded-xl text-xs hover:bg-[#32492F] transition shadow">Gaon Me Stay Book Karein</button>
           </div>
         `;
       });
@@ -230,16 +251,40 @@
       document.getElementById('villages-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Default Load Rajasthan
-    selectState('rajasthan', 'Rajasthan');
+    // --- MOUSE DRAG & TOUCH SWIPE SCRIPT ---
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    statesGrid.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - statesGrid.offsetLeft;
+      scrollLeft = statesGrid.scrollLeft;
+    });
+
+    statesGrid.addEventListener('mouseleave', () => { isDown = false; });
+    statesGrid.addEventListener('mouseup', () => { isDown = false; });
+
+    statesGrid.addEventListener('mousemove', (e) => {
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - statesGrid.offsetLeft;
+      const walk = (x - startX) * 2;
+      statesGrid.scrollLeft = scrollLeft - walk;
+    });
 
     // Arrow Buttons Scrolling
-    document.getElementById('state-left').addEventListener('click', () => {
-      statesGrid.scrollBy({ left: -260, behavior: 'smooth' });
-    });
-    document.getElementById('state-right').addEventListener('click', () => {
-      statesGrid.scrollBy({ left: 260, behavior: 'smooth' });
-    });
+    document.getElementById('state-left').onclick = function () {
+      statesGrid.scrollBy({ left: -300, behavior: 'smooth' });
+    };
+    
+    document.getElementById('state-right').onclick = function () {
+      statesGrid.scrollBy({ left: 300, behavior: 'smooth' });
+    };
+
+    // Initialize
+    renderStates();
+    selectState('rajasthan', 'Rajasthan');
   </script>
 </body>
 </html>
