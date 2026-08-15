@@ -1,310 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VillageDeko - Instagram Rural Feed</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b45309">
+  <title>VillageDeko — India ke Gaon</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body { font-family: 'Poppins', sans-serif; background-color: #FAF9F6; }
-    .font-serif-heading { font-family: 'Playfair Display', serif; }
-    .olive-bg { background-color: #4C6B22; }
-    .dark-green-bg { background-color: #1B290E; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .story-ring {
-      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-slate-800 pb-20">
+<body class="text-slate-900 antialiased pb-24">
 
-  <!-- TOP INSTA HEADER -->
-  <header class="bg-white sticky top-0 z-50 border-b border-gray-200 px-4 py-3 flex justify-between items-center max-w-md mx-auto">
-    <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-tree-city text-2xl text-[#3B541A]"></i>
-      <h1 class="text-xl font-bold font-serif-heading text-[#1B290E] tracking-wide">VillageDeko</h1>
+<!-- LOGIN GATE: app remains hidden until Google authentication succeeds. -->
+<section id="loginGate" class="login-gate">
+  <div class="login-box">
+    <div class="login-logo">🌾</div>
+    <p class="login-kicker">WELCOME TO</p>
+    <h1><span>Village</span>Deko</h1>
+    <p class="login-subtitle">India ke asli gaon</p>
+    <div class="login-art">🏡 &nbsp; 📸 &nbsp; 🌿</div>
+    <h2>Gaon explore karo, post karo aur follow karo.</h2>
+    <button id="googleLoginGateBtn" onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button>
+    <p id="loginError" class="login-error hidden"></p>
+    <p class="login-note">VillageDeko par dekhne, post karne, follow karne aur apni post manage karne ke liye Google se login zaroori hai.</p>
+  </div>
+</section>
+
+<div id="appShell" class="hidden">
+<header class="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+<div class="max-w-4xl xl mx-auto px-4 py-3 space-y-3">
+    <div class="flex items-center justify-between gap-3">
+      <button onclick="goHome()" class="flex items-center gap-2 text-left">
+        <div class="w-10 h-10 rounded-2xl bg-amber-600 flex items-center justify-center text-white font-black text-xl shadow-sm">🌾</div>
+        <div><h1 class="text-base font-extrabold tracking-tight"><span class="text-amber-700">Village</span>Deko</h1><span class="text-[10px] font-bold text-slate-500">India ke asli gaon</span></div>
+      </button>
+      <button onclick="openDrawer()" id="topProfileBtn" class="profile-trigger" aria-label="Open profile"><span id="topProfileEmoji">👤</span><img id="topProfilePhoto" class="profile-photo hidden" alt="Profile photo"></button>
     </div>
-    <div class="flex items-center space-x-5 text-xl text-slate-800">
-      <button onclick="openTab('market-tab')"><i class="fa-solid fa-store text-lg"></i></button>
-      <button onclick="openTab('explore-tab')"><i class="fa-regular fa-compass text-lg"></i></button>
-      <i class="fa-regular fa-heart"></i>
+    <div class="flex gap-2">
+      <div class="relative flex-1"><span class="absolute left-3 top-2.5">🔎</span><input id="globalSearch" oninput="filterExplore(this.value)" placeholder="Search village, state, district, activity..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 outline-none"></div>
+      <select id="stateSelect" onchange="selectState(this.value)" class="w-32 text-xs bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 font-bold outline-none"><option value="">All India</option></select>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- MAIN APP CONTAINER (Insta Mobile Frame Width) -->
-  <main class="max-w-md mx-auto min-h-screen bg-[#FAF9F6]">
-
-    <!-- INSTA STORIES: 28 STATES & EXPERIENCES -->
-    <section class="bg-white border-b border-gray-200 py-3 px-3">
-      <div class="flex space-x-3 overflow-x-auto no-scrollbar">
-        <!-- Story Item 1 -->
-        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('explore-tab')">
-          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
-          </div>
-          <span class="text-[10px] text-gray-700 mt-1 font-medium">Rajasthan</span>
-        </div>
-        <!-- Story Item 2 -->
-        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('explore-tab')">
-          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
-          </div>
-          <span class="text-[10px] text-gray-700 mt-1 font-medium">Kerala</span>
-        </div>
-        <!-- Story Item 3 -->
-        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('timeline-tab')">
-          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
-          </div>
-          <span class="text-[10px] text-gray-700 mt-1 font-medium">A Day 🌅</span>
-        </div>
-        <!-- Story Item 4 -->
-        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('food-tab')">
-          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
-          </div>
-          <span class="text-[10px] text-gray-700 mt-1 font-medium">Food 🍞</span>
-        </div>
-        <!-- Story Item 5 -->
-        <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="openTab('market-tab')">
-          <div class="w-16 h-16 rounded-full story-ring p-[2px] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=200&q=80" class="w-full h-full rounded-full object-cover border-2 border-white" />
-          </div>
-          <span class="text-[10px] text-gray-700 mt-1 font-medium">Bazaar 🌾</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 1: FEED & STORIES (Default Home View) -->
-    <div id="home-tab" class="space-y-4 py-3">
+<main class="max-w-4xl mx-auto p-4 space-y-5">
+  <section id="homeView" class="space-y-5">
+    <div class="hero-card rounded-3xl p-5 text-white shadow-lg">
+      <p class="text-[10px] uppercase tracking-widest font-black text-amber-100">🇮🇳 Explore India</p>
+      <h2 class="text-2xl font-black mt-1">Gaon dekho, follow karo, yaad rakho.</h2>
       
-      <!-- Post 1 -->
-      <div class="bg-white border-y border-gray-200">
-        <!-- Post Header -->
-        <div class="flex justify-between items-center px-3 py-2.5">
-          <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center text-xs font-bold">RJ</div>
-            <div>
-              <span class="text-xs font-bold text-slate-900 block leading-none">Khuri_Heritage_Village</span>
-              <span class="text-[9px] text-gray-500">Jaisalmer, Rajasthan</span>
-            </div>
-          </div>
-          <i class="fa-solid fa-ellipsis text-gray-500 text-xs"></i>
-        </div>
-        <!-- Post Image -->
-        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80" class="w-full h-80 object-cover" />
-        <!-- Action Buttons -->
-        <div class="px-3 py-2 flex justify-between items-center text-lg text-slate-800">
-          <div class="flex space-x-4">
-            <i class="fa-regular fa-heart hover:text-red-500 cursor-pointer"></i>
-            <i class="fa-regular fa-comment cursor-pointer"></i>
-            <i class="fa-regular fa-paper-plane cursor-pointer"></i>
-          </div>
-          <i class="fa-regular fa-bookmark cursor-pointer"></i>
-        </div>
-        <!-- Likes & Caption -->
-        <div class="px-3 pb-3 text-xs">
-          <span class="font-bold block mb-1">1,482 likes</span>
-          <p><strong class="font-semibold">Khuri_Heritage_Village</strong> Experiencing traditional mud-hut stays and clay-stove cooked bajra roti with organic ghee! 🌾✨ #VillageTourism #Rajasthan</p>
-          <span class="text-[10px] text-gray-400 mt-1 block">2 hours ago</span>
-        </div>
-      </div>
-
-      <!-- Post 2 -->
-      <div class="bg-white border-y border-gray-200">
-        <!-- Post Header -->
-        <div class="flex justify-between items-center px-3 py-2.5">
-          <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 rounded-full olive-bg text-white flex items-center justify-center text-xs font-bold">KL</div>
-            <div>
-              <span class="text-xs font-bold text-slate-900 block leading-none">Kumarakom_Backwaters</span>
-              <span class="text-[9px] text-gray-500">Kerala Backwaters</span>
-            </div>
-          </div>
-          <i class="fa-solid fa-ellipsis text-gray-500 text-xs"></i>
-        </div>
-        <!-- Post Image -->
-        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-80 object-cover" />
-        <!-- Action Buttons -->
-        <div class="px-3 py-2 flex justify-between items-center text-lg text-slate-800">
-          <div class="flex space-x-4">
-            <i class="fa-regular fa-heart hover:text-red-500 cursor-pointer"></i>
-            <i class="fa-regular fa-comment cursor-pointer"></i>
-            <i class="fa-regular fa-paper-plane cursor-pointer"></i>
-          </div>
-          <i class="fa-regular fa-bookmark cursor-pointer"></i>
-        </div>
-        <!-- Likes & Caption -->
-        <div class="px-3 pb-3 text-xs">
-          <span class="font-bold block mb-1">2,305 likes</span>
-          <p><strong class="font-semibold">Kumarakom_Backwaters</strong> Morning boat ride through green paddy fields and peaceful village waterways. 🛶🌴 #GodsOwnCountry</p>
-          <span class="text-[10px] text-gray-400 mt-1 block">5 hours ago</span>
-        </div>
-      </div>
-
+      <div class="grid grid-cols-3 gap-2 mt-4"><div class="stat-chip"><b id="stateCount">36</b><span>States/UTs</span></div><div class="stat-chip"><b id="villageCount">0</b><span>Listed villages</span></div><div class="stat-chip"><b id="postCount">0</b><span>Posts</span></div></div>
     </div>
 
-    <!-- TAB 2: DISCOVER & MAP (28 States Explorer) -->
-    <div id="explore-tab" class="hidden p-4 space-y-4">
-      <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center shadow-sm">
-        <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2 text-xs"></i>
-        <input type="text" placeholder="Search 28 States & Villages..." class="w-full text-xs outline-none" />
-      </div>
+    <div class="flex items-center justify-between"><div><h3 class="font-black text-sm">🏘️ Listed Villages</h3><p class="text-[10px] text-slate-500"> </p></div><button onclick="openModal('listVillageModal')" class="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl">+ List Village</button></div>
 
-      <h3 class="font-serif-heading font-bold text-sm text-[#1B290E]">Explore All 28 States</h3>
-      <div class="grid grid-cols-2 gap-3">
-        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
-          <div class="p-2.5">
-            <h4 class="font-bold text-xs">Rajasthan Villages</h4>
-            <p class="text-[10px] text-gray-500">Deserts & Havelis</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
-          <div class="p-2.5">
-            <h4 class="font-bold text-xs">Kerala Backwaters</h4>
-            <p class="text-[10px] text-gray-500">Greenery & Canals</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
-          <div class="p-2.5">
-            <h4 class="font-bold text-xs">Himachal Hills</h4>
-            <p class="text-[10px] text-gray-500">Orchards & Mountains</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=300&q=80" class="h-28 w-full object-cover" />
-          <div class="p-2.5">
-            <h4 class="font-bold text-xs">Uttarakhand Valleys</h4>
-            <p class="text-[10px] text-gray-500">Rivers & Temples</p>
-          </div>
-        </div>
-      </div>
+    <div class="section-card">
+      <div class="flex items-center justify-between mb-3"><div><h3 class="font-black text-sm">🌾 Villages</h3><p class="text-[10px] text-slate-500">Village name + district + state</p></div></div>
+      <div id="homeVillagesList" class="space-y-4"></div>
+      <div id="homePostsFeed" class="hidden"></div>
+      <div id="statesGrid" class="hidden"></div>
     </div>
+  </section>
 
-    <!-- TAB 3: A DAY IN VILLAGE TIMELINE -->
-    <div id="timeline-tab" class="hidden p-4 space-y-4">
-      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">A Day in the Village 🌅</h3>
-      <div class="space-y-3">
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
-          <div class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2 py-1 rounded h-fit">05:30 AM</div>
-          <div>
-            <h4 class="font-bold text-xs text-[#1B290E]">Morning Dawn</h4>
-            <p class="text-[10px] text-gray-500">Fresh air, bird songs & temple bell sounds.</p>
-          </div>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
-          <div class="bg-emerald-100 text-emerald-900 text-[10px] font-bold px-2 py-1 rounded h-fit">07:00 AM</div>
-          <div>
-            <h4 class="font-bold text-xs text-[#1B290E]">Farming & Cattle</h4>
-            <p class="text-[10px] text-gray-500">Milking cows and watering organic fields.</p>
-          </div>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
-          <div class="bg-orange-100 text-orange-900 text-[10px] font-bold px-2 py-1 rounded h-fit">01:00 PM</div>
-          <div>
-            <h4 class="font-bold text-xs text-[#1B290E]">Earthen Kitchen Lunch</h4>
-            <p class="text-[10px] text-gray-500">Clay stove cooked traditional meal.</p>
-          </div>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex space-x-3 items-center">
-          <div class="bg-indigo-100 text-indigo-900 text-[10px] font-bold px-2 py-1 rounded h-fit">09:00 PM</div>
-          <div>
-            <h4 class="font-bold text-xs text-[#1B290E]">Bonfire & Stories</h4>
-            <p class="text-[10px] text-gray-500">Folk tales under the clear starry night sky.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <section id="stateView" class="hidden space-y-5">
+    <button onclick="goHome()" class="text-xs font-bold text-amber-700">← All India</button>
+    <div class="state-hero section-card"><div><p class="text-[10px] uppercase tracking-widest font-black text-amber-700">State Explorer</p><h2 id="stateTitle" class="text-2xl font-black">State</h2><p id="stateSubtitle" class="text-xs text-slate-500 mt-1"></p></div><button onclick="openPostModal()" class="text-xs font-black bg-amber-600 text-white px-3 py-2 rounded-xl">+ Post</button></div>
+    <div class="section-card"><div class="flex justify-between items-center mb-3"><h3 class="font-black text-sm">Villages in this state</h3><span id="stateVillageCount" class="pill"></span></div><div id="stateVillages" class="space-y-2"></div></div>
+    <div class="section-card"><div class="flex items-center justify-between mb-3"><h3 class="font-black text-sm">📸 State Feed</h3><span class="text-[10px] text-slate-500">Village posts</span></div><div id="statePostsFeed" class="space-y-4"></div></div>
+  </section>
 
-    <!-- TAB 4: FOOD JOURNEY -->
-    <div id="food-tab" class="hidden p-4 space-y-4">
-      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">Seed to Plate Journey 🌱</h3>
-      <div class="space-y-2">
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
-          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">1</div>
-          <span class="text-xs font-semibold">🌱 Selecting Organic Seeds in Village</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
-          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">2</div>
-          <span class="text-xs font-semibold">🌾 Traditional Soil Sowing</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
-          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">3</div>
-          <span class="text-xs font-semibold">🚜 Natural Crop Care & Watering</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
-          <div class="w-7 h-7 rounded-full olive-bg text-white flex items-center justify-center font-bold text-xs">4</div>
-          <span class="text-xs font-semibold">✂️ Hand Harvest by Farmers</span>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 flex items-center space-x-3">
-          <div class="w-7 h-7 rounded-full amber-600 bg-amber-600 text-white flex items-center justify-center font-bold text-xs">5</div>
-          <span class="text-xs font-semibold text-amber-900">🍞 Served Fresh on Clay Plates</span>
-        </div>
-      </div>
-    </div>
+  <section id="villageView" class="hidden space-y-4">
+    <button onclick="goBackFromVillage()" class="text-xs font-bold text-amber-700">← Back</button>
+    <div id="villageHeader"></div>
+    <div class="section-card"><div class="flex gap-2 border-b border-slate-100 pb-2 overflow-x-auto"><button class="vtab active" onclick="showVillageSection('feed',this)">📸 Feed</button><button class="vtab" onclick="showVillageSection('details',this)">🏡 Details</button><button class="vtab" onclick="showVillageSection('activities',this)">🎯 Activities</button><button class="vtab" onclick="showVillageSection('packages',this)">📦 Packages</button></div><div id="villageSectionFeed" class="pt-4"></div><div id="villageSectionDetails" class="hidden pt-4"></div><div id="villageSectionActivities" class="hidden pt-4"></div><div id="villageSectionPackages" class="hidden pt-4"></div></div>
+  </section>
 
-    <!-- TAB 5: VILLAGE BAZAAR MARKETPLACE -->
-    <div id="market-tab" class="hidden p-4 space-y-4">
-      <h3 class="font-serif-heading font-bold text-base text-[#1B290E]">Village Marketplace 🛍️</h3>
-      <div class="grid grid-cols-2 gap-3">
-        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">ORGANIC</span>
-          <h4 class="font-bold text-xs mt-2">Pearl Millet Flour</h4>
-          <span class="text-[10px] text-gray-500 block">₹120 / kg</span>
-          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">NATURAL</span>
-          <h4 class="font-bold text-xs mt-2">Wild Forest Honey</h4>
-          <span class="text-[10px] text-gray-500 block">₹450 / 500g</span>
-          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">HANDICRAFT</span>
-          <h4 class="font-bold text-xs mt-2">Clay Cooking Pot</h4>
-          <span class="text-[10px] text-gray-500 block">₹290 / set</span>
-          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
-        </div>
-        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-          <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded">SPICES</span>
-          <h4 class="font-bold text-xs mt-2">Ground Turmeric</h4>
-          <span class="text-[10px] text-gray-500 block">₹180 / 250g</span>
-          <button class="mt-3 olive-bg text-white text-[10px] w-full py-1.5 rounded font-semibold">Buy Now</button>
-        </div>
-      </div>
-    </div>
+  <section id="weddingView" class="hidden space-y-4">
+    <div class="section-card wedding-banner"><p class="text-[10px] font-black uppercase tracking-widest">✨ Village Weddings</p><h2 class="text-xl font-black">Shaadi, venue aur rural experience</h2><p class="text-xs mt-1 text-pink-50">Village wedding listings aur enquiries ek jagah.</p></div>
+    <div class="section-card"><h3 class="font-black text-sm mb-3">Destination Wedding Inquiry</h3><form id="weddingForm" onsubmit="submitWedding(event)" class="grid gap-2"><input id="wName" required placeholder="Your name" class="input"><input id="wPhone" required placeholder="Phone" class="input"><select id="wState" class="input"><option value="">Select state</option></select><input id="wGuests" placeholder="Guest count" class="input"><input id="wDate" type="date" class="input"><textarea id="wMessage" rows="3" placeholder="What do you need?" class="input"></textarea><button class="primary">Submit Inquiry</button></form></div>
+  </section>
 
-  </main>
+  <section id="chaupalView" class="hidden space-y-4">
+    <div class="section-card bg-amber-50 border-amber-200"><div class="flex justify-between gap-3 items-center"><div><h3 class="font-black text-sm">🔥 Chaupal</h3><p class="text-[10px] text-slate-500">Gaon ki baat, announcements aur stories.</p></div><button onclick="openPostModal('chaupal')" class="primary shrink-0">+ Share</button></div></div>
+    <div id="chaupalFeedContainer" class="space-y-4"></div>
+  </section>
+</main>
 
-  <!-- INSTA BOTTOM NAVIGATION BAR -->
-  <nav class="bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto py-3 px-6 flex justify-between items-center text-slate-700 text-xl">
-    <button onclick="openTab('home-tab')" class="text-[#3B541A]"><i class="fa-solid fa-house"></i></button>
-    <button onclick="openTab('explore-tab')"><i class="fa-solid fa-magnifying-glass"></i></button>
-    <button onclick="openTab('timeline-tab')"><i class="fa-solid fa-clapperboard"></i></button>
-    <button onclick="openTab('food-tab')"><i class="fa-solid fa-bowl-food"></i></button>
-    <button onclick="openTab('market-tab')"><i class="fa-solid fa-bag-shopping"></i></button>
-  </nav>
+<nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 py-2.5 px-5 z-50 flex justify-around items-center max-w-4xl mx-auto shadow-2xl">
+  <button onclick="goHome()" class="nav-btn">🏡<span>Home</span></button><button onclick="openWedding()" class="nav-btn">💍<span>Wedding</span></button><button onclick="openChaupal()" class="nav-btn">🔥<span>Chaupal</span></button>
+</nav>
+</div>
 
-  <!-- SCRIPT FOR SWITCHING INSTA TABS -->
-  <script>
-    function openTab(tabId) {
-      const tabs = ['home-tab', 'explore-tab', 'timeline-tab', 'food-tab', 'market-tab'];
-      tabs.forEach(t => {
-        const el = document.getElementById(t);
-        if(el) el.classList.add('hidden');
-      });
-      const target = document.getElementById(tabId);
-      if(target) target.classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
+<div id="drawer" class="drawer"><div class="drawer-panel"><div class="flex items-center justify-between p-4 border-b"><div><p class="text-[10px] font-black uppercase text-amber-700">My VillageDeko</p><h3 id="drawerName" class="font-black">Guest</h3><p id="drawerEmail" class="text-[10px] text-slate-500"></p></div><button onclick="closeDrawer()" class="text-2xl text-slate-400">&times;</button></div><div class="p-4 space-y-2 overflow-y-auto" style="max-height:calc(100vh - 100px)"><div class="profile-panel"><div class="profile-panel-avatar"><span id="drawerProfileEmoji">👤</span><img id="drawerProfilePhoto" class="profile-photo hidden" alt="Profile photo"></div><div class="min-w-0 flex-1"><b id="drawerProfileLabel">Your Profile</b><p class="text-[10px] text-slate-500">Apni profile photo lagayein</p></div><label class="profile-upload-btn">📷<input id="profilePhotoFile" type="file" accept="image/*" onchange="handleProfilePhoto(event)" hidden></label></div><button onclick="openPostModal();closeDrawer()" class="drawer-item">📸 My Post <span>＋</span></button><button onclick="showMyListings();closeDrawer()" class="drawer-item">🏘️ My Village Listings <span>›</span></button><button onclick="showMyHosts();closeDrawer()" class="drawer-item">🏡 My Host Listings <span>›</span></button><button onclick="showMyWeddings();closeDrawer()" class="drawer-item">💍 My Wedding Listings <span>›</span></button><button onclick="openChaupal();closeDrawer()" class="drawer-item">🔥 My Chaupal <span>›</span></button><button onclick="openSettings();closeDrawer()" class="drawer-item">⚙️ Settings <span>›</span></button><button onclick="openPrivacy();closeDrawer()" class="drawer-item">🔐 Privacy <span>›</span></button><button onclick="logout()" class="drawer-item text-red-600">🚪 Logout <span>›</span></button></div></div></div>
 
+<div id="loginModal" class="modal"><div class="login-box"><button onclick="closeModal('loginModal')" class="modal-x">&times;</button><div class="login-logo">🌾</div><p class="login-kicker">WELCOME TO</p><h2><span class="text-amber-700">Village</span>Deko</h2><p class="text-sm text-slate-500 mt-2">Continue with Google karke app use karein.</p><button onclick="googleLogin()" class="google-btn"><span class="google-g">G</span> Continue with Google</button><p id="loginModalError" class="login-error hidden"></p></div></div>
+
+<div id="addStoryModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">✨ Create Village Post</h3><button onclick="closeModal('addStoryModal')" class="modal-x">&times;</button></div><form id="chaupalPostForm" onsubmit="handleCloudinaryPhotoPost(event)" class="space-y-3"><input type="hidden" id="postType" value="village"><input id="storyAuthor" required placeholder="Your name" class="input"><select id="storyVillage" required class="input"><option value="">Select village</option></select><input id="storyLocation" placeholder="Village / Location" class="input"><input type="file" id="storyImageFile" accept="image/*" class="input"><textarea id="storyText" rows="4" required placeholder="Caption / story" class="input"></textarea><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('addStoryModal')" class="secondary">Cancel</button><button id="submitBtn" class="primary">Publish Post</button></div></form></div></div>
+
+<div id="listVillageModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🏘️ List Your Village, Stay & Gallery</h3><button onclick="closeModal('listVillageModal')" class="modal-x">&times;</button></div><form id="listVillageForm" onsubmit="handleVillageListing(event)" class="space-y-3 text-xs"><input type="file" id="villageGalleryFiles" accept="image/*" multiple class="input"><div class="grid sm:grid-cols-3 gap-2"><input id="hostName" required placeholder="Host name" class="input"><input id="hostWhatsapp" required placeholder="Host WhatsApp" class="input"><input id="vName" required placeholder="Village name" class="input"></div><div class="grid sm:grid-cols-2 gap-2"><input id="vDistrict" required placeholder="District" class="input"><select id="vState" required class="input"></select></div><textarea id="vDescription" required rows="4" placeholder="Village culture, story, how to reach..." class="input"></textarea><div class="section-mini"><div class="flex justify-between items-center"><b>🎯 Activities</b><button type="button" onclick="addActivityRow()" class="add-btn">+ Add Activity</button></div><div id="activitiesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><div class="flex justify-between items-center"><b>📦 Packages</b><button type="button" onclick="addPackageRow()" class="add-btn">+ Add Package</button></div><div id="packagesRows" class="space-y-2 mt-2"></div></div><div class="section-mini"><b>🏦 Bank Details <span class="text-slate-400">(Optional)</span></b><input id="bankName" placeholder="Bank name" class="input mt-2"><input id="accountName" placeholder="Account holder" class="input mt-2"><input id="accountNumber" placeholder="Account number" class="input mt-2"><input id="ifsc" placeholder="IFSC" class="input mt-2"></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('listVillageModal')" class="secondary">Cancel</button><button id="listSubmitBtn" class="primary">Publish Village Live</button></div></form></div></div>
+
+<div id="settingsModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">⚙️ Settings</h3><button onclick="closeModal('settingsModal')" class="modal-x">&times;</button></div><label class="setting-row"><span>Show my email in profile</span><input id="settingEmail" type="checkbox" onchange="saveSetting('showEmail',this.checked)"></label><label class="setting-row"><span>Notifications</span><input id="settingNotifications" type="checkbox" checked onchange="saveSetting('notifications',this.checked)"></label></div></div>
+<div id="privacyModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 class="font-black">🔐 Privacy</h3><button onclick="closeModal('privacyModal')" class="modal-x">&times;</button></div><div class="info-box"><b>Post ownership</b><p>Sirf jis Google account ne post/listing banayi hai, wahi usko edit ya delete kar sakta hai.</p></div><div class="info-box"><b>Bank details</b><p>Bank details optional hain aur public village feed mein show nahi kiye jayenge.</p></div></div></div>
+<div id="genericModal" class="modal"><div class="modal-content"><div class="modal-head"><h3 id="genericTitle" class="font-black">My Activity</h3><button onclick="closeModal('genericModal')" class="modal-x">&times;</button></div><div id="genericBody"></div></div></div>
+<div id="imageViewerModal" class="image-viewer" onclick="closeImageViewer(event)"><button class="image-viewer-close" onclick="closeImageViewer(event)">&times;</button><img id="imageViewerImg" src="" alt="Full size village photo" onclick="event.stopPropagation()"></div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
