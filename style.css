@@ -644,12 +644,20 @@ button {
 
 /* Image container */
 .post-image-wrapper {
-  width: 100%;
-  height: 420px;
-  overflow: hidden;
-  background: var(--green-light);
+  width: 100% !important;
+  height: 330px !important;
+  max-height: 330px !important;
+  overflow: hidden !important;
+  position: relative !important;
 }
 
+.post-image {
+  display: block !important;
+  width: 100% !important;
+  height: 330px !important;
+  max-height: 330px !important;
+  object-fit: cover !important;
+}
 /* Actual post image */
 .post-image {
   display: block;
@@ -841,9 +849,15 @@ button {
     Image ab full original height mein nahi jayegi.
     Fixed mobile height rakhi hai.
   */
-  .post-image-wrapper {
-    height: 330px;
-  }
+ .post-image-wrapper {
+  height: 280px !important;
+  max-height: 280px !important;
+}
+
+.post-image {
+  height: 280px !important;
+  max-height: 280px !important;
+}
 
   .post-content {
     padding: 14px 15px 16px;
