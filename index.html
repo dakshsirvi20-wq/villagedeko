@@ -73,14 +73,14 @@
         <span>Visit Village</span>
       </button>
 
-      <!-- Hamburger Button (Visible only on Mobile/Tablet) -->
+      <!-- Hamburger Button (Mobile) -->
       <button id="menu-toggle" class="lg:hidden bg-gray-100 text-[#0F2C23] p-2 rounded-xl text-lg focus:outline-none">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile Slide-out Menu Drawer -->
+  <!-- Mobile Menu Drawer -->
   <div id="mobile-menu" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-300">
     <div class="bg-white w-4/5 max-w-xs h-full p-6 shadow-2xl flex flex-col justify-between">
       <div>
@@ -112,18 +112,18 @@
     </div>
   </div>
 
-  <!-- Dynamic Content Container -->
+  <!-- Main Container -->
   <main id="main-container">
 
     <!-- HERO SECTION -->
-    <header class="hero-gradient min-h-[440px] md:min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-10">
-      <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-[#F3E5AB] text-[11px] md:text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-xl">
+    <header class="hero-gradient min-h-[420px] md:min-h-[480px] flex flex-col justify-center items-center text-center text-white px-4 relative py-10">
+      <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-[#F3E5AB] text-[10px] md:text-xs font-bold px-3 py-1 rounded-full mb-3 md:mb-4 shadow-xl">
         <i class="fa-solid fa-sparkles text-amber-400"></i> Step 1 to 20 Integrated Ecosystem
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-lg max-w-4xl leading-tight">
+      <h1 class="text-2xl sm:text-4xl md:text-6xl font-deshi text-[#F3E5AB] tracking-wide drop-shadow-lg max-w-4xl leading-tight">
         Gaon Dekho Nahi — Samjho, Mehsoos Karo Aur Experience Karo
       </h1>
-      <p class="max-w-2xl text-xs sm:text-sm md:text-base text-emerald-100/90 mt-3 mb-8 md:mb-10 font-medium leading-relaxed">
+      <p class="max-w-2xl text-xs sm:text-sm md:text-base text-emerald-100/90 mt-2 mb-6 md:mb-10 font-medium leading-relaxed">
         Khet-khalihaan, choolhe ka khana, buzurgon ki kahaniyan aur asli homestays. Supermarket ke piche ka asli sach samjhein.
       </p>
 
@@ -133,28 +133,33 @@
           <i class="fa-solid fa-magnifying-glass text-[#B85042] text-sm md:text-lg mr-2"></i>
           <input type="text" placeholder="Gaon, Jila ya Rajya search karein..." class="w-full text-xs md:text-sm outline-none font-semibold text-slate-800 placeholder-gray-400" />
         </div>
-        <button class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-3 px-6 rounded-xl shadow-md transition w-full sm:w-auto text-xs md:text-sm flex-shrink-0">
+        <button class="bg-gradient-to-r from-[#B85042] to-[#8C402B] hover:opacity-95 text-white font-extrabold py-2.5 sm:py-3 px-6 rounded-xl shadow-md transition w-full sm:w-auto text-xs md:text-sm flex-shrink-0">
           Explore
         </button>
       </div>
     </header>
 
-    <!-- SECTION: MAP & DISCOVERY -->
+    <!-- SECTION: MAP & DISCOVERY (FIXED HORIZONTAL SCROLLER & MOBILE CARD SIZES) -->
     <section id="explore-tab" class="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-8">
       <div class="flex justify-between items-end mb-4 md:mb-6">
         <div>
           <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">India Village Map 🗺️</span>
-          <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">State → District → Village</h2>
+          <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">State → District → Village</h2>
         </div>
+        <!-- Scroll Buttons -->
         <div class="flex items-center space-x-2">
-          <button id="state-left" class="bg-white border border-gray-200 text-[#0F2C23] hover:bg-[#0F2C23] hover:text-white w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition"><i class="fa-solid fa-arrow-left text-xs md:text-base"></i></button>
-          <button id="state-right" class="bg-[#0F2C23] text-white hover:bg-[#1A4739] w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition"><i class="fa-solid fa-arrow-right text-xs md:text-base"></i></button>
+          <button id="state-left" class="bg-white border border-gray-300 text-[#0F2C23] hover:bg-[#0F2C23] hover:text-white w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-chevron-left text-xs md:text-base"></i>
+          </button>
+          <button id="state-right" class="bg-[#0F2C23] text-white hover:bg-[#1A4739] w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-chevron-right text-xs md:text-base"></i>
+          </button>
         </div>
       </div>
 
-      <!-- State Horizontal Scrollable Grid -->
-      <div id="states-grid" class="flex space-x-4 overflow-x-auto scroll-smooth no-scrollbar py-2 px-1">
-        <!-- JS Dynamic Data -->
+      <!-- Scrollable States Track (Mobile Grid Ready) -->
+      <div id="states-grid" class="flex space-x-3 md:space-x-4 overflow-x-auto scroll-smooth no-scrollbar py-2 px-1">
+        <!-- JS Dynamic Data for 28 States -->
       </div>
     </section>
 
@@ -163,58 +168,59 @@
       <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="text-left md:text-center max-w-2xl md:mx-auto mb-6 md:mb-10">
           <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Real Village Day Experience 🌅</span>
-          <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Ek Din Gaon Mein: Subah Se Raat Tak</h2>
+          <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Ek Din Gaon Mein: Subah Se Raat Tak</h2>
           <p class="text-xs text-gray-600 font-semibold mt-1">Pashu paalan se lekar mandir bhajan aur gaon ki raat tak ki real timeline.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-md">05:30 AM</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Gaon Ki Subah 🌅</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Pakshiyon ki chahchahat aur mandir ki pehli ghanti.</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
-              <span><i class="fa-solid fa-microphone mr-1"></i> Audio Story</span>
-              <i class="fa-solid fa-circle-play text-base"></i>
+        <!-- 2 Column Grid on Mobile, 5 Column on Laptop -->
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">05:30 AM</span>
+            <h4 class="font-extrabold text-sm md:text-base text-[#0F2C23] mt-2">Gaon Ki Subah 🌅</h4>
+            <p class="text-[11px] md:text-xs text-gray-500 font-semibold mt-1">Pakshiyon ki chahchahat aur mandir ghanti.</p>
+            <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] md:text-xs font-bold text-[#B85042]">
+              <span>Audio Story</span>
+              <i class="fa-solid fa-circle-play text-sm md:text-base"></i>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-emerald-100 text-emerald-900 text-[10px] font-black px-2 py-0.5 rounded-md">06:00 AM</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Pashu & Dairy 🐄</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Doodh dohana aur gaayon ko charane ki tayyari.</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
-              <span><i class="fa-solid fa-video mr-1"></i> Ramesh Ji</span>
-              <i class="fa-solid fa-circle-play text-base"></i>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-emerald-100 text-emerald-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">06:00 AM</span>
+            <h4 class="font-extrabold text-sm md:text-base text-[#0F2C23] mt-2">Pashu & Dairy 🐄</h4>
+            <p class="text-[11px] md:text-xs text-gray-500 font-semibold mt-1">Doodh dohana aur gaayon ko charana.</p>
+            <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] md:text-xs font-bold text-[#B85042]">
+              <span>Ramesh Ji</span>
+              <i class="fa-solid fa-circle-play text-sm md:text-base"></i>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-green-100 text-green-900 text-[10px] font-black px-2 py-0.5 rounded-md">07:00 AM</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Khet & Kheti 🌾</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Khet ki jutai, paani dena aur kisan ki mehnat.</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
-              <span><i class="fa-solid fa-camera mr-1"></i> Photo View</span>
-              <i class="fa-solid fa-image text-base"></i>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-green-100 text-green-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">07:00 AM</span>
+            <h4 class="font-extrabold text-sm md:text-base text-[#0F2C23] mt-2">Khet & Kheti 🌾</h4>
+            <p class="text-[11px] md:text-xs text-gray-500 font-semibold mt-1">Khet jutai aur paani dena.</p>
+            <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] md:text-xs font-bold text-[#B85042]">
+              <span>Photo View</span>
+              <i class="fa-solid fa-image text-sm md:text-base"></i>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-orange-100 text-orange-900 text-[10px] font-black px-2 py-0.5 rounded-md">01:00 PM</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Ghar Ka Khana 🍲</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Choolhe ki roti, bajra, desi ghee aur mitti ka saag.</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
-              <span><i class="fa-solid fa-utensils mr-1"></i> Kitchen Tour</span>
-              <i class="fa-solid fa-circle-play text-base"></i>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-orange-100 text-orange-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">01:00 PM</span>
+            <h4 class="font-extrabold text-sm md:text-base text-[#0F2C23] mt-2">Ghar Ka Khana 🍲</h4>
+            <p class="text-[11px] md:text-xs text-gray-500 font-semibold mt-1">Choolhe ki roti aur mitti saag.</p>
+            <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] md:text-xs font-bold text-[#B85042]">
+              <span>Kitchen Tour</span>
+              <i class="fa-solid fa-circle-play text-sm md:text-base"></i>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-indigo-100 text-indigo-900 text-[10px] font-black px-2 py-0.5 rounded-md">09:00 PM</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Gaon Ki Raat 🌙</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Chaupal par buzurgon ki kahania aur taaron bhara aasmaan.</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#B85042]">
-              <span><i class="fa-solid fa-moon mr-1"></i> Night View</span>
-              <i class="fa-solid fa-headphones text-base"></i>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200 col-span-2 sm:col-span-1">
+            <span class="bg-indigo-100 text-indigo-900 text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md">09:00 PM</span>
+            <h4 class="font-extrabold text-sm md:text-base text-[#0F2C23] mt-2">Gaon Ki Raat 🌙</h4>
+            <p class="text-[11px] md:text-xs text-gray-500 font-semibold mt-1">Chaupal par kahania aur taare.</p>
+            <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] md:text-xs font-bold text-[#B85042]">
+              <span>Night View</span>
+              <i class="fa-solid fa-headphones text-sm md:text-base"></i>
             </div>
           </div>
         </div>
@@ -226,133 +232,105 @@
       <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-3">
         <div>
           <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Food Journey 🌾➡️🍞</span>
-          <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Beej Se Thali Tak Ka Asli Safar</h2>
+          <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Beej Se Thali Tak Ka Asli Safar</h2>
         </div>
-        <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl text-xs font-bold text-[#0F2C23] self-start md:self-auto">
+        <div class="bg-emerald-50 border border-emerald-200 p-2 rounded-xl text-[11px] md:text-xs font-bold text-[#0F2C23]">
           💡 Kids Mode: "Roti Supermarket Mein Nahi Ugti!"
         </div>
       </div>
 
-      <!-- Responsive Food Flow Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">1</div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 md:gap-3 text-center">
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">1</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">🌱 Beej</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Seed Selection</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Seed Selection</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">2</div>
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">2</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">🌾 Buwai</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Soil & Water</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Soil & Water</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">3</div>
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">3</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">🚜 Care</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Organic Farming</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Organic Farming</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">4</div>
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">4</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">✂️ Katai</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Harvesting</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Harvesting</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">5</div>
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">5</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">🚛 Mandi</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Local Market</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Local Market</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs md:text-sm mb-2">6</div>
+        <div class="bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs mb-1.5">6</div>
           <span class="font-extrabold text-xs text-[#0F2C23]">⚙️ Chakki</span>
-          <span class="text-[10px] text-gray-400 font-semibold mt-0.5">Fresh Grinding</span>
+          <span class="text-[9px] md:text-[10px] text-gray-400 font-semibold">Fresh Grinding</span>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-2xl border border-amber-300 bg-gradient-to-b from-amber-50 to-white flex flex-col items-center col-span-2 sm:col-span-1">
-          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#B85042] text-white flex items-center justify-center font-bold text-xs md:text-sm mb-2">7</div>
+        <div class="bg-white p-3 rounded-2xl border border-amber-300 bg-gradient-to-b from-amber-50 to-white flex flex-col items-center col-span-2 sm:col-span-1">
+          <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#B85042] text-white flex items-center justify-center font-bold text-xs mb-1.5">7</div>
           <span class="font-extrabold text-xs text-[#B85042]">🍞 Thali Par</span>
-          <span class="text-[10px] text-gray-500 font-semibold mt-0.5">Shuddh Food</span>
+          <span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Shuddh Food</span>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: REAL VILLAGE FEED -->
+    <!-- SECTION: VILLAGE FEED -->
     <section id="feed-tab" class="py-8 md:py-12 bg-[#F3EFEA]">
       <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="flex justify-between items-end mb-6">
           <div>
             <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Village Feed 📸</span>
-            <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Gaon Ke Log Aur Stories</h2>
+            <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Gaon Ke Log Aur Stories</h2>
           </div>
-          <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 md:px-4 rounded-xl shadow">
+          <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-xl shadow">
             + Share Story
           </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
-            <div class="p-3.5 flex items-center space-x-3 border-b border-gray-100">
-              <div class="w-9 h-9 rounded-full bg-emerald-800 text-white flex items-center justify-center font-black text-xs">
-                RJ
-              </div>
+            <div class="p-3 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-8 h-8 rounded-full bg-emerald-800 text-white flex items-center justify-center font-black text-xs">RJ</div>
               <div>
                 <h4 class="font-bold text-xs md:text-sm text-[#0F2C23] leading-none">Ramesh Kumar (Kisan)</h4>
-                <p class="text-[10px] md:text-[11px] font-semibold text-[#B85042] mt-1">📍 Kankroli · Rajasthan</p>
+                <p class="text-[10px] font-semibold text-[#B85042] mt-1">📍 Kankroli · Rajasthan</p>
               </div>
             </div>
-            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80" class="w-full h-44 md:h-48 object-cover" />
-            <div class="p-4">
-              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
-                "Aaj sarson ki pehli katai shuru ho gayi hai. 40 saal se kheti kar raha hoon, mitti ki khushboo hi meri zindagi hai."
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
-                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 248</button>
-                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 34</button>
-                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
-              </div>
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80" class="w-full h-40 md:h-48 object-cover" />
+            <div class="p-3.5">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">"Aaj sarson ki pehli katai shuru ho gayi hai. 40 saal se kheti kar raha hoon."</p>
             </div>
           </div>
 
           <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
-            <div class="p-3.5 flex items-center space-x-3 border-b border-gray-100">
-              <div class="w-9 h-9 rounded-full bg-[#B85042] text-white flex items-center justify-center font-black text-xs">
-                SD
-              </div>
+            <div class="p-3 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-8 h-8 rounded-full bg-[#B85042] text-white flex items-center justify-center font-black text-xs">SD</div>
               <div>
                 <h4 class="font-bold text-xs md:text-sm text-[#0F2C23] leading-none">Saraswati Devi (Local Cook)</h4>
-                <p class="text-[10px] md:text-[11px] font-semibold text-[#B85042] mt-1">📍 Khuri · Rajasthan</p>
+                <p class="text-[10px] font-semibold text-[#B85042] mt-1">📍 Khuri · Rajasthan</p>
               </div>
             </div>
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" class="w-full h-44 md:h-48 object-cover" />
-            <div class="p-4">
-              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
-                "Hamari mitti ke choolhe ka bajre ka sogra aur ker sangri ki sabzi. Iska swad shehar ke hotel mein nahi milta."
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
-                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 512</button>
-                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 89</button>
-                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
-              </div>
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" class="w-full h-40 md:h-48 object-cover" />
+            <div class="p-3.5">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">"Mitti ke choolhe ka bajre ka sogra aur ker sangri ki sabzi ka swad alag hai."</p>
             </div>
           </div>
 
           <div class="modern-card rounded-2xl overflow-hidden border border-gray-200">
-            <div class="p-3.5 flex items-center space-x-3 border-b border-gray-100">
-              <div class="w-9 h-9 rounded-full bg-amber-700 text-white flex items-center justify-center font-black text-xs">
-                KS
-              </div>
+            <div class="p-3 flex items-center space-x-3 border-b border-gray-100">
+              <div class="w-8 h-8 rounded-full bg-amber-700 text-white flex items-center justify-center font-black text-xs">KS</div>
               <div>
                 <h4 class="font-bold text-xs md:text-sm text-[#0F2C23] leading-none">Kaka Shivsingh (Buzurg)</h4>
-                <p class="text-[10px] md:text-[11px] font-semibold text-[#B85042] mt-1">📍 Kumarakom · Kerala</p>
+                <p class="text-[10px] font-semibold text-[#B85042] mt-1">📍 Kumarakom · Kerala</p>
               </div>
             </div>
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-44 md:h-48 object-cover" />
-            <div class="p-4">
-              <p class="text-xs font-semibold text-gray-700 leading-relaxed">
-                "Buzurgon Se Suno: 50 saal pehle hamara gaon kaisa tha aur hum kaise prakriti ke saath milkar rehte the."
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between text-gray-500 text-xs font-bold">
-                <button class="hover:text-rose-500 transition"><i class="fa-solid fa-heart text-rose-500 mr-1"></i> 430</button>
-                <button class="hover:text-emerald-700 transition"><i class="fa-solid fa-comment mr-1"></i> 62</button>
-                <button class="hover:text-amber-700 transition"><i class="fa-solid fa-share mr-1"></i> Share</button>
-              </div>
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" class="w-full h-40 md:h-48 object-cover" />
+            <div class="p-3.5">
+              <p class="text-xs font-semibold text-gray-700 leading-relaxed">"Buzurgon Se Suno: 50 saal pehle hamara gaon kaisa tha aur hum kaise rehte the."</p>
             </div>
           </div>
         </div>
@@ -363,66 +341,63 @@
     <section id="visit-tab" class="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-8">
       <div class="mb-6 text-left md:text-center max-w-2xl md:mx-auto">
         <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Gaon Dekho → Gaon Jao 🧳</span>
-        <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">2-Day Family Village Experience</h2>
-        <p class="text-xs text-gray-600 font-semibold mt-1">Apne bacho ko asli gaon dikhayein: Farming, Daily life & Organic food.</p>
+        <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">2-Day Family Village Experience</h2>
       </div>
 
-      <div id="villages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="villages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <!-- Dynamic Village Cards -->
       </div>
     </section>
 
-    <!-- SECTION: GAON KA BAZAAR -->
+    <!-- SECTION: BAZAAR -->
     <section id="market-tab" class="py-8 md:py-12 bg-[#F3EFEA] border-t border-emerald-900/10">
       <div class="max-w-7xl mx-auto px-4 md:px-8">
-        <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-3">
+        <div class="flex justify-between items-end mb-6">
           <div>
             <span class="text-[10px] md:text-xs font-black text-[#B85042] uppercase tracking-widest">Village Marketplace 🛒</span>
-            <h2 class="text-2xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Gaon Ka Bazaar: Shuddh Desi Products</h2>
+            <h2 class="text-xl md:text-3xl font-deshi text-[#0F2C23] mt-0.5">Gaon Ka Bazaar: Shuddh Products</h2>
           </div>
-          <p class="text-xs font-bold text-gray-600 bg-white px-3 py-2 rounded-xl border border-gray-200 self-start md:self-auto">
-            🌱 Know Your Farmer: Direct product support.
-          </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-amber-100 text-amber-900 text-[9px] font-black px-2 py-0.5 rounded uppercase">Organic Food</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Shuddh Organic Bajra</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Grown by Ramesh Ji · Kankroli</p>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="font-black text-sm text-[#B85042]">₹120 / kg</span>
-              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+        <!-- 2 Column Grid on Mobile for compact look -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded uppercase">Organic</span>
+            <h4 class="font-extrabold text-xs md:text-base text-[#0F2C23] mt-1 md:mt-2">Shuddh Organic Bajra</h4>
+            <p class="text-[10px] md:text-xs text-gray-500 font-semibold mt-0.5">Ramesh Ji · Kankroli</p>
+            <div class="mt-3 flex justify-between items-center">
+              <span class="font-black text-xs md:text-sm text-[#B85042]">₹120 / kg</span>
+              <button class="bg-[#0F2C23] text-white text-[10px] md:text-xs font-bold py-1.5 px-2.5 rounded-lg">Buy</button>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-amber-100 text-amber-900 text-[9px] font-black px-2 py-0.5 rounded uppercase">Natural Honey</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Pahadi Wild Honey</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Collected by Local Tribe · Himachal</p>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="font-black text-sm text-[#B85042]">₹450 / 500g</span>
-              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded uppercase">Natural</span>
+            <h4 class="font-extrabold text-xs md:text-base text-[#0F2C23] mt-1 md:mt-2">Pahadi Wild Honey</h4>
+            <p class="text-[10px] md:text-xs text-gray-500 font-semibold mt-0.5">Local Tribe · Himachal</p>
+            <div class="mt-3 flex justify-between items-center">
+              <span class="font-black text-xs md:text-sm text-[#B85042]">₹450 / 500g</span>
+              <button class="bg-[#0F2C23] text-white text-[10px] md:text-xs font-bold py-1.5 px-2.5 rounded-lg">Buy</button>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-amber-100 text-amber-900 text-[9px] font-black px-2 py-0.5 rounded uppercase">Handicrafts</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Mitti Ke Clay Pots</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Made by Artisans · Bishnoi Village</p>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="font-black text-sm text-[#B85042]">₹290 / set</span>
-              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded uppercase">Handicraft</span>
+            <h4 class="font-extrabold text-xs md:text-base text-[#0F2C23] mt-1 md:mt-2">Mitti Ke Clay Pots</h4>
+            <p class="text-[10px] md:text-xs text-gray-500 font-semibold mt-0.5">Artisans · Bishnoi</p>
+            <div class="mt-3 flex justify-between items-center">
+              <span class="font-black text-xs md:text-sm text-[#B85042]">₹290 / set</span>
+              <button class="bg-[#0F2C23] text-white text-[10px] md:text-xs font-bold py-1.5 px-2.5 rounded-lg">Buy</button>
             </div>
           </div>
 
-          <div class="modern-card p-4 rounded-2xl border border-gray-200">
-            <span class="bg-amber-100 text-amber-900 text-[9px] font-black px-2 py-0.5 rounded uppercase">Spices</span>
-            <h4 class="font-extrabold text-base text-[#0F2C23] mt-2">Handground Haldi</h4>
-            <p class="text-xs text-gray-500 font-semibold mt-1">Processed by Village Women SHG</p>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="font-black text-sm text-[#B85042]">₹180 / 250g</span>
-              <button class="bg-[#0F2C23] text-white text-xs font-bold py-2 px-3 rounded-lg">Buy Direct</button>
+          <div class="modern-card p-3 md:p-4 rounded-2xl border border-gray-200">
+            <span class="bg-amber-100 text-amber-900 text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded uppercase">Spices</span>
+            <h4 class="font-extrabold text-xs md:text-base text-[#0F2C23] mt-1 md:mt-2">Handground Haldi</h4>
+            <p class="text-[10px] md:text-xs text-gray-500 font-semibold mt-0.5">Village Women SHG</p>
+            <div class="mt-3 flex justify-between items-center">
+              <span class="font-black text-xs md:text-sm text-[#B85042]">₹180 / 250g</span>
+              <button class="bg-[#0F2C23] text-white text-[10px] md:text-xs font-bold py-1.5 px-2.5 rounded-lg">Buy</button>
             </div>
           </div>
         </div>
@@ -431,8 +406,7 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-[#0F2C23] text-[#F3E5AB] py-8 md:py-12 px-6 border-t-4 border-[#B85042]">
+  <footer class="bg-[#0F2C23] text-[#F3E5AB] py-8 px-6 border-t-4 border-[#B85042]">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center space-x-3">
         <div class="bg-[#B85042] text-white p-2 rounded-xl">
@@ -449,36 +423,41 @@
     </div>
   </footer>
 
-  <!-- Dynamic JS Engine -->
+  <!-- DYNAMIC JAVASCRIPT ENGINE WITH ALL STATES AND WORKING SCROLL -->
   <script>
-    const indian36States = [
-      { id: 'rajasthan', name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Khuri & Bishnoi Haveli Villages' },
-      { id: 'kerala', name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Kumarakom Backwater Stays' },
-      { id: 'himachal', name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Seb ke baag & Pahadi Huts' },
-      { id: 'punjab', name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson Khet & Farm Homestays' }
+    // Expanded States List
+    const indianStates = [
+      { name: 'Rajasthan', img: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=500&q=80', desc: 'Khuri & Bishnoi Haveli Villages' },
+      { name: 'Kerala', img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=500&q=80', desc: 'Kumarakom Backwater Stays' },
+      { name: 'Himachal Pradesh', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', desc: 'Apple orchards & hill huts' },
+      { name: 'Punjab', img: 'https://images.unsplash.com/photo-1627920769842-6887c6df05ca?auto=format&fit=crop&w=500&q=80', desc: 'Sarson Khet & Farm Homestays' },
+      { name: 'Uttarakhand', img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80', desc: 'Kumaon & Garhwal Traditional Huts' },
+      { name: 'Gujarat', img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=500&q=80', desc: 'Rann of Kutch Bhunga Stays' },
+      { name: 'Assam', img: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=500&q=80', desc: 'Majuli Island Tribal Heritage' },
+      { name: 'Nagaland', img: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80', desc: 'Khonoma Eco Tribal Village' }
     ];
 
     const stateVillagesData = [
-      { name: 'Khuri Heritage Village', state: 'Rajasthan', stay: 'Traditional Mud Hut', price: '₹1,499/night', desc: 'Choolhe ka bajre ka sogra, folk dance aur khet-khalihaan.' },
-      { name: 'Kumarakom Eco Stay', state: 'Kerala', stay: 'Waterfront Hut', price: '₹2,299/night', desc: 'Traditional coconut farming, fresh fish curry & boating.' },
-      { name: 'Khonoma Eco Village', state: 'Nagaland', stay: 'Bamboo Cottage', price: '₹1,899/night', desc: 'Organic farming, local tribal stories aur craft workshops.' }
+      { name: 'Khuri Heritage Village', stay: 'Traditional Mud Hut', price: '₹1,499/night', desc: 'Choolhe ka bajre ka sogra, folk dance aur khet-khalihaan.' },
+      { name: 'Kumarakom Eco Stay', stay: 'Waterfront Hut', price: '₹2,299/night', desc: 'Traditional coconut farming, fresh fish curry & boating.' },
+      { name: 'Khonoma Eco Village', stay: 'Bamboo Cottage', price: '₹1,899/night', desc: 'Organic farming, local tribal stories aur craft workshops.' }
     ];
 
     function renderStates() {
       const grid = document.getElementById('states-grid');
       grid.innerHTML = "";
-      indian36States.forEach(state => {
+      indianStates.forEach(state => {
         grid.innerHTML += `
-          <div onclick="switchTab('visit-tab')" class="modern-card rounded-2xl overflow-hidden border border-gray-200 min-w-[200px] sm:min-w-[240px] flex-shrink-0 cursor-pointer group">
-            <div class="relative overflow-hidden h-32 md:h-36">
+          <div onclick="switchTab('visit-tab')" class="modern-card rounded-2xl overflow-hidden border border-gray-200 min-w-[170px] sm:min-w-[220px] max-w-[170px] sm:max-w-[220px] flex-shrink-0 cursor-pointer group">
+            <div class="relative overflow-hidden h-28 sm:h-36">
               <img src="${state.img}" class="h-full w-full object-cover group-hover:scale-110 transition duration-500" />
-              <div class="absolute top-2 right-2 bg-black/50 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-full">⭐ 4.9</div>
+              <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-full">⭐ 4.9</div>
             </div>
-            <div class="p-3 md:p-4">
-              <h3 class="font-extrabold text-sm md:text-base text-[#0F2C23]">
-                <i class="fa-solid fa-location-dot text-[#B85042] text-xs mr-1"></i>${state.name}
+            <div class="p-2.5 sm:p-3.5">
+              <h3 class="font-extrabold text-xs sm:text-sm text-[#0F2C23] truncate">
+                <i class="fa-solid fa-location-dot text-[#B85042] text-[10px] mr-1"></i>${state.name}
               </h3>
-              <p class="text-[11px] md:text-xs font-semibold text-gray-500 mt-1 leading-normal">${state.desc}</p>
+              <p class="text-[10px] sm:text-xs font-semibold text-gray-500 mt-0.5 line-clamp-2">${state.desc}</p>
             </div>
           </div>
         `;
@@ -490,16 +469,16 @@
       container.innerHTML = "";
       stateVillagesData.forEach(v => {
         container.innerHTML += `
-          <div class="modern-card p-4 md:p-5 rounded-2xl border border-gray-200 flex flex-col justify-between">
+          <div class="modern-card p-4 rounded-2xl border border-gray-200 flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <span class="bg-emerald-100 text-[#0F2C23] text-[9px] md:text-[10px] font-black px-2 py-0.5 rounded-md uppercase">${v.stay}</span>
-                <span class="text-xs md:text-sm font-black text-[#B85042]">${v.price}</span>
+                <span class="bg-emerald-100 text-[#0F2C23] text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${v.stay}</span>
+                <span class="text-xs font-black text-[#B85042]">${v.price}</span>
               </div>
-              <h4 class="font-extrabold text-base md:text-lg text-[#0F2C23] mt-1">${v.name}</h4>
+              <h4 class="font-extrabold text-base text-[#0F2C23] mt-1">${v.name}</h4>
               <p class="text-xs font-semibold text-gray-500 mt-1.5 leading-relaxed">${v.desc}</p>
             </div>
-            <button class="mt-4 w-full bg-[#0F2C23] hover:bg-[#1A4739] text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition">
+            <button class="mt-4 w-full bg-[#0F2C23] hover:bg-[#1A4739] text-white font-bold py-2 rounded-xl text-xs shadow-md transition">
               Book Experience
             </button>
           </div>
@@ -514,7 +493,7 @@
       }
     }
 
-    // Mobile Drawer Logic
+    // Mobile Navigation Drawer Toggle
     const menuToggle = document.getElementById('menu-toggle');
     const menuClose = document.getElementById('menu-close');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -527,10 +506,14 @@
       switchTab(tabId);
     }
 
-    // Scroll Controls
+    // State Horizontal Scroller Logic
     const statesGrid = document.getElementById('states-grid');
-    document.getElementById('state-left').onclick = () => statesGrid.scrollBy({ left: -220, behavior: 'smooth' });
-    document.getElementById('state-right').onclick = () => statesGrid.scrollBy({ left: 220, behavior: 'smooth' });
+    document.getElementById('state-left').onclick = () => {
+      statesGrid.scrollBy({ left: -260, behavior: 'smooth' });
+    };
+    document.getElementById('state-right').onclick = () => {
+      statesGrid.scrollBy({ left: 260, behavior: 'smooth' });
+    };
 
     renderStates();
     renderVillages();
