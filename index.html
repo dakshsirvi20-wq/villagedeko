@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VillageDeko — Village Tourism</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span>Village</span><b>Deko</b></div>
+      <div class="tagline">DISCOVER. EXPERIENCE. LIVE THE REAL INDIA.</div>
+      <div class="top-actions">
+        <button class="icon-btn" data-action="search" aria-label="Search">⌕</button>
+        <button class="icon-btn" data-action="menu" aria-label="Menu">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero slide active" id="slide-home">
+        <div class="hero-copy">
+          <span class="eyebrow">INDIA'S VILLAGE TOURISM PLATFORM</span>
+          <h1>Explore the real<br><em>India.</em></h1>
+          <p>Discover beautiful villages, authentic experiences, local food, culture and people — all in one place.</p>
+          <div class="hero-buttons">
+            <button class="primary" data-action="explore">Explore Villages</button>
+            <button class="secondary" data-action="random">Discover a Village</button>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="photo-card large"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85" alt="Village landscape"></div>
+          <div class="photo-card small"><img src="https://images.unsplash.com/photo-1498550744921-75f79806b8a7?auto=format&fit=crop&w=700&q=85" alt="Village house"></div>
+        </div>
+      </section>
+
+      <section class="content-slide slide" id="slide-explore">
+        <div class="section-head"><div><span class="eyebrow">01 · VILLAGE LISTING · ALL INDIA</span><h2>Discover villages across India</h2></div><button class="text-btn" data-action="all-villages">View all →</button></div>
+        <div class="village-carousel-wrap">
+          <button class="carousel-arrow left" data-carousel="prev" aria-label="Previous villages">‹</button>
+          <div class="village-carousel" id="village-grid" tabindex="0" aria-label="Discover villages across India"></div>
+          <button class="carousel-arrow right" data-carousel="next" aria-label="Next villages">›</button>
+        </div>
+        <div class="carousel-hint">Swipe or slide to discover more villages across India</div>
+      </section>
+
+      <section class="content-slide slide" id="slide-profile">
+        <div class="profile-banner"><img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=85"><div class="profile-overlay"><span class="eyebrow">VILLAGE PROFILE</span><h2>Kuthar Village</h2><p>Jodhpur District · Rajasthan</p></div></div>
+        <div class="profile-body"><div><h3>About Kuthar</h3><p>A heritage village known for traditional homes, warm hospitality, local craft and rural life.</p></div><div class="facts"><span>☀ Best time<br><b>Oct – March</b></span><span>⌖ How to reach<br><b>Jodhpur Airport · 85 km</b></span><span>◉ Languages<br><b>Marwari · Hindi</b></span></div></div>
+        <div class="profile-actions"><button class="secondary" data-action="photos">Photos</button><button class="secondary" data-action="videos">Videos</button><button class="primary" data-action="plan">Plan Your Visit</button></div>
+      </section>
+
+      <section class="content-slide slide" id="slide-experiences">
+        <div class="section-head"><div><span class="eyebrow">03 · EXPERIENCES & FOOD</span><h2>Feel the village, don't just see it</h2></div></div>
+        <div class="filter-row"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="activities">Activities</button><button class="filter" data-filter="food">Food</button><button class="filter" data-filter="culture">Culture</button></div>
+        <div class="experience-list">
+          <article class="experience" data-type="activities"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=500&q=85"><div><h3>Farm Visit</h3><p>2 Hours · Local Farmer</p></div><strong>₹700 <small>/ person</small></strong><button data-action="book">Book</button></article>
+          <article class="experience" data-type="activities"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=500&q=85"><div><h3>Pottery Workshop</h3><p>1.5 Hours · Village Artisan</p></div><strong>₹800 <small>/ person</small></strong><button data-action="book">Book</button></article>
+          <article class="experience" data-type="food"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=500&q=85"><div><h3>Traditional Thali</h3><p>Authentic Rajasthani meal</p></div><strong>₹450 <small>/ plate</small></strong><button data-action="book">Book</button></article>
+          <article class="experience" data-type="culture"><img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=500&q=85"><div><h3>Folk Evening</h3><p>Music · Dance · Local stories</p></div><strong>₹500 <small>/ person</small></strong><button data-action="book">Book</button></article>
+        </div>
+      </section>
+
+      <section class="content-slide slide" id="slide-stay">
+        <div class="section-head"><div><span class="eyebrow">04 · STAY, VISIT & WEDDINGS</span><h2>Stay local. Celebrate local.</h2></div></div>
+        <div class="stay-grid">
+          <article class="stay-card"><img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=85"><div><span>Village Homestay</span><h3>Heritage Mud House</h3><p>Private room · 2 guests</p><b>₹1,800 / night</b><button class="primary" data-action="reserve">Reserve</button></div></article>
+          <article class="wedding-card"><span class="eyebrow">VILLAGE DESTINATION WEDDINGS</span><h3>Have your wedding in a real Indian village.</h3><p>Choose a village, local venue, food, traditions and experiences. Hosts set their own packages and prices.</p><button class="primary" data-action="wedding">Explore Wedding Villages</button></article>
+        </div>
+      </section>
+
+      <section class="content-slide slide" id="slide-market">
+        <div class="section-head"><div><span class="eyebrow">05 · MARKETPLACE & BUSINESS</span><h2>Take a piece of the village home</h2></div></div>
+        <div class="market-grid"><article><img src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=700&q=85"><h3>Handmade Pottery</h3><p>Made by local artisans · ₹650</p><button data-action="product">View Product</button></article><article><img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=85"><h3>Local Textiles</h3><p>Village-made · ₹750</p><button data-action="product">View Product</button></article><article><img src="https://images.unsplash.com/photo-1471943038886-87c772f4d2a2?auto=format&fit=crop&w=700&q=85"><h3>Organic Honey</h3><p>From village farms · ₹550</p><button data-action="product">View Product</button></article></div>
+      </section>
+
+      <section class="content-slide slide" id="slide-stories">
+        <div class="section-head"><div><span class="eyebrow">06 · STORIES & PEOPLE</span><h2>Meet the people behind the village</h2></div></div>
+        <div class="story-grid"><article class="story-feature"><img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85"><div><span>Village Story</span><h3>40 years of farming, one field at a time.</h3><p>Real people. Real stories. Real India.</p><button class="primary" data-action="story">Read Story</button></div></article><article class="people-card"><h3>Village People</h3><div class="people"><div><div class="avatar">GS</div><b>Gopal Singh</b><small>Farmer</small></div><div><div class="avatar">SD</div><b>Sita Devi</b><small>Cook</small></div><div><div class="avatar">HK</div><b>Hukamram</b><small>Potter</small></div></div><button class="secondary" data-action="people">Meet More People</button></article></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-nav="slide-home">⌂<span>Home</span></button>
+      <button class="nav-item" data-nav="slide-explore">⌕<span>Explore</span></button>
+      <button class="nav-item" data-nav="slide-experiences">◇<span>Experiences</span></button>
+      <button class="nav-item" data-nav="slide-stay">⌂<span>Trips</span></button>
+      <button class="nav-item" data-nav="slide-stories">◎<span>Stories</span></button>
+    </nav>
+  </div>
+
+  <div class="modal" id="modal"><div class="modal-box"><button class="close" data-action="close">×</button><div id="modal-content"></div></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
