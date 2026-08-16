@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owner() { return signedIn() && resource.data.ownerUid == request.auth.uid; }
+    function newOwner() { return signedIn() && request.resource.data.ownerUid == request.auth.uid; }
+
+    match /villagesListings/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /villageStories/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /people/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /products/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /localBusinesses/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /weddingEvents/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+    match /bookingInquiries/{id} {
+      allow create: if newOwner();
+      allow read: if signedIn() && (resource.data.ownerUid == request.auth.uid || resource.data.hostOwnerUid == request.auth.uid);
+      allow update, delete: if signedIn() && (resource.data.ownerUid == request.auth.uid || resource.data.hostOwnerUid == request.auth.uid);
+    }
+    match /weddingInquiries/{id} {
+      allow create: if newOwner();
+      allow read: if signedIn() && (resource.data.ownerUid == request.auth.uid || resource.data.hostOwnerUid == request.auth.uid);
+      allow update, delete: if signedIn() && (resource.data.ownerUid == request.auth.uid || resource.data.hostOwnerUid == request.auth.uid);
+    }
+    match /challengeEntries/{id} {
+      allow read: if true;
+      allow create: if newOwner();
+      allow update, delete: if owner();
+    }
+  }
+}
