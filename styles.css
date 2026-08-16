@@ -16,3 +16,142 @@
 /* Stories: keeps the existing VillageDeko visual language while adding a smooth card slider and reader. */
 .story-filters{display:flex;gap:9px;overflow-x:auto;padding:2px 0 20px;scrollbar-width:none}.story-filters::-webkit-scrollbar{display:none}.story-filter{border:0;white-space:nowrap;padding:10px 16px;border-radius:999px;background:#edf0e7;color:var(--green);font:inherit;font-weight:800;cursor:pointer}.story-filter.active{background:var(--green);color:#fff}.story-slider-wrap{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:12px;align-items:center}.story-slider{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 14px;scrollbar-width:none}.story-slider::-webkit-scrollbar{display:none}.story-card{flex:0 0 min(72%,620px);scroll-snap-align:start;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 8px 30px rgba(40,50,35,.06)}.story-card>img{width:100%;height:270px;object-fit:cover}.story-card-body{padding:24px}.story-card-body>span{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}.story-card-body h3{font-family:'Playfair Display',serif;color:var(--green);font-size:30px;line-height:1.15;margin:9px 0}.story-card-body p{color:var(--muted);margin:0 0 18px}.story-card-body .primary{margin-top:2px}.story-hint{text-align:center;color:var(--muted);font-size:12px;margin-top:4px}.story-reader img{width:100%;height:250px;object-fit:cover;border-radius:18px;margin-bottom:18px}.story-reader-tag{display:inline-block;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}.story-reader h2{font-family:'Playfair Display',serif;color:var(--green);font-size:34px;line-height:1.15;margin:8px 0}.story-reader-person{font-weight:800!important;color:var(--green)!important}.story-reader p{line-height:1.75}.story-slider-wrap .slider-arrow{border:0;background:#edf0e7;color:var(--green);width:44px;height:44px;border-radius:50%;font-size:30px;cursor:pointer}.section-subtitle{color:var(--muted);margin:8px 0 0;max-width:700px}
 @media(max-width:900px){.story-slider-wrap{grid-template-columns:1fr}.story-slider-wrap .slider-arrow{display:none}.story-card{flex-basis:88%}.story-card>img{height:230px}.story-card-body h3{font-size:27px}.story-hint{display:block}.section-subtitle{font-size:14px}}
+/* ===== MOBILE ZOOM / WIDTH FIX ===== */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .slide {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .topbar {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 12vw, 62px);
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .hero-art {
+    width: 100%;
+    height: 320px;
+  }
+
+  .photo-card.large {
+    inset: 10px 0 20px 30px;
+  }
+
+  .photo-card.small {
+    width: 180px;
+    height: 140px;
+  }
+
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-head h2 {
+    font-size: 32px;
+  }
+
+  .village-grid,
+  .market-grid,
+  .trip-grid,
+  .story-grid,
+  .stay-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+
+  .experience button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .trip-card,
+  .story-card,
+  .village-card,
+  .market-grid article {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .trip-body {
+    padding: 20px;
+  }
+
+  .trip-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .story-slider {
+    width: 100%;
+  }
+
+  .story-card {
+    flex-basis: 92%;
+  }
+
+  .profile-banner {
+    height: 300px;
+  }
+
+  .profile-overlay {
+    padding: 25px;
+  }
+
+  .profile-overlay h2 {
+    font-size: 34px;
+  }
+
+  .bottom-nav {
+    width: 100%;
+    gap: 0;
+  }
+
+  .nav-item {
+    min-width: 0;
+    flex: 1;
+  }
+}
