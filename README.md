@@ -1,18 +1,20 @@
-# VillageDeko Final Tourism Build
+# VillageDeko Fresh UI Demo
 
-Fresh VillageDeko frontend rebuilt around the finalized village-tourism roadmap.
+A completely fresh VillageDeko tourism-first interface based on the latest six-slide visual direction.
 
-## Backend compatibility
-- Firebase project/config reused from the previous VillageDeko build.
-- Cloudinary cloud name and unsigned upload preset reused from the previous VillageDeko build.
-- Firebase Firestore stores village listings, village stories/media metadata, booking enquiries, wedding enquiries, products and challenge entries.
-- Cloudinary stores uploaded images and videos; only their secure URLs are stored in Firestore.
+## Included
+- 6 main interactive slides
+- Explore villages
+- Village profile
+- Experiences & food with working filters
+- Stays, visits & village destination weddings
+- Marketplace & local business section
+- Stories & village people
+- Working navigation buttons
+- Working modal interactions for actions
+- Responsive mobile/desktop layout
 
-## Important
-Do not add a Cloudinary API Secret to frontend code.
+## Run
+Open `index.html` in a browser. Internet is needed for the demo image URLs and Google Fonts.
 
-## Main collections
-`villagesListings`, `villageStories`, `bookingInquiries`, `weddingEvents`, `weddingInquiries`, `products`, `challengeEntries`, `people`.
-
-## Product direction
-This build intentionally removes the old social-media behavior: no likes, comments, shares or village follows, and no Chaupal. Village profiles and tourism experiences are the primary destination.
+This is a fresh frontend demo; Firebase and Cloudinary can be connected later without restoring the old UI.
