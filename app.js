@@ -4,11 +4,11 @@ let firebaseReady=false;
 async function initFirebase(){
  try{
   const cfg=await import('./villagedeko-config.js');
-  const [{initializeApp},{getAuth,GoogleAuthProvider,onAuthStateChanged,signInWithPopup,signOut},{getFirestore,doc,setDoc,getDoc,deleteDoc,collection,getDocs,query,where}]=await Promise.all([
-   import('https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js'),
-   import('https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js'),
-   import('https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js')
-  ]);
+const [{initializeApp},{getAuth,GoogleAuthProvider,onAuthStateChanged,signInWithPopup,signOut},{getFirestore,doc,setDoc,getDoc,deleteDoc,collection,getDocs,query,where}]=await Promise.all([
+  import('https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js'),
+  import('https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js'),
+  import('https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js')
+]);
   const app=initializeApp(cfg.FIREBASE_CONFIG);
   firebaseAuth=getAuth(app); googleProvider=new GoogleAuthProvider(); firestoreDb=getFirestore(app); firebaseReady=true;
   window.VD_FIREBASE={doc,setDoc,getDoc,deleteDoc,collection,getDocs,query,where,signInWithPopup,signOut};
@@ -61,12 +61,36 @@ async function loadRemoteListing(){
  try{const ref=window.VD_FIREBASE.doc(firestoreDb,'villages',firebaseUser.uid);const snap=await window.VD_FIREBASE.getDoc(ref);if(snap.exists()){const d=restoreListingRowsFromFirestore(snap.data().listing); if(d){localStorage.setItem('villagedeko_my_village_listing',JSON.stringify(d)); syncSavedListingIntoVillages(); currentVillage=villages.find(v=>v.id==='my-listing')||currentVillage; renderVillages(selectedState||'all'); renderProfile();}}}catch(e){console.warn('Remote listing load failed',e);}
 }
 async function uploadCloudinary(file){
- const cfg=await import('./villagedeko-config.js');
- if(!file||!file.size)return null;
- const fd=new FormData(); fd.append('file',file); fd.append('upload_preset',cfg.CLOUDINARY_UPLOAD_PRESET);
- const res=await fetch(`https://api.cloudinary.com/v1_1/${cfg.CLOUDINARY_CLOUD_NAME}/${file.type.startsWith('video/')?'video':'image'}/upload`,{method:'POST',body:fd});
- if(!res.ok)throw new Error('Cloudinary upload failed');
- const j=await res.json(); return {url:j.secure_url,publicId:j.public_id,resourceType:j.resource_type,width:j.width||null,height:j.height||null,bytes:j.bytes||null,format:j.format||null};
+  if(!file || !file.size) return null;
+
+  const {data} = await createCloudinaryUploadSignature();
+
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('api_key', data.apikey);
+  fd.append('timestamp', String(data.timestamp));
+  fd.append('signature', data.signature);
+  fd.append('upload_preset', data.uploadPreset);
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${data.cloudName}/upload`,
+    {
+      method: 'POST',
+      body: fd
+    }
+  );
+
+  if(!res.ok) throw new Error('Cloudinary upload failed');
+
+  const j = await res.json();
+
+  return {
+    url: j.secure_url,
+    publicId: j.public_id,
+    resourceType: j.resource_type,
+    width: j.width,
+    height: j.height
+  };
 }
 async function persistVillageToFirebase(data){
  if(!firebaseUser||!firestoreDb)throw new Error('Please continue with Google first.');
