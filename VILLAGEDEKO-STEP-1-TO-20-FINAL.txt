@@ -1,0 +1,42 @@
+VILLAGEDEKO — FINAL ROADMAP BUILD (STEP 1 TO STEP 20)
+
+Status: Steps 1–20 implemented in this build.
+
+STEP 1–11
+1. Strong village feed foundation: photo/video posts, like, comment, save, share, owner delete and mobile-first UI.
+2. Village identity: Village · District · State and post-to-village navigation.
+3. Ek Din Gaon Mein timeline.
+4. Food Journey from farm to plate.
+5. Gaon Ke Log with name, role and Meri Kahani.
+6. Explore Village story-led sections.
+7. Real Village Feed linked to real places, moments, journeys and people.
+8. Real Ek Din media, local voice and storyteller fields.
+9. Real Food Journey farmer, village, story, photo/video/audio fields.
+10. State → District → Village discovery, search, saved villages and coordinate-ready OpenStreetMap.
+11. Stay, Food, Activity and Package cart; direct booking; capacity; atomic availability lock; stay double-booking protection; cancellation and host booking list.
+
+STEP 12–20
+12. Family Village Experience: child/family learning journey and bookable family packages.
+13. Village Stories & Rural History: people stories plus Old → New archive contribution category.
+14. Rural Culture: culture/traditions plus Gaon Ki Awaaz for folk music, bhajan, local language and elder voice recordings.
+15. Kisan Se Seekho: real farmer-led food/farming stages with photo, video, audio and explanation.
+16. Village Community: contributor publishing for knowledge, farming updates, people, culture, photos, videos and audio; village-source recognition.
+17. Village Challenges: sunrise, farming, local food, folk culture, old-vs-new and festival story entries; quality-first principle.
+18. Village-first Business Model: useful/trusted first, no random-ad experience, with Visit and Market value connected to the village ecosystem.
+19. Gaon Ka Bazaar: separate Market navigation and story-led products connected to farmer/artisan and village identity.
+20. Complete ecosystem journey: Discover → People → Village Life → Food → Culture → Community → Visit → Market.
+
+MAIN NAVIGATION
+Home · Explore · Community · Market · Stories
+
+ARCHITECTURE PRESERVED
+- Existing state and village seed data remains inside index.html.
+- Main application logic remains in app.js.
+- Booking additions remain in booking-cart.js.
+- Community functionality remains in community.js.
+- Main, booking and community styles remain separated in styles.css, booking-cart.css and community.css.
+- Firebase/Cloudinary settings remain in villagedeko-config.js.
+- Firestore permissions remain in firestore.rules.
+
+IMPORTANT LIVE SETUP
+Deploy firestore.rules before testing live Community publishing, atomic booking or cancellation.

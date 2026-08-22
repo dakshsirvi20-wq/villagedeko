@@ -1,0 +1,88 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /villages/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == userId && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if request.auth != null && request.auth.uid == userId && resource.data.ownerUid == request.auth.uid && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if request.auth != null && request.auth.uid == userId && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /marketplaceProducts/{productId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if request.auth != null && resource.data.ownerUid == request.auth.uid && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'confirmed';
+      allow read: if request.auth != null
+        && (resource.data.uid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow update: if request.auth != null
+        && (resource.data.uid == request.auth.uid || resource.data.ownerUid == request.auth.uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.villageId == resource.data.villageId
+        && request.resource.data.date == resource.data.date
+        && (
+          (resource.data.uid == request.auth.uid
+            && resource.data.status == 'confirmed'
+            && request.resource.data.status == 'cancelled')
+          || (resource.data.ownerUid == request.auth.uid
+            && request.resource.data.status in ['confirmed', 'completed', 'cancelled'])
+        );
+      allow delete: if false;
+    }
+
+    match /bookingLocks/{lockId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null
+        && request.resource.data.lastUid == request.auth.uid
+        && request.resource.data.villageId is string
+        && request.resource.data.date is string;
+      allow delete: if false;
+    }
+
+    match /feedComments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 500;
+      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+
+    match /feedInteractions/{interactionId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow update: if request.auth != null
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+
+    match /communityPosts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1500;
+      allow update: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}
