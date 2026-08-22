@@ -1,0 +1,1705 @@
+:root{--green:#183d20;--green2:#315b2b;--cream:#f6f2e9;--paper:#fffdf8;--gold:#bd7a2b;--text:#172018;--muted:#6c756c;--line:#ded9cd;--shadow:0 18px 50px rgba(30,40,25,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif}.app-shell{max-width:1500px;margin:auto;background:var(--paper);min-height:100vh}.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,253,248,.94);backdrop-filter:blur(12px);z-index:20}.brand{font-family:'Playfair Display',serif;font-size:34px;color:var(--green)}.brand b{color:var(--gold)}.tagline{font-size:12px;letter-spacing:2.5px;color:#725a3f;font-weight:700}.top-actions{display:flex;gap:8px}.icon-btn,.nav-item,.filter,.text-btn,.secondary,.primary,.experience button,.village-card button,.market-grid button{border:0;font:inherit;cursor:pointer}.icon-btn{width:42px;height:42px;border-radius:50%;background:#eef0e9;color:var(--green);font-size:20px}.slide{display:none!important;min-height:calc(100vh - 140px);padding:70px 6%}.slide.active{display:block!important;animation:fade .45s ease}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:50px;background:linear-gradient(135deg,#fbf8ef,#edf0e6)}.eyebrow{display:inline-block;font-size:12px;letter-spacing:2px;font-weight:800;color:var(--green2);margin-bottom:16px}.hero h1{font-family:'Playfair Display',serif;font-size:clamp(52px,7vw,94px);line-height:.96;margin:0 0 24px;color:var(--green)}.hero h1 em{font-style:normal;color:var(--gold)}.hero p{font-size:19px;line-height:1.7;max-width:600px;color:var(--muted)}.hero-buttons{display:flex;gap:12px;margin-top:30px}.primary,.secondary{padding:13px 20px;border-radius:13px;font-weight:800}.primary{background:var(--green);color:#fff}.secondary{background:#eef0e9;color:var(--green)}.hero-art{position:relative;height:540px}.photo-card{position:absolute;overflow:hidden;border-radius:30px;box-shadow:var(--shadow);border:8px solid white}.photo-card img{width:100%;height:100%;object-fit:cover}.photo-card.large{inset:20px 0 30px 60px}.photo-card.small{width:250px;height:190px;left:0;bottom:0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:32px}.section-head h2{font-family:'Playfair Display',serif;font-size:44px;margin:0;color:var(--green)}.text-btn{background:transparent;color:var(--green);font-weight:800}.village-grid,.market-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.village-card,.market-grid article,.people-card{background:white;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(40,50,35,.06)}.village-card>img,.market-grid img{width:100%;height:220px;object-fit:cover}.village-card div,.market-grid article{padding:20px}.village-card span,.market-grid p,.stay-card span{font-size:12px;color:var(--gold);font-weight:800}.village-card h3,.market-grid h3{margin:7px 0;font-size:24px}.village-card p,.market-grid p{color:var(--muted)}.village-card button,.market-grid button{margin-top:8px;background:#edf0e7;color:var(--green);padding:10px 13px;border-radius:10px;font-weight:700}.profile-banner{height:420px;border-radius:30px;overflow:hidden;position:relative}.profile-banner img{width:100%;height:100%;object-fit:cover}.profile-overlay{position:absolute;inset:auto 0 0;padding:45px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:white}.profile-overlay h2{font-family:'Playfair Display',serif;font-size:56px;margin:0}.profile-overlay p{margin:8px 0 0}.profile-body{display:grid;grid-template-columns:1fr 2fr;gap:40px;padding:35px 10px}.profile-body h3{font-size:28px;margin:0 0 10px}.profile-body p{color:var(--muted);line-height:1.7}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.facts span{background:#f4f3ed;border-radius:18px;padding:17px;color:var(--muted);font-size:13px}.facts b{color:var(--text)}.profile-actions{display:flex;justify-content:flex-end;gap:10px}.filter-row{display:flex;gap:9px;margin-bottom:25px}.filter{padding:10px 17px;border-radius:999px;background:#edf0e7;color:var(--green);font-weight:800}.filter.active{background:var(--green);color:white}.experience-list{display:grid;gap:12px}.experience{display:grid;grid-template-columns:85px 1fr auto auto;gap:18px;align-items:center;background:white;border:1px solid var(--line);border-radius:18px;padding:12px}.experience img{width:85px;height:75px;object-fit:cover;border-radius:13px}.experience h3{margin:0 0 4px}.experience p{margin:0;color:var(--muted);font-size:13px}.experience strong{white-space:nowrap}.experience small{font-weight:500;color:var(--muted)}.experience button{background:#edf0e7;color:var(--green);padding:10px 15px;border-radius:10px;font-weight:800}.stay-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}.stay-card{background:white;border:1px solid var(--line);border-radius:26px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}.stay-card img{width:100%;height:100%;object-fit:cover}.stay-card>div{padding:30px}.stay-card h3{font-family:'Playfair Display',serif;font-size:30px}.stay-card p{color:var(--muted)}.stay-card b{display:block;margin:20px 0}.wedding-card{border-radius:26px;background:var(--green);color:white;padding:42px}.wedding-card h3{font-family:'Playfair Display',serif;font-size:38px}.wedding-card p{line-height:1.7;color:#dce7dc}.wedding-card .primary{background:#d7e2ce;color:var(--green)}.market-grid article img{height:250px}.market-grid article button{width:100%}.story-grid{display:grid;grid-template-columns:1.5fr .8fr;gap:24px}.story-feature{min-height:450px;border-radius:28px;overflow:hidden;position:relative;color:white}.story-feature img{width:100%;height:100%;object-fit:cover}.story-feature>div{position:absolute;inset:auto 0 0;padding:35px;background:linear-gradient(transparent,rgba(0,0,0,.8))}.story-feature h3{font-family:'Playfair Display',serif;font-size:40px;max-width:700px}.people-card{padding:30px}.people{display:flex;justify-content:space-between;gap:12px;margin:35px 0}.people>div{text-align:center}.avatar{width:70px;height:70px;border-radius:50%;background:#dfe8d8;color:var(--green);display:grid;place-items:center;font-weight:900;margin:auto auto 9px}.people small{display:block;color:var(--muted);margin-top:4px}.bottom-nav{height:78px;position:sticky;bottom:0;background:rgba(255,253,248,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:35px;z-index:20}.nav-item{background:transparent;color:#7a8279;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:80px;font-size:22px}.nav-item span{font-size:11px;margin-top:3px}.nav-item.active{color:var(--green);font-weight:900}.modal{display:none;position:fixed;inset:0;background:rgba(15,25,16,.55);z-index:50;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.modal.show{display:flex}.modal-box{background:#fffdf8;border-radius:24px;max-width:520px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto;padding:35px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.3)}.modal-box h3{font-family:'Playfair Display',serif;font-size:30px;color:var(--green)}.modal-box p{line-height:1.7;color:var(--muted)}.close{position:absolute;right:15px;top:15px;border:0;background:#edf0e7;color:var(--green);width:35px;height:35px;border-radius:50%;font-size:22px;cursor:pointer}
+@media(max-width:900px){.tagline{display:none}.hero{grid-template-columns:1fr}.hero-art{height:380px}.slide{padding:45px 5%}.village-grid,.market-grid,.stay-grid,.story-grid{grid-template-columns:1fr}.profile-body{grid-template-columns:1fr}.facts{grid-template-columns:1fr}.section-head h2{font-size:34px}.experience{grid-template-columns:65px 1fr auto}.experience img{width:65px;height:65px}.experience button{grid-column:2/4;justify-self:start}.bottom-nav{gap:5px}.nav-item{min-width:60px}.profile-overlay h2{font-size:42px}}
+
+/* Village profile + listing additions */
+.profile-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;border-bottom:1px solid var(--line);scrollbar-width:none}.profile-tabs::-webkit-scrollbar{display:none}.profile-tab{white-space:nowrap;border:1px solid var(--line);background:white;color:var(--green);padding:10px 14px;border-radius:999px;font-weight:800;cursor:pointer}.profile-tab.active{background:var(--green);color:white}.profile-page{padding:30px 5px}.profile-page>h3{font-family:'Playfair Display',serif;font-size:34px;color:var(--green);margin:0 0 10px}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.mini-grid button{min-height:55px}.journey{background:#f0f2e9;border-radius:22px;padding:28px;font-weight:800;color:var(--green);display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin:24px 0}.journey b{color:var(--gold)}.story-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}.story-mini-grid article{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:white}.story-mini-grid img{width:100%;height:180px;object-fit:cover}.story-mini-grid article>span,.story-mini-grid article>h3,.story-mini-grid article>p,.story-mini-grid article>button{margin-left:16px;margin-right:16px}.story-mini-grid article>span{display:block;margin-top:14px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:1px}.story-mini-grid article>h3{font-family:'Playfair Display',serif;font-size:21px}.story-mini-grid article>p{font-size:13px}.story-mini-grid article>button{margin-bottom:16px}.culture-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;align-items:center}.culture-strip span,.culture-strip b{padding:10px 13px;border-radius:999px;background:#edf0e7;color:var(--green);font-size:12px}.culture-strip b{background:var(--green);color:white}.listing-box{max-width:900px;background:white;border:1px solid var(--line);border-radius:26px;padding:34px;box-shadow:0 10px 35px rgba(40,50,35,.06)}.listing-box h3{font-family:'Playfair Display',serif;font-size:34px;color:var(--green)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:25px 0}.form-grid label{font-size:12px;font-weight:800;color:var(--green)}.form-grid input,.form-grid select{display:block;width:100%;margin-top:7px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#fbfaf5;outline:none}.media-row{display:flex;gap:10px;margin-bottom:18px}.menu-actions{display:grid;gap:10px;margin:20px 0}.menu-actions button{text-align:left}.modal-box .primary{margin-top:12px}.modal-box .menu-actions .secondary{width:100%}
+@media(max-width:900px){.mini-grid,.story-mini-grid,.form-grid{grid-template-columns:1fr}.profile-tabs{margin-right:-5vw}.media-row{flex-direction:column}.listing-box{padding:24px}.profile-page>h3{font-size:29px}}
+
+/* VillageDeko Explore sliders — preserves the approved visual language */
+.state-slider-wrap,.village-slider-wrap{display:flex;align-items:center;gap:10px}.state-slider,.village-slider{display:flex;gap:14px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;flex:1;padding:5px 2px 14px}.state-slider::-webkit-scrollbar,.village-slider::-webkit-scrollbar{display:none}.slider-arrow{flex:0 0 42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:50%;color:var(--green);font-size:27px;line-height:1}.state-card{flex:0 0 178px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:18px;text-align:left;transition:.2s;box-shadow:0 7px 20px rgba(23,45,33,.04)}.state-card:hover,.state-card.active{border-color:var(--sage);background:#f2f4ed;transform:translateY(-2px)}.state-card .state-no{font-size:10px;letter-spacing:1.5px;color:var(--sage);font-weight:800}.state-card h3{font-size:17px;margin:9px 0 4px}.state-card p{font-size:12px;margin:0}.explore-tools{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0 0 18px;align-items:center}.village-search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:0 15px;min-height:48px}.village-search span{font-size:20px;color:var(--green)}.village-search input{width:100%;border:0;outline:0;background:transparent;font:inherit;color:var(--text);font-size:16px}.village-search input::placeholder{color:#9a9d94}.explore-filter{width:100%;min-height:48px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:0 14px;color:var(--green);font:inherit;font-weight:700;outline:0}.clear-filters{min-height:48px;white-space:nowrap}.explore-divider{display:flex;align-items:center;gap:12px;margin:24px 0 12px;color:var(--muted);font-size:10px;letter-spacing:2px;font-weight:800}.explore-divider b{font-size:18px;letter-spacing:0;color:var(--ink)}.village-slider{min-height:250px}.village-card{flex:0 0 290px}.empty-state{border:1px dashed #c9c8bd;background:#faf9f3;border-radius:16px;text-align:center;padding:34px;margin-top:5px}.empty-state strong{font-size:17px}.empty-state p{margin:7px 0 0;font-size:13px}@media(max-width:760px){.slider-arrow{flex-basis:36px;width:36px;height:36px;font-size:23px}.state-card{flex-basis:155px}.village-card{flex-basis:260px}.topbar{padding:0 18px}.tagline{display:none}}
+
+/* Trips — complete village package */
+.section-subtitle{margin:10px 0 0;color:var(--muted);max-width:720px;line-height:1.6}.trip-connection{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 28px;padding:14px 18px;border:1px solid var(--line);border-radius:999px;background:#f7f6ef;color:var(--green);font-size:12px;font-weight:900;letter-spacing:1.5px}.trip-connection b{color:var(--gold);font-size:18px}.trip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}.trip-card{background:white;border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 8px 30px rgba(40,50,35,.06)}.trip-image{height:220px;position:relative}.trip-image img{width:100%;height:100%;object-fit:cover}.trip-image>span{position:absolute;left:18px;bottom:18px;background:rgba(255,253,248,.95);color:var(--green);padding:9px 12px;border-radius:999px;font-weight:900;font-size:12px}.trip-body{padding:25px}.trip-label{font-size:11px;letter-spacing:1.5px;color:var(--gold);font-weight:900}.trip-body h3{font-family:'Playfair Display',serif;font-size:30px;color:var(--green);margin:7px 0}.trip-location{color:var(--muted);font-size:13px;margin:0 0 18px}.trip-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}.trip-facts span{background:#f4f3ed;border-radius:14px;padding:12px;font-size:13px;color:var(--muted);line-height:1.45}.trip-facts b,.trip-block>b,.trip-columns>b{display:block;color:var(--text);font-size:12px;margin-bottom:4px}.trip-chips{display:flex;flex-wrap:wrap;gap:7px}.trip-chips span{background:#edf0e7;color:var(--green);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}.trip-block{padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.trip-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:18px 0}.trip-columns ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.7}.trip-footer{display:flex;align-items:end;justify-content:space-between;gap:15px}.trip-footer small{display:block;color:var(--muted);font-size:11px}.trip-footer strong{display:block;font-size:25px;color:var(--green);margin-top:3px}.trip-book-summary{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;background:#f4f3ed;border-radius:15px;padding:14px;margin:18px 0;color:var(--muted);font-size:13px}.trip-book-summary b{color:var(--text)}
+@media(max-width:900px){.trip-grid{grid-template-columns:1fr}.trip-facts,.trip-columns{grid-template-columns:1fr}.trip-connection{font-size:10px;gap:9px}.trip-body h3{font-size:26px}}
+
+/* Stories: keeps the existing VillageDeko visual language while adding a smooth card slider and reader. */
+.story-filters{display:flex;gap:9px;overflow-x:auto;padding:2px 0 20px;scrollbar-width:none}.story-filters::-webkit-scrollbar{display:none}.story-filter{border:0;white-space:nowrap;padding:10px 16px;border-radius:999px;background:#edf0e7;color:var(--green);font:inherit;font-weight:800;cursor:pointer}.story-filter.active{background:var(--green);color:#fff}.story-slider-wrap{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:12px;align-items:center}.story-slider{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 14px;scrollbar-width:none}.story-slider::-webkit-scrollbar{display:none}.story-card{flex:0 0 min(72%,620px);scroll-snap-align:start;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 8px 30px rgba(40,50,35,.06)}.story-card>img{width:100%;height:270px;object-fit:cover}.story-card-body{padding:24px}.story-card-body>span{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}.story-card-body h3{font-family:'Playfair Display',serif;color:var(--green);font-size:30px;line-height:1.15;margin:9px 0}.story-card-body p{color:var(--muted);margin:0 0 18px}.story-card-body .primary{margin-top:2px}.story-hint{text-align:center;color:var(--muted);font-size:12px;margin-top:4px}.story-reader img{width:100%;height:250px;object-fit:cover;border-radius:18px;margin-bottom:18px}
+@media (min-width: 901px){.story-reader img{filter:brightness(1.12) contrast(1.03);opacity:1;mix-blend-mode:normal}}.story-reader-tag{display:inline-block;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}.story-reader h2{font-family:'Playfair Display',serif;color:var(--green);font-size:34px;line-height:1.15;margin:8px 0}.story-reader-person{font-weight:800!important;color:var(--green)!important}.story-reader p{line-height:1.75}.story-slider-wrap .slider-arrow{border:0;background:#edf0e7;color:var(--green);width:44px;height:44px;border-radius:50%;font-size:30px;cursor:pointer}.section-subtitle{color:var(--muted);margin:8px 0 0;max-width:700px}
+@media(max-width:900px){.story-slider-wrap{grid-template-columns:1fr}.story-slider-wrap .slider-arrow{display:none}.story-card{flex-basis:88%}.story-card>img{height:230px}.story-card-body h3{font-size:27px}.story-hint{display:block}.section-subtitle{font-size:14px}}
+
+/* ===== VillageDeko mobile layout — compact phone sizing ===== */
+@media (max-width: 760px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body { padding-bottom: 0; }
+
+  .app-shell {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  /* Compact phone header */
+  .topbar {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .brand { font-size: 27px; line-height: 1; }
+  .icon-btn { width: 38px; height: 38px; font-size: 18px; }
+  .top-actions { gap: 7px; }
+
+  /* No artificial full-screen height on mobile. */
+  .slide {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 28px 16px 98px;
+  }
+
+  .slide.active { min-height: 0; }
+
+  /* Home stays text-first and compact. */
+  .hero {
+    display: block;
+    min-height: 0;
+    background: linear-gradient(135deg,#fbf8ef,#edf0e6);
+  }
+
+  .hero-art { display: none !important; }
+  .hero-copy { max-width: 100%; }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 9.5vw, 46px);
+    line-height: .98;
+    margin: 0 0 16px;
+  }
+
+  .hero p {
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .hero-buttons {
+    gap: 9px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .primary, .secondary {
+    padding: 11px 17px;
+    border-radius: 11px;
+    font-size: 14px;
+  }
+
+  .section-head {
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .section-head h2 {
+    font-size: 27px;
+    line-height: 1.08;
+  }
+
+  .section-subtitle { font-size: 13px; line-height: 1.5; }
+
+  /* Explore cards sized for an actual phone viewport. */
+  .state-slider-wrap,
+  .village-slider-wrap {
+    width: 100%;
+    min-width: 0;
+    gap: 7px;
+  }
+
+  .state-slider,
+  .village-slider {
+    min-width: 0;
+    flex: 1 1 auto;
+    width: 0;
+    gap: 9px;
+    padding: 3px 1px 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+  }
+
+  .state-card {
+    flex: 0 0 128px;
+    min-width: 128px;
+    padding: 12px;
+    border-radius: 14px;
+    scroll-snap-align: start;
+  }
+
+  .state-card .state-no { font-size: 8px; }
+  .state-card h3 { font-size: 15px; line-height: 1.15; margin: 7px 0 3px; }
+  .state-card p { font-size: 10px; }
+
+  .slider-arrow {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .explore-divider { margin: 17px 0 9px; gap: 9px; }
+  .explore-divider b { font-size: 16px; }
+
+  .village-slider { min-height: 0; }
+
+  .village-card {
+    flex: 0 0 220px;
+    min-width: 220px;
+    border-radius: 18px;
+    scroll-snap-align: start;
+  }
+
+  .village-card > img { height: 132px; }
+  .village-card div { padding: 13px; }
+  .village-card h3 { font-size: 19px; line-height: 1.15; }
+  .village-card p { font-size: 12px; }
+  .village-card button { padding: 8px 11px; font-size: 12px; }
+
+  /* Bottom navigation is truly fixed to the phone viewport. */
+  .bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 68px;
+    min-height: 68px;
+    margin: 0;
+    gap: 0;
+    padding: 4px 4px max(4px, env(safe-area-inset-bottom));
+    justify-content: space-around;
+    z-index: 100;
+  }
+
+  .nav-item {
+    min-width: 0;
+    flex: 1 1 20%;
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .nav-item span { font-size: 10px; margin-top: 3px; }
+
+  /* Mobile story cards remain compact. */
+  .story-slider-wrap { width: 100%; min-width: 0; }
+  .story-slider {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .story-card { flex-basis: 82%; }
+}
+
+/* ===== Phone: fixed header + fixed bottom navigation ===== */
+@media (max-width: 760px) {
+  .app-shell {
+    padding-top: 64px;
+  }
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 64px;
+    z-index: 200;
+  }
+
+  main {
+    position: relative;
+    width: 100%;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 201;
+  }
+}
+
+/* ===== FINAL PHONE SCALE — compact, nothing oversized ===== */
+@media (max-width: 760px) {
+  body { font-size: 14px; }
+  .topbar { height: 58px; padding: 0 14px; }
+  .app-shell { padding-top: 58px; }
+  .brand { font-size: 23px; }
+  .icon-btn { width: 34px; height: 34px; font-size: 16px; }
+
+  .slide { padding: 22px 14px 86px; }
+  .hero { gap: 0; }
+  .eyebrow { font-size: 9px; letter-spacing: 1.3px; margin-bottom: 8px; }
+  .hero h1 { font-size: clamp(30px, 8.5vw, 38px); line-height: 1; margin-bottom: 13px; }
+  .hero p { font-size: 14px; line-height: 1.45; }
+  .hero-buttons { margin-top: 16px; gap: 7px; }
+  .primary, .secondary { padding: 9px 14px; font-size: 13px; border-radius: 9px; }
+
+  .section-head { margin-bottom: 14px; gap: 7px; }
+  .section-head h2 { font-size: 24px; }
+  .section-subtitle { font-size: 12px; line-height: 1.4; }
+
+  .state-card { flex-basis: 118px; min-width: 118px; padding: 10px; }
+  .state-card h3 { font-size: 14px; }
+  .state-card p { font-size: 9px; }
+  .village-card { flex-basis: 200px; min-width: 200px; }
+  .village-card > img { height: 115px; }
+  .village-card div { padding: 11px; }
+  .village-card h3 { font-size: 17px; }
+  .village-card p { font-size: 11px; }
+
+  .profile-banner { height: 260px; border-radius: 18px; }
+  .profile-overlay { padding: 22px; }
+  .profile-overlay h2 { font-size: 30px; }
+  .profile-body { gap: 20px; padding: 22px 4px; }
+  .profile-body h3 { font-size: 22px; }
+  .profile-body p { font-size: 13px; line-height: 1.5; }
+  .facts { gap: 8px; }
+  .facts span { padding: 11px; font-size: 11px; border-radius: 12px; }
+
+  .filter-row { gap: 6px; margin-bottom: 16px; overflow-x: auto; }
+  .filter { padding: 8px 12px; font-size: 11px; }
+  .experience { grid-template-columns: 52px 1fr; gap: 10px; padding: 9px; border-radius: 14px; }
+  .experience img { width: 52px; height: 52px; border-radius: 9px; }
+  .experience strong { font-size: 12px; }
+  .experience p { font-size: 11px; }
+  .experience button { grid-column: 2; padding: 8px 11px; font-size: 11px; }
+
+  .stay-grid, .trip-grid { gap: 14px; }
+  .stay-card { border-radius: 18px; }
+  .stay-card>div { padding: 16px; }
+  .stay-card h3 { font-size: 23px; }
+  .stay-card p { font-size: 12px; }
+  .wedding-card { padding: 22px; border-radius: 18px; }
+  .wedding-card h3 { font-size: 27px; }
+  .wedding-card p { font-size: 12px; line-height: 1.5; }
+
+  .trip-connection { margin-bottom: 18px; padding: 10px 12px; font-size: 9px; gap: 6px; }
+  .trip-connection b { font-size: 14px; }
+  .trip-card { border-radius: 18px; }
+  .trip-image { height: 150px; }
+  .trip-image>span { left: 12px; bottom: 12px; padding: 7px 9px; font-size: 10px; }
+  .trip-body { padding: 16px; }
+  .trip-label { font-size: 9px; }
+  .trip-body h3 { font-size: 22px; }
+  .trip-location { font-size: 11px; margin-bottom: 13px; }
+  .trip-facts { gap: 7px; margin-bottom: 14px; }
+  .trip-facts span { padding: 9px; font-size: 11px; }
+  .trip-chips { gap: 5px; }
+  .trip-chips span { padding: 5px 8px; font-size: 10px; }
+  .trip-columns { gap: 12px; padding: 13px 0; }
+  .trip-columns ul { font-size: 11px; }
+  .trip-footer strong { font-size: 21px; }
+
+  .story-grid { gap: 14px; }
+  .story-feature { min-height: 300px; border-radius: 18px; }
+  .story-feature>div { padding: 20px; }
+  .story-feature h3 { font-size: 27px; }
+  .story-card { border-radius: 18px; }
+  .story-card>img { height: 175px; }
+  .story-card-body { padding: 16px; }
+  .story-card-body h3 { font-size: 23px; }
+  .story-card-body p { font-size: 12px; }
+
+  .profile-page { padding: 20px 3px; }
+  .profile-page>h3 { font-size: 26px; }
+  .profile-tab { padding: 8px 11px; font-size: 11px; }
+  .journey { padding: 17px 12px; margin: 17px 0; font-size: 11px; }
+  .story-mini-grid { gap: 9px; }
+  .story-mini-grid img { height: 120px; }
+  .story-mini-grid article>h3 { font-size: 17px; }
+  .story-mini-grid article>p { font-size: 11px; }
+
+  .modal { padding: 12px; align-items: center; overflow-y: auto; }
+  .modal-box { padding: 22px; border-radius: 18px; max-height: calc(100vh - 24px); overflow-y: auto; width: 100%; }
+  .modal-box h3 { font-size: 24px; }
+  .modal-box p { font-size: 13px; }
+
+  .bottom-nav { height: 62px; min-height: 62px; padding: 3px 3px max(3px, env(safe-area-inset-bottom)); }
+  .nav-item { font-size: 17px; }
+  .nav-item span { font-size: 9px; margin-top: 2px; }
+}
+
+
+/* ===== FINAL MOBILE PASS: compact + one complete card ===== */
+.mobile-home-photo{display:none}
+
+@media (max-width:760px){
+  /* Home: replace the large empty mobile area with a real photo. */
+  .hero{display:block!important;padding-bottom:22px}
+  .mobile-home-photo{
+    display:block;
+    width:100%;
+    height:190px;
+    margin:22px 0 0;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(40,50,35,.07);
+  }
+  .mobile-home-photo img{display:block;width:100%;height:100%;object-fit:cover}
+  .hero-art{display:none!important}
+
+  /* Explore: no arrow buttons on touch phones; swipe directly. */
+  .state-slider-wrap,.village-slider-wrap{display:block!important;width:100%;}
+  .state-slider-wrap .slider-arrow,.village-slider-wrap .slider-arrow{display:none!important}
+  .state-slider,.village-slider{width:100%;display:flex;overflow-x:auto;gap:10px;padding:2px 0 12px;scroll-snap-type:x mandatory;}
+  .state-card{flex:0 0 145px;min-width:145px;}
+  .village-card{flex:0 0 300px;min-width:300px;scroll-snap-align:start;border-radius:18px;}
+  .village-card>img{height:150px}
+  .village-card div{padding:14px}
+  .village-card h3{font-size:19px;margin:6px 0}
+  .village-card p{font-size:12px;line-height:1.35;margin:7px 0}
+  .village-card button{font-size:12px;padding:8px 11px}
+
+  /* Trips: one complete card at a time, swipe for the next. */
+  .trip-grid{display:flex!important;overflow-x:auto;gap:12px;width:100%;padding:2px 0 14px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x}
+  .trip-grid::-webkit-scrollbar{display:none}
+  .trip-card{flex:0 0 100%;min-width:100%;scroll-snap-align:start;border-radius:18px}
+  .trip-image{height:145px}
+  .trip-body{padding:14px}
+  .trip-label{font-size:9px;letter-spacing:1.2px}
+  .trip-body h3{font-size:21px;line-height:1.12;margin:6px 0}
+  .trip-location{font-size:11px;line-height:1.35;margin-bottom:12px}
+  .trip-facts{grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+  .trip-facts span{padding:8px;font-size:10px}
+  .trip-facts b,.trip-block>b,.trip-columns>b{font-size:11px}
+  .trip-chips{gap:5px}
+  .trip-chips span{padding:5px 7px;font-size:9px}
+  .trip-block{padding:12px 0}
+  .trip-columns{gap:10px;padding:12px 0}
+  .trip-columns ul{font-size:10px;line-height:1.5;padding-left:16px}
+  .trip-footer{gap:8px}
+  .trip-footer strong{font-size:19px}
+  .trip-footer .primary{font-size:11px;padding:8px 10px}
+
+  /* Keep every mobile slide compact and leave room above fixed bottom nav. */
+  .slide{padding:20px 14px 82px!important}
+  .section-head{margin-bottom:13px}
+  .section-head h2{font-size:24px;line-height:1.08}
+  .section-subtitle{font-size:12px;line-height:1.4}
+}
+
+/* ===== FINAL MOBILE BEHAVIOUR FIX ===== */
+@media (max-width:760px){
+  /* Let the page scroll vertically even when the finger starts over a horizontal slider. */
+  .state-slider,
+  .village-slider,
+  .trip-grid,
+  .story-slider{
+    touch-action:auto;
+  }
+
+  /* Explore: compact cards, with one complete village card in view. */
+  .state-card{
+    flex-basis:132px;
+    min-width:132px;
+    padding:10px;
+  }
+  .village-card{
+    flex:0 0 calc(100vw - 44px);
+    min-width:calc(100vw - 44px);
+    max-width:calc(100vw - 44px);
+  }
+  .village-card>img{height:132px}
+  .village-card div{padding:12px}
+
+  /* Trips: one card at a time, but noticeably shorter and easier to scan. */
+  .trip-grid{
+    touch-action:auto;
+    gap:10px;
+    padding-bottom:10px;
+  }
+  .trip-card{
+    flex:0 0 calc(100vw - 44px);
+    min-width:calc(100vw - 44px);
+    max-width:calc(100vw - 44px);
+  }
+  .trip-image{height:118px}
+  .trip-image>span{left:10px;bottom:10px;padding:6px 8px;font-size:9px}
+  .trip-body{padding:12px}
+  .trip-label{font-size:8px;letter-spacing:1px}
+  .trip-body h3{font-size:19px;margin:5px 0;line-height:1.1}
+  .trip-location{font-size:10px;margin-bottom:9px}
+  .trip-facts{gap:6px;margin-bottom:9px}
+  .trip-facts span{padding:7px;font-size:9px;line-height:1.3}
+  .trip-facts b,.trip-block>b,.trip-columns>b{font-size:10px;margin-bottom:3px}
+  .trip-chips{gap:4px}
+  .trip-chips span{padding:4px 6px;font-size:8px}
+  .trip-block{padding:9px 0}
+  .trip-columns{gap:8px;padding:9px 0}
+  .trip-columns ul{font-size:9px;line-height:1.4;padding-left:14px}
+  .trip-footer{gap:6px}
+  .trip-footer small{font-size:9px}
+  .trip-footer strong{font-size:18px}
+  .trip-footer .primary{font-size:10px;padding:7px 9px}
+
+  /* Keep content clear of the fixed navigation. */
+  .slide{padding-bottom:88px!important}
+}
+
+
+/* ===== VILLAGEDEKO FINAL HERO: HOME ONLY ===== */
+#slide-home.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex !important;
+  align-items: center;
+  min-height: min(760px, calc(100vh - 156px));
+  padding: clamp(52px, 6vw, 92px) clamp(28px, 4vw, 64px);
+  overflow: hidden;
+  background: #17251a;
+}
+#slide-home.hero .hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url('hero-cows.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#slide-home.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.68) 0%, rgba(0,0,0,.44) 30%, rgba(0,0,0,.10) 62%, rgba(0,0,0,.12) 100%);
+}
+#slide-home.hero .hero-copy {
+  width: min(620px, 54%);
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+#slide-home.hero .eyebrow {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 15px;
+  letter-spacing: 2.2px;
+}
+#slide-home.hero h1 {
+  color: #fff;
+  font-size: clamp(56px, 6.2vw, 94px);
+  line-height: .96;
+  margin: 0 0 28px;
+  text-shadow: 0 2px 14px rgba(0,0,0,.18);
+}
+#slide-home.hero h1 em { color: var(--gold); }
+#slide-home.hero p {
+  color: #fff;
+  max-width: 560px;
+  font-size: clamp(18px, 1.8vw, 26px);
+  line-height: 1.45;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,.22);
+}
+#slide-home.hero .hero-buttons { margin-top: 34px; }
+#slide-home.hero .primary {
+  padding: 16px 28px;
+  border-radius: 11px;
+  font-size: 18px;
+  background: #0d4d28;
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+}
+
+/* FINAL NAVIGATION VISIBILITY GUARD — Home hero is Home-only on every device. */
+main > .slide { display:none !important; }
+main > #slide-home.active { display:flex !important; }
+main > .slide.active:not(#slide-home) { display:block !important; }
+main > .slide:not(#slide-home) .hero-background,
+main > .slide:not(#slide-home) .hero-copy,
+main > .slide:not(#slide-home) > .hero { display:none !important; }
+
+/* HARD RULE: the photographic hero exists only on Home. */
+main > .slide:not(#slide-home) .hero-background,
+main > .slide:not(#slide-home) > .hero { display:none !important; }
+main > .slide:not(#slide-home) { background:var(--paper); }
+
+/* All non-home navigation pages stay content-only: no shared hero is injected. */
+#slide-explore,
+#slide-profile,
+#slide-experiences,
+#slide-stay,
+#slide-market,
+#slide-stories,
+#slide-listing { background: var(--paper); }
+
+@media (max-width: 900px) {
+  #slide-home.hero {
+    min-height: calc(100svh - 58px - 62px);
+    padding: 44px 28px 86px;
+  }
+  #slide-home.hero .hero-copy { width: min(620px, 78%); }
+  #slide-home.hero h1 { font-size: clamp(48px, 8vw, 72px); }
+  #slide-home.hero p { font-size: clamp(16px, 2.4vw, 21px); }
+}
+
+@media (max-width: 760px) {
+  #slide-home.hero {
+    min-height: calc(100svh - 58px - 62px);
+    padding: 48px 26px 88px;
+    align-items: flex-start;
+  }
+  #slide-home.hero .hero-copy { width: 100%; max-width: 560px; }
+  #slide-home.hero .eyebrow { font-size: 10px; letter-spacing: 1.6px; margin-bottom: 12px; }
+  #slide-home.hero h1 {
+    font-size: clamp(38px, 10.5vw, 56px);
+    line-height: .98;
+    margin-bottom: 18px;
+  }
+  #slide-home.hero p {
+    font-size: clamp(15px, 4.1vw, 18px);
+    line-height: 1.45;
+    max-width: 430px;
+  }
+  #slide-home.hero .hero-buttons { margin-top: 22px; }
+  #slide-home.hero .primary { padding: 13px 20px; font-size: 15px; border-radius: 10px; }
+  #slide-home.hero::after {
+    background: linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.47) 64%, rgba(0,0,0,.20) 100%);
+  }
+  #slide-home.hero .hero-background { background-position: 58% center; }
+}
+
+@media (min-width: 1600px) {
+  .app-shell { max-width: none; }
+}
+
+
+.ek-din-experience-card{border:1px solid var(--line);background:linear-gradient(135deg,#f7f3e7,#fffdf8);}
+.ek-din-card-icon{width:58px;height:58px;border-radius:16px;background:#e8eee1;display:grid;place-items:center;font-size:30px;}
+.experience-kicker{display:block;font-size:10px;letter-spacing:1.5px;font-weight:900;color:var(--green2);margin-bottom:4px;}
+.ek-din-card{background:#fffdf8;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 8px 30px rgba(40,50,35,.06);}
+.ek-din-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:24px;}
+.ek-din-head h3{font-family:'Playfair Display',serif;color:var(--green);font-size:34px;margin:0 0 7px;}
+.ek-din-head p{color:var(--muted);max-width:720px;margin:0;line-height:1.6;}
+.ek-din-time{white-space:nowrap;background:var(--green);color:#fff;padding:10px 14px;border-radius:999px;font-size:12px;font-weight:800;}
+.ek-din-timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.ek-din-slot{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;text-align:left;min-height:145px;cursor:pointer;font:inherit;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;}
+.ek-din-slot.active{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);background:#f4f7ef;}
+.ek-din-icon{font-size:25px;margin-bottom:10px;}.ek-din-slot small{color:var(--gold);font-weight:900;font-size:10px;letter-spacing:.5px;}.ek-din-slot strong{font-size:14px;margin-top:5px;line-height:1.25;}.ek-din-arrow{margin-top:auto;color:var(--green);font-size:18px;}
+.ek-din-detail{margin-top:16px;padding:18px;border-radius:16px;background:#eef2e8;}.ek-din-detail>span{font-size:11px;color:var(--gold);font-weight:900;letter-spacing:1px;}.ek-din-detail h4{margin:5px 0;font-family:'Playfair Display',serif;color:var(--green);font-size:24px;}.ek-din-detail p{margin:0 0 8px;color:var(--muted);line-height:1.55;}.ek-din-detail b{font-size:12px;color:var(--green);}
+@media(max-width:900px){.ek-din-head{flex-direction:column}.ek-din-timeline{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.ek-din-slot{flex:0 0 155px;scroll-snap-align:start}.ek-din-card{padding:18px;border-radius:18px}.ek-din-head h3{font-size:28px}.ek-din-time{font-size:11px}.ek-din-experience-card{grid-template-columns:52px 1fr}.ek-din-experience-card>strong{grid-column:2}.ek-din-experience-card>button{grid-column:2}}
+
+/* VillageDeko Step 4-6 additions — keeps existing UI intact */
+.food-journey-card{background:white;border:1px solid var(--line);border-radius:24px;padding:24px;margin-bottom:12px;box-shadow:0 8px 30px rgba(40,50,35,.05)}
+.food-journey-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:20px}
+.food-journey-head h3{font-family:'Playfair Display',serif;color:var(--green);font-size:30px;margin:7px 0}
+.food-journey-head p{color:var(--muted);margin:0;max-width:720px}
+.experience-kicker{display:inline-block;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}
+.food-journey-end{font-size:30px;white-space:nowrap;background:#f0f2e9;padding:12px 15px;border-radius:16px}
+.food-journey-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.food-journey-step{border:1px solid var(--line);background:#fbfaf5;border-radius:16px;padding:14px 10px;text-align:left;color:var(--green);cursor:pointer;min-height:100px}
+.food-journey-step:hover{border-color:#b9c8b0;transform:translateY(-1px)}
+.food-journey-step span{font-size:25px;display:block;margin-bottom:6px}.food-journey-step small{color:var(--gold);font-weight:900;display:block}.food-journey-step strong{display:block;margin-top:3px}
+.food-journey-detail{background:#f0f2e9;border-radius:18px;padding:18px 20px;margin:18px 0}.food-journey-detail span{color:var(--gold);font-size:11px;font-weight:900}.food-journey-detail h4{color:var(--green);font-size:21px;margin:4px 0}.food-journey-detail p{color:var(--muted);margin:0;line-height:1.6}
+.food-journey-card>.primary{margin-top:2px}
+.food-journey-modal .modal-lead{font-weight:700;color:var(--green)}
+.journey-stage{border:0;background:transparent;color:var(--green);font:inherit;font-weight:800;cursor:pointer;padding:4px}
+.journey-stage:hover{text-decoration:underline}
+.knowledge-note{font-size:12px!important;background:#f7f5ed;border-radius:14px;padding:12px 14px}
+.village-explore-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.food-journey-head{flex-direction:column}.food-journey-steps{grid-template-columns:repeat(2,1fr)}.food-journey-end{font-size:24px}.village-explore-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.food-journey-card{padding:17px}.food-journey-head h3{font-size:24px}.food-journey-steps{grid-template-columns:1fr 1fr}.food-journey-step{min-height:88px;padding:11px 9px}.food-journey-step strong{font-size:13px}.journey{gap:7px}}
+
+.food-journey-experience-card{border:1px solid var(--line);background:linear-gradient(135deg,#f7f3e7,#fffdf8);}
+.food-journey-card-icon{width:58px;height:58px;border-radius:16px;background:#e8eee1;display:grid;place-items:center;font-size:30px;}
+.food-journey-experience-card h3{margin:4px 0 5px;}
+.food-journey-experience-card p{margin:0;color:var(--muted);line-height:1.45;}
+.food-journey-experience-card>strong{white-space:nowrap;color:var(--green);font-size:13px;}
+@media(max-width:900px){.food-journey-experience-card{grid-template-columns:52px 1fr}.food-journey-experience-card>strong{grid-column:2}.food-journey-experience-card>button{grid-column:2}}
+
+.profile-backbar{display:flex;align-items:center;margin:0 0 14px;}
+.back-btn{border:1px solid var(--line,#ddd);background:#fff;color:inherit;border-radius:999px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.05);}
+.back-btn:hover{transform:translateY(-1px);}
+
+/* ===== STORY READER + FOOD JOURNEY VIEWPORT FIX ===== */
+.story-reader,
+.food-journey-modal {
+  min-width: 0;
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+.story-reader img {
+  display: block;
+  max-width: 100%;
+}
+.story-reader h2,
+.story-reader p,
+.food-journey-modal p,
+.food-journey-modal h4 {
+  overflow-wrap: anywhere;
+}
+
+/* ===== MODERN VILLAGE LISTING FORM ===== */
+.listing-page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px}.listing-page-head h2{font-family:'Playfair Display',serif;font-size:clamp(34px,5vw,54px);color:var(--green);margin:0 0 10px}.listing-progress{display:flex;gap:8px;overflow:auto;padding:4px 2px 18px;scrollbar-width:none}.listing-progress::-webkit-scrollbar{display:none}.listing-progress button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;color:var(--muted);font-weight:800;cursor:pointer}.listing-progress button.active{background:var(--green);color:#fff;border-color:var(--green)}.modern-listing-form{max-width:1120px;margin:auto}.listing-step{display:none;background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 12px 36px rgba(40,50,35,.07)}.listing-step.active{display:block;animation:fade .3s ease}.listing-step-title{display:flex;gap:18px;align-items:flex-start;margin-bottom:28px}.listing-step-title>span{width:48px;height:48px;border-radius:16px;background:#edf1e8;color:var(--green);display:grid;place-items:center;font-weight:900}.listing-step-title small{letter-spacing:2px;font-size:11px;font-weight:900;color:var(--gold)}.listing-step-title h3{font-family:'Playfair Display',serif;color:var(--green);font-size:30px;margin:4px 0}.listing-step-title p{color:var(--muted);margin:0;line-height:1.55}.modern-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.modern-grid label{display:flex;flex-direction:column;gap:8px;font-weight:800;color:var(--text)}.modern-grid label b{color:var(--gold)}.modern-grid input,.modern-grid select,.modern-grid textarea,.repeat-card input,.repeat-card select,.repeat-card textarea{width:100%;border:1px solid #d9d8d0;background:#fbfaf6;border-radius:15px;padding:13px 14px;font:inherit;color:var(--text);outline:none}.modern-grid input:focus,.modern-grid select:focus,.modern-grid textarea:focus,.repeat-card input:focus,.repeat-card select:focus,.repeat-card textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(24,61,32,.08)}.full{grid-column:1/-1}.media-upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.upload-card{min-height:170px;border:1.5px dashed #cfcfc4;background:#faf9f3;border-radius:22px;padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:7px;cursor:pointer;transition:.2s}.upload-card:hover{transform:translateY(-2px);border-color:var(--green)}.upload-card input{display:none}.upload-card>span{width:48px;height:48px;border-radius:15px;background:#e9eee4;display:grid;place-items:center;font-size:24px;color:var(--green)}.upload-card strong{font-size:17px}.upload-card small{color:var(--muted);line-height:1.4}.upload-card.featured{background:linear-gradient(135deg,#f4f0e4,#f9fbf4)}.form-note{margin-top:18px;padding:14px 16px;border-radius:15px;background:#f2f4ed;color:var(--muted);font-size:13px;line-height:1.55}.form-note.warning{background:#fbf4e8;color:#70532d}.repeat-list{display:grid;gap:14px}.repeat-card{border:1px solid var(--line);background:#fbfaf6;border-radius:20px;padding:18px}.repeat-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.repeat-card-head strong{color:var(--green)}.remove-row{border:0;background:transparent;color:#a34b3b;font-weight:800;cursor:pointer}.repeat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.repeat-grid .wide{grid-column:1/-1}.repeat-grid label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:800}.add-row{margin-top:14px;border:1px dashed #b9c0b4;background:#f1f4ed;color:var(--green);padding:12px 16px;border-radius:13px;font:inherit;font-weight:900;cursor:pointer}.subform-block{padding:20px 0;border-top:1px solid var(--line)}.subform-block:first-of-type{border-top:0}.subform-block h4{font-family:'Playfair Display',serif;color:var(--green);font-size:22px;margin:0 0 14px}.listing-review{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.review-card{background:#f7f5ed;border-radius:18px;padding:17px}.review-card small{display:block;color:var(--gold);font-weight:900;letter-spacing:1.5px}.review-card strong{display:block;margin-top:5px;font-size:18px;color:var(--green)}.review-card p{margin:6px 0 0;color:var(--muted);white-space:pre-wrap}.owner-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.danger-outline{border:1px solid #b65a4b;background:#fff8f5;color:#9a3f32;padding:13px 20px;border-radius:13px;font:inherit;font-weight:900;cursor:pointer}.listing-controls{display:flex;justify-content:space-between;align-items:center;margin-top:18px}.listing-controls>div{color:var(--muted);font-size:13px;font-weight:800}.listing-controls button{min-width:130px}.listing-saved-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;background:#e8f0e6;color:var(--green);font-size:12px;font-weight:900;margin-bottom:15px}
+@media(max-width:900px){.listing-page-head{align-items:flex-start;flex-direction:column}.media-upload-grid{grid-template-columns:1fr}.modern-grid,.repeat-grid,.listing-review{grid-template-columns:1fr}.listing-step{padding:22px;border-radius:22px}.listing-step-title h3{font-size:26px}}
+@media(max-width:560px){.listing-page-head h2{font-size:36px}.listing-step-title{gap:12px}.listing-step-title>span{width:40px;height:40px;border-radius:13px}.listing-controls button{min-width:105px;padding:11px 13px}.listing-controls{gap:10px}.listing-progress button{padding:8px 11px}}
+
+/* ===== MOBILE INPUT ZOOM LOCK =====
+   Keep all editable controls at a 16px minimum on phones so browsers do not
+   auto-zoom the page when a user focuses a field. Touch-action also prevents
+   double-tap zoom on these controls without changing the desktop design.
+*/
+@media (max-width: 900px) {
+  .modern-listing-form input:not([type="file"]),
+  .modern-listing-form select,
+  .modern-listing-form textarea,
+  .modern-listing-form button,
+  .modern-listing-form label,
+  .listing-page-head,
+  .listing-step {
+    touch-action: manipulation;
+  }
+
+  .modern-listing-form input:not([type="file"]),
+  .modern-listing-form select,
+  .modern-listing-form textarea,
+  .modern-listing-form .repeat-card input:not([type="file"]),
+  .modern-listing-form .repeat-card select,
+  .modern-listing-form .repeat-card textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ===== FINAL MOBILE RESPONSIVE CONTAINMENT PASS =====
+   Preserve the approved desktop design. On phones, only the page-width
+   behaviour is corrected: normal content always fits the viewport; intentional
+   carousels remain horizontally swipeable.
+*/
+@media (max-width: 760px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-shell,
+  main,
+  .slide,
+  .content-slide,
+  .profile-page,
+  .story-reader,
+  .food-journey-modal,
+  .ek-din-card,
+  .food-journey-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .slide,
+  .content-slide,
+  .profile-page {
+    overflow-x: hidden;
+  }
+
+  /* Flex/grid children must be allowed to shrink instead of pushing the
+     whole page wider than the phone. */
+  .slide > *,
+  .content-slide > *,
+  .section-head > *,
+  .ek-din-head > *,
+  .food-journey-head > *,
+  .story-reader > *,
+  .food-journey-modal > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .section-head h2,
+  .section-subtitle,
+  .ek-din-head h3,
+  .ek-din-head p,
+  .food-journey-head h3,
+  .food-journey-head p,
+  .story-reader h2,
+  .story-reader p,
+  .food-journey-modal h4,
+  .food-journey-modal p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .ek-din-head p,
+  .food-journey-head p {
+    width: 100%;
+  }
+
+  /* Only these components are allowed to move sideways. */
+  .ek-din-timeline,
+  .story-slider,
+  .filter-row,
+  .profile-tabs,
+  .listing-progress,
+  .state-slider,
+  .village-slider,
+  .trip-grid {
+    max-width: 100%;
+  }
+
+  .ek-din-timeline,
+  .story-slider,
+  .filter-row,
+  .profile-tabs,
+  .listing-progress,
+  .state-slider,
+  .village-slider,
+  .trip-grid {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Food Journey's stage row is normal responsive content, not page-level
+     overflow. Two columns remain on phones and labels wrap naturally. */
+  .food-journey-steps {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .food-journey-step {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .food-journey-step strong,
+  .food-journey-step small,
+  .journey-stage {
+    overflow-wrap: anywhere;
+  }
+
+  .journey {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Story reader image/text must never create a wider page. */
+  .story-reader img,
+  .story-reader video,
+  .food-journey-modal img,
+  .food-journey-modal video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Keep fixed navigation inside the viewport. */
+  .topbar,
+  .bottom-nav {
+    max-width: 100vw;
+  }
+}
+
+/* Village cards: entire card opens the village profile; existing button remains available. */
+.village-card[data-action="village"]{cursor:pointer;}
+.village-card[data-action="village"]:focus-visible{outline:2px solid currentColor;outline-offset:3px;}
+
+@media (max-width:700px){.explore-tools{grid-template-columns:1fr;gap:8px}.village-search{grid-column:auto}}
+
+
+/* ===== MOBILE CONTENT + TOUCH CARD STABILITY ===== */
+.experience.ek-din-experience-card,
+.experience.food-journey-experience-card,
+.story-card,
+.food-journey-card,
+.ek-din-card { min-width:0; }
+.experience.ek-din-experience-card[data-action],
+.experience.food-journey-experience-card[data-action],
+.story-card[data-action] { cursor:pointer; }
+.experience.ek-din-experience-card:focus-visible,
+.experience.food-journey-experience-card:focus-visible,
+.story-card:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+
+@media (max-width:760px){
+  .slide { padding-left:16px; padding-right:16px; }
+  .section-head { width:100%; max-width:100%; }
+  .section-head h2 { font-size:clamp(28px,8vw,36px); line-height:1.12; }
+  .section-subtitle { width:100%; max-width:100%; overflow-wrap:anywhere; }
+
+  .experience-list,
+  .experience,
+  .ek-din-card,
+  .food-journey-card,
+  .story-reader,
+  .story-reader > div,
+  .food-journey-modal,
+  .food-journey-detail { min-width:0; max-width:100%; width:100%; }
+
+  .experience { grid-template-columns:58px minmax(0,1fr); gap:12px; align-items:start; padding:11px; }
+  .experience img { width:58px; height:58px; }
+  .experience > div { min-width:0; }
+  .experience h3,
+  .experience p,
+  .experience strong { overflow-wrap:anywhere; word-break:normal; }
+  .experience strong { grid-column:2; white-space:normal; }
+  .experience button { grid-column:2; width:max-content; max-width:100%; }
+
+  .ek-din-card { padding:16px; overflow:hidden; }
+  .ek-din-head { min-width:0; }
+  .ek-din-head h3 { font-size:25px; line-height:1.15; overflow-wrap:anywhere; }
+  .ek-din-head p { font-size:13px; line-height:1.55; }
+  .ek-din-time { white-space:normal; max-width:100%; }
+
+  .food-journey-card { padding:16px; overflow:hidden; }
+  .food-journey-head { min-width:0; }
+  .food-journey-head h3 { font-size:23px; line-height:1.18; }
+  .food-journey-head p { font-size:13px; line-height:1.55; }
+  .food-journey-end { align-self:flex-start; white-space:normal; font-size:20px; max-width:100%; }
+  .food-journey-steps { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .food-journey-step { overflow:hidden; }
+
+  .story-slider-wrap { min-width:0; width:100%; }
+  .story-slider { width:100%; min-width:0; padding-left:0; padding-right:0; gap:12px; }
+  .story-card { flex:0 0 88%; min-width:0; max-width:88%; }
+  .story-card > img { width:100%; max-width:100%; height:190px; }
+  .story-card-body { min-width:0; padding:16px; }
+  .story-card-body h3 { font-size:23px; line-height:1.18; overflow-wrap:anywhere; }
+  .story-card-body p { overflow-wrap:anywhere; }
+
+  .modal { padding:10px; }
+  .modal-box { width:min(100%,520px); max-width:100%; min-width:0; padding:18px; overflow-x:hidden; }
+  .modal-box h3 { max-width:100%; overflow-wrap:anywhere; line-height:1.15; }
+  .modal-box p { max-width:100%; overflow-wrap:anywhere; }
+  .story-reader img { width:100%; height:auto; max-height:250px; object-fit:cover; }
+  .story-reader h2 { font-size:27px; line-height:1.15; }
+  .story-reader p { font-size:14px; line-height:1.65; }
+  .food-journey-modal .journey { justify-content:flex-start; gap:6px; padding:16px; font-size:13px; }
+  .food-journey-modal .journey b { flex:0 0 auto; }
+  .food-journey-modal .journey-stage { max-width:100%; overflow-wrap:anywhere; }
+}
+
+/* ===== FINAL PHONE COMPACT PASS: STORIES + FOOD JOURNEY ===== */
+@media (max-width: 760px) {
+  .story-card { flex-basis: 86%; max-width: 86%; border-radius: 20px; }
+  .story-card > img { height: 155px; }
+  .story-card-body { padding: 13px; }
+  .story-card-body > span { font-size: 10px; }
+  .story-card-body h3 { font-size: 20px; line-height: 1.16; margin: 6px 0; }
+  .story-card-body p { font-size: 12px; line-height: 1.45; margin-bottom: 10px; }
+  .story-card-body .primary { padding: 9px 12px; font-size: 12px; }
+
+  .story-reader img { max-height: 190px; margin-bottom: 12px; border-radius: 14px; }
+  .story-reader h2 { font-size: 23px; line-height: 1.14; margin: 6px 0; }
+  .story-reader p { font-size: 13px; line-height: 1.52; margin: 7px 0; }
+  .story-reader-tag { font-size: 10px; }
+  .story-reader-person { font-size: 13px !important; }
+
+  .food-journey-card { padding: 13px; border-radius: 20px; }
+  .food-journey-head h3 { font-size: 21px; line-height: 1.16; }
+  .food-journey-head p { font-size: 12px; line-height: 1.45; }
+  .food-journey-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .food-journey-step { min-height: 72px; padding: 9px 8px; border-radius: 14px; }
+  .food-journey-step strong { font-size: 12px; line-height: 1.2; }
+  .food-journey-step small { font-size: 10px; line-height: 1.3; }
+  .food-journey-end { font-size: 17px; }
+
+  .food-journey-modal .modal-lead { font-size: 13px; line-height: 1.48; margin: 4px 0 10px; }
+  .food-journey-modal .journey { padding: 11px; gap: 5px; margin: 10px 0; font-size: 12px; border-radius: 16px; }
+  .food-journey-modal .journey-stage { padding: 6px 7px; font-size: 12px; }
+  .food-journey-detail { padding: 13px !important; border-radius: 16px !important; }
+  .food-journey-detail h4 { font-size: 20px; margin: 5px 0; }
+  .food-journey-detail p { font-size: 12px; line-height: 1.45; margin: 4px 0; }
+  .food-journey-modal .knowledge-note { font-size: 11px; line-height: 1.45; margin: 9px 0; }
+
+  .modal { padding: 7px; }
+  .modal-box { padding: 14px; border-radius: 18px; max-height: calc(100dvh - 14px); }
+  .modal-box > .primary { padding: 9px 13px; font-size: 12px; margin-top: 8px; }
+}
+
+/* ===== VILLAGE LISTING -> PROFILE DATA CONNECTION ===== */
+.profile-data-card{
+  background:#f5f6ef;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  min-width:0;
+}
+.profile-data-card small{display:block;color:var(--gold);font-size:10px;font-weight:900;letter-spacing:1.2px;margin-bottom:7px}
+.profile-data-card h4{margin:0 0 7px;color:var(--green);font-size:20px}
+.profile-data-card p{margin:5px 0 0;color:#69736b;font-size:13px;line-height:1.55;overflow-wrap:anywhere}
+.profile-data-card strong{color:var(--green)}
+.clickable-data{cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+.clickable-data:hover,.clickable-data:focus-visible{transform:translateY(-2px);box-shadow:0 8px 22px rgba(40,50,35,.08);outline:none}
+.data-icon{font-size:22px;display:block;margin-bottom:7px}
+.empty-profile-data{grid-column:1/-1;background:#f7f6ef;border:1px dashed var(--line);border-radius:18px;padding:20px;color:#68726a}
+.empty-profile-data strong{display:block;color:var(--green);margin-bottom:5px}
+.empty-profile-data p{margin:0;font-size:13px;line-height:1.55}
+.empty-inline{color:#69736b;font-size:13px}
+.food-dishes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.profile-form-experience{cursor:pointer}
+.profile-form-experience>div{min-width:0}
+.profile-form-experience p,.profile-form-experience h3{overflow-wrap:anywhere}
+.form-note{margin-top:16px}
+@media(max-width:900px){
+  .food-dishes{grid-template-columns:1fr}
+  .profile-data-card{padding:14px}
+}
+
+.listing-media-strip{margin-top:18px}.listing-media-strip .mini-grid{margin-top:10px}.listing-media-thumb{width:100%;height:140px;object-fit:cover;border-radius:16px;display:block}.listing-media-strip img{max-width:100%}@media(max-width:640px){.listing-media-thumb{height:120px;border-radius:14px}}
+
+/* ===== MOBILE MODAL FORMS: CLEAR STACKED FIELDS ===== */
+.modal-box > label {
+  display:block;
+  width:100%;
+  margin:0 0 14px;
+  color:var(--text);
+  font-size:14px;
+  font-weight:700;
+  line-height:1.35;
+}
+.modal-box > label input,
+.modal-box > label select,
+.modal-box > label textarea {
+  display:block;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin-top:7px;
+  padding:12px 13px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fbfaf5;
+  color:var(--text);
+  font:inherit;
+  line-height:1.4;
+  outline:none;
+}
+.modal-box > label textarea {
+  min-height:96px;
+  resize:vertical;
+}
+.modal-box > label input:focus,
+.modal-box > label select:focus,
+.modal-box > label textarea:focus {
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(25,77,42,.08);
+}
+.modal-box .vd-feature-card {
+  margin-bottom:16px;
+}
+.modal-box .menu-actions {
+  width:100%;
+  margin:16px 0 0;
+}
+.modal-box .menu-actions .primary {
+  width:100%;
+  text-align:center;
+}
+
+@media (max-width:760px) {
+  .modal { padding:8px; align-items:center; }
+  .modal-box {
+    width:100%;
+    max-width:520px;
+    max-height:calc(100dvh - 16px);
+    padding:20px 16px 18px;
+    border-radius:20px;
+    overflow-x:hidden;
+    overflow-y:auto;
+  }
+  .modal-box h3 {
+    font-size:25px;
+    line-height:1.12;
+    margin:0 42px 18px 0;
+    overflow-wrap:anywhere;
+  }
+  .modal-box .close {
+    width:40px;
+    height:40px;
+    right:12px;
+    top:12px;
+    font-size:25px;
+  }
+  .modal-box > label {
+    margin-bottom:13px;
+    font-size:13px;
+  }
+  .modal-box > label input,
+  .modal-box > label select,
+  .modal-box > label textarea {
+    width:100%;
+    font-size:14px;
+    padding:11px 12px;
+    margin-top:6px;
+  }
+  .modal-box > label textarea { min-height:92px; }
+  .modal-box .menu-actions { margin-top:12px; }
+  .modal-box .menu-actions .primary {
+    min-height:48px;
+    font-size:14px;
+  }
+}
+
+/* ===== TRIP & ENQUIRY MODALS: CLEAN PROFESSIONAL FORM LAYOUT ===== */
+.vd-modal-form{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:16px;
+  margin:18px 0 4px;
+}
+.vd-form-field{min-width:0;}
+.vd-form-field-full{grid-column:1 / -1;}
+.vd-form-field label{
+  display:block;
+  margin:0 0 7px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:800;
+  line-height:1.3;
+}
+.vd-form-field input,
+.vd-form-field select,
+.vd-form-field textarea{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  padding:13px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fbfaf5;
+  color:var(--text);
+  font:inherit;
+  font-size:14px;
+  line-height:1.4;
+  outline:none;
+}
+.vd-form-field select{min-height:48px;}
+.vd-form-field input{min-height:48px;}
+.vd-form-field textarea{min-height:112px;resize:vertical;}
+.vd-form-field input:focus,
+.vd-form-field select:focus,
+.vd-form-field textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(25,77,42,.08);
+}
+.vd-modal-form + .menu-actions{margin-top:18px;}
+.vd-modal-form + .menu-actions .primary{width:100%;min-height:50px;text-align:center;}
+@media(max-width:760px){
+  .vd-modal-form{grid-template-columns:1fr;gap:13px;margin-top:15px;}
+  .vd-form-field-full{grid-column:auto;}
+  .vd-form-field label{font-size:13px;margin-bottom:6px;}
+  .vd-form-field input,
+  .vd-form-field select,
+  .vd-form-field textarea{font-size:14px;padding:12px 13px;}
+  .vd-form-field textarea{min-height:100px;}
+  .vd-modal-form + .menu-actions{margin-top:14px;}
+}
+
+
+/* ===== FINAL MOBILE FORM + FEED PERSISTENCE UX PASS ===== */
+html,body{max-width:100%;overflow-x:hidden}
+body.vd-modal-open{overflow:hidden;overscroll-behavior:none}
+
+/* Every modal stays inside the phone viewport. The box itself scrolls. */
+.modal{z-index:1000;align-items:center;justify-content:center;padding:10px;overscroll-behavior:contain}
+.modal-box{
+  width:min(100%,520px);
+  max-width:520px;
+  max-height:min(88dvh,760px);
+  min-height:0;
+  box-sizing:border-box;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:18px 18px 16px;
+  scroll-padding-top:62px;
+}
+/* Sticky close button: it remains visible even when a form is scrolled. */
+.modal-box>.close{
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:20;
+  width:40px;
+  height:40px;
+  margin:0 -2px 0 10px;
+  border:0;
+  background:#edf0e7;
+  color:var(--green);
+  font-size:25px;
+  line-height:40px;
+  text-align:center;
+  border-radius:50%;
+}
+.modal-box>h3{clear:both;margin:2px 48px 12px 0;line-height:1.12;overflow-wrap:anywhere}
+.modal-box>.modal-done-btn{width:auto;min-width:100px;margin:12px 0 0;min-height:44px}
+
+.vd-modal-form{grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 2px}
+.vd-form-field{min-width:0}
+.vd-form-field-full{grid-column:1/-1}
+.vd-form-field label{font-size:13px;margin-bottom:5px}
+.vd-form-field input,.vd-form-field select,.vd-form-field textarea,
+.modal-box>label input,.modal-box>label select,.modal-box>label textarea,
+.vd-feed-form input,.vd-feed-form textarea{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  font-size:16px !important;
+  line-height:1.35;
+  padding:10px 12px;
+}
+.vd-form-field input,.vd-form-field select{min-height:44px}
+.vd-form-field textarea{min-height:86px}
+.vd-modal-form+.menu-actions{margin:10px 0 0}
+.vd-modal-form+.menu-actions .primary{min-height:46px}
+
+/* Feed composer: compact, clear and never wider than the phone. */
+.vd-feed-form{gap:10px}
+.vd-feed-form label{font-size:13px;gap:5px}
+.vd-feed-form textarea{min-height:100px}
+.vd-feed-form input[type=file]{font-size:16px !important;padding:8px}
+.vd-feed-form .menu-actions{grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 0}
+.vd-feed-form .menu-actions button{width:100%;text-align:center}
+
+/* iOS Safari zoom prevention: editable controls must be at least 16px on phones. */
+@media(max-width:760px){input,select,textarea{font-size:16px}}
+
+@media(max-width:760px){
+  .modal{padding:8px;align-items:center}
+  .modal-box{
+    width:calc(100vw - 16px);
+    max-width:none;
+    max-height:86dvh;
+    padding:14px 13px 14px;
+    border-radius:18px;
+  }
+  .modal-box>.close{
+    width:38px;height:38px;line-height:38px;font-size:24px;
+    margin-right:0;margin-bottom:2px;
+  }
+  .modal-box>h3{font-size:23px;margin:2px 46px 10px 0}
+  .modal-box>p{font-size:13px;line-height:1.48;margin:6px 0 10px}
+  .modal-box>.modal-done-btn{min-height:42px;min-width:86px;padding:9px 14px;font-size:13px}
+
+  .vd-feature-card{padding:10px;margin:5px 0 9px}
+  .feed-host-note{padding:9px 10px;margin:8px 0;font-size:12px;line-height:1.4}
+  .vd-modal-form{grid-template-columns:1fr;gap:10px;margin:9px 0 1px}
+  .vd-form-field-full{grid-column:auto}
+  .vd-form-field label{font-size:12px;margin-bottom:4px}
+  .vd-form-field input,.vd-form-field select{min-height:42px;padding:9px 11px}
+  .vd-form-field textarea{min-height:78px;padding:9px 11px}
+  .vd-modal-form+.menu-actions{margin-top:9px}
+  .vd-modal-form+.menu-actions .primary{min-height:44px;padding:9px 12px;font-size:13px}
+
+  .vd-feed-form{gap:9px}
+  .vd-feed-form label{font-size:12px}
+  .vd-feed-form textarea{min-height:88px}
+  .vd-feed-form .menu-actions{grid-template-columns:1fr 1fr;gap:7px}
+  .vd-feed-form .menu-actions button{min-height:43px;padding:9px 10px;font-size:13px}
+}
+
+@media(max-width:380px){
+  .modal-box{width:calc(100vw - 12px);max-height:88dvh;padding:12px 11px}
+  .modal-box>h3{font-size:21px}
+  .vd-feed-form .menu-actions{grid-template-columns:1fr}
+}
+
+/* ===== GAON KA BAZAAR ENTRY ===== */
+.marketplace-entry{width:100%;display:flex;align-items:center;gap:12px;margin:2px 0 22px;padding:17px 20px;border:1px solid var(--line);border-radius:18px;background:#fff;color:var(--green);box-shadow:0 8px 24px rgba(40,50,35,.05);font:inherit;font-weight:800;font-size:17px;text-align:left;cursor:pointer;transition:.2s}
+.marketplace-entry:hover{border-color:var(--sage);background:#f5f6ef;transform:translateY(-1px)}
+.marketplace-entry b{margin-left:auto;font-size:20px}
+.market-categories{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 14px;margin-bottom:20px}
+.market-categories::-webkit-scrollbar{display:none}
+.market-category{flex:0 0 auto;border:0;border-radius:999px;padding:10px 15px;background:#edf0e7;color:var(--green);font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.market-category.active{background:var(--green);color:#fff}
+@media(max-width:700px){.marketplace-entry{font-size:16px;padding:15px 16px}.market-category{padding:9px 13px;font-size:12px}}
+
+/* ===== GAON KA BAZAAR PRODUCT STRUCTURE ===== */
+.market-grid{align-items:stretch}
+.market-product-card{padding:0!important;display:flex;flex-direction:column}
+.market-product-card>img{height:220px!important;display:block;object-fit:cover}
+.market-product-body{padding:20px;display:flex;flex-direction:column;height:100%}
+.market-product-category{display:inline-block;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase}
+.market-product-body h3{font-family:'Playfair Display',serif;font-size:27px;margin:7px 0 5px;color:var(--green)}
+.market-product-price{display:block;font-size:21px;color:var(--green);margin-bottom:10px}
+.market-product-seller{font-size:13px;line-height:1.55;margin:0 0 10px!important;color:var(--muted)}
+.market-product-seller b{color:var(--text)}
+.market-product-story{font-size:13px;line-height:1.6;margin:0 0 18px!important;color:var(--muted)}
+.market-view-btn{width:100%;margin-top:auto!important}
+.market-product-detail{display:grid;gap:10px}
+.market-product-detail>img{width:100%;height:220px;object-fit:cover;border-radius:18px}
+.market-product-detail h4{font-family:'Playfair Display',serif;font-size:30px;color:var(--green);margin:2px 0}
+.market-product-detail-price{font-size:23px;color:var(--green)}
+.market-story-box{padding:16px;background:#f4f3ed;border-radius:16px}
+.market-story-box b{color:var(--green)}
+.market-story-box p{margin:7px 0 0}
+.market-buy-btn{width:100%;margin-top:8px}
+.market-buy-detail{padding:4px 0}
+.market-buy-detail p{margin:8px 0}
+@media(max-width:900px){
+ .market-product-card>img{height:210px!important}
+ .market-product-body{padding:18px}
+ .market-product-body h3{font-size:24px}
+ .market-product-detail>img{height:200px}
+}
+
+/* ===== EXPLORE: BAZAAR + DESTINATION WEDDING (FINAL MOBILE-SAFE PLACEMENT) ===== */
+.marketplace-entry,
+.destination-wedding-entry{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0 0 10px;
+  padding:14px 17px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  color:var(--green);
+  box-shadow:0 8px 24px rgba(40,50,35,.05);
+  font:inherit;
+  font-weight:800;
+  font-size:17px;
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+}
+.marketplace-entry:hover,
+.destination-wedding-entry:hover{transform:translateY(-1px);border-color:var(--sage)}
+.marketplace-entry span,
+.destination-wedding-entry span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.marketplace-entry strong,
+.destination-wedding-entry strong{font-size:16px;line-height:1.15}
+.marketplace-entry small,
+.destination-wedding-entry small{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.marketplace-entry b,
+.destination-wedding-entry b{margin-left:auto;font-size:20px;flex:0 0 auto}
+.destination-wedding-entry{background:#fffafc;border-color:#ead6df}
+.destination-wedding-entry strong,
+.destination-wedding-entry b{color:#8b3658}
+
+@media(max-width:760px){
+  /* Keep the existing Explore design. Only make the complete Explore composition fit the phone viewport. */
+  #slide-explore{
+    height:calc(100dvh - 78px);
+    min-height:0;
+    overflow:hidden;
+    padding:18px 14px 70px!important;
+  }
+  #slide-explore .section-head{margin-bottom:10px}
+  #slide-explore .section-head h2{font-size:24px;line-height:1.08;margin:2px 0}
+  #slide-explore .eyebrow{font-size:10px;letter-spacing:1.5px;margin-bottom:7px}
+  #slide-explore .text-btn{font-size:11px;padding:4px 6px}
+
+  #slide-explore .explore-tools{margin:0 0 10px;gap:7px}
+  #slide-explore .village-search{min-height:42px;height:42px;border-radius:13px;padding:0 12px;gap:8px}
+  #slide-explore .village-search span{font-size:18px}
+  #slide-explore .village-search input{font-size:14px}
+
+  /* Existing state-card style, just compact enough for the first viewport. */
+  #slide-explore .state-slider-wrap{gap:5px}
+  #slide-explore .state-slider{gap:8px;padding:2px 1px 7px}
+  #slide-explore .state-slider-wrap .slider-arrow{display:none!important}
+  #slide-explore .state-card{
+    flex:0 0 118px;
+    min-width:118px;
+    height:82px;
+    padding:10px;
+    border-radius:14px;
+    box-shadow:0 5px 16px rgba(23,45,33,.04);
+  }
+  #slide-explore .state-card .state-no{font-size:7px;letter-spacing:1px}
+  #slide-explore .state-card h3{font-size:14px;line-height:1.12;margin:6px 0 2px}
+  #slide-explore .state-card p{font-size:9px;line-height:1.1}
+
+  #slide-explore .explore-divider{margin:8px 0 6px;gap:8px;font-size:9px;letter-spacing:1.5px}
+  #slide-explore .explore-divider b{font-size:15px}
+
+  /* Village cards remain image-first and horizontally swipeable, like the existing design. */
+  #slide-explore .village-slider-wrap .slider-arrow{display:none!important}
+  #slide-explore .village-slider{gap:10px;padding:0 1px 8px;min-height:0;height:190px}
+  #slide-explore .village-card{
+    flex:0 0 235px;
+    min-width:235px;
+    max-width:235px;
+    height:180px;
+    border-radius:17px;
+  }
+  #slide-explore .village-card>img{height:102px}
+  #slide-explore .village-card div{padding:11px 12px}
+  #slide-explore .village-card h3{font-size:18px;line-height:1.08;margin:2px 0 4px}
+  #slide-explore .village-card p{font-size:10px;line-height:1.25;margin:0}
+  #slide-explore .village-card button{font-size:10px;padding:6px 9px;margin-top:5px}
+
+  /* Bazaar and Destination Wedding sit directly below the village cards. */
+  #slide-explore .marketplace-entry,
+  #slide-explore .destination-wedding-entry{
+    min-height:58px;
+    height:58px;
+    margin:5px 0 0;
+    padding:9px 12px;
+    border-radius:15px;
+    gap:9px;
+    box-shadow:0 5px 16px rgba(40,50,35,.04);
+    font-size:15px;
+  }
+  #slide-explore .marketplace-entry strong,
+  #slide-explore .destination-wedding-entry strong{font-size:15px}
+  #slide-explore .marketplace-entry small,
+  #slide-explore .destination-wedding-entry small{font-size:10px}
+  #slide-explore .marketplace-entry b,
+  #slide-explore .destination-wedding-entry b{font-size:18px}
+  #slide-explore .empty-state{display:none}
+}
+
+@media(max-width:360px){
+  #slide-explore{padding-left:11px!important;padding-right:11px!important}
+  #slide-explore .section-head h2{font-size:22px}
+  #slide-explore .state-card{flex-basis:108px;min-width:108px;height:78px;padding:9px}
+  #slide-explore .state-card h3{font-size:13px}
+  #slide-explore .village-slider{height:174px}
+  #slide-explore .village-card{flex-basis:218px;min-width:218px;max-width:218px;height:165px}
+  #slide-explore .village-card>img{height:92px}
+  #slide-explore .village-card h3{font-size:16px}
+  #slide-explore .marketplace-entry,
+  #slide-explore .destination-wedding-entry{height:54px;min-height:54px}
+}
+
+
+/* ===== EXPLORE PAGE — REFERENCE PLACEMENT MODEL =====
+   Presentation-only override. Existing village/state data and Firebase logic are preserved. */
+#slide-explore .explore-block-head{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 10px;
+}
+#slide-explore .explore-block-head h3{
+  margin:0;color:var(--text);font-size:18px;font-weight:800;letter-spacing:-.2px;
+}
+#slide-explore .explore-block-head .text-btn{font-size:13px}
+#slide-explore .villages-block-head{margin-top:26px}
+#slide-explore .villages-block-head>div{display:flex;align-items:baseline;gap:9px;min-width:0}
+#slide-explore .villages-block-head small{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+#slide-explore .state-card{
+  position:relative;isolation:isolate;overflow:hidden;padding:0;border:0;border-radius:18px;
+  flex:0 0 180px;min-width:180px;height:132px;background:#dde3d8;text-align:left;color:#fff;
+  box-shadow:none;transform:none;
+}
+#slide-explore .state-card:hover,#slide-explore .state-card.active{transform:none;background:#dde3d8;border-color:transparent}
+#slide-explore .state-card.active{outline:3px solid rgba(49,91,43,.22);outline-offset:2px}
+#slide-explore .state-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+#slide-explore .state-card-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,20,10,.05) 28%,rgba(6,20,10,.78) 100%)}
+#slide-explore .state-card-copy{position:absolute;left:13px;right:10px;bottom:12px;display:flex;flex-direction:column;gap:2px}
+#slide-explore .state-card-copy strong{font-size:17px;line-height:1.08;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+#slide-explore .state-card-copy small{font-size:8px;letter-spacing:1.4px;font-style:normal;font-weight:900;color:#f6f2e9}
+#slide-explore .state-card-copy em{font-size:10px;font-style:normal;font-weight:700;color:rgba(255,255,255,.88)}
+
+#slide-explore .village-card{
+  position:relative;isolation:isolate;overflow:hidden;padding:0;border:0;border-radius:18px;
+  flex:0 0 260px;min-width:260px;height:205px;background:#dfe4dc;box-shadow:none;color:#fff;
+}
+#slide-explore .village-card>img{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover}
+#slide-explore .village-card-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03) 35%,rgba(0,0,0,.78) 100%)}
+#slide-explore .village-card .village-card-overlay{position:absolute;left:0;right:0;bottom:0;padding:16px!important;z-index:2}
+#slide-explore .village-card .village-card-overlay h3{margin:0 0 3px;color:#fff;font-size:23px;line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#slide-explore .village-card .village-card-overlay p{margin:0;color:rgba(255,255,255,.9);font-size:12px;font-weight:600}
+
+#slide-explore .marketplace-entry{background:#fffaf0;border-color:#eadcbe}
+#slide-explore .marketplace-entry>span:before{content:''}
+#slide-explore .destination-wedding-entry{background:#fff8fc;border-color:#ead6df}
+
+@media(max-width:760px){
+  /* Reference uses a normal vertical Explore page. Do not crop it to one viewport. */
+  #slide-explore{
+    height:auto!important;min-height:calc(100vh - 156px)!important;overflow:visible!important;
+    padding:26px 18px 105px!important;
+  }
+  #slide-explore .section-head{align-items:flex-start;margin-bottom:20px}
+  #slide-explore .section-head h2{font-size:31px;line-height:1.05;margin:3px 0 0;max-width:300px}
+  #slide-explore .eyebrow{font-size:10px;letter-spacing:1.8px;margin-bottom:9px}
+  #slide-explore .section-head .text-btn{font-size:12px;padding-top:4px}
+
+  #slide-explore .explore-tools{margin-bottom:18px}
+  #slide-explore .village-search{height:50px;min-height:50px;border-radius:14px;padding:0 15px}
+  #slide-explore .village-search input{font-size:16px}
+
+  #slide-explore .explore-block-head{margin:19px 0 10px}
+  #slide-explore .explore-block-head h3{font-size:16px}
+  #slide-explore .explore-block-head .text-btn{font-size:12px}
+  #slide-explore .villages-block-head{margin-top:25px}
+
+  #slide-explore .state-slider-wrap,#slide-explore .village-slider-wrap{display:block}
+  #slide-explore .state-slider-wrap .slider-arrow,#slide-explore .village-slider-wrap .slider-arrow{display:none!important}
+  #slide-explore .state-slider{gap:9px;padding:3px 2px 7px;overflow-x:auto;scroll-snap-type:x proximity}
+  #slide-explore .state-card{flex:0 0 112px;min-width:112px;height:145px;border-radius:15px;scroll-snap-align:start}
+  #slide-explore .state-card-copy{left:10px;bottom:10px}
+  #slide-explore .state-card-copy strong{font-size:15px}
+  #slide-explore .state-card-copy em{font-size:9px}
+
+  #slide-explore .village-slider{gap:10px;padding:2px 2px 8px;height:auto!important;min-height:0;overflow-x:auto;scroll-snap-type:x proximity}
+  #slide-explore .village-card{flex:0 0 154px;min-width:154px;max-width:154px;height:166px;border-radius:15px;scroll-snap-align:start}
+  #slide-explore .village-card .village-card-overlay{padding:12px!important}
+  #slide-explore .village-card .village-card-overlay h3{font-size:17px;margin-bottom:3px}
+  #slide-explore .village-card .village-card-overlay p{font-size:10px;line-height:1.25}
+
+  #slide-explore .marketplace-entry,#slide-explore .destination-wedding-entry{
+    height:auto!important;min-height:78px;margin:14px 0 0;padding:14px 16px;border-radius:16px;gap:12px;
+  }
+  #slide-explore .marketplace-entry strong,#slide-explore .destination-wedding-entry strong{font-size:17px}
+  #slide-explore .marketplace-entry small,#slide-explore .destination-wedding-entry small{font-size:11px;white-space:normal;line-height:1.35}
+  #slide-explore .marketplace-entry b,#slide-explore .destination-wedding-entry b{font-size:21px}
+  #slide-explore .empty-state{display:block}
+}
+
+@media(max-width:360px){
+  #slide-explore{padding-left:14px!important;padding-right:14px!important}
+  #slide-explore .section-head h2{font-size:28px}
+  #slide-explore .state-card{flex-basis:104px;min-width:104px;height:136px}
+  #slide-explore .village-card{flex-basis:146px;min-width:146px;max-width:146px;height:158px}
+}
+
+/* FINAL FIX: respect the Explore empty-state hidden attribute.
+   Prevents the "No villages..." card from appearing below Destination Wedding
+   when village cards are already available. */
+#slide-explore #empty-state[hidden]{display:none!important;}
+#slide-explore #empty-state:not([hidden]){display:block;}
+
+
+/* ===== FINAL PRIMARY NAVIGATION — stable, mobile-first ===== */
+.bottom-nav{
+  box-sizing:border-box;
+  background:rgba(255,253,248,.97);
+  border-top:1px solid rgba(24,61,32,.12);
+  box-shadow:0 -8px 28px rgba(23,32,24,.08);
+}
+.bottom-nav .nav-item{
+  position:relative;
+  min-width:0;
+  border:0;
+  background:transparent;
+  color:#747d74;
+  border-radius:14px;
+  transition:color .18s ease,background .18s ease,transform .18s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.bottom-nav .nav-item .nav-icon{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:25px;
+  margin:0 auto;
+  font-size:20px;
+  line-height:1;
+}
+.bottom-nav .nav-item>span:last-child{
+  display:block;
+  margin-top:3px;
+  font-size:10px;
+  line-height:1.05;
+  font-weight:700;
+  white-space:nowrap;
+}
+.bottom-nav .nav-item.active{
+  color:var(--green);
+  font-weight:900;
+}
+.bottom-nav .nav-item.active::before{
+  content:'';
+  position:absolute;
+  top:4px;
+  left:50%;
+  width:34px;
+  height:3px;
+  border-radius:999px;
+  background:var(--green);
+  transform:translateX(-50%);
+}
+.bottom-nav .nav-item:active{transform:scale(.97)}
+.bottom-nav .nav-item:focus-visible{outline:2px solid var(--green);outline-offset:-3px}
+@media(max-width:760px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  .bottom-nav{
+    position:fixed!important;
+    left:0!important;right:0!important;bottom:0!important;
+    width:100%!important;
+    height:calc(62px + env(safe-area-inset-bottom))!important;
+    min-height:calc(62px + env(safe-area-inset-bottom))!important;
+    padding:4px 5px env(safe-area-inset-bottom)!important;
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:stretch!important;
+    gap:2px!important;
+    z-index:1000!important;
+  }
+  .bottom-nav .nav-item{
+    flex:1 1 20%!important;
+    width:20%!important;
+    min-height:58px;
+    padding:8px 2px 5px!important;
+    justify-content:center;
+  }
+  .bottom-nav .nav-item .nav-icon{font-size:19px}
+  .bottom-nav .nav-item>span:last-child{font-size:9.5px!important}
+  .bottom-nav .nav-item.active{background:#edf2e8}
+}
+@media(max-width:360px){
+  .bottom-nav .nav-item>span:last-child{font-size:8.5px!important}
+  .bottom-nav .nav-item .nav-icon{font-size:18px}
+}
+
+/* ===== FINAL POLISH PASS — compact mobile + stable desktop navigation ===== */
+/* This block intentionally replaces older patch-level sizing where they conflict. */
+
+/* Feed: village identity first, image-led, compact actions. */
+.village-feed-section{max-width:860px;margin:0 auto;padding-left:18px;padding-right:18px}
+.village-feed-list{display:grid;gap:18px;max-width:720px;margin:0 auto}
+.village-feed-card{border-radius:20px;overflow:hidden;background:#fff;border:1px solid rgba(24,61,32,.10);box-shadow:0 8px 24px rgba(30,40,25,.06)}
+.village-feed-headrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:14px 15px 11px;align-items:start}
+.feed-village-link{justify-self:start;border:0;background:transparent;padding:0;color:var(--green);font:inherit;font-weight:900;font-size:16px;cursor:pointer;text-align:left}
+.village-feed-headrow small{grid-column:1;color:var(--muted);font-size:11px;line-height:1.25}
+.village-feed-headrow>span{grid-column:1;color:#626b63;font-size:12px;font-weight:700;margin-top:3px}
+.feed-delete-icon{grid-column:2;grid-row:1/4;width:34px;height:34px;border:0;border-radius:50%;background:#f2f3ed;color:var(--green);font-size:20px;line-height:1;cursor:pointer}
+.village-feed-media-btn{display:block;width:100%;border:0;padding:0;background:#eee;cursor:zoom-in}
+.village-feed-media,.village-feed-video{display:block;width:100%;aspect-ratio:4/5;max-height:680px;object-fit:cover;background:#e9e9e4}
+.village-feed-body{padding:12px 15px 13px}
+.village-feed-body h3{font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.25;margin:0 0 5px;color:var(--text)}
+.village-feed-body p{font-size:13px;line-height:1.5;margin:0;color:#555f57}
+.village-feed-actions{display:flex;align-items:center;gap:6px;margin-top:10px}
+.village-feed-actions button{width:38px;height:36px;display:grid;place-items:center;border:0;border-radius:10px;background:transparent;color:var(--green);font-size:21px;line-height:1;cursor:pointer;padding:0}
+.village-feed-actions button:hover,.village-feed-actions button:focus-visible{background:#edf2e8;outline:none}
+.village-feed-actions button.active{background:#e9f0e5;color:#214e2a}
+.feed-photo-viewer{width:100%;display:grid;place-items:center;background:#111;border-radius:14px;overflow:hidden}
+.feed-photo-viewer img{display:block;max-width:100%;max-height:76dvh;width:auto;height:auto;object-fit:contain}
+
+/* Desktop navigation: readable, balanced and aligned to the app width. */
+@media(min-width:761px){
+  .bottom-nav{
+    position:sticky;bottom:0;width:100%;height:68px;min-height:68px;padding:5px max(18px,4%);
+    display:flex;align-items:stretch;justify-content:center;gap:8px;z-index:40;
+  }
+  .bottom-nav .nav-item{flex:0 1 138px;min-width:112px;max-width:150px;padding:7px 12px}
+  .bottom-nav .nav-item .nav-icon{font-size:20px;height:24px}
+  .bottom-nav .nav-item>span:last-child{font-size:11px!important}
+  .bottom-nav .nav-item.active{background:#edf2e8}
+}
+
+@media(max-width:760px){
+  /* Normalise oversized headings everywhere except the approved Explore composition. */
+  .content-slide:not(#slide-explore)>.section-head h2{font-size:26px!important;line-height:1.08}
+  .content-slide:not(#slide-explore)>.section-head{margin-bottom:14px}
+
+  /* Trips: shorter cards with all information still visible. */
+  #slide-stay{padding-left:14px!important;padding-right:14px!important}
+  #slide-stay .trip-connection{margin:0 0 12px;padding:8px 10px;gap:5px;font-size:8px;letter-spacing:1px}
+  #slide-stay .trip-grid{gap:10px;padding:0 0 9px}
+  #slide-stay .trip-card{flex:0 0 calc(100vw - 28px);min-width:calc(100vw - 28px);max-width:calc(100vw - 28px);border-radius:16px}
+  #slide-stay .trip-image{height:104px}
+  #slide-stay .trip-body{padding:11px 12px 12px}
+  #slide-stay .trip-body h3{font-size:18px;line-height:1.08;margin:4px 0}
+  #slide-stay .trip-location{font-size:10px;margin-bottom:8px}
+  #slide-stay .trip-facts{grid-template-columns:1fr 1fr!important;gap:5px;margin-bottom:8px}
+  #slide-stay .trip-facts span{padding:6px 7px;font-size:9px;line-height:1.25;border-radius:10px}
+  #slide-stay .trip-block{padding:8px 0}
+  #slide-stay .trip-chips{gap:4px}
+  #slide-stay .trip-chips span{padding:4px 6px;font-size:8px}
+  #slide-stay .trip-columns{grid-template-columns:1fr 1fr!important;gap:8px;padding:8px 0}
+  #slide-stay .trip-columns ul{font-size:8.5px;line-height:1.35;padding-left:13px;margin:0}
+  #slide-stay .trip-footer{align-items:center;padding-top:1px}
+  #slide-stay .trip-footer small{font-size:8px}
+  #slide-stay .trip-footer strong{font-size:17px}
+  #slide-stay .trip-footer .primary{padding:7px 9px;font-size:10px}
+
+  /* Feed: Instagram-like width without oversized vertical UI. */
+  .village-feed-section{padding:22px 12px calc(84px + env(safe-area-inset-bottom));max-width:none}
+  .village-feed-section .section-head{margin-bottom:13px;align-items:flex-end}
+  .village-feed-section .section-head h2{font-size:24px;line-height:1.08}
+  .village-feed-section .section-subtitle{font-size:11px;line-height:1.35}
+  .village-feed-list{gap:14px;max-width:none}
+  .village-feed-card{border-radius:16px}
+  .village-feed-headrow{padding:11px 12px 9px}
+  .feed-village-link{font-size:15px}
+  .village-feed-headrow small{font-size:10px}
+  .village-feed-headrow>span{font-size:11px}
+  .feed-delete-icon{width:31px;height:31px;font-size:18px}
+  .village-feed-media,.village-feed-video{aspect-ratio:4/5;max-height:none}
+  .village-feed-body{padding:10px 12px 11px}
+  .village-feed-body h3{font-size:15px}
+  .village-feed-body p{font-size:12px;line-height:1.45}
+  .village-feed-actions{margin-top:8px;gap:3px}
+  .village-feed-actions button{width:36px;height:34px;font-size:20px}
+
+  /* Keep the already-approved mobile nav readable, not tiny. */
+  .bottom-nav .nav-item .nav-icon{font-size:20px!important}
+  .bottom-nav .nav-item>span:last-child{font-size:10px!important}
+}
+
+@media(max-width:360px){
+  #slide-stay .trip-card{flex-basis:calc(100vw - 22px);min-width:calc(100vw - 22px);max-width:calc(100vw - 22px)}
+  .bottom-nav .nav-item .nav-icon{font-size:19px!important}
+  .bottom-nav .nav-item>span:last-child{font-size:9px!important}
+}
+
+
+/* ===== DESKTOP STICKY TOP NAVIGATION — mobile bottom nav unchanged ===== */
+.desktop-nav{display:none}
+@media(min-width:901px){
+  .topbar{
+    display:grid!important;
+    grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr);
+    align-items:center;
+    gap:24px;
+    height:78px;
+    padding:0 clamp(28px,4vw,64px)!important;
+    position:sticky;
+    top:0;
+    z-index:1100;
+  }
+  .brand{justify-self:start}
+  .top-actions{justify-self:end}
+  .desktop-nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    min-width:0;
+  }
+  .desktop-nav-item{
+    border:0;
+    background:transparent;
+    color:#667068;
+    font:inherit;
+    font-size:14px;
+    font-weight:800;
+    padding:10px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .18s ease,color .18s ease,transform .18s ease;
+  }
+  .desktop-nav-item:hover{background:#f0f3eb;color:var(--green)}
+  .desktop-nav-item:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .desktop-nav-item.active{background:#e9f0e5;color:var(--green)}
+  .bottom-nav{display:none!important}
+  body{padding-bottom:0!important}
+}
+@media(max-width:900px){
+  .desktop-nav{display:none!important}
+}
