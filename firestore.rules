@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /villages/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == userId && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if request.auth != null && request.auth.uid == userId && resource.data.ownerUid == request.auth.uid && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if request.auth != null && request.auth.uid == userId && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /marketplaceProducts/{productId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if request.auth != null && resource.data.ownerUid == request.auth.uid && request.resource.data.ownerUid == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}
